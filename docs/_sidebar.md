@@ -1,6 +1,7 @@
 * 零基础实践深度学习（第 2 版）
-  * [内容总结](/10百度飞桨/task00.md)
-  * [task01](/10百度飞桨/task01.md)
-  * [task02](/10百度飞桨/task02.md)
-  * [task03](/10百度飞桨/task03.md)
-  * [test](/10百度飞桨/test.md)
+  * [Task00 Paddle 深度学习总结](/10_paddle_deep_learning/task00.md)
+  * [Task01 零基础入门深度学习](/10_paddle_deep_learning/task01.md)
+  * [Task02 一个案例吃透深度学习](/10_paddle_deep_learning/task02.md)
+  * [Task03 计算机视觉基础](/10_paddle_deep_learning/task03.md)
+  * [Task04 test](/10_paddle_deep_learning/task04/task04.md)
+  * [Task05 test](/10_paddle_deep_learning/task05/task05.md)

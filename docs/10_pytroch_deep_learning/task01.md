@@ -91,7 +91,7 @@ ERROR: pip's dependency resolver does not currently take into account all the pa
 pip install d2l==0.17.6
 ```
 
-* 执行发现，依然存部分依赖包不全的问题
+* 执行发现，依然存在部分依赖包不全的问题
 
 ![image-20230318174224515](images/task01/image-20230318174224515.png)
 

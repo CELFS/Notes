@@ -1,6 +1,16 @@
-# 测试笔记
+# 编程学习
 
-> 2023/03/09
+Date: 2023/03/09
+
+------
+
+
+
+* **在线笔记地址** https://celfs.github.io/Notes/
+
+
+
+------
 
 
 
@@ -14,19 +24,16 @@
   * [Task01 零基础入门深度学习](/10_paddle_deep_learning/task01.md)
   * [Task02 一个案例吃透深度学习](/10_paddle_deep_learning/task02.md)
   * [Task03 计算机视觉基础](/10_paddle_deep_learning/task03.md)
-  * [Task04 test](/10_paddle_deep_learning/task04/task04.md)
-  * [Task05 test](/10_paddle_deep_learning/task05/task05.md)
+  * [Task04 计算机视觉基础案例实践](/10_paddle_deep_learning/task04.md)
+  * [Task05 更复杂的计算机视觉任务：目标检测](/10_paddle_deep_learning/task05_01.md)
 
 
 
-### docsify 笔记部署完成
-
-* https://celfs.github.io/Notes/
-* 还需分类+目录
+------
 
 
 
-### TEST
+### docsify 部署简记
 
 * 保存后, 可同步到网页
 * 参考 https://www.cnblogs.com/Can-daydayup/p/15413267.html
@@ -42,34 +49,41 @@
 # 初始化一个项目文件夹
 docsify init ./filename
 
-# 启动本地服务器, 实时预览 http://localhost:3000
+# 启动本地服务器, 实时监听 http://localhost:3000
 docsify serve filename
 ```
 
 
 
-### 维护
+### 配置
 
-![image-20230309132330683](D:\TyporaTxt\PicCopy\image-20230309132330683.png)
-
-
+| 文件作用 |     文件      |
+| :------: | :-----------: |
+|   基础   |  index.html   |
+|   封面   | _coverpage.md |
+|  侧边栏  |  _sidebar.md  |
+|  导航栏  |  _navbar.md   |
+| 主页渲染 |   README.md   |
+|   图标   |  favicon.ico  |
 
 
 
 ### 问题集
-* 图片暂时无法处理, 可能要上传到 git private 库(路径问题, 写了个脚本处理)
-* 忽略列表
-* 删除远程 .idea 文件
-* 修改 readme 后, 内容未同步更新到 web(发现是服务器的延迟)
-* 按项目分类笔记
-* 侧边栏优化
-* 仓库按项目改名
+- [x] 图片暂时无法处理, 可能要上传到 git private 库(路径问题, 写了个脚本处理)
+- [x] 忽略列表
+- [x] 删除远程 .idea 文件
+- [x] 修改 readme 后, 内容未同步更新到 web(发现是服务器的延迟)
+- [ ] 按项目分类笔记
+- [x] 目录
+- [x] 侧边栏优化
+- [x] 仓库按项目改名
+- [ ] 编辑时间自动记录
 
 
 
+------
 
-
-
+* 2023/03/27 4:58:13
 
 
 

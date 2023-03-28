@@ -26,6 +26,12 @@ Date: 2023/03/09
   * [Task03 计算机视觉基础](/10_paddle_deep_learning/task03.md)
   * [Task04 计算机视觉基础案例实践](/10_paddle_deep_learning/task04.md)
   * [Task05 更复杂的计算机视觉任务：目标检测](/10_paddle_deep_learning/task05_01.md)
+  * [Task05 实践作业](/10_paddle_deep_learning/task05_02.md)
+  * [Task06 自然语言处理基础](/10_paddle_deep_learning/task06.md)
+  * [Task07 自然语言处理模型的网络结构](/10_paddle_deep_learning/task07.md)
+  * [Task08 自然语言处理任务的新范式：预训练语言模型*](/10_paddle_deep_learning/task08.md)
+
+
 
 
 

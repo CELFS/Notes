@@ -46,6 +46,8 @@ Date: 2023/03/09
 * GitHub 部署 https://www.likecs.com/show-205308376.html
 * 自动生成目录 https://www.cnblogs.com/ziwuxian/p/14391264.html
 * 分支改名 https://zhuanlan.zhihu.com/p/557304573
+* https://docsify.js.org/#/zh-cn/
+* https://jhildenbiddle.github.io/docsify-themeable/#/themes?id=simple-dark
 
 
 

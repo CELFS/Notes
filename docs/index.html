@@ -16,7 +16,8 @@
 <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">-->
 <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">-->
     <!-- 夜间主题 -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css">
+<!--    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css">-->
+    <link rel="stylesheet" href="darklight-theme-diy.css">
     <style>
         #docsify-darklight-theme {
             position: absolute;
@@ -43,14 +44,19 @@
             font-weight: 600;
             text-decoration: none;
         }
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #2b2b2b;
-            }
-            .sidebar {
-                color: var(--textColor);
-                background-color: #2b2b2b;
-            }
+        .sidebar-toggle {
+            background-color: transparent;
+            border: 0;
+            outline: none;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            text-align: center;
+            transition: opacity .3s;
+            width: 284px;
+            z-index: 30;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -114,9 +120,75 @@
     <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
     <!-- count -->
     <script src="//cdn.jsdelivr.net/npm/docsify-count/dist/countable.min.js"></script>
-    <script
-        src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js"
-        type="text/javascript">
+    <!-- dark-light-theme -->
+    <script type="text/javascript">
+        window.$docsify.plugins = [].concat((e, o) => {
+            let t = {
+                siteFont: "PT Sans",
+                defaultTheme: "dark",
+                codeFontFamily: "Roboto Mono, Monaco, courier, monospace",
+                bodyFontSize: "17px",
+                dark: {
+                    accent: "#42b983",
+                    toogleBackground: "#ffffff",
+                    background: "#222222",
+                    textColor: "#b4b4b4",
+                    codeTextColor: "#ffffff",
+                    codeBackgroundColor: "#111111",
+                    borderColor: "#0d2538",
+                    blockQuoteColor: "#858585",
+                    highlightColor: "#d22778",
+                    sidebarSublink: "#b4b4b4",
+                    codeTypeColor: "#ffffff",
+                    coverBackground: "linear-gradient(to left bottom, hsl(118, 100%, 85%) 0%,hsl(181, 100%, 85%) 100%)",
+                    toogleImage: "url(https://cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/icons/sun.svg)"
+                },
+                light: {
+                    accent: "#42b983",
+                    toogleBackground: "#091a28",
+                    background: "#ffffff",
+                    textColor: "#34495e",
+                    codeTextColor: "#525252",
+                    codeBackgroundColor: "#f8f8f8",
+                    borderColor: "rgba(0, 0, 0, 0.07)",
+                    blockQuoteColor: "#858585",
+                    highlightColor: "#d22778",
+                    sidebarSublink: "#505d6b",
+                    codeTypeColor: "#091a28",
+                    coverBackground: "linear-gradient(to left bottom, hsl(118, 100%, 85%) 0%,hsl(181, 100%, 85%) 100%)",
+                    toogleImage: "url(https://cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/icons/moon.svg)"
+                }
+            };
+            if (o.config.hasOwnProperty("darklightTheme")) {
+                for (var [r, l] of Object.entries(o.config.darklightTheme)) "light" !== r && "dark" !== r && "defaultTheme" !== r && (t[r] = l);
+                for (var [r, l] of Object.entries(t)) "light" !== r && "dark" !== r && (t[r] = l, document.documentElement.style.setProperty("--" + r, l));
+                if (o.config.darklightTheme.hasOwnProperty("dark"))
+                    for (var [r, l] of Object.entries(o.config.darklightTheme.dark)) t.dark[r] = l;
+                if (o.config.darklightTheme.hasOwnProperty("light"))
+                    for (var [r, l] of Object.entries(o.config.darklightTheme.light)) t.light[r] = l
+            } else
+                for (var [r, l] of Object.entries(t)) "light" !== r && "dark" !== r && (t[r] = l, document.documentElement.style.setProperty("--" + r, l));
+            window.matchMedia("(prefers-color-scheme: dark)")
+                .matches ? t.defaultTheme = "dark" : window.matchMedia("(prefers-color-scheme: light)")
+                .matches && (t.defaultTheme = "light");
+            var d = e => {
+                if (localStorage.setItem("DARK_LIGHT_THEME", e), t.defaultTheme = e, "light" == e)
+                    for (var [o, r] of Object.entries(t.light)) document.documentElement.style.setProperty("--" + o, r);
+                else if ("dark" == e)
+                    for (var [o, r] of Object.entries(t.dark)) document.documentElement.style.setProperty("--" + o, r);
+                document.documentElement.style.setProperty("color-scheme", e)
+            };
+            e.afterEach((function(e, o) {
+                o(e = '<div id="docsify-darklight-theme"><p>.</p></div>' + e)
+            })), e.doneEach((function() {
+                let e = localStorage.getItem("DARK_LIGHT_THEME");
+                "light" == e || "dark" == e ? (t.defaultTheme = e, d(t.defaultTheme)) : d(t.defaultTheme);
+                const o = document.getElementById("docsify-darklight-theme");
+                null !== o && o.addEventListener("click", (function() {
+                    "light" === t.defaultTheme ? d("dark") : d("light")
+                }))
+            }))
+        }, window.$docsify.plugins);
     </script>
 </body>
 

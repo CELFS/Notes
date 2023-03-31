@@ -48,6 +48,7 @@ Date: 2023/03/09
 * 分支改名 https://zhuanlan.zhihu.com/p/557304573
 * https://docsify.js.org/#/zh-cn/
 * https://jhildenbiddle.github.io/docsify-themeable/#/themes?id=simple-dark
+* https://docsify-darklight-theme.boopathikumar.me/#/configuration?id=configuration
 
 
 

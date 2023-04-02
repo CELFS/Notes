@@ -12,3 +12,9 @@
   * [Task06 自然语言处理基础](/10_paddle_deep_learning/task06.md)
   * [Task07 自然语言处理模型的网络结构](/10_paddle_deep_learning/task07.md)
   * [Task08 自然语言处理任务的新范式：预训练语言模型*](/10_paddle_deep_learning/task08.md)
+  * [Task09 推荐系统](/10_paddle_deep_learning/task09.md)
+  * [Task10 飞桨产业级开源模型库](/10_paddle_deep_learning/task10.md)
+  * [Task11 飞桨支持的部署方案](/10_paddle_deep_learning/task11.md)
+  * [Task12 基于飞桨进行二次研发](/10_paddle_deep_learning/task12.md)
+
+  

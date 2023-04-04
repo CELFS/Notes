@@ -36,10 +36,10 @@ Date: 2023/03/09
   * [Task11 飞桨支持的部署方案](/10_paddle_deep_learning/task11.md)
   * [Task12 基于飞桨进行二次研发](/10_paddle_deep_learning/task12.md)
 * 读吴军《信息论 40 讲》
-  * [00 导论](/103_information_theory/00_导论 01-03.md)
-  * [01 模块一：信息产生 04-18](/103_information_theory/01_信息产生 04-18.md)
-  * [02 模块二：信息传播 19-28](/103_information_theory/02_信息传播 19-28.md)
-  * [03 模块三：信息应用 29-38](/103_information_theory/03_信息应用 29-40.md)
+  * [00 导论](/103_information_theory/00_导论_01-03.md)
+  * [01 模块一：信息产生 04-18](/103_information_theory/01_信息产生_04-18.md)
+  * [02 模块二：信息传播 19-28](/103_information_theory/02_信息传播_19-28.md)
+  * [03 模块三：信息应用 29-38](/103_information_theory/03_信息应用_29-40.md)
   * [04 复盘](/103_information_theory/04_复盘.md)
 
 

@@ -1,11 +1,11 @@
-* 操作系统导论
-  * [《操作系统导论》总结](/06_introduction_to_operating_system/00_总结.md)
-  * [第1部分 虚拟化](/06_introduction_to_operating_system/01_虚拟化.md)
-  * [第2部分 并发](/06_introduction_to_operating_system/02_并发.md)
-  * [第3部分 持久性](/06_introduction_to_operating_system/03_持久化.md)
-  * [附录](/06_introduction_to_operating_system/04_附录.md)
-  * [作业](/06_introduction_to_operating_system/05_作业.md)
-  * [Linux 补充](/06_introduction_to_operating_system/10_Linux补充.md)
+* 操作系统导论（在学）
+  * [Task00 总结](/06_introduction_to_operating_system/00_总结.md)
+  * [Task01 虚拟化](/06_introduction_to_operating_system/01_虚拟化.md)
+  * [Task02 并发](/06_introduction_to_operating_system/02_并发.md)
+  * [Task03 持久性](/06_introduction_to_operating_system/03_持久化.md)
+  * [Task04 附录](/06_introduction_to_operating_system/04_附录.md)
+  * [Task05 作业](/06_introduction_to_operating_system/05_作业.md)
+  * [Task06 Linux 补充](/06_introduction_to_operating_system/10_Linux补充.md)
 * 动手学深度学习（Pytorch 版）
   * [Task01 初识深度学习](/10_pytroch_deep_learning/task01.md)
   * [Task02 预备知识](/10_pytroch_deep_learning/task02.md)
@@ -24,6 +24,16 @@
   * [Task10 飞桨产业级开源模型库](/10_paddle_deep_learning/task10.md)
   * [Task11 飞桨支持的部署方案](/10_paddle_deep_learning/task11.md)
   * [Task12 基于飞桨进行二次研发](/10_paddle_deep_learning/task12.md)
+* 机器学习初步（周志华）
+  * [0.0 记录](/10_machine_learning/Task00.md)
+  * [1.0 绪论](/10_machine_learning/Task01.md)
+  * [2.0 模型评估与选择—概念树](/10_machine_learning/Task02.md)
+  * [3.0 线性模型](/10_machine_learning/Task03.md)
+  * [4.0 决策树](/10_machine_learning/Task04.md)
+  * [5.0 支持向量机](/10_machine_learning/Task05.md)
+  * [6.0 神经网络](/10_machine_learning/Task06.md)
+  * [7.0 贝叶斯分类器](/10_machine_learning/Task07.md)
+  * [8.0 集成学习和聚类](/10_machine_learning/Task08.md)
 * 读吴军《信息论 40 讲》
   * [00 导论](/103_information_theory/00_导论_01-03.md)
   * [01 模块一：信息产生 04-18](/103_information_theory/01_信息产生_04-18.md)
@@ -31,7 +41,9 @@
   * [03 模块三：信息应用 29-38](/103_information_theory/03_信息应用_29-40.md)
   * [04 复盘](/103_information_theory/04_复盘.md)
 * 读吴军《富足》
-  * [读吴军《富足》总结](/103_wj_plenties/读吴军《富足》.md)
+  * [总结](/103_wj_plenties/读吴军《富足》.md)
+
+
 
 
 

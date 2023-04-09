@@ -1,4 +1,4 @@
-# 编程学习
+# 学而时习之
 
 Date: 2023/03/09
 
@@ -7,6 +7,8 @@ Date: 2023/03/09
 
 
 * **在线笔记地址** https://celfs.github.io/Notes/
+  * 记录我的学习
+  * 正在陆续把以往的笔记转到仓库上，整理以便复盘
 
 
 
@@ -16,14 +18,14 @@ Date: 2023/03/09
 
 ### 目录
 
-* 操作系统导论
-  * [《操作系统导论》总结](/06_introduction_to_operating_system/00_总结.md)
-  * [第1部分 虚拟化](/06_introduction_to_operating_system/01_虚拟化.md)
-  * [第2部分 并发](/06_introduction_to_operating_system/02_并发.md)
-  * [第3部分 持久性](/06_introduction_to_operating_system/03_持久化.md)
-  * [附录](/06_introduction_to_operating_system/04_附录.md)
-  * [作业](/06_introduction_to_operating_system/05_作业.md)
-  * [Linux 补充](/06_introduction_to_operating_system/10_Linux补充.md)
+* 操作系统导论（在学）
+  * [Task00 总结](/06_introduction_to_operating_system/00_总结.md)
+  * [Task01 虚拟化](/06_introduction_to_operating_system/01_虚拟化.md)
+  * [Task02 并发](/06_introduction_to_operating_system/02_并发.md)
+  * [Task03 持久性](/06_introduction_to_operating_system/03_持久化.md)
+  * [Task04 附录](/06_introduction_to_operating_system/04_附录.md)
+  * [Task05 作业](/06_introduction_to_operating_system/05_作业.md)
+  * [Task06 Linux 补充](/06_introduction_to_operating_system/10_Linux补充.md)
 * 动手学深度学习（Pytorch 版）
   * [Task01 初识深度学习](/10_pytroch_deep_learning/task01.md)
   * [Task02 预备知识](/10_pytroch_deep_learning/task02.md)
@@ -42,6 +44,16 @@ Date: 2023/03/09
   * [Task10 飞桨产业级开源模型库](/10_paddle_deep_learning/task10.md)
   * [Task11 飞桨支持的部署方案](/10_paddle_deep_learning/task11.md)
   * [Task12 基于飞桨进行二次研发](/10_paddle_deep_learning/task12.md)
+* 机器学习初步（周志华）
+  * [0.0 记录](/10_machine_learning/Task00.md)
+  * [1.0 绪论](/10_machine_learning/Task01.md)
+  * [2.0 模型评估与选择—概念树](/10_machine_learning/Task02.md)
+  * [3.0 线性模型](/10_machine_learning/Task03.md)
+  * [4.0 决策树](/10_machine_learning/Task04.md)
+  * [5.0 支持向量机](/10_machine_learning/Task05.md)
+  * [6.0 神经网络](/10_machine_learning/Task06.md)
+  * [7.0 贝叶斯分类器](/10_machine_learning/Task07.md)
+  * [8.0 集成学习和聚类](/10_machine_learning/Task08.md)
 * 读吴军《信息论 40 讲》
   * [00 导论](/103_information_theory/00_导论_01-03.md)
   * [01 模块一：信息产生 04-18](/103_information_theory/01_信息产生_04-18.md)
@@ -49,9 +61,7 @@ Date: 2023/03/09
   * [03 模块三：信息应用 29-38](/103_information_theory/03_信息应用_29-40.md)
   * [04 复盘](/103_information_theory/04_复盘.md)
 * 读吴军《富足》
-  * [读吴军《富足》总结](/103_wj_plenties/读吴军《富足》.md)
-
-
+  * [总结](/103_wj_plenties/读吴军《富足》.md)
 
 
 
@@ -102,37 +112,26 @@ docsify serve filename
 - [x] 忽略列表
 - [x] 删除远程 .idea 文件
 - [x] 修改 readme 后, 内容未同步更新到 web(发现是服务器的延迟)
-- [ ] 按项目分类笔记
+- [ ] 按项目分类笔记、仓库细分
 - [x] 目录
 - [x] 侧边栏优化
 - [x] 仓库按项目改名
 - [ ] 编辑时间自动记录
+
+- [x] 正文居中、图片居中
+- [ ] 夜间模式，自定义导致图片加载过慢
+- [ ] 自定义导致移动端显示异常（导航栏未自动隐藏，字体过小）
+- [ ] 搜索栏失效
+- [ ] 文件名称含空格，导致路径未能识别（gen文件添加替换功能）
+- [ ] 图片路径，相对路径
+- [ ] 图片缩放参数，无法识别
+- [ ] 高亮语法符号 “== ==”，网页无渲染
+- [ ] 代码过长情况，横向滚动条
+- [ ] jpn 协作方法
 
 
 
 ------
 
 * 2023/03/27 4:58:13
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

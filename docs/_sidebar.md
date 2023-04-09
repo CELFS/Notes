@@ -1,3 +1,11 @@
+* 操作系统导论
+  * [《操作系统导论》总结](/06_introduction_to_operating_system/00_总结.md)
+  * [第1部分 虚拟化](/06_introduction_to_operating_system/01_虚拟化.md)
+  * [第2部分 并发](/06_introduction_to_operating_system/02_并发.md)
+  * [第3部分 持久性](/06_introduction_to_operating_system/03_持久化.md)
+  * [附录](/06_introduction_to_operating_system/04_附录.md)
+  * [作业](/06_introduction_to_operating_system/05_作业.md)
+  * [Linux 补充](/06_introduction_to_operating_system/10_Linux补充.md)
 * 动手学深度学习（Pytorch 版）
   * [Task01 初识深度学习](/10_pytroch_deep_learning/task01.md)
   * [Task02 预备知识](/10_pytroch_deep_learning/task02.md)
@@ -16,10 +24,14 @@
   * [Task10 飞桨产业级开源模型库](/10_paddle_deep_learning/task10.md)
   * [Task11 飞桨支持的部署方案](/10_paddle_deep_learning/task11.md)
   * [Task12 基于飞桨进行二次研发](/10_paddle_deep_learning/task12.md)
-
 * 读吴军《信息论 40 讲》
   * [00 导论](/103_information_theory/00_导论_01-03.md)
   * [01 模块一：信息产生 04-18](/103_information_theory/01_信息产生_04-18.md)
   * [02 模块二：信息传播 19-28](/103_information_theory/02_信息传播_19-28.md)
   * [03 模块三：信息应用 29-38](/103_information_theory/03_信息应用_29-40.md)
   * [04 复盘](/103_information_theory/04_复盘.md)
+* 读吴军《富足》
+  * [读吴军《富足》总结](/103_wj_plenties/读吴军《富足》.md)
+
+
+

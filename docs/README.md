@@ -16,11 +16,18 @@ Date: 2023/03/09
 
 ### 目录
 
+* 操作系统导论
+  * [《操作系统导论》总结](/06_introduction_to_operating_system/00_总结.md)
+  * [第1部分 虚拟化](/06_introduction_to_operating_system/01_虚拟化.md)
+  * [第2部分 并发](/06_introduction_to_operating_system/02_并发.md)
+  * [第3部分 持久性](/06_introduction_to_operating_system/03_持久化.md)
+  * [附录](/06_introduction_to_operating_system/04_附录.md)
+  * [作业](/06_introduction_to_operating_system/05_作业.md)
+  * [Linux 补充](/06_introduction_to_operating_system/10_Linux补充.md)
 * 动手学深度学习（Pytorch 版）
   * [Task01 初识深度学习](/10_pytroch_deep_learning/task01.md)
   * [Task02 预备知识](/10_pytroch_deep_learning/task02.md)
 * 零基础实践深度学习（第 2 版）
-
   * [Task00 Paddle 深度学习总结](/10_paddle_deep_learning/task00.md)
   * [Task01 零基础入门深度学习](/10_paddle_deep_learning/task01.md)
   * [Task02 一个案例吃透深度学习](/10_paddle_deep_learning/task02.md)
@@ -41,6 +48,8 @@ Date: 2023/03/09
   * [02 模块二：信息传播 19-28](/103_information_theory/02_信息传播_19-28.md)
   * [03 模块三：信息应用 29-38](/103_information_theory/03_信息应用_29-40.md)
   * [04 复盘](/103_information_theory/04_复盘.md)
+* 读吴军《富足》
+  * [读吴军《富足》总结](/103_wj_plenties/读吴军《富足》.md)
 
 
 

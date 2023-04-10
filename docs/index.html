@@ -41,15 +41,11 @@
                 loadSidebar: true,
                 loadNavbar: false,
                 coverpage: false,
-                search: 'auto',
                 maxLevel: 5,
                 auto2top: true,
                 sidebarDisplayLevel: 0,
                 subMaxLevel: 4,
                 mergeNavbar: true,
-                alias: {
-                    '/.*/_sidebar.md': '/_sidebar.md'
-                },
                 pagination: {
                     previousText: '上一章节',
                     nextText: '下一章节',
@@ -72,6 +68,7 @@
                     '/zh-cn/': '没有结果!',
                     '/': 'No results!',
                   },
+                  //paths: [];
                   placeholder: {
                     '/es/': 'Buscar',
                     '/de-de/': 'Suche',
@@ -80,6 +77,7 @@
                     '/': 'Search',
                   },
                   pathNamespaces: ['/es', '/de-de', '/ru-ru', '/zh-cn'],
+                  depth: 6,
                 },
                 plugins: [
                     function(hook, vm) {

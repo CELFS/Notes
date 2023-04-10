@@ -26,6 +26,16 @@ Date: 2023/03/09
   * [Task04 附录](/06_introduction_to_operating_system/04_附录.md)
   * [Task05 作业](/06_introduction_to_operating_system/05_作业.md)
   * [Task06 Linux 补充](/06_introduction_to_operating_system/10_Linux补充.md)
+* Linux 操作系统
+  * [00 C++ 开发环境配置实验 V2.3](/01_linux/Linux_00_C++开发环境配置实验.md)
+  * [01 Linux环境下，部分软件安装](/01_linux/Linux_01_Linux环境下，部分软件安装.md)
+  * [02 shell环境的熟悉与使用](/01_linux/Linux_02_shell环境的熟悉与使用.md)
+  * [03 文件的特殊权限](/01_linux/Linux_03_文件的特殊权限.md)
+  * [04 用户管理测验](/01_linux/Linux_04_用户管理测验.md)
+  * [05 进程管理 随堂笔记及简答题思考](/01_linux/Linux_05_进程管理_个人随堂笔记.md)
+  * [06 数据提取练习题](/01_linux/Linux_06_数据提取练习题.md)
+  * [07 shell编程练习题](/01_linux/Linux_07_shell编程练习题.md)
+  * [08 Linux 保存完整网页](/01_linux/Linux_08_保存完整网页.md)
 * 动手学深度学习（Pytorch 版）
   * [Task01 初识深度学习](/10_pytroch_deep_learning/task01.md)
   * [Task02 预备知识](/10_pytroch_deep_learning/task02.md)
@@ -133,5 +143,5 @@ docsify serve filename
 
 ------
 
-* 2023/03/27 4:58:13
+* 2023/04/10 23:13:02
 

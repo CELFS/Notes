@@ -36,21 +36,22 @@
         <div id="app"></div>
         <script>
             window.$docsify = {
+                auto2top: true,
                 name: '编程之路',
                 repo: 'https://github.com/CELFS/Notes',
                 loadSidebar: true,
                 loadNavbar: false,
-                coverpage: false,
-                maxLevel: 5,
-                auto2top: true,
-                sidebarDisplayLevel: 0,
-                subMaxLevel: 4,
                 mergeNavbar: true,
+                coverpage: false,
+                search: 'auto',
+                maxLevel: 5,
+                subMaxLevel: 4,
+                sidebarDisplayLevel: 0,
                 pagination: {
                     previousText: '上一章节',
                     nextText: '下一章节',
                 },
-                count:{
+                count: {
                     countable: true,
                     position: 'top',
                     margin: '10px',
@@ -61,37 +62,39 @@
                     isExpected: true
                 },
                 search: {
-                  noData: {
-                    '/es/': '¡No hay resultados!',
-                    '/de-de/': 'Keine Ergebnisse!',
-                    '/ru-ru/': 'Никаких результатов!',
-                    '/zh-cn/': '没有结果!',
-                    '/': 'No results!',
-                  },
-                  //paths: [];
-                  placeholder: {
-                    '/es/': 'Buscar',
-                    '/de-de/': 'Suche',
-                    '/ru-ru/': 'Поиск',
-                    '/zh-cn/': '搜索',
-                    '/': 'Search',
-                  },
-                  pathNamespaces: ['/es', '/de-de', '/ru-ru', '/zh-cn'],
-                  depth: 6,
+                    maxAge: 86400000,
+                    paths: ['/', '/docs'],
+                    noData: {
+                        '/es/': '¡No hay resultados!',
+                        '/de-de/': 'Keine Ergebnisse!',
+                        '/ru-ru/': 'Никаких результатов!',
+                        '/zh-cn/': '没有结果!',
+                        '/': 'No results!',
+                    },
+                    placeholder: {
+                        '/es/': 'Buscar',
+                        '/de-de/': 'Suche',
+                        '/ru-ru/': 'Поиск',
+                        '/zh-cn/': '搜索',
+                        '/': 'Search',
+                    },
+                    hideOtherSidebarContent: true,
+                    pathNamespaces: ['/es', '/de-de', '/ru-ru', '/zh-cn'],
                 },
                 plugins: [
                     function(hook, vm) {
-                      hook.beforeEach(function(html) {
-                        // Markdown highlight syntax "== =="
-                        let res = html.match(/==(.+?)==/g);
-                        if (res) {
-                          for (var i = 0; i < res.length; i++) {
-                            html = html.replace(res[i], `<mark>` + res[i].replace(/==/g, "") + `</mark>`);
-                          }
+                        hook.beforeEach(function(html) {
+                            // Markdown highlight syntax "== =="
+                            let res = html.match(/==(.+?)==/g);
+                            if (res) {
+                            for (var i = 0; i < res.length; i++) {
+                                html = html.replace(res[i], `<mark>` + res[i].replace(/==/g, "") + `</mark>`);
+                            }
                         }
-                        // update time, show on the top
-                        // return '> Last Modified {docsify-updated}' + '\n----\n' + html;
-                      })
+                            // update time, show on the top
+                            // return '> Last Modified {docsify-updated}' + '\n----\n' + html;
+                            return html;
+                        })
                     }
                 ],
             }

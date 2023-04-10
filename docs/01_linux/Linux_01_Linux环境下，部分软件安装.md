@@ -14,7 +14,7 @@
 
 ### Ubuntu安装相关命令
 
-```
+```bash
 sudo     提权
 apt      理解为安装工具集合命令（相关资料推荐使用apt）
 apt-get  理解为apt命令集的拆分
@@ -47,7 +47,7 @@ dpkg -L  查询系统中已安装的软件包所安装的位置
   * Net top tool grouping bandwidth per process NetHogs is a small 'net top' tool. Instead of breaking the traffic down per protocol or per subnet, like most tools do, it groups bandwidth by process. NetHogs does not rely on a special kernel module to be loaded.
   * NetHogs是一个小型的“nettop”工具。它不像大多数工具那样按协议或子网划分流量，而是按进程对带宽进行分组。NetHogs不依赖于要加载的特殊内核模块。
 
-```
+```bash
 dpkg -s nethogs
 ```
 
@@ -55,7 +55,7 @@ dpkg -s nethogs
 
 #### 1.3 本次安装方法
 
-```
+```bash
 sudo apt-get install nethogs
 ```
 
@@ -69,7 +69,7 @@ sudo apt-get install nethogs
 
 #### 1.6 命令详解资源
 
-```
+```bash
 实例1：设置5秒钟刷新一次，通过-d来指定刷新频率
 # nethogs -d 5
 
@@ -108,7 +108,7 @@ q : 退出命令提示符
 
 #### 2.3 本次安装方法
 
-```
+```bash
 sudo apt-get install htop
 ```
 
@@ -145,7 +145,7 @@ sudo apt-get install htop
 
 #### 3.3 安装方法
 
-```tex
+```bash
 sudo apt install nmon
 ```
 
@@ -183,7 +183,7 @@ sudo apt install nmon
 
 #### 4.3 安装方法
 
-```
+```bash
 sudo apt-get install dstat
 ```
 

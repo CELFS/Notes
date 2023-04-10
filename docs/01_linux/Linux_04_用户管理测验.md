@@ -4,7 +4,7 @@
 
 * 反馈意见：
 
-  <img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210621162439199.png" alt="image-20210621162439199" style="zoom: 35%;" /> 
+![image-20210621162439199](images/Linux_04_用户管理测验/image-20210621162439199.png)
 
 第二次修改信息：2021年6月18日22:03:58  By CELFS
 

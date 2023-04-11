@@ -1,12 +1,15 @@
 * 操作系统导论（在学）
-  * [Task00 总结](/06_introduction_to_operating_system/00_总结.md)
-  * [Task01 虚拟化](/06_introduction_to_operating_system/01_虚拟化.md)
-  * [Task02 并发](/06_introduction_to_operating_system/02_并发.md)
-  * [Task03 持久性](/06_introduction_to_operating_system/03_持久化.md)
-  * [Task04 附录](/06_introduction_to_operating_system/04_附录.md)
-  * [Task05 作业](/06_introduction_to_operating_system/05_作业.md)
-  * [Task06 Linux 补充](/06_introduction_to_operating_system/10_Linux补充.md)
-
+  * [0.0 操作系统介绍](/06_introduction_to_operating_system/00_概述.md)
+  * [1.1 虚拟化（CPU 虚拟化）](/06_introduction_to_operating_system/01-1_虚拟化_CPU.md)
+  * [1.2 虚拟化（内存虚拟化）](/06_introduction_to_operating_system/01-2_虚拟化_内存.md)
+  * [1.3 虚拟化（代码）](/06_introduction_to_operating_system/01-3_code.md)
+  * [2.1 并发](/06_introduction_to_operating_system/02-1_并发.md)
+  * [2.2 并发（代码）](/06_introduction_to_operating_system/02-2_code.md)
+  * [3.1 持久性](/06_introduction_to_operating_system/03-1_持久化.md)
+  * [3.2 持久性（代码）](/06_introduction_to_operating_system/03-2_code.md)
+  * [4.1 附录](/06_introduction_to_operating_system/04_附录.md)
+  * [5.1 作业](/06_introduction_to_operating_system/05_作业.md)
+  * [6.1 Linux 常用命令](/06_introduction_to_operating_system/10_Linux补充.md)
 * Linux 操作系统
   * [00 环境配置个人优化](/01_linux/Linux_00_环境配置个人优化.md)
   * [00 C++ 开发环境配置实验 V2.3](/01_linux/Linux_00_C++开发环境配置实验.md)
@@ -18,7 +21,6 @@
   * [06 数据提取练习题](/01_linux/Linux_06_数据提取练习题.md)
   * [07 shell编程练习题](/01_linux/Linux_07_shell编程练习题.md)
   * [08 Linux 保存完整网页](/01_linux/Linux_08_保存完整网页.md)
-
 * 动手学深度学习（Pytorch 版）
   * [Task01 初识深度学习](/10_pytroch_deep_learning/task01.md)
   * [Task02 预备知识](/10_pytroch_deep_learning/task02.md)

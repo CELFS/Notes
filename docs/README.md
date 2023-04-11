@@ -27,6 +27,7 @@ Date: 2023/03/09
   * [Task05 作业](/06_introduction_to_operating_system/05_作业.md)
   * [Task06 Linux 补充](/06_introduction_to_operating_system/10_Linux补充.md)
 * Linux 操作系统
+  * [00_环境配置个人优化](/01_linux/Linux_00_环境配置个人优化.md)
   * [00 C++ 开发环境配置实验 V2.3](/01_linux/Linux_00_C++开发环境配置实验.md)
   * [01 Linux环境下，部分软件安装](/01_linux/Linux_01_Linux环境下，部分软件安装.md)
   * [02 shell环境的熟悉与使用](/01_linux/Linux_02_shell环境的熟悉与使用.md)
@@ -72,6 +73,8 @@ Date: 2023/03/09
   * [04 复盘](/103_information_theory/04_复盘.md)
 * 读吴军《富足》
   * [总结](/103_wj_plenties/读吴军《富足》.md)
+
+
 
 
 

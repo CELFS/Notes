@@ -8,7 +8,7 @@
   * [Task06 Linux 补充](/06_introduction_to_operating_system/10_Linux补充.md)
 
 * Linux 操作系统
-  * [00_环境配置个人优化](/01_linux/Linux_00_环境配置个人优化.md)
+  * [00 环境配置个人优化](/01_linux/Linux_00_环境配置个人优化.md)
   * [00 C++ 开发环境配置实验 V2.3](/01_linux/Linux_00_C++开发环境配置实验.md)
   * [01 Linux环境下，部分软件安装](/01_linux/Linux_01_Linux环境下，部分软件安装.md)
   * [02 shell环境的熟悉与使用](/01_linux/Linux_02_shell环境的熟悉与使用.md)

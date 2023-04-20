@@ -290,7 +290,33 @@ while (current) {
 ### 第10章 多处理器调度（高级）
 ### 第11章 关于CPU虚拟化的总结对话
 ### 第12章 关于内存虚拟化的对话
+
+
+
+------
+
+
+
 ### 第13章 抽象：地址空间
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+int main(int argc, char *argv[]) {
+    printf("location of code : %p\n", (void *) main);
+    printf("location of heap : %p\n", (void *) malloc(1));
+    int x = 3;
+    printf("location of stack : %p\n", (void *) &x);
+    return x;
+}
+```
+
+
+
+------
+
+
+
 ### 第14章 插叙：内存操作API
 ### 第15章 机制：地址转换
 ### 第16章 分段

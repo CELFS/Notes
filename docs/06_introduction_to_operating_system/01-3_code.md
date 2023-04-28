@@ -319,7 +319,35 @@ int main(int argc, char *argv[]) {
 
 ### 第14章 插叙：内存操作API
 ### 第15章 机制：地址转换
+
+
+
+
+
+------
+
+
+
 ### 第16章 分段
+
+```pseudocode
+1    // get top 2 bits of 14-bit VA
+2    Segment = (VirtualAddress & SEG_MASK) >> SEG_SHIFT
+3    // now get offset
+4    Offset = VirtualAddress & OFFSET_MASK
+5    if (Offset >= Bounds[Segment])
+6        RaiseException(PROTECTION_FAULT)
+7    else
+8        PhysAddr = Base[Segment] + Offset
+9        Register = AccessMemory(PhysAddr)
+```
+
+
+
+------
+
+
+
 ### 第17章 空闲空间管理
 ### 第18章 分页：介绍
 ### 第19章 分页：快速地址转换（TLB）

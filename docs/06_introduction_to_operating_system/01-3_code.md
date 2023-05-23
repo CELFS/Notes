@@ -349,9 +349,219 @@ int main(int argc, char *argv[]) {
 
 
 ### 第17章 空闲空间管理
+
+```c
+typedef struct header_t { 
+    int size;
+    int magic;
+} header_t;
+```
+
+```c
+void free(void *ptr) {
+    header_t *hptr = (void *)ptr - sizeof(header_t);
+}
+```
+
+* 如何理解 `(void *)ptr` ？
+  * 将一个指向要释放的内存块的指针，转换为 `void` 类型指针。
+  * 定义 `header_t` 类型的 `hptr` 变量，减去自定义结构体 `header_t` 的大小，得到内存块之前的**头部信息的起始地址**。
+* 未理解以下代码的内嵌 `struct` ：
+  * 为什么是得到 8 字节？`node_t` 初始化为 4 + 4 ？
+  * 几种参数分别是？
+
+```C
+typedef struct node_t { 
+    int size;
+    struct node_t *next;
+} node_t;
+```
+
+```C
+// mmap() returns a pointer to a chunk of free space 
+node_t *head = mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_ANON|MAP_PRIVATE, -1, 0);
+head->size = 4096 - sizeof(node_t); 
+head->next = NULL;
+```
+
+
+
+
+
+------
+
+
+
 ### 第18章 分页：介绍
+
+```assembly
+movl <virtual address>, %eax
+```
+
+```assembly
+movl 21, %eax
+```
+
+```C
+VPN     = (VirtualAddress & VPN_MASK) >> SHIFT // VPN_MASK =  0x30 or 110000, SHIFT = 4
+PTEAddr = PageTableBaseRegister + (VPN * sizeof(PTE))
+```
+
+```C
+offset   = VirtualAddress & OFFSET_MASK 
+PhysAddr = (PFN << SHIFT) | offset
+// Extract the VPN from the virtual address
+VPN = (VirtualAddress & VPN_MASK) >> SHIFT
+
+// Form the address of the page-table entry (PTE)
+PTEAddr = PTBR + (VPN * sizeof(PTE))
+
+// Fetch the PTE
+PTE = AccessMemory(PTEAddr)
+
+// Check if process can access the page
+if (PTE.Valid == False)
+    RaiseException(SEGMENTATION_FAULT)
+else if (CanAccess(PTE.ProtectBits) == False)
+    RaiseException(PROTECTION_FAULT)
+else
+    // Access is OK: form physical address and fetch it
+    offset   = VirtualAddress & OFFSET_MASK
+    PhysAddr = (PTE.PFN << PFN_SHIFT) | offset
+    Register = AccessMemory(PhysAddr)
+```
+
+* 一个是右移，一个是左移，可否理解为 “右移裁剪了一部分，得到期望值”，“右移也裁剪了一部分，得到期望值”，两者合并得到最终期望结果？
+* 描述了在每个内存引用上发生的情况的初始协议。无论如何，分页都需要我们执行一个额外的内存引用，以便首先从页表中获取地址转换。开销很大。
+
+```C
+int array[1000];
+...
+for (i = 0; i < 1000; i++) 
+    array[i] = 0;
+```
+
+```C
+prompt> gcc -o array array.c -Wall -O 
+prompt> ./array
+```
+
+* objdump / otool 反汇编（以下需一点 x86 基础）
+
+```assembly
+0x1024 movl $0x0,(%edi,%eax,4) 
+0x1028 incl %eax
+0x102c cmpl $0x03e8,%eax 
+0x1030 jne 0x1024
+```
+
+
+
+
+
+------
+
+
+
 ### 第19章 分页：快速地址转换（TLB）
+
+```C
+VPN = (VirtualAddress & VPN_MASK) >> SHIFT
+(Success, TlbEntry) = TLB_Lookup(VPN)
+if (Success == True)    // TLB Hit
+    if (CanAccess(TlbEntry.ProtectBits) == True)
+        Offset   = VirtualAddress & OFFSET_MASK
+        PhysAddr = (TlbEntry.PFN << SHIFT) | Offset
+        AccessMemory(PhysAddr)
+    else
+        RaiseException(PROTECTION_FAULT)
+else    // TLB Miss
+    PTEAddr = PTBR + (VPN * sizeof(PTE))
+    PTE = AccessMemory(PTEAddr)
+    if (PTE.Valid == False)
+        RaiseException(SEGMENTATION_FAULT)
+    else if (CanAccess(PTE.ProtectBits) == False)
+        RaiseException(PROTECTION_FAULT)
+    else
+        TLB_Insert(VPN, PTE.PFN, PTE.ProtectBits)
+        RetryInstruction()
+```
+
+
+
+
+
+
+
+
+
+------
+
+
+
 ### 第20章 分页：较小的表
+
+```cpp
+SN           = (VirtualAddress & SEG_MASK) >> SN_SHIFT 
+VPN          = (VirtualAddress & VPN_MASK) >> VPN_SHIFT 
+AddressOfPTE = Base[SN] + (VPN * sizeof(PTE))
+```
+
+* 此段代码，可以了解掩码的意义
+
+```cpp
+PDEAddr = PageDirBase +（PDIndex×sizeof（PDE））
+PTEAddr = (PDE.PFN << SHIFT) + (PTIndex * sizeof(PTE))
+```
+
+* 先用一定长度的 VPN 位获取 PDE，再用剩余的 VPN 位获取 PTE
+* 从下面代码可以看到，在任何复杂的多级页表访问发生之前，硬件首先检查TLB。在命中时，物理地址直接形成，而不像之前一样访问页表。只有在TLB未命中时，硬件才需要执行完整的多级查找。在这条路径上，可以看到传统的两级页表的成本：两次额外的内存访问来查找有效的转换映射（第 13  行与 21 行）。
+
+```cpp
+VPN = (VirtualAddress & VPN_MASK) >> SHIFT
+(Success, TlbEntry) = TLB_Lookup(VPN)
+if (Success == True)    // TLB Hit
+    if (CanAccess(TlbEntry.ProtectBits) == True)
+        Offset   = VirtualAddress & OFFSET_MASK
+        PhysAddr = (TlbEntry.PFN << SHIFT) | Offset
+        Register = AccessMemory(PhysAddr)
+    else
+        RaiseException(PROTECTION_FAULT)
+else                  // TLB Miss
+    // first, get page directory entry
+    PDIndex = (VPN & PD_MASK) >> PD_SHIFT
+    PDEAddr = PDBR + (PDIndex * sizeof(PDE))
+    PDE     = AccessMemory(PDEAddr)
+    if (PDE.Valid == False)
+        RaiseException(SEGMENTATION_FAULT)
+    else
+        // PDE is valid: now fetch PTE from page table
+        PTIndex = (VPN & PT_MASK) >> PT_SHIFT
+        PTEAddr = (PDE.PFN << SHIFT) + (PTIndex * sizeof(PTE))
+        PTE     = AccessMemory(PTEAddr)
+        if (PTE.Valid == False)
+            RaiseException(SEGMENTATION_FAULT)
+        else if (CanAccess(PTE.ProtectBits) == False)
+            RaiseException(PROTECTION_FAULT)
+        else
+            TLB_Insert(VPN, PTE.PFN, PTE.ProtectBits)
+            RetryInstruction()
+```
+
+
+
+
+
+
+
+
+
+
+
+------
+
+
+
 ### 第21章 超越物理内存：机制
 ### 第22章 超越物理内存：策略
 ### 第23章 VAX/VMS虚拟内存系统

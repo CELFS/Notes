@@ -563,6 +563,61 @@ else                  // TLB Miss
 
 
 ### 第21章 超越物理内存：机制
+
+```cpp
+VPN = (VirtualAddress & VPN_MASK) >> SHIFT
+(Success, TlbEntry) = TLB_Lookup(VPN)
+if (Success == True)    // TLB Hit
+    if (CanAccess(TlbEntry.ProtectBits) == True)
+        Offset     = VirtualAddress & OFFSET_MASK
+        PhysAddr   = (TlbEntry.PFN << SHIFT) | Offset
+        Register  = AccessMemory(PhysAddr)
+    else
+        RaiseException(PROTECTION_FAULT)
+else                  // TLB Miss
+    PTEAddr = PTBR + (VPN * sizeof(PTE))
+    PTE = AccessMemory(PTEAddr)
+    if (PTE.Valid == False) // page not valid
+        RaiseException(SEGMENTATION_FAULT)
+    else
+        if (CanAccess(PTE.ProtectBits) == False)
+            RaiseException(PROTECTION_FAULT)
+        else if (PTE.Present == True) // page present and valid
+            // assuming hardware-managed TLB
+            TLB_Insert(VPN, PTE.PFN, PTE.ProtectBits)
+            RetryInstruction()
+        else if (PTE.Present == False) // page error process
+            RaiseException(PAGE_FAULT)
+```
+
+* 第13~14，硬件捕获这个非法访问，操作系统陷阱处理程序运行，可能会杀死非法进程。
+
+```cpp
+// 页错误控制流算法（软件）
+PFN = FindFreePhysicalPage()
+if (PFN == -1)               // no free page found
+    PFN = EvictPage()        // run replacement algorithm
+DiskRead(PTE.DiskAddr, pfn) // sleep (waiting for I/O)
+PTE.present = True           // update page table with present
+PTE.PFN     = PFN            // bit and translation (PFN)
+RetryInstruction()           // retry instruction
+```
+
+* 从上图软件控制流中，可以看到为了处理页错误，操作系统大致做了什么。
+  * 首先，操作系统必须为将要换入的页找到一个物理帧，如果没有这样的物理帧，我们将不得不等待交换算法运行，并从内存中踢出一些页，释放帧供这里使用。
+  * 在获得物理帧后，处理程序发出 I/O 请求从交换空间读取页。
+  * 最后，当这个慢操作完成时，操作系统更新页表并重试指令。重试将导致TLB未命中，然后再一次重试时，TLB 命中，此时硬件将能够访问所需的值。
+
+
+
+
+
+
+
+------
+
+
+
 ### 第22章 超越物理内存：策略
 ### 第23章 VAX/VMS虚拟内存系统
 ### 第24章 内存虚拟化总结对话

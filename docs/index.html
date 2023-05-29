@@ -65,7 +65,8 @@
                 },
                 search: {
                     maxAge: 86400000,
-                    paths: ['/', '/docs'],
+                    paths: 'auto',
+                    depth:6,
                     noData: {
                         '/es/': '¡No hay resultados!',
                         '/de-de/': 'Keine Ergebnisse!',
@@ -110,7 +111,7 @@
         <!-- sidebar collapse -->
         <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse@latest/dist/docsify-sidebar-collapse.min.js"></script>
         <!-- search -->
-        <script src="//cdn.jsdelivr.net/npm/docsify@latest/lib/plugins/search.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/docsify@4.11.0/lib/plugins/search.js"></script>
         <!-- word count -->
         <script src="//cdn.jsdelivr.net/npm/docsify-count@latest/dist/countable.min.js"></script>
 

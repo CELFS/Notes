@@ -32,11 +32,44 @@
             .sidebar ul, .sidebar ul li {
                 cursor: pointer;
             }
+            .ant-back-top-button {
+                overflow: hidden;
+                color: #fff;
+                text-align: center;
+                background-color: #00000073;
+                border-radius: 20px;
+                transition: all .3s;
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                font-size: 20px;
+                line-height: 1.6;
+                list-style: none;
+                position: fixed;
+                right: 50px;
+                bottom: 50px;
+                z-index: 10;
+                width: 40px;
+                height: 40px;
+                cursor: pointer;
+            }
         </style>
     </head>
 
     <body>
         <div id="app"></div>
+<!--        <div class="ant-back-top-button"></div>-->
+        <button class="ant-back-top-button" onclick="scrollToTop()">
+            <span>&#10514;</span>
+        </button>
+        <script>
+            function scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        </script>
         <script>
             window.$docsify = {
                 auto2top: true,

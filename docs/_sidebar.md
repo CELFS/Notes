@@ -1,4 +1,4 @@
-* 操作系统导论（在学）
+* 操作系统导论
   * [0.0 操作系统介绍](/06_introduction_to_operating_system/00_概述.md)
   * [1.1 虚拟化（CPU 虚拟化）](/06_introduction_to_operating_system/01-1_虚拟化_CPU.md)
   * [1.2 虚拟化（内存虚拟化）](/06_introduction_to_operating_system/01-2_虚拟化_内存.md)

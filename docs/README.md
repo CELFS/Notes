@@ -18,6 +18,8 @@ Date: 2023/03/09
 
 ### 目录
 
+* 轻量级服务器开发（TinyWebServer）
+  * [探索笔记](/06_TinyWebServer/TinyWebServer.md)
 * MySQL 必知必会
   * [笔记整理](/06_database_mysql/mysql_crash_course.md)
 * 操作系统导论
@@ -177,6 +179,7 @@ docsify serve filename
   - [ ] 可折叠文本框
   - [x] 搜索栏失效（本地调试可行，放到云端失效）
     - [x] 经排查，是引用的 search 模块 JS 文件版本兼容问题
+  - [ ] 图片加载受限于 Git 访问网络，考虑使用图床
 - [ ] 自适应
   - [x] 正文居中、图片居中
   - [x] 自定义导致移动端显示异常（导航栏未自动隐藏，字体过小）

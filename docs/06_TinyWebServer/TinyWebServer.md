@@ -1041,7 +1041,7 @@ bool signal()
       * 返回值：成功（fd就绪个数）、超时（0），错误（-1）
 
     ```cpp
-  #include <sys/epoll.h>
+    #include <sys/epoll.h>
     int epoll_wait(int epfd, struct epoll_event *events, int maxevents, int timeout)
     ```
 
@@ -1056,6 +1056,8 @@ bool signal()
   | 应用程序索引就绪fd |          只返回发生事件fd个数，若需确定具体fd，遍历          | 返回发生事件个数和结构体数组，后者含socket信息，直接处理数组即可 |
   |      工作模式      |                           仅低效LT                           | 高效ET、EPOLLONESHOT（可进一步减少可读、可写、异常事件被触发的次数） |
   |      应用场景      | 若所有fd为活连接，需建立文件系统，红黑树效率低；监听fd数目较小、都较活跃时 | fd数目非常大，成千上万，单位时间只有部分fd就绪，则epoll性能显著 |
+
+  
 
   * ET、LT、EPOLLONESHOT
       * LT（Level Triggered 水平触发模式）：_wait检测——通知——可搁置——再次报告——直到被处理

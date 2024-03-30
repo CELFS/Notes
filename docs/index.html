@@ -136,41 +136,6 @@
             }
         </script>
 
-        <div id="pdf-container"></div>
-
-        <script src="/pdfjs/bulid/pdf.mjs"></script>
-        <script>
-            // 指定工作线程脚本的路径
-            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.js';
-
-            // 获取容器元素
-            var container = document.getElementById('pdf-container');
-
-            // 加载PDF文档
-            pdfjsLib.getDocument('/pdfjs/web/00Task.pdf').promise.then(function(pdf) {
-                // 获取第一页
-                pdf.getPage(1).then(function(page) {
-                    var scale = 1.5;
-                    var viewport = page.getViewport({ scale: scale });
-
-                    // 创建一个<canvas>元素用于显示PDF页面
-                    var canvas = document.createElement('canvas');
-                    var context = canvas.getContext('2d');
-                    canvas.width = viewport.width;
-                    canvas.height = viewport.height;
-
-                    // 将PDF页面渲染到<canvas>元素中
-                    page.render({
-                        canvasContext: context,
-                        viewport: viewport
-                    });
-
-                    // 将<canvas>元素添加到容器中
-                    container.appendChild(canvas);
-                });
-            });
-        </script>
-
         <script src="//cdn.jsdelivr.net/npm/docsify@latest/lib/docsify.min.js"></script>
         <!-- emoji -->
         <script src="//cdn.jsdelivr.net/npm/docsify@latest/lib/plugins/emoji.min.js"></script>

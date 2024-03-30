@@ -1,3 +1,6 @@
+* test
+  * [PDF在线预览组件](/pdfjs/web/00Task.pdf)
+  * [viewer](/pdfjs/web/viewer.html)
 * 轻量级服务器开发（TinyWebServer）
   * [探索笔记](/06_TinyWebServer/TinyWebServer.md)
 * MySQL 必知必会

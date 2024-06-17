@@ -1,4 +1,7 @@
 * [pdf viewer test](/test/viewer.html)
+* C++ 后台服务器开发
+  * [00 Task Ch07~Ch10 总结](/06_cpp_server/00Task.md)
+  * [01 Task Ch11~Ch20 总结](/06_cpp_server/01Task.md)
 * 轻量级服务器开发（TinyWebServer）
   * [探索笔记](/06_TinyWebServer/TinyWebServer.md)
 * MySQL 必知必会

@@ -2,6 +2,8 @@
 * C++ 后台服务器开发
   * [00 Task Ch07~Ch10 总结](/06_cpp_server/00Task.md)
   * [01 Task Ch11~Ch20 总结](/06_cpp_server/01Task.md)
+* [《Qt UI 设计》总结 & 代码实践](/06_qt/01QtBeginner.md)
+* [《Qt 6.0 开发指南》各章总结](/06_qt/00Task.md)
 * 轻量级服务器开发（TinyWebServer）
   * [探索笔记](/06_TinyWebServer/TinyWebServer.md)
 * MySQL 必知必会

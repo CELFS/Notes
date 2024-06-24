@@ -22,7 +22,7 @@ Date：2024/05/25 16:09:47
 * 完成第八章（2024/06/04）
 * 完成第九章（2024/06/12）
 * 开始第十章（2024/06/13）
-* 完成第十章（）
+* 完成第十章（2024/06/24）
 
 
 
@@ -3605,37 +3605,6 @@ $BASE_DIR/tmp/ftpputtest "*" 0.04
 
 
 
-### 00 复盘（C08）
-
-* 概括
-  * 
-* 下载模块
-  * 
-* 上传模块
-  * 
-
-
-
-------
-
-
-
-### 00 信息补充（链接、静态库、动态库、编译）
-
-* 头文件的寻址路径
-  * xx
-  * 为什么直接写头文件名称，会定位到该项目所在目录的同级目录中（VSC 点击头文件跳转发现的）？
-* 链接（课程 PXX，文档 XXX）
-  * 静态库
-  * 动态库
-* 编译
-
-
-
-------
-
-
-
 ## 第十章 基于 TCP 协议的文件传输模块
 
 ### 69 TCP 文件传输的业务需求
@@ -4739,7 +4708,7 @@ bool clientlogin()
 
 ### 74 上传文件（三）
 
-* 代码流程
+* 代码流程（上传文件请求发送，收到服务端确认报文）
 
   ![image-20240616173305854](images/00Task/image-20240616173305854.png)
 
@@ -4977,7 +4946,7 @@ bool _tcpputfiles() {
     while (dir.readdir()) {
 
         // 把文件名、修改时间、文件大小组成报文，发送给对端
-        sformat(strsendbuffer, "<filename>%s</filename><mtime>%s</mtime><szie>%d</size>", 
+        sformat(strsendbuffer, "<filename>%s</filename><mtime>%s</mtime><size>%d</size>", 
                 dir.m_ffilename.c_str(), dir.m_mtime.c_str(), dir.m_filesize);
         
         logfile.write("strsendbuffer = %s\n", strsendbuffer.c_str());
@@ -5240,23 +5209,2068 @@ bool clientlogin()
 
 ### 75 上传文件（四）
 
-* 代码流程
-  * 
+* 代码流程（文件内容发送）
+  * 客户端
+    * 声明发送文件内容函数 `sendfile()` 
+    * 修改文件上传主函数（发送文件内容）
+    * 实现发送内容函数
+  * 服务端
+    * 声明接收内容函数 `recvfile()` 
+    * 修改文件接收主函数（构造服务端文件路径、接收文件内容）
+    * 实现接收文件内容函数
+
+```cpp
+// 把文件的内容发送给对端
+bool sendfile(const string &filename, const int filesize);
+
+// 文件上传的主函数，执行一次文件上传的任务
+bool _tcpputfiles() {
+    /* ... */
+    while (dir.readdir()) {
+        /* ... */
+        // 发送文件内容
+        logfile.write("send %s(%d) ...", dir.m_ffilename.c_str(), dir.m_filesize);
+        if (sendfile(dir.m_ffilename, dir.m_filesize) == true) {
+            logfile << "ok.\n";
+        } else {
+            logfile << "failed.\n"; tcpclient.close(); return false;
+        }
+        /* ... */
+    }
+    return true;
+}
+
+// 把文件的内容发送给对端
+bool sendfile(const string &filename, const int filesize) {
+
+    int onread = 0;         // 每次打算从文件中读取的字节数
+    char buffer[1000];      // 存放读取数据的buffer，buffer的大小可参考硬盘一次读取数据量（4K为宜）
+    int totalbytes = 0;     // 从文件中已读取的字节总数
+    cifile ifile;           // 读取文件的对象
+
+    // 必须以二进制的方式操作文件
+    if (ifile.open(filename, ios::in | ios::binary) == false) return false;
+
+    while (true) {
+        memset(buffer, 0, sizeof(buffer));
+
+        // 从计算本次应该读取的字节数，如果剩余的数据超过 1000 字节，就读 1000 字节
+        if (filesize - totalbytes > 1000) onread = 1000;
+        else onread = filesize - totalbytes;
+
+        // 从文件中读取数据
+        ifile.read(buffer, onread);
+
+        // 把读取到的数据发送给对端
+        if (tcpclient.write(buffer, onread) == false) return false;
+
+        // 计算文件已读取的字节总数，如果已读完，跳出循环
+        totalbytes = totalbytes + onread;
+
+        if (totalbytes == filesize) break;
+    }
+
+    return true;
+}
+```
+
+```cpp
+// 接收文件的内容
+bool recvfile(const string &filename, const string &mtime, int filesize);
+
+void recvfilesmain() {
+    while (true) {
+        // 处理上传文件的请求报文
+        if (strrecvbuffer.find("<filename>") != string::npos) {
+            /* ... */
+            // 接收文件的内容
+            // starg.clientpath = /tmp/client
+            // starg.srvpath = /tmp/server
+            // 客户端的文件名：clientfilename = /tmp/client/aaa/1/txt
+            // 服务端的文件名：serverfilename = /tmp/server/aaa/1/txt
+            string serverfilename;
+            serverfilename = clientfilename;
+            replacestr(serverfilename, starg.clientpath, starg.srvpath);
+
+            logfile.write("recv %s(%d) ...", serverfilename.c_str(), filesize);
+            if (recvfile(serverfilename, mtime, filesize) == true) {
+                logfile << "ok.\n";
+                sformat(strsendbuffer, "<filename>%s</filename><result>ok</result>", clientfilename.c_str());
+            } else {
+                logfile << "failed.\n";
+                sformat(strsendbuffer, "<filename>%s</filename><result>failed</result>", clientfilename.c_str());
+            }
+            /* ... */
+        }
+    }
+}
+
+// 接收文件的内容
+bool recvfile(const string &filename, const string &mtime, int filesize) {
+
+    int totalbytes = 0;     // 已接收文件的总字节数
+    int onread = 0;         // 本次打算接收的字节数
+    char buffer[1000];      // 接收文件内容的缓冲区
+    cofile ofile;           // 写入文件的对象
+
+    // 必须以二进制的方式操作文件
+    if (ofile.open(filename, true, ios::out | ios::binary) == false) return false;
+
+    while (true) {
+
+        memset(buffer, 0, sizeof(buffer));
+
+        // 计算本次应该接收的字节数
+        if (filesize - totalbytes > 1000) onread = 1000;
+        else onread = filesize - totalbytes;
+
+        // 接收文件内容
+        if (tcpserver.read(buffer, onread) == false) return false;
+
+        // 把接收到的内容写入文件
+        ofile.write(buffer, onread);
+
+        // 计算已经接收文件的总字节数，如果文件接收完，跳出循环
+        totalbytes = totalbytes + onread;
+
+        if (totalbytes == filesize) break;
+    }
+
+    ofile.closeandrename();
+
+    // 文件时间用当前时间没有意义，应该与对端的文件时间保持一致
+    setmtime(filename, mtime);
+
+    return true;
+}
+```
+
+* 信息补充
+  * 课程文档 350 小节，实现文件传输功能
+* 疑问
+  * 注意，关闭客户端与关闭TCP连接，是两种不同的行为。
+* BUG
+  * ~~调试发现，本程序运行一次，只能拷贝一个文件到目标目录，但课程中的程序，可以将客户端目录中的所有文件，都上传到服务端的目录。~~ 
+    * 检查发现，这个问题在于我的测试目录 `/tmp/client` 多了一个 `.json` 文件，可能是处理逻辑遇到非法文件类型，导致的提前中断上传。这个问题可以通过加入相关处理逻辑得到解决。
 
 
 
-
+* 2024/06/17 20:25:30 1h6min
 
 ------
 
 
 
 ### 76 同步和异步通讯
-### 77 上传文件（五）
-### 78 下载文件
+
+* 概括
+  * 同步通讯
+    * 发送方在发出报文后，需等待对方的回复，才能发送下一个报文。
+    * 特点：编程简单，效率低
+    * 实现：前面章节的通讯方式，即为同步通讯。
+  
+  ![image-20240618121218816](images/00Task/image-20240618121218816.png)
+  
+  * 异步通讯
+    * 发送方在发出报文后，不必等待对方的回复，继续发送下一个报文。
+    * 特点：效率高，编程复杂
+    * 实现（按批发送与接收，**批处理**）
+      * 多进程（建立 TCP，一个进程发送报文，一个进程接收报文）
+      * 多线程（建立 TCP，一个线程发送报文，一个线程接收报文）
+      * I/O 复用（ `select, poll, epoll` ）
+  
+  ![image-20240618121321093](images/00Task/image-20240618121321093.png)
+  
+  * 注意
+    * 此处讨论的同步与异步，是在通讯层面而言的。
+    * 实际开发中，两种通讯方式都会使用，根据场景与业务的适配情况选择即可。
+* 代码分析
+  * `demo07` 同步通讯客户端程序
+    * 开销：时间主要用于等待
+  * `demo08` 服务端程序
+  * `demo09` 多进程异步通讯客户端程序
+  * 核心：父子进程的分工设计
+      * 子进程（只向服务端发送报文）、父进程（只接收服务端返回的报文）
+  * `demo10` I/O复用异步通讯客户端程序
+  
+
+```cpp
+// 同步通讯客户端程序, demo07.cpp
+#include "/home/celfs/project/engi_cpp/49_project/public/_public.h"
+using namespace idc;
+
+int main(int argc, char *argv[]) {
+
+    if (argc != 3) {
+        printf("Using: ./demo07 IP port\n");
+        printf("Example: ./demo07 192.168.20.150 5005\n");
+        return -1;
+    }
+
+    clogfile logfile;
+    logfile.open("./log/demo07.log");
+
+    ctcpclient tcpclient;
+    if (tcpclient.connect(argv[1], atoi(argv[2])) == false) {
+        logfile.write("tcpclient.connect(%s, %d) failed.\n", argv[1], atoi(argv[2])); return -1;
+    }
+    
+    logfile.write("connect ok.\n");
+
+    string strsendbuffer, strrecvbuffer;
+
+    for (int i = 1; i <= 100; i++) {
+        sformat(strsendbuffer, "这是第 %d 个哲学家", i);
+        logfile.write("%s\n", strsendbuffer.c_str());
+        tcpclient.write(strsendbuffer);     // 向服务端发送报文
+
+        tcpclient.read(strrecvbuffer);      // 等待服务端的回应
+        logfile.write("%s\n", strrecvbuffer.c_str());
+    }
+
+    return 0;
+}
+```
+
+```cpp
+// 服务端程序, demo08.cpp
+#include "/home/celfs/project/engi_cpp/49_project/public/_public.h"
+using namespace idc;
+
+int main(int argc, char *argv[]) {
+
+    if (argc != 2) {
+        printf("Using: ./demo08 port\n");
+        printf("Example: ./demo08 5005\n");
+        return -1;
+    }
+
+    ctcpserver tcpserver;
+    if (tcpserver.initserver(atoi(argv[1])) == false) {
+        cout << "tcpserver.initserver() failed.\n"; return -1;
+    }
+
+    tcpserver.accept();
+
+    string strsendbuffer, strrecvbuffer;
+    while (true) {
+        if (tcpserver.read(strrecvbuffer) == false) break;         // 接收客户端的报文
+
+        sformat(strsendbuffer, "回复: %s", strrecvbuffer.c_str()); // 简单在接收报文加回复二字，返回
+        if (tcpserver.write(strsendbuffer) == false) break;        // 向客户端发送回应报文
+    }
+
+    return 0;
+}
+```
+
+```cpp
+// 多进程异步通讯客户端程序, demo09.cpp
+#include "/home/celfs/project/engi_cpp/49_project/public/_public.h"
+using namespace idc;
+
+int main(int argc, char *argv[]) {
+
+    if (argc != 3) {
+        printf("Using: ./demo09 IP port\n");
+        printf("Example: ./demo09 192.168.20.150 5005\n");
+        return -1;
+    }
+
+    clogfile logfile;
+    logfile.open("./log/demo09.log");
+
+    ctcpclient tcpclient;
+    if (tcpclient.connect(argv[1], atoi(argv[2])) == false) {
+        logfile.write("tcpclient.connect(%s, %d) failed.\n", argv[1], atoi(argv[2])); return -1;
+    }
+    
+    logfile.write("connect ok.\n");
+
+    if (fork() == 0) {
+
+        string strsendbuffer;
+
+        for (int i = 1; i <= 100000; i++) {
+            sformat(strsendbuffer, "这是第 %d 个哲学家", i);
+            logfile.write("%s\n", strsendbuffer.c_str());
+            tcpclient.write(strsendbuffer);     // 向服务端发送报文
+        }
+
+    } else {
+
+        string strrecvbuffer;
+
+        for (int i = 1; i <= 100000; i++) {
+            tcpclient.read(strrecvbuffer);      // 等待服务端的回应
+            logfile.write("%s\n", strrecvbuffer.c_str());
+        }
+        
+    }
 
 
+    return 0;
+}
+```
+
+```cpp
+// I/O复用异步通讯客户端程序, demo10.cpp
+#include "/home/celfs/project/engi_cpp/49_project/public/_public.h"
+using namespace idc;
+
+int main(int argc, char *argv[]) {
+
+    if (argc != 3) {
+        printf("Using: ./demo10 IP port\n");
+        printf("Example: ./demo10 192.168.20.150 5005\n");
+        return -1;
+    }
+
+    clogfile logfile;
+    logfile.open("./log/demo10.log");
+
+    ctcpclient tcpclient;
+    if (tcpclient.connect(argv[1], atoi(argv[2])) == false) {
+        logfile.write("tcpclient.connect(%s, %d) failed.\n", argv[1], atoi(argv[2])); return -1;
+    }
+    
+    logfile.write("connect ok.\n");
+
+    string strsendbuffer, strrecvbuffer;
+
+    int ack = 0; // 已接收回应报文的计数器
+
+    for (int i = 1; i <= 100000; i++) {
+        sformat(strsendbuffer, "这是第 %d 个哲学家", i);
+        logfile.write("%s\n", strsendbuffer.c_str());
+        tcpclient.write(strsendbuffer);     // 向服务端发送报文
+
+        while (tcpclient.read(strrecvbuffer, -1) == true) { // 检查 TCP 的缓冲区中是否有服务端回应报文，超时等待-1，表示不等待
+            logfile.write("%s\n", strrecvbuffer.c_str());
+            ack++;
+        }
+    }
+
+    while (ack < 100000) {
+        if (tcpclient.read(strrecvbuffer) == true) { // 等待服务端回应报文，缺省0
+            logfile.write("%s\n", strrecvbuffer.c_str());
+            ack++;
+        }
+    }
+    
+}
+```
+
+* 疑问
+
+  * VSC 如何查阅所有的重载函数？
+  * 应当先打开日志，还是先连接到客户端？
+    * 个人倾向于，无论是调试阶段还是使用阶段，都优先打开日志（便于记录问题，除非程序十分简单），如果先连接客户端，即使报错信息返回到客户端，也不利于服务端的调试，如今省略日志的写法，只是在程序员能看到两个端信息的阶段，便于调试而已。
+  * 在前面几章的同步通讯当中，多进程的代码是在服务端的，对比本节多进程异步通讯，稍有不同。
+  * **如何理解 I/O 复用的代码？哪部分实现了复用？**上述 `demo10.cpp` 对比三种 I/O 复用方法，更像哪一种？
+    * 梳理
+  * 为什么多进程的效率比 I/O 复用的高一点点？主要差异在哪？如何判断两者的适用场景？
+
+
+
+* 2024/06/17 20:37:28 视频，12min
+* 2024/06/18 13:36:17 代码，1h28min
 
 ------
 
+
+
+### 77 上传文件（五）
+
+* 代码流程（将文件上传改为异步通讯）
+  * 添加 I/O 计数 `delayed` 
+  * 注释部分日志
+  * 创建千个测试文件（统计 `ls */|wc` ）
+  * 调试
+  * 细节补充
+    * 标记位（进程不休眠，若上传过程产生了新文件，则可尽快上传）
+    * 进程心跳（客户端、服务端；若运行可能超时，就更新心跳）
+    * 启用服务端多进程代码
+    * 修改客户端、服务端的接收报文超时时间
+  * 备份程序
+
+```cpp
+// 基于 TCP 协议的文件上传模块
+#include "/home/celfs/project/engi_cpp/49_project/public/_public.h"
+using namespace idc;
+
+// 程序运行的参数结构体
+struct st_arg {
+    int  clienttype;         // 客户端类型，1-上传文件；2-下载文件，本程序固定填1
+    char ip[31];             // 服务端的 IP 地址
+    int  port;               // 服务端的端口
+    char clientpath[256];    // 本地文件存放的目录 /data /data/dir1 /data/dir2
+    int  ptype;              // 文件上传成功后，本地文件的处理方式：1-删除文件；2-移动到备份目录
+    char clientpathbak[256]; // 文件上传成功后，本地文件的备份根目录，当 ptype == 2 时有效
+    bool andchild;           // 是否上传 clientpath 目录下各级子目录的文件
+    char matchname[256];     // 待上传文件名的匹配规则。如 "*.TXT,*.XML"
+    char srvpath[256];       // 服务端文件存放的根目录，控制是否递归访问子目录
+    int  timetvl;            // 扫描本地目录文件的时间间隔（执行文件上传任务的时间间隔），单位：秒
+    int  timeout;            // 进程心跳的超时时间
+    char pname[51];          // 进程名，建议用 “tcpputfiles_后缀” 的方式
+} starg;
+
+// 帮助文档
+void _help();
+
+// 把 xml 解析到参数 starg 结构中
+bool _xmltoarg(const char *strxmlbuffer);
+
+clogfile logfile;       // 创建日志对象
+ctcpclient tcpclient;   // 创建 TCP 通讯的客户端对象
+
+// 程序退出信号2、15的处理函数
+void EXIT(int sig);
+
+bool activetest();      // 心跳
+
+string strsendbuffer;   // 发送报文的 buffer
+string strrecvbuffer;   // 接收报文的 buffer
+
+// 向服务端发送登录报文，把客户端程序的参数传递给服务端
+bool login(const char *argv);
+
+// 文件上传的主函数，执行一次文件上传的任务
+bool _tcpputfiles(bool &bcontinue);
+
+// 处理传输文件的响应报文（删除或转存本地的文件）
+bool ackmessage(const string &strrecvbuffer);
+
+// 把文件的内容发送给对端
+bool sendfile(const string &filename, const int filesize);
+
+cpactive pactive; // 进程心跳
+
+int main(int argc, char *argv[]) {
+
+    if (argc != 3) {
+        _help();
+        return -1;
+    }
+
+    // 关闭全部的信号和输入输出。
+    // 设置信号,在shell状态下可用 "kill + 进程号" 正常终止些进程。
+    // 但请不要用 "kill -9 +进程号" 强行终止。
+    // 在网络通讯程序中，一般不关IO，因为某些函数可能会往1和2中输出信息
+    // 如果关了1和2，那么1和2会被socket重用，向1和2输出的信息会发送到网络中。
+    // closeioandsignal(true);
+    signal(SIGINT, EXIT); signal(SIGTERM, EXIT);
+
+    // 打开日志文件
+    if (logfile.open(argv[1]) == false) {
+        printf("打开日志文件失败（%s）。\n",argv[1]); return -1;
+    }
+
+    // 解析 xml，得到程序运行的参数
+    if (_xmltoarg(argv[2]) == false) return -1;
+
+    pactive.addpinfo(starg.timeout, starg.pname); // 把进程的心跳信息写入共享内存
+
+    // 向服务端发起连接请求
+    if (tcpclient.connect(starg.ip, starg.port) == false) {
+        logfile.write("tcpclient.connect(%s, %d) failed.\n", starg.ip, starg.port); EXIT(-1);
+    }
+
+    if (login(argv[2]) == false) { logfile.write("login() failed.\n"); EXIT(-1); }
+
+    bool bcontinue = true; // 如果调用 _tcpputfiles() 发送了文件，bcontinue 为 true，否则为 false，初始化为 true
+
+    while (true) {
+
+        // 调用文件上传的主函数，执行一次文件上传的任务
+        if (_tcpputfiles(bcontinue) == false) { logfile.write("_tcpputfiles() failed.\n"); EXIT(-1); }
+
+        // 如果刚才执行文件上传任务的时候上传了文件，那么，在上传的过程中，可能有新的文件陆续已生成
+        // 为保证文件被尽快上传，进程不休眠（只有在刚才执行文件上传任务的时候没有上传文件的情况才休眠）
+        if (bcontinue == false) {
+            sleep(starg.timetvl);
+
+            // 发送心跳报文
+            if (activetest() == false) break;
+        }
+
+        pactive.uptatime();
+    }
+
+    EXIT(0);
+}
+
+// 心跳
+bool activetest() {
+
+    strsendbuffer = "<activetest>ok</activetest>";
+    // xxxxxxxxxx logfile.write("发送：%s\n", strsendbuffer.c_str());
+    if (tcpclient.write(strsendbuffer) == false) return false;      // 向服务端发送请求报文
+
+    if (tcpclient.read(strrecvbuffer, 10) == false) return false;   // 接收服务端的回应报文
+    // xxxxxxxxxx logfile.write("接收：%s\n", strsendbuffer.c_str());
+
+    // 心跳机制的代码可简单化处理，只需要收到对端的回应就行了，不必判断回应的内容
+
+    return true;
+}
+
+void EXIT(int sig) {
+
+    logfile.write("程序退出，sig = %d\n\n", sig);
+
+    exit(0);
+}
+
+void _help() {
+
+    string base_bin = "/home/celfs/project/engi_cpp/49_project";
+
+    printf("\n");
+    printf("Using: %s/tools/bin/tcpputfiles logfilename xmlbuffer\n\n", base_bin.c_str());
+    printf(
+        "Example: %s/tools/bin/procctl 20 %s/tools/bin/tcpputfiles %s/log/idc/tcpputfiles_surfdata.log "\
+        "\"<ip>192.168.20.150</ip><port>5005</port>"\
+        "<clientpath>%s/tmp/client</clientpath><ptype>1</ptype>"\
+        "<srvpath>%s/tmp/server</srvpath>"\
+        "<andchild>true</andchild><matchname>*.xml,*.txt,*.csv</matchname><timetvl>10</timetvl>"\
+        "<timeout>50</timeout><pname>tcpputfiles_surfdata</pname>\"\n\n", 
+        base_bin.c_str(), base_bin.c_str(), base_bin.c_str(), base_bin.c_str(), base_bin.c_str()
+    ); 
+
+    printf("本程序是数据中心的公共功能模块，采用tcp协议把文件上传给服务端。\n");
+    printf("logfilename   本程序运行的日志文件。\n");
+    printf("xmlbuffer     本程序运行的参数，如下：\n");
+    printf("ip            服务端的IP地址。\n");
+    printf("port          服务端的端口。\n");
+    printf("ptype         文件上传成功后的处理方式：1-删除文件；2-移动到备份目录。\n");
+    printf("clientpath    本地文件存放的根目录。\n");
+    printf("clientpathbak 文件成功上传后，本地文件备份的根目录，当ptype==2时有效。\n");
+    printf("andchild      是否上传clientpath目录下各级子目录的文件，true-是；false-否，缺省为false。\n");
+    printf("matchname     待上传文件名的匹配规则，如\"*.TXT,*.XML\"\n");
+    printf("srvpath       服务端文件存放的根目录。\n");
+    printf("timetvl       扫描本地目录文件的时间间隔，单位：秒，取值在1-30之间。\n");
+    printf("timeout       本程序的超时时间，单位：秒，视文件大小和网络带宽而定，建议设置50以上。\n");
+    printf("pname         进程名，尽可能采用易懂的、与其它进程不同的名称，方便故障排查。\n\n");
+}
+
+bool _xmltoarg(const char *strxmlbuffer) {
+
+    memset(&starg, 0, sizeof(struct st_arg));
+
+    getxmlbuffer(strxmlbuffer, "ip", starg.ip);
+    if (strlen(starg.ip) == 0) { logfile.write("ip is null.\n"); return false; }
+
+    getxmlbuffer(strxmlbuffer, "port", starg.port);
+    if (starg.port == 0) { logfile.write("port is null.\n"); return false; }
+
+    getxmlbuffer(strxmlbuffer, "ptype", starg.ptype);
+    if ((starg.ptype != 1) && (starg.ptype != 2)) { logfile.write("ptype not in (1, 2).\n"); return false; }
+
+    getxmlbuffer(strxmlbuffer, "clientpath", starg.clientpath);
+    if (strlen(starg.clientpath) == 0) { logfile.write("clientpath is null.\n"); return false; }
+
+    getxmlbuffer(strxmlbuffer, "clientpathbak", starg.clientpathbak);
+    if ((starg.ptype == 2) && (strlen(starg.clientpathbak) == 0)) { logfile.write("clientpathbak is null.\n"); return false; }
+
+    getxmlbuffer(strxmlbuffer, "andchild", starg.andchild);
+
+    getxmlbuffer(strxmlbuffer, "matchname", starg.matchname);
+    if (strlen(starg.matchname) == 0) { logfile.write("matchname is null.\n"); return false; }
+
+    getxmlbuffer(strxmlbuffer, "srvpath", starg.srvpath);
+    if (strlen(starg.srvpath) == 0) { logfile.write("srvpath is null.\n"); return false; }
+
+    getxmlbuffer(strxmlbuffer, "timetvl", starg.timetvl);
+    if (starg.timetvl == 0) { logfile.write("timetvl is null.\n"); return false; }
+
+    // 扫描本地目录文件的时间间隔（执行上传任务的时间间隔），单位：秒
+    // starg.timetvl没有必要超过30秒
+    if (starg.timetvl > 30) starg.timetvl = 30;
+
+    // 进程心跳的超时时间，一定要大于 starg.timetvl
+    getxmlbuffer(strxmlbuffer, "timeout", starg.timeout);
+    if (starg.timeout == 0) { logfile.write("timeout is null.\n"); return false; }
+    if (starg.timeout <= starg.timetvl) { logfile.write("starg.timeout(%d) <= starg.timetvl(%d)\n", starg.timeout, starg.timetvl); return false; }
+
+    getxmlbuffer(strxmlbuffer, "pname", starg.pname, 50);
+    //if (strlen(starg.pname) == 0) { logfile.write("pname is null.\n"); return false; }
+
+    return true;
+}
+
+// 向服务端发送登录报文，把客户端程序的参数传递给服务端
+bool login(const char *argv) {
+
+    sformat(strsendbuffer, "%s<clienttype>1</clienttype>", argv);
+    // xxxxxxxxxx logfile.write("发送：%s\n", strsendbuffer.c_str());
+    if (tcpclient.write(strsendbuffer) == false) return false;      // 向服务端发送请求报文
+
+    if (tcpclient.read(strrecvbuffer, 10) == false) return false;  // 接收服务端的回应报文
+    // xxxxxxxxxx logfile.write("接收：%s\n", strrecvbuffer.c_str());
+
+    logfile.write("登录(%s:%d)成功。\n", starg.ip, starg.port);
+
+    return true;
+}
+
+// 文件上传的主函数，执行一次文件上传的任务
+bool _tcpputfiles(bool &bcontinue) {
+
+    bcontinue = false;
+
+    cdir dir;
+
+    // 打开 starg.client 目录
+    if (dir.opendir(starg.clientpath, starg.matchname, 10000, starg.andchild) == false) {
+        logfile.write("dir.opendir(%s) failed.\n", starg.clientpath); return false;
+    }
+
+    int delayed = 0; // 未收到对端确认报文的文件数量，发送了一个文件就加1，接收了一个回应就减1
+
+    // 遍历目录中的每个文件
+    while (dir.readdir()) {
+    
+        bcontinue = true;
+
+        // 把文件名、修改时间、文件大小组成报文，发送给对端
+        sformat(strsendbuffer, "<filename>%s</filename><mtime>%s</mtime><size>%d</size>", 
+                dir.m_ffilename.c_str(), dir.m_mtime.c_str(), dir.m_filesize);
+        
+        // xxxxxxxxxx logfile.write("strsendbuffer = %s\n", strsendbuffer.c_str());
+        if (tcpclient.write(strsendbuffer) == false) {
+            logfile.write("tcpclien.write() failed.\n"); return false;
+        }
+
+        // 发送文件内容
+        logfile.write("send %s(%d) ...", dir.m_ffilename.c_str(), dir.m_filesize);
+        if (sendfile(dir.m_ffilename, dir.m_filesize) == true) {
+            logfile << "ok.\n";
+            delayed++;
+        } else {
+            logfile << "failed.\n"; tcpclient.close(); return false;
+        }
+
+        pactive.uptatime();
+
+        while (delayed > 0) {
+            // 接收服务端的确认报文
+            if (tcpclient.read(strrecvbuffer, -1) == false) break;
+            // xxxxxxxxxx logfile.write("strrecvbuffer1 = %s\n", strrecvbuffer.c_str());
+
+            // 处理服务端的确认报文（删除本地文件或把本地文件移动到备份目录）
+            ackmessage(strrecvbuffer);
+        }
+    }
+
+    // 继续接收对端的确认报文
+    while (delayed > 0) {
+        if (tcpclient.read(strrecvbuffer, 10) == false) break;
+        // xxxxxxxxxx logfile.write("strrecvbuffer2 = %s\n", strrecvbuffer.c_str());
+
+        // 处理传输文件的响应报文（删除或转存本地的文件）
+        delayed--;
+        ackmessage(strrecvbuffer);
+    }
+
+    return true;
+}
+
+// 把文件的内容发送给对端
+bool sendfile(const string &filename, const int filesize) {
+
+    int onread = 0;         // 每次打算从文件中读取的字节数
+    char buffer[1000];      // 存放读取数据的buffer，buffer的大小可参考硬盘一次读取数据量（4K为宜）
+    int totalbytes = 0;     // 从文件中已读取的字节总数
+    cifile ifile;           // 读取文件的对象
+
+    // 必须以二进制的方式操作文件
+    if (ifile.open(filename, ios::in | ios::binary) == false) return false;
+
+    while (true) {
+        memset(buffer, 0, sizeof(buffer));
+
+        // 从计算本次应该读取的字节数，如果剩余的数据超过 1000 字节，就读 1000 字节
+        if (filesize - totalbytes > 1000) onread = 1000;
+        else onread = filesize - totalbytes;
+
+        // 从文件中读取数据
+        ifile.read(buffer, onread);
+
+        // 把读取到的数据发送给对端
+        if (tcpclient.write(buffer, onread) == false) { return false; }
+        // logfile.write("tcpclient.write() buffer is: %s\n", buffer); // 测试发现，发送的数据正常，说明接收数据有问题
+
+        // 计算文件已读取的字节总数，如果已读完，跳出循环
+        totalbytes = totalbytes + onread;
+
+        if (totalbytes == filesize) break;
+    }
+
+    return true;
+}
+
+// 处理传输文件的响应报文（删除或转存本地的文件）
+bool ackmessage(const string &strrecvbuffer) {
+
+    // <filename>/tmp/client/1.txt</filename><result>ok</result>
+    string filename;    // 本地文件名
+    string result;      // 对端接收文件的结果
+    getxmlbuffer(strrecvbuffer, "filename", filename);
+    getxmlbuffer(strrecvbuffer, "result", result);
+
+    // 如果服务端接收文件不成功，直接返回（下次执行文件传输任务时将会重传）
+    if (result != "ok") return true;
+
+    // 如果 starg.ptype == 1，删除文件
+    if (starg.ptype == 1) {
+        if (remove(filename.c_str()) != 0) { logfile.write("remove(%s) failed.\n", filename.c_str()); return false; }
+    }
+
+    // 如果 starg.ptype == 2，移动文件到备份目录
+    if (starg.ptype == 2) {
+        // 
+        string bakfilename = filename;
+        replacestr(bakfilename, starg.clientpath, starg.clientpathbak, false); // 注意，第四个参数一定填 false
+        if (renamefile(filename, bakfilename) == false) {
+            logfile.write("renamefile(%s, %s) failed.\n", filename.c_str(), bakfilename.c_str()); return false;
+        }
+    }
+
+    return true;
+}
+```
+
+```cpp
+#include "/home/celfs/project/engi_cpp/49_project/public/_public.h"
+using namespace idc;
+
+// 程序运行的参数结构体。
+struct st_arg
+{
+    int  clienttype;           // 客户端类型，1-上传文件；2-下载文件，本程序固定填1。
+    char ip[31];               // 服务端的IP地址。
+    int  port;                 // 服务端的端口。
+    char clientpath[256];      // 本地文件存放的根目录。 /data /data/aaa /data/bbb
+    int  ptype;                // 文件上传成功后本地文件的处理方式：1-删除文件；2-移动到备份目录。
+    char clientpathbak[256];   // 文件成功上传后，本地文件备份的根目录，当ptype==2时有效。
+    bool andchild;             // 是否上传clientpath目录下各级子目录的文件，true-是；false-否。
+    char matchname[256];       // 待上传文件名的匹配规则，如"*.TXT,*.XML"。
+    char srvpath[256];         // 服务端文件存放的根目录。/data1 /data1/aaa /data1/bbb
+    int  timetvl;              // 扫描本地目录文件的时间间隔（执行文件上传任务的时间间隔），单位：秒。 
+    int  timeout;              // 进程心跳的超时时间。
+    char pname[51];            // 进程名，建议用"tcpputfiles_后缀"的方式。
+} starg;
+
+clogfile logfile;        // 服务程序的运行日志
+ctcpserver tcpserver;    // 创建tcp通讯的服务端对象
+
+void FathEXIT(int sig);  // 父进程退出函数
+void ChldEXIT(int sig);  // 子进程退出函数
+
+// 处理登录客户端的登录报文。
+bool clientlogin();
+
+// 上传文件的主函数
+void recvfilesmain();
+
+string strsendbuffer;    // 发送报文的buffer
+string strrecvbuffer;    // 接收报文的buffer
+
+// 接收文件的内容
+bool recvfile(const string &filename, const string &mtime, int filesize);
+
+cpactive pactive; // 进程心跳
+
+int main(int argc, char *argv[]) {
+
+    if (argc != 3) {
+        printf("Using:./fileserver port logfile\n");
+        printf("Example:./fileserver 5005 /home/celfs/project/engi_cpp/49_project/log/idc/fileserver.log\n"); 
+        printf("         /home/celfs/project/engi_cpp/49_project/tools/bin/procctl 10 /home/celfs/project/engi_cpp/49_project/tools/bin/fileserver 5005 /home/celfs/project/engi_cpp/49_project/log/idc/fileserver.log\n\n\n"); 
+        return -1;
+    }
+
+    // 关闭全部的信号和输入输出。
+    // 设置信号,在shell状态下可用 "kill + 进程号" 正常终止些进程
+    // 但请不要用 "kill -9 +进程号" 强行终止
+    //closeioandsignal(false); 
+    signal(SIGINT, FathEXIT); signal(SIGTERM, FathEXIT);
+
+    if (logfile.open(argv[2]) == false) {
+        printf("logfile.open(%s) failed.\n", argv[2]); return -1;
+    }
+
+    // 服务端初始化。
+    if (tcpserver.initserver(atoi(argv[1]))==false) {
+      logfile.write("tcpserver.initserver(%s) failed.\n",argv[1]); return -1;
+    }
+
+    while (true) {
+
+        // 等待客户端的连接请求
+        if (tcpserver.accept() == false) {
+            logfile.write("tcpserver.accept() failed.\n"); FathEXIT(-1);
+        }
+
+        logfile.write("客户端（%s）已连接。\n", tcpserver.getip());
+
+        // 不使用多进程时，可便于 GDB 调试
+        if (fork() > 0) { tcpserver.closeclient(); continue; }   // 父进程继续回到Accept()
+
+        // 子进程重新设置退出信号
+        signal(SIGINT, ChldEXIT); signal(SIGTERM, ChldEXIT);
+
+        tcpserver.closelisten();
+
+        // 子进程与客户端进行通讯，处理业务。
+
+        // 处理登录客户端的登录报文。
+        if (clientlogin() == false) ChldEXIT(-1);
+
+        // 把进程心跳信息写入共享内存（每个子进程都有自己的心跳）
+        pactive.addpinfo(starg.timeout, starg.pname);
+
+        // 如果starg.clienttype == 1，调用上传文件的主函数。
+        if (starg.clienttype == 1)  recvfilesmain();  
+
+        // 如果 starg.clienttype == 2，调用下载文件的主函数。
+        // if (starg.clienttype == 2) sendfilesmain();
+
+        ChldEXIT(0);
+    }
+}
+
+void FathEXIT(int sig) {
+
+    // 以下代码是为了防止信号处理函数在执行的过程中被信号中断
+    signal(SIGINT, SIG_IGN); signal(SIGTERM, SIG_IGN);
+
+    logfile.write("父进程退出，sig = %d。\n", sig);
+
+    tcpserver.closelisten();    // 关闭监听的socket
+
+    kill(0, 15);     // 通知全部的子进程退出
+
+    exit(0);
+
+}
+
+void ChldEXIT(int sig) {
+
+    // 以下代码是为了防止信号处理函数在执行的过程中被信号中断
+    signal(SIGINT, SIG_IGN); signal(SIGTERM, SIG_IGN);
+
+    logfile.write("子进程退出，sig = %d。\n", sig);
+
+    tcpserver.closeclient();    // 关闭客户端的socket
+
+    exit(0);
+
+}
+
+// 上传文件的主函数
+void recvfilesmain() {
+
+    while (true) {
+
+        pactive.uptatime(); // 只需此处一个地方更新心跳
+
+        // 接收客户端的报文
+        if (tcpserver.read(strrecvbuffer, starg.timetvl + 10) == false) {
+            logfile.write("tcpserver.read() failed.\n"); return;
+        }
+        // xxxxxxxxxx logfile.write("strrecvbuffer = %s\n", strrecvbuffer.c_str());
+
+        // 处理心跳报文
+        if (strrecvbuffer == "<activetest>ok</activetest>") {
+
+            strsendbuffer = "ok.";
+            // xxxxxxxxxx logfile.write("strsendbuffer = %s\n", strsendbuffer.c_str());
+            if (tcpserver.write(strsendbuffer) == false) {
+                logfile.write("tcpserver.write() failed.\n"); return;
+            }
+        }
+
+        // 处理上传文件的请求报文
+        if (strrecvbuffer.find("<filename>") != string::npos) {
+            // 解析上传文件请求报文的 xml
+            string clientfilename;  // 对端的文件名
+            string mtime;           // 文件的时间
+            int filesize = 0;       // 文件大小
+            getxmlbuffer(strrecvbuffer, "filename", clientfilename);
+            getxmlbuffer(strrecvbuffer, "mtime", mtime);
+            getxmlbuffer(strrecvbuffer, "size", filesize);
+            // logfile.write("start --> strrecvbuffer is :%s\n", strrecvbuffer.c_str());// aaaaaa
+
+            // 接收文件的内容
+            // starg.clientpath = /tmp/client
+            // starg.srvpath = /tmp/server
+            // 客户端的文件名：clientfilename = /tmp/client/aaa/1/txt
+            // 服务端的文件名：serverfilename = /tmp/server/aaa/1/txt
+            string serverfilename;
+            serverfilename = clientfilename;
+            replacestr(serverfilename, starg.clientpath, starg.srvpath, false);
+            // logfile.write("filename is: %s\n", serverfilename.c_str());// aaaaaa
+
+            logfile.write("recv %s(%d) ...", serverfilename.c_str(), filesize);
+            if (recvfile(serverfilename, mtime, filesize) == true) {
+                logfile << "ok.\n";
+                sformat(strsendbuffer, "<filename>%s</filename><result>ok</result>", clientfilename.c_str());
+                // logfile << "ok --> strsendbuffer is : " + strsendbuffer + " \n";// aaaaaa
+                // logfile.write("ok --> strsendbuffer is :%s\n", strsendbuffer.c_str());// aaaaaa
+            } else {
+                logfile << "failed.\n";
+                sformat(strsendbuffer, "<filename>%s</filename><result>failed</result>", clientfilename.c_str());
+                // logfile.write("failed --> strsendbuffer is :%s\n", strsendbuffer.c_str());// aaaaaa
+            }
+
+            // 假设成功的接收了文件的内容，拼接确认报文的内容
+            // sformat(strsendbuffer, "<filename>%s</filename><result>ok</result>", clientfilename.c_str());
+
+            // 把确认报文返回给对端
+            // xxxxxxxxxx logfile.write("back to strsendbuffer = %s\n", strsendbuffer.c_str());
+            if (tcpserver.write(strsendbuffer) == false) {
+                logfile.write("tcpserver.write() failed.\n"); return;
+            }
+        }
+    }
+
+}
+
+// 接收文件的内容
+bool recvfile(const string &filename, const string &mtime, int filesize) {
+
+    int totalbytes = 0;     // 已接收文件的总字节数
+    int onread = 0;         // 本次打算接收的字节数
+    char buffer[1000];      // 接收文件内容的缓冲区
+    cofile ofile;           // 写入文件的对象
+
+    // 必须以二进制的方式操作文件
+    if (ofile.open(filename, true, ios::out | ios::binary) == false) return false;
+
+    while (true) {
+
+        memset(buffer, 0, sizeof(buffer));
+
+        // 计算本次应该接收的字节数
+        if (filesize - totalbytes > 1000) onread = 1000;
+        else onread = filesize - totalbytes;
+
+        // 接收文件内容
+        if (tcpserver.read(buffer, onread) == false) return false;
+
+        // 把接收到的内容写入文件
+        ofile.write(buffer, onread);
+        // logfile.write("ofile.write(buffer, onread) is: %s (%d)\n", buffer, onread);// aaaaaa
+
+        // 计算已经接收文件的总字节数，如果文件接收完，跳出循环
+        totalbytes = totalbytes + onread;
+
+        if (totalbytes == filesize) break;
+    }
+
+    ofile.closeandrename();
+
+    // 文件时间用当前时间没有意义，应该与对端的文件时间保持一致
+    idc::setmtime(filename, mtime);
+
+    return true;
+}
+
+// 处理登录客户端的登录报文。
+bool clientlogin()
+{
+    // 接收客户端的登录报文。
+    if (tcpserver.read(strrecvbuffer, 10) == false)
+    {
+        logfile.write("tcpserver.read() failed.\n"); return false;
+    }
+    // xxxxxxxxxx logfile.write("strrecvbuffer = %s\n", strrecvbuffer.c_str());
+
+    // 解析客户端登录报文，不需要对参数做合法性判断，客户端已经判断过了。
+    memset(&starg, 0, sizeof(struct st_arg));
+    getxmlbuffer(strrecvbuffer,"clienttype", starg.clienttype);
+    getxmlbuffer(strrecvbuffer,"clientpath", starg.clientpath);
+    getxmlbuffer(strrecvbuffer,"srvpath", starg.srvpath);
+
+    getxmlbuffer(strrecvbuffer,"timetvl",starg.timetvl);        // 执行任务的周期。
+    getxmlbuffer(strrecvbuffer,"timeout",starg.timeout);     // 进程超时的时间。
+    getxmlbuffer(strrecvbuffer,"pname",starg.pname,50);    // 进程名。
+
+    // 为什么要判断客户端的类型？不是只有1和2吗？ 防止非法的连接请求。
+    if ( (starg.clienttype != 1) && (starg.clienttype != 2) )
+        strsendbuffer = "failed";
+    else
+        strsendbuffer = "ok";
+
+    if (tcpserver.write(strsendbuffer) == false)
+    {
+        logfile.write("tcpserver.write() failed.\n"); return false;
+    }
+
+    logfile.write("%s login %s.\n", tcpserver.getip(), strsendbuffer.c_str());
+
+    return true;
+}
+```
+
+* 经验
+  
+  * 注释代码，可加入特定前缀，便于查找并取消注释。例如使用 `// xxxxxxxxxx` （统一为十个 `x` ）进行注释，需要取消时，可考虑一键替换，也可考虑查找字符串后，按需取消注释。
+  * 查看端口状态
+    * `ss | grep port` 
+    * `netstat` 
+  
+* 疑问
+  * 为何已经用 `delayed > 0` 来界定了接收服务端确认报文后，还要在循环外继续接收对端的确认报文？
+  * 为什么在内层循环不使用 `delayed--` 而在外层循环使用？
+  * 为什么一个 `delayed` 就能实现 I/O 复用的异步通讯？
+  * ~~为什么调试时，客户端报文有文件发送日志，但实际文件并没有发送到服务的的目录？~~（详见 BUG）
+  * 日志注释的原则是什么？哪些是必要的，哪些是不必要的？
+    * 往来的报文
+* 如何理解把进程心跳信息写入共享内存的添加时机？
+  
+* BUG
+
+  * ~~1）强制终止服务端，再次运行，报错 `'std::length_error'`~~ 
+    * 等待程序超时，再次运行，问题复现
+    * 多次重新运行，问题暂时消失
+    * 重新编译，问题暂时消失
+  * ~~推测~~ 
+    * `5005` 端口问题
+    * 某个处理函数参数问题
+    * 目录文件含空格，导致解析错误
+
+  ```cpp
+  (gdb) run
+  Starting program: /home/celfs/project/engi_cpp/49_project/tools/bin/fileserver 5005 /home/celfs/project/engi_cpp/49_project/log/idc/fileserver.log
+  terminate called after throwing an instance of 'std::length_error'
+    what():  basic_string::_M_replace_aux
+  
+  Program received signal SIGABRT, Aborted.
+  __GI_raise (sig=sig@entry=6)
+      at ../sysdeps/unix/sysv/linux/raise.c:50
+  50      ../sysdeps/unix/sysv/linux/raise.c: No such file or directory.
+  (gdb) backtrace
+  #0  __GI_raise (sig=sig@entry=6)
+      at ../sysdeps/unix/sysv/linux/raise.c:50
+  #1  0x00007ffff7b5e859 in __GI_abort () at abort.c:79
+  #2  0x00007ffff7df7ee6 in ?? ()
+     from /lib/x86_64-linux-gnu/libstdc++.so.6
+  #3  0x00007ffff7e09f8c in ?? ()
+     from /lib/x86_64-linux-gnu/libstdc++.so.6
+  #4  0x00007ffff7e09ff7 in std::terminate() ()
+     from /lib/x86_64-linux-gnu/libstdc++.so.6
+  #5  0x00007ffff7e0a258 in __cxa_throw ()
+     from /lib/x86_64-linux-gnu/libstdc++.so.6
+  #6  0x00007ffff7dfb211 in std::__throw_length_error(char const*) ()
+     from /lib/x86_64-linux-gnu/libstdc++.so.6
+  #7  0x00007ffff7ead59b in std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_replace_aux(unsigned long, unsig
+  --Type <RET> for more, q to quit, c to continue without paging--c
+  ned long, unsigned long, char) () from /lib/x86_64-linux-gnu/libstdc++.so.6
+  #8  0x0000555555560ab1 in idc::tcpread (sockfd=5, buffer="<filename>/home/celfs/project/engi_cpp/49_project/tmp/client/eee/SURF_ZH_20240609172000_27469.csv</filename><mtime>20240620233315</mtime><szie>53524</size>", itimeout=60) at /home/celfs/project/engi_cpp/49_project/public/_public.cpp:1475
+  #9  0x000055555556069a in idc::ctcpserver::read (this=0x555555571740 <tcpserver>, buffer="<filename>/home/celfs/project/engi_cpp/49_project/tmp/client/eee/SURF_ZH_20240609172000_27469.csv</filename><mtime>20240620233315</mtime><szie>53524</size>", itimeout=60) at /home/celfs/project/engi_cpp/49_project/public/_public.cpp:1354
+  #10 0x0000555555559806 in recvfilesmain () at fileserver.cpp:128
+  #11 0x00005555555596ab in main (argc=3, argv=0x7fffffffdf38) at fileserver.cpp:86
+  (gdb) quit
+  ```
+
+  ```cpp
+  celfs@ub cpp % /home/celfs/project/engi_cpp/49_project/tools/bin/fileserver 5005 /home/celfs/project/engi_cpp/49_project/log/idc/fileserver.log
+  terminate called after throwing an instance of 'std::length_error'
+    what():  basic_string::_M_replace_aux
+  [1]    7495 abort      /home/celfs/project/engi_cpp/49_project/tools/bin/fileserver 5005 
+  ```
+
+  * ~~2）服务端仅文件夹 `eee` 有文件更新，其余若干客户端上传的文件，仅有客户端日志记录（提示发送成功）~~ 
+    * 这个 bug 可能导致了第一个 bug
+  * ~~3）一次运行，只上传了一个文件~~ 
+    * 清空了 `client` 文件，重新复制文件夹内容（xml 文件在前），重新运行，问题解决（调试方式为删除客户端文件）
+  * ~~4）拷贝得到的文件，没有任何内容~~ 
+    * 可能服务端接受文件出错
+    * 可能客户端发送文件出错
+    * 可能二进制解析、写入文件失败
+  * ~~定位到 `sformat()` 函数，涉及到编译警告~~ 
+    * 经测试，并不是这个问题；
+    * 又犯了一个低级错误，格式化字符串，遗漏了格式化占位符！引以为戒！
+  * 服了，结果是一个非常低级的错误，导致的长时间 debug
+    * 这是一个可以毫无价值，但又可以价值连城的错误。一个字符的不严谨，导致的深刻教训，原本可以用这几个小时做更多有意义的事情，结果自以为逻辑有问题，不断 debug，追溯到源代码，然而方向错了。
+    * `<size>%d</size>` 写错成 `<szie>%d</size>` 
+    * **既不是逻辑问题，也不是警告没有消除，也不是读取环节问题，而是拼写错误！**
+    * 实际**拼错导致的解析出错**，无法构建有效的 xml 标签导致的系列问题。可见，解析出错，会导致多么严重的问题！
+    * 另外，**这个问题其实在 GDB 直接检测出来了！但我还是没有看清楚，从而错过了直接解决这个问题的契机**，走了很多弯路。真的要好好看清楚 GDB 的结果。
+    * 后面，不仅应当使用 AI **比较代码版本差异**，还应当注重**识别拼写错误**。
+
+  ```cpp
+  // 把文件名、修改时间、文件大小组成报文，发送给对端
+  sformat(strsendbuffer, "<filename>%s</filename><mtime>%s</mtime><size>%d</size>", dir.m_ffilename.c_str(), dir.m_mtime.c_str(), dir.m_filesize);
+  ```
+
+  
+
+* 2024/06/18 23:31:42 视频 24min；2024/06/20 23:44:04 代码 + 调试，32min
+* 2024/06/22 11:45:08 代码 + debug，2h1min；2024/06/23 3:09:52 debug，未解决，53min；2024/06/23 3:48:08 debug，逐步定位问题，38min
+* 2024/06/23 4:46:25 debug，解决问题，59min
+* 2024/06/23 5:26:59 代码完成，40min
+
+------
+
+
+
+### 78 下载文件
+
+* 关于 TCP 连接
+  * TCP 连接请求由客户端主动发起；
+  * TCP 连接建立之后，不再区分客户端与服务端；
+  * TCP 连接是全双工的通道，任何一方都可发送和接收报文。
+
+* 关于 TCP 报文
+  * 请求/回应报文是业务层面的概念，本质都是 TCP 报文；
+  * 请求报文可以由任何一方发起，由业务决定；
+  * TCP 通讯方式没有固定的模式，只需双方约定（统一协议）。
+* 关于文件上传/下载
+  * 上传 / 下载文件是业务层面的概念，本质都是传输文件
+  * 端1 --> 扫描本地目录 --> 文件发送 --> 端2（上传 / 下载，端互换）
+* 代码流程（下载模块）
+  * 客户端 `tcpgetfiles.cpp` 
+    * 全局信息
+      * 拷贝上传模块，修改代码为下载模块
+      * 参数结构体（添加参数 `srvpathbak`，修改主路径）
+      * 删除处理传输文件响应报文函数 `ackmessage()` 
+      * 删除文件上传的主函数
+      * 添加文件下载的主函数
+      * 删除文件内容发送函数
+      * 添加文件内容接收函数
+    * `main` 
+      * 文件上传主函数 --> 调用文件下载主函数
+    * `_help()` 不变
+    * `_xmltoarg()` 
+      * 添加解析 `srvpathbak` 
+    * `_tcpgetfiles()` 
+      * 代码逻辑同 `fileserver.cpp` 的 `recvfilesmain()` 
+      * 互换客户端与服务端路径
+    * `recvfile()` 同 `fileserver.cpp` 
+  * 服务端 `fileserver.cpp` 
+    * 全局信息
+      * 参数结构体（注释无用参数）
+      * 添加下载文件的主函数 `sendfilesmain()` 
+      * 添加文件内容发送函数 `sendfile()` 
+      * 添加文件下载的 `_tcpputfiles()` 
+      * 添加处理传输文件响应报文函数 `ackmessage()` 
+      * 添加心跳报文函数 `activetest` 
+    * 整体上，服务端添加了客户端上传模块改为下载模块时删除的内容，相当于在服务端添加了上传的相关逻辑。
+  * 调试
+  * 修改脚本 `start.sh` 及 `stop.sh` 
+    * 实现效果：`ftpputtest` --> `tcpputtest` --> `tcpgettest` 
+    * 注意，前面章节生成了数据文件到 `ftpputtest` 目录
+
+```cpp
+// 基于 TCP 协议的文件下载模块
+#include "/home/celfs/project/engi_cpp/49_project/public/_public.h"
+using namespace idc;
+
+// 程序运行的参数结构体
+struct st_arg {
+    int  clienttype;         // 客户端类型，1-上传文件；2-下载文件，本程序固定填2
+    char ip[31];             // 服务端的 IP 地址
+    int  port;               // 服务端的端口
+    char srvpath[256];       // 服务端文件存放的根目录
+    int  ptype;              // 文件下载成功后，服务端文件的处理方式：1-删除文件；2-移动到备份目录
+    char srvpathbak[256];    // 文件下载成功后，服务端文件的备份根目录，当 ptype == 2 时有效
+    bool andchild;           // 是否下载 srvpath 目录下各级子目录的文件，true-是；false-否
+    char matchname[256];     // 待下载文件名的匹配规则。如 "*.TXT,*.XML"
+    char clientpath[256];    // 客户端文件存放的根目录
+    int  timetvl;            // 扫描服务端目录文件的时间间隔，单位：秒
+    int  timeout;            // 进程心跳的超时时间
+    char pname[51];          // 进程名，建议用 “tcpgetfiles_后缀” 的方式
+} starg;
+
+// 帮助文档
+void _help();
+
+// 把 xml 解析到参数 starg 结构中
+bool _xmltoarg(const char *strxmlbuffer);
+
+// 程序退出信号2、15的处理函数
+void EXIT(int sig);
+
+clogfile logfile;       // 创建日志对象
+ctcpclient tcpclient;   // 创建 TCP 通讯的客户端对象
+
+string strsendbuffer;   // 发送报文的 buffer
+string strrecvbuffer;   // 接收报文的 buffer
+
+// 向服务端发送登录报文，把客户端程序的参数传递给服务端
+bool login(const char *argv);
+
+// 文件下载的主函数
+void _tcpgetfiles();
+
+// 接收文件的内容
+bool recvfile(const string &filename, const string &mtime, const int filesize);
+
+cpactive pactive; // 进程心跳
+
+int main(int argc, char *argv[]) {
+
+    if (argc != 3) {
+        _help();
+        return -1;
+    }
+
+    // 关闭全部的信号和输入输出。
+    // 设置信号,在shell状态下可用 "kill + 进程号" 正常终止些进程。
+    // 但请不要用 "kill -9 +进程号" 强行终止。
+    // 在网络通讯程序中，一般不关IO，因为某些函数可能会往1和2中输出信息
+    // 如果关了1和2，那么1和2会被socket重用，向1和2输出的信息会发送到网络中。
+    // closeioandsignal(true);
+    signal(SIGINT, EXIT); signal(SIGTERM, EXIT);
+
+    // 打开日志文件
+    if (logfile.open(argv[1]) == false) {
+        printf("打开日志文件失败（%s）。\n",argv[1]); return -1;
+    }
+
+    // 解析 xml，得到程序运行的参数
+    if (_xmltoarg(argv[2]) == false) return -1;
+
+    pactive.addpinfo(starg.timeout, starg.pname); // 把进程的心跳信息写入共享内存
+
+    // 向服务端发起连接请求
+    if (tcpclient.connect(starg.ip, starg.port) == false) {
+        logfile.write("tcpclient.connect(%s, %d) failed.\n", starg.ip, starg.port); EXIT(-1);
+    }
+
+    if (login(argv[2]) == false) { logfile.write("login() failed.\n"); EXIT(-1); }
+
+    // 调用文件下载的主函数
+    _tcpgetfiles();
+
+    EXIT(0);
+}
+
+void EXIT(int sig) {
+
+    logfile.write("程序退出，sig = %d\n\n", sig);
+
+    exit(0);
+}
+
+void _help() {
+
+    string base_bin = "/home/celfs/project/engi_cpp/49_project";
+
+    printf("\n");
+    printf("Using: %s/tools/bin/tcpgetfiles logfilename xmlbuffer\n\n", base_bin.c_str());
+    printf(
+        "Example: %s/tools/bin/procctl 20 %s/tools/bin/tcpgetfiles %s/log/idc/tcpgetfiles_surfdata.log "\
+        "\"<ip>192.168.20.150</ip><port>5005</port>"\
+        "<clientpath>%s/tmp/client</clientpath><ptype>1</ptype>"\
+        "<srvpath>%s/tmp/server</srvpath>"\
+        "<andchild>true</andchild><matchname>*</matchname><timetvl>10</timetvl>"\
+        "<timeout>50</timeout><pname>tcpgetfiles_surfdata</pname>\"\n\n", 
+        base_bin.c_str(), base_bin.c_str(), base_bin.c_str(), base_bin.c_str(), base_bin.c_str()
+    ); 
+
+    printf("本程序是数据中心的公共功能模块，采用tcp协议从服务端下载文件。\n");
+    printf("logfilename   本程序运行的日志文件。\n");
+    printf("xmlbuffer     本程序运行的参数，如下：\n");
+    printf("ip            服务端的IP地址。\n");
+    printf("port          服务端的端口。\n");
+    printf("ptype         文件下载成功后服务端文件的处理方式：1-删除文件；2-移动到备份目录。\n");
+    printf("srvpath       服务端文件存放的根目录。\n");
+    printf("srvpathbak    文件成功下载后，服务端文件备份的根目录，当ptype==2时有效。\n");
+    printf("andchild      是否下载srvpath目录下各级子目录的文件，true-是；false-否，缺省为false。\n");
+    printf("matchname     待下载文件名的匹配规则，如\"*.TXT,*.XML\"\n");
+    printf("clientpath    客户端文件存放的根目录。\n");
+    printf("timetvl       扫描服务目录文件的时间间隔，单位：秒，取值在1-30之间。\n");
+    printf("timeout       本程序的超时时间，单位：秒，视文件大小和网络带宽而定，建议设置50以上。\n");
+    printf("pname         进程名，尽可能采用易懂的、与其它进程不同的名称，方便故障排查。\n\n");
+}
+
+bool _xmltoarg(const char *strxmlbuffer) {
+
+    memset(&starg, 0, sizeof(struct st_arg));
+
+    getxmlbuffer(strxmlbuffer, "ip", starg.ip);
+    if (strlen(starg.ip) == 0) { logfile.write("ip is null.\n"); return false; }
+
+    getxmlbuffer(strxmlbuffer, "port", starg.port);
+    if (starg.port == 0) { logfile.write("port is null.\n"); return false; }
+
+    getxmlbuffer(strxmlbuffer, "ptype", starg.ptype);
+    if ((starg.ptype != 1) && (starg.ptype != 2)) { logfile.write("ptype not in (1, 2).\n"); return false; }
+
+    getxmlbuffer(strxmlbuffer, "srvpath", starg.srvpath);
+    if (strlen(starg.srvpath) == 0) { logfile.write("srvpath is null.\n"); return false; }
+
+    getxmlbuffer(strxmlbuffer, "srvpathbak", starg.srvpathbak);
+    if ((starg.ptype == 2) && (strlen(starg.srvpathbak) == 0)) { logfile.write("srvpathbak is null.\n"); return false; }
+
+    getxmlbuffer(strxmlbuffer, "andchild", starg.andchild);
+
+    getxmlbuffer(strxmlbuffer, "matchname", starg.matchname);
+    if (strlen(starg.matchname) == 0) { logfile.write("matchname is null.\n"); return false; }
+
+    getxmlbuffer(strxmlbuffer, "clientpath", starg.clientpath);
+    if (strlen(starg.clientpath) == 0) { logfile.write("clientpath is null.\n"); return false; }
+
+    getxmlbuffer(strxmlbuffer, "timetvl", starg.timetvl);
+    if (starg.timetvl == 0) { logfile.write("timetvl is null.\n"); return false; }
+
+    // 扫描本地目录文件的时间间隔（执行上传任务的时间间隔），单位：秒
+    // starg.timetvl没有必要超过30秒
+    if (starg.timetvl > 30) starg.timetvl = 30;
+
+    // 进程心跳的超时时间，一定要大于 starg.timetvl
+    getxmlbuffer(strxmlbuffer, "timeout", starg.timeout);
+    if (starg.timeout == 0) { logfile.write("timeout is null.\n"); return false; }
+    if (starg.timeout <= starg.timetvl) { logfile.write("starg.timeout(%d) <= starg.timetvl(%d)\n", starg.timeout, starg.timetvl); return false; }
+
+    getxmlbuffer(strxmlbuffer, "pname", starg.pname, 50);
+    //if (strlen(starg.pname) == 0) { logfile.write("pname is null.\n"); return false; }
+
+    return true;
+}
+
+// 向服务端发送登录报文，把客户端程序的参数传递给服务端
+bool login(const char *argv) {
+
+    sformat(strsendbuffer, "%s<clienttype>2</clienttype>", argv);
+    // xxxxxxxxxx logfile.write("发送：%s\n", strsendbuffer.c_str());
+    if (tcpclient.write(strsendbuffer) == false) return false;      // 向服务端发送请求报文
+
+    if (tcpclient.read(strrecvbuffer, 10) == false) return false;  // 接收服务端的回应报文
+    // xxxxxxxxxx logfile.write("接收：%s\n", strrecvbuffer.c_str());
+
+    logfile.write("登录(%s:%d)成功。\n", starg.ip, starg.port);
+
+    return true;
+}
+
+// 文件下载的主函数
+void _tcpgetfiles() {
+ 
+    while (true) {
+
+        pactive.uptatime();
+
+        // 接收服务端的报文
+        if (tcpclient.read(strrecvbuffer, starg.timetvl + 10) == false) {
+            logfile.write("tcpclient.read() failed.\n"); return;
+        }
+        // xxxxxxxxxx logfile.write("strrecvbuffer = %s\n", strrecvbuffer.c_str());
+
+        // 处理心跳报文
+        if (strrecvbuffer == "<activetest>ok</activetest>") {
+
+            strsendbuffer = "ok.";
+            // xxxxxxxxxx logfile.write("strsendbuffer = %s\n", strsendbuffer.c_str());
+            if (tcpclient.write(strsendbuffer) == false) {
+                logfile.write("tcpclient.write() failed.\n"); return;
+            }
+        }
+
+        // 处理下载文件的请求报文
+        if (strrecvbuffer.find("<filename>") != string::npos) {
+            // 解析下载文件请求报文的 xml
+            string serverfilename;  // 对端的文件名
+            string mtime;           // 文件的时间
+            int filesize = 0;       // 文件大小
+            getxmlbuffer(strrecvbuffer, "filename", serverfilename);
+            getxmlbuffer(strrecvbuffer, "mtime", mtime);
+            getxmlbuffer(strrecvbuffer, "size", filesize);
+            // logfile.write("start --> strrecvbuffer is :%s\n", strrecvbuffer.c_str());// aaaaaa
+
+            // 客户端和服务端文件的目录是不一样的，以下代码生成客户端的文件名
+            // 把文件名中的 srvpath 替换乘 clientpath，要小新第三个参数
+            string clientfilename;
+            clientfilename = serverfilename;
+            replacestr(clientfilename, starg.srvpath, starg.clientpath, false);
+            // logfile.write("filename is: %s\n", serverfilename.c_str());// aaaaaa
+
+            // 接收文件的内容
+            logfile.write("recv %s(%d) ...", clientfilename.c_str(), filesize);
+            if (recvfile(clientfilename, mtime, filesize) == true) {
+                logfile << "ok.\n";
+                sformat(strsendbuffer, "<filename>%s</filename><result>ok</result>", serverfilename.c_str());
+                // logfile << "ok --> strsendbuffer is : " + strsendbuffer + " \n";// aaaaaa
+                // logfile.write("ok --> strsendbuffer is :%s\n", strsendbuffer.c_str());// aaaaaa
+            } else {
+                logfile << "failed.\n";
+                sformat(strsendbuffer, "<filename>%s</filename><result>failed</result>", serverfilename.c_str());
+                // logfile.write("failed --> strsendbuffer is :%s\n", strsendbuffer.c_str());// aaaaaa
+            }
+
+            // 把接收结果返回给对端
+            // xxxxxxxxxx logfile.write("back to strsendbuffer = %s\n", strsendbuffer.c_str());
+            if (tcpclient.write(strsendbuffer) == false) {
+                logfile.write("tcpclient.write() failed.\n"); return;
+            }
+        }
+    }
+}
+
+// 接收文件的内容
+bool recvfile(const string &filename, const string &mtime, int filesize) {
+
+    int  onread = 0;         // 本次打算接收的字节数
+    char buffer[1000];       // 接收文件内容的缓冲区
+    int  totalbytes = 0;     // 已接收文件的总字节数
+    cofile ofile;            // 接收文件的对象
+
+    newdir(filename);
+    // logfile.write("ok --> filename is %s\n", filename.c_str());
+
+    // 必须以二进制的方式操作文件
+    if (ofile.open(filename, ios::in | ios::binary) == false) return false;
+
+    while (true) {
+        memset(buffer, 0, sizeof(buffer));
+
+        // 计算本次应该接收的字节数
+        if (filesize - totalbytes > 1000) onread = 1000;
+        else onread = filesize - totalbytes;
+
+        // 接收文件内容
+        if (tcpclient.read(buffer, onread) == false) return false;
+
+        // 从文件中读取数据
+        ofile.write(buffer, onread);
+
+        // 计算文件已接收的字节总数，如果文件接收完，跳出循环
+        totalbytes = totalbytes + onread;
+
+        if (totalbytes == filesize) break;
+    }
+
+    ofile.closeandrename();
+
+    // 重置文件的时间
+    setmtime(filename, mtime);
+
+    return true;
+}
+
+```
+
+```cpp
+#include "/home/celfs/project/engi_cpp/49_project/public/_public.h"
+using namespace idc;
+
+// 程序运行的参数结构体。
+struct st_arg
+{
+    int  clienttype;           // 客户端类型，1-上传文件；2-下载文件，本程序固定填1。
+    // char ip[31];               // 服务端的IP地址。
+    // int  port;                 // 服务端的端口。
+    char clientpath[256];      // 本地文件存放的根目录。 /data /data/aaa /data/bbb
+    int  ptype;                // 文件上传成功后本地文件的处理方式：1-删除文件；2-移动到备份目录。
+    // char clientpathbak[256];   // 文件成功上传后，本地文件备份的根目录，当ptype==2时有效。
+    bool andchild;             // 是否上传clientpath目录下各级子目录的文件，true-是；false-否。
+    char matchname[256];       // 待上传文件名的匹配规则，如"*.TXT,*.XML"。
+    char srvpath[256];         // 服务端文件存放的根目录。/data1 /data1/aaa /data1/bbb
+    char srvpathbak[256];         // 服务端文件存放的根目录。/data1 /data1/aaa /data1/bbb
+    int  timetvl;              // 扫描本地目录文件的时间间隔（执行文件上传任务的时间间隔），单位：秒。 
+    int  timeout;              // 进程心跳的超时时间。
+    char pname[51];            // 进程名，建议用"tcpputfiles_后缀"的方式。
+} starg;
+
+clogfile logfile;        // 服务程序的运行日志
+ctcpserver tcpserver;    // 创建tcp通讯的服务端对象
+
+void FathEXIT(int sig);  // 父进程退出函数
+void ChldEXIT(int sig);  // 子进程退出函数
+
+// 处理登录客户端的登录报文。
+bool clientlogin();
+
+// 上传文件的主函数
+void recvfilesmain();
+
+// 下载文件的主函数
+void sendfilesmain();
+
+string strsendbuffer;    // 发送报文的buffer
+string strrecvbuffer;    // 接收报文的buffer
+
+// 接收文件的内容
+bool recvfile(const string &filename, const string &mtime, int filesize);
+
+// 把文件的内容发送给对端。
+bool sendfile(const string &filename, const int filesize);
+
+// 文件下载的主函数，执行一次文件下载的任务。
+bool _tcpputfiles(bool &bcontinue);
+
+// 心跳。
+bool activetest();
+
+// 处理传输文件的响应报文（删除或者转存服务端的文件）。
+bool ackmessage(const string &strrecvbuffer);
+
+cpactive pactive; // 进程心跳
+
+int main(int argc, char *argv[]) {
+
+    if (argc != 3) {
+        printf("Using:./fileserver port logfile\n");
+        printf("Example:./fileserver 5005 /home/celfs/project/engi_cpp/49_project/log/idc/fileserver.log\n"); 
+        printf("         /home/celfs/project/engi_cpp/49_project/tools/bin/procctl 10 /home/celfs/project/engi_cpp/49_project/tools/bin/fileserver 5005 /home/celfs/project/engi_cpp/49_project/log/idc/fileserver.log\n\n\n"); 
+        return -1;
+    }
+
+    // 关闭全部的信号和输入输出。
+    // 设置信号,在shell状态下可用 "kill + 进程号" 正常终止些进程
+    // 但请不要用 "kill -9 +进程号" 强行终止
+    //closeioandsignal(false); 
+    signal(SIGINT, FathEXIT); signal(SIGTERM, FathEXIT);
+
+    if (logfile.open(argv[2]) == false) {
+        printf("logfile.open(%s) failed.\n", argv[2]); return -1;
+    }
+
+    // 服务端初始化。
+    if (tcpserver.initserver(atoi(argv[1])) == false) {
+      logfile.write("tcpserver.initserver(%s) failed.\n", argv[1]); return -1;
+    }
+
+    while (true) {
+
+        // 等待客户端的连接请求
+        if (tcpserver.accept() == false) {
+            logfile.write("tcpserver.accept() failed.\n"); FathEXIT(-1);
+        }
+
+        logfile.write("客户端（%s）已连接。\n", tcpserver.getip());
+
+        // 不使用多进程时，可便于 GDB 调试
+        if (fork() > 0) { tcpserver.closeclient(); continue; }   // 父进程继续回到Accept()
+
+        // 子进程重新设置退出信号
+        signal(SIGINT, ChldEXIT); signal(SIGTERM, ChldEXIT);
+
+        tcpserver.closelisten();
+
+        // 子进程与客户端进行通讯，处理业务。
+
+        // 处理登录客户端的登录报文。
+        if (clientlogin() == false) ChldEXIT(-1);
+
+        // 把进程心跳信息写入共享内存（每个子进程都有自己的心跳）
+        pactive.addpinfo(starg.timeout, starg.pname);
+
+        // 如果starg.clienttype == 1，调用上传文件的主函数。
+        if (starg.clienttype == 1)  recvfilesmain();  
+
+        // 如果 starg.clienttype == 2，调用下载文件的主函数。
+        if (starg.clienttype == 2) sendfilesmain();
+
+        ChldEXIT(0);
+    }
+}
+
+void FathEXIT(int sig) {
+
+    // 以下代码是为了防止信号处理函数在执行的过程中被信号中断
+    signal(SIGINT, SIG_IGN); signal(SIGTERM, SIG_IGN);
+
+    logfile.write("父进程退出，sig = %d。\n", sig);
+
+    tcpserver.closelisten();    // 关闭监听的socket
+
+    kill(0, 15);     // 通知全部的子进程退出
+
+    exit(0);
+
+}
+
+void ChldEXIT(int sig) {
+
+    // 以下代码是为了防止信号处理函数在执行的过程中被信号中断
+    signal(SIGINT, SIG_IGN); signal(SIGTERM, SIG_IGN);
+
+    logfile.write("子进程退出，sig = %d。\n", sig);
+
+    tcpserver.closeclient();    // 关闭客户端的socket
+
+    exit(0);
+
+}
+
+// 上传文件的主函数
+void recvfilesmain() {
+
+    while (true) {
+
+        pactive.uptatime(); // 只需此处一个地方更新心跳
+
+        // 接收客户端的报文
+        if (tcpserver.read(strrecvbuffer, starg.timetvl + 10) == false) {
+            logfile.write("tcpserver.read() failed.\n"); return;
+        }
+        // xxxxxxxxxx logfile.write("strrecvbuffer = %s\n", strrecvbuffer.c_str());
+
+        // 处理心跳报文
+        if (strrecvbuffer == "<activetest>ok</activetest>") {
+
+            strsendbuffer = "ok.";
+            // xxxxxxxxxx logfile.write("strsendbuffer = %s\n", strsendbuffer.c_str());
+            if (tcpserver.write(strsendbuffer) == false) {
+                logfile.write("tcpserver.write() failed.\n"); return;
+            }
+        }
+
+        // 处理上传文件的请求报文
+        if (strrecvbuffer.find("<filename>") != string::npos) {
+            // 解析上传文件请求报文的 xml
+            string clientfilename;  // 对端的文件名
+            string mtime;           // 文件的时间
+            int filesize = 0;       // 文件大小
+            getxmlbuffer(strrecvbuffer, "filename", clientfilename);
+            getxmlbuffer(strrecvbuffer, "mtime", mtime);
+            getxmlbuffer(strrecvbuffer, "size", filesize);
+            // logfile.write("start --> strrecvbuffer is :%s\n", strrecvbuffer.c_str());// aaaaaa
+
+            // 客户端和服务端文件的目录是不一样的，以下代码生成客户端的文件名。
+            // 把文件名中的clientpath替换成srvpath，要小心第三个参数
+            string serverfilename;
+            serverfilename = clientfilename;
+            replacestr(serverfilename, starg.clientpath, starg.srvpath, false);
+            // logfile.write("filename is: %s\n", serverfilename.c_str());// aaaaaa
+
+            logfile.write("recv %s(%d) ...", serverfilename.c_str(), filesize);
+            if (recvfile(serverfilename, mtime, filesize) == true) {
+                logfile << "ok.\n";
+                sformat(strsendbuffer, "<filename>%s</filename><result>ok</result>", clientfilename.c_str());
+                // logfile << "ok --> strsendbuffer is : " + strsendbuffer + " \n";// aaaaaa
+                // logfile.write("ok --> strsendbuffer is :%s\n", strsendbuffer.c_str());// aaaaaa
+            } else {
+                logfile << "failed.\n";
+                sformat(strsendbuffer, "<filename>%s</filename><result>failed</result>", clientfilename.c_str());
+                // logfile.write("failed --> strsendbuffer is :%s\n", strsendbuffer.c_str());// aaaaaa
+            }
+
+            // 假设成功的接收了文件的内容，拼接确认报文的内容
+            // sformat(strsendbuffer, "<filename>%s</filename><result>ok</result>", clientfilename.c_str());
+
+            // 把确认报文返回给对端
+            // xxxxxxxxxx logfile.write("back to strsendbuffer = %s\n", strsendbuffer.c_str());
+            if (tcpserver.write(strsendbuffer) == false) {
+                logfile.write("tcpserver.write() failed.\n"); return;
+            }
+        }
+    }
+
+}
+
+// 接收文件的内容
+bool recvfile(const string &filename, const string &mtime, int filesize) {
+
+    int totalbytes = 0;     // 已接收文件的总字节数
+    int onread = 0;         // 本次打算接收的字节数
+    char buffer[1000];      // 接收文件内容的缓冲区
+    cofile ofile;           // 写入文件的对象
+
+    // 必须以二进制的方式操作文件
+    if (ofile.open(filename, true, ios::out | ios::binary) == false) return false;
+
+    while (true) {
+
+        memset(buffer, 0, sizeof(buffer));
+
+        // 计算本次应该接收的字节数
+        if (filesize - totalbytes > 1000) onread = 1000;
+        else onread = filesize - totalbytes;
+
+        // 接收文件内容
+        if (tcpserver.read(buffer, onread) == false) return false;
+
+        // 把接收到的内容写入文件
+        ofile.write(buffer, onread);
+        // logfile.write("ofile.write(buffer, onread) is: %s (%d)\n", buffer, onread);// aaaaaa
+
+        // 计算已经接收文件的总字节数，如果文件接收完，跳出循环
+        totalbytes = totalbytes + onread;
+
+        if (totalbytes == filesize) break;
+    }
+
+    ofile.closeandrename();
+
+    // 文件时间用当前时间没有意义，应该与对端的文件时间保持一致
+    setmtime(filename, mtime);
+
+    return true;
+}
+
+// 处理登录客户端的登录报文。
+bool clientlogin()
+{
+    // 接收客户端的登录报文。
+    if (tcpserver.read(strrecvbuffer, 10) == false)
+    {
+        logfile.write("tcpserver.read() failed.\n"); return false;
+    }
+    // xxxxxxxxxx logfile.write("strrecvbuffer = %s\n", strrecvbuffer.c_str());
+
+    // 解析客户端登录报文，不需要对参数做合法性判断，客户端已经判断过了。
+    memset(&starg, 0, sizeof(struct st_arg));
+    getxmlbuffer(strrecvbuffer, "clienttype", starg.clienttype);
+    getxmlbuffer(strrecvbuffer, "clientpath", starg.clientpath);
+    getxmlbuffer(strrecvbuffer, "srvpath", starg.srvpath);
+    getxmlbuffer(strrecvbuffer, "srvpathbak", starg.srvpathbak);
+    getxmlbuffer(strrecvbuffer, "andchild", starg.andchild);
+    getxmlbuffer(strrecvbuffer, "ptype", starg.ptype);
+    getxmlbuffer(strrecvbuffer, "matchname", starg.matchname);
+
+    getxmlbuffer(strrecvbuffer, "timetvl", starg.timetvl);     // 执行任务的周期。
+    getxmlbuffer(strrecvbuffer, "timeout", starg.timeout);     // 进程超时的时间。
+    getxmlbuffer(strrecvbuffer, "pname", starg.pname, 50);     // 进程名。
+
+    // 为什么要判断客户端的类型？不是只有1和2吗？ 防止非法的连接请求。
+    if ( (starg.clienttype != 1) && (starg.clienttype != 2) )
+        strsendbuffer = "failed";
+    else
+        strsendbuffer = "ok";
+
+    if (tcpserver.write(strsendbuffer) == false)
+    {
+        logfile.write("tcpserver.write() failed.\n"); return false;
+    }
+
+    logfile.write("%s login %s.\n", tcpserver.getip(), strsendbuffer.c_str());
+
+    return true;
+}
+
+// 下载文件的主函数
+void sendfilesmain() {
+
+    pactive.addpinfo(starg.timeout, starg.pname);
+
+    bool bcontinue = true; // 如果调用 _tcpputfiles() 发送了文件，bcontinue 为 true，否则为 false，初始化为 true
+
+    while (true) {
+
+        // 调用文件下载的主函数，执行一次文件下载的任务
+        if (_tcpputfiles(bcontinue) == false) { logfile.write("_tcpputfiles() failed.\n"); return; }
+
+        if (bcontinue == false) {
+            sleep(starg.timetvl);
+
+            // 发送心跳报文
+            if (activetest() == false) break;
+        }
+
+        pactive.uptatime();
+    }
+}
+
+// 心跳。
+bool activetest()
+{
+    strsendbuffer="<activetest>ok</activetest>";
+    // xxxxxxxxxxxxx logfile.write("发送：%s\n",strsendbuffer.c_str());
+    if (tcpserver.write(strsendbuffer) == false) return false; // 向服务端发送请求报文。
+
+    if (tcpserver.read(strrecvbuffer, 20) == false) return false; // 接收服务端的回应报文。
+    // xxxxxxxxxxxxx logfile.write("接收：%s\n",strrecvbuffer.c_str());
+
+    return true;
+}
+
+// 文件上传的主函数，执行一次文件上传的任务
+bool _tcpputfiles(bool &bcontinue) {
+
+    bcontinue = false;
+
+    cdir dir;
+
+    // 打开 starg.client 目录
+    if (dir.opendir(starg.srvpath, starg.matchname, 10000, starg.andchild) == false) {
+        logfile.write("dir.opendir(%s) failed.\n", starg.srvpath); return false;
+    }
+
+    int delayed = 0; // 未收到对端确认报文的文件数量
+
+    // 遍历目录中的每个文件
+    while (true) {
+    
+        if (dir.readdir() == false) break;
+
+        bcontinue = true;
+
+        // 把文件名、修改时间、文件大小组成报文，发送给对端
+        sformat(strsendbuffer, "<filename>%s</filename><mtime>%s</mtime><size>%d</size>", 
+                dir.m_ffilename.c_str(), dir.m_mtime.c_str(), dir.m_filesize);
+        
+        // xxxxxxxxxx logfile.write("strsendbuffer = %s\n", strsendbuffer.c_str());
+        if (tcpserver.write(strsendbuffer) == false) {
+            logfile.write("tcpserver.write() failed.\n"); return false;
+        }
+
+        // 发送文件内容给对端
+        logfile.write("send %s(%d) ...", dir.m_ffilename.c_str(), dir.m_filesize);
+        if (sendfile(dir.m_ffilename, dir.m_filesize) == true) {
+            logfile << "ok.\n";
+            delayed++;
+        } else {
+            logfile << "failed.\n"; tcpserver.closeclient(); return false;
+        }
+
+        pactive.uptatime();
+
+        while (delayed > 0) {
+            // 接收服务端的确认报文
+            if (tcpserver.read(strrecvbuffer, -1) == false) break;
+            // xxxxxxxxxx logfile.write("strrecvbuffer1 = %s\n", strrecvbuffer.c_str());
+
+            // 处理服务端的确认报文（删除本地文件或把本地文件移动到备份目录）
+            // delayed--;
+            ackmessage(strrecvbuffer);
+        }
+    }
+
+    // 继续接收对端的确认报文
+    while (delayed > 0) {
+        if (tcpserver.read(strrecvbuffer, 10) == false) break;
+        // xxxxxxxxxx logfile.write("strrecvbuffer2 = %s\n", strrecvbuffer.c_str());
+
+        // 处理传输文件的响应报文（删除或转存本地的文件）
+        delayed--;
+        ackmessage(strrecvbuffer);
+    }
+
+    return true;
+}
+
+// 把文件的内容发送给对端。
+bool sendfile(const string &filename,const int filesize)
+{
+    int  onread=0;        // 每次调用fread时打算读取的字节数。 
+    char buffer[1000];    // 存放读取数据的buffer。
+    int  totalbytes=0;    // 从文件中已读取的字节总数。
+    cifile ifile;
+
+    // 以"rb"的模式打开文件。
+    if (ifile.open(filename,ios::in|ios::binary)==false) return false;
+
+    while (true)
+    {
+        memset(buffer,0,sizeof(buffer));
+
+        // 计算本次应该读取的字节数，如果剩余的数据超过1000字节，就打算读1000字节。
+        if (filesize-totalbytes>1000) onread=1000;
+        else onread=filesize-totalbytes;
+
+        // 从文件中读取数据。
+        ifile.read(buffer,onread);    
+
+        // 把读取到的数据发送给对端。
+        if (tcpserver.write(buffer,onread)==false)  { return false; }
+
+        // 计算文件已读取的字节总数，如果文件已读完，跳出循环。
+        totalbytes=totalbytes+onread;
+
+        if (totalbytes==filesize) break;
+    }
+
+    return true;
+}
+
+// 处理传输文件的响应报文（删除或转存本地的文件）
+bool ackmessage(const string &strrecvbuffer) {
+
+    string filename;
+    string result;
+
+    getxmlbuffer(strrecvbuffer, "filename", filename);
+    getxmlbuffer(strrecvbuffer, "result", result);
+    // logfile.write("get --> filename is %s\n", filename.c_str());
+
+    // 如果服务端接收文件不成功，直接返回（下次执行文件传输任务时将会重传）
+    if (result != "ok") return true;
+
+    // 如果 starg.ptype == 1，删除文件
+    if (starg.ptype == 1) {
+        // logfile.write("remove --> filename is %s\n", filename.c_str());
+        if (remove(filename.c_str()) != 0) { logfile.write("remove(%s) failed.\n", filename.c_str()); return false; }
+    }
+
+    // 如果 starg.ptype == 2，移动文件到备份目录
+    if (starg.ptype == 2) {
+        // 生成转存后的备份目录文件名
+        string bakfilename = filename;
+        replacestr(bakfilename, starg.srvpath, starg.srvpathbak, false); // 注意，第四个参数一定填 false
+        if (renamefile(filename, bakfilename) == false) {
+            logfile.write("renamefile(%s, %s) failed.\n", filename.c_str(), bakfilename.c_str()); return false;
+        }
+    }
+
+    return true;
+}
+```
+
+```shell
+#!/bin/bash
+
+# 长路径变量
+BASE_DIR="/home/celfs/project/engi_cpp/49_project"
+BIN_PROCCTL="$BASE_DIR/tools/bin/procctl"
+BIN_DELETE="$BASE_DIR/tools/bin/deletefiles"
+
+REMOTE_HOST="192.168.20.150:21"
+
+# 启动守护模块
+#$BIN_PROCCTL 10 $BASE_DIR/tools/bin/checkproc $BASE_DIR/tmp/log/checkproc.log
+
+# 生成气象站点观测的分钟数据，程序每分钟运行一次
+$BIN_PROCCTL 60 \
+$BASE_DIR/idc/bin/crtsurfdata \
+$BASE_DIR/idc/ini/stcode.ini \
+$BASE_DIR/tmp/idc/surfdata \
+$BASE_DIR/log/idc/crtsurfdata.log csv,xml,json
+
+# 清理原始的气象观测数据目录（/tmp/idc/surfdata）中的历史数据文件
+$BIN_PROCCTL 300 \
+$BIN_DELETE \
+$BASE_DIR/tmp/idc/surfdata "*" 0.02
+
+# 压缩后台服务程序的备份日志
+$BIN_PROCCTL 300 \
+$BASE_DIR/tools/bin/gzipfiles \
+$BASE_DIR/tmp/idc/surfdata "*.log.20*" 0.02
+
+# 从（/tmp/idc/surfdata）目录下载原始的气象观测数据文件，存放在（/idcdata/surfdata）目录
+$BIN_PROCCTL 30 \
+$BASE_DIR/tools/bin/ftpgetfiles \
+$BASE_DIR/log/idc/ftpgetfiles_surfdata.log \
+"<host>$REMOTE_HOST</host><mode>1</mode>\
+<username>celfs</username><password>123</password>\
+<localpath>$BASE_DIR/idcdata/surfdata</localpath>\
+<remotepath>$BASE_DIR/tmp/idc/surfdata</remotepath>\
+<matchname>*.TXT</matchname><ptype>1</ptype>\
+<okfilename>$BASE_DIR/idcdata/ftplist/ftpgetfiles_test.xml</okfilename>\
+<checkmtime>true</checkmtime>\
+<timeout>30</timeout><pname>ftpgetfiles_test</pname>"
+
+# 清理（/tmp/idc/surfdata）目录中 0.04 天之前的文件
+$BIN_PROCCTL 300 \
+$BIN_DELETE \
+$BASE_DIR/idcdata/surfdata "*" 0.04
+
+# 把（/tmp/idc/surfdata）目录的原始气象观测数据文件上传到（/tmp/ftpputtest）目录
+# 注意，先创建好服务端的目录：mkdir /tmp/ftpputtest
+$BIN_PROCCTL 30 \
+$BASE_DIR/tools/bin/ftpputfiles \
+$BASE_DIR/log/idc/ftpputfiles_surfdata.log \
+"<host>127.0.0.1:21</host><mode>1</mode>\
+<username>celfs</username><password>123</password>\
+<localpath>$BASE_DIR/tmp/idc/surfdata</localpath>\
+<remotepath>$BASE_DIR/tmp/ftpputtest</remotepath>\
+<matchname>SURF_ZH*.JSON</matchname><ptype>1</ptype>\
+<localpathbak>$BASE_DIR/tmp/idc/surfdatabak</localpathbak>\
+<okfilename>$BASE_DIR/idcdata/ftplist/ftpputfiles_surfdata.xml</okfilename>\
+<timeout>80</timeout><pname>ftpputfiles_surfdata</pname>"
+
+# 清理（/tmp/ftpputest）目录中 0.04 天 之前的文件
+$BIN_PROCCTL 300 \
+$BIN_DELETE \
+$BASE_DIR/tmp/ftpputtest "*" 0.04
+
+# 文件传输的服务端程序
+$BIN_PROCCTL 10 $BASE_DIR/tools/bin/fileserver 5005 $BASE_DIR/log/idc/fileserver.log
+
+# 把目录 /tmp/ftpputtest 中的文件上传到 /tmp/tcpputtest 目录中
+$BIN_PROCCTL 20 \
+$BASE_DIR/tools/bin/tcpputfiles \
+$BASE_DIR/log/idc/tcpputfiles_surfdata.log \
+"<ip>127.0.0.1</ip><port>5005</port>\
+<ptype>1</ptype>\
+<clientpath>$BASE_DIR/tmp/ftpputtest</clientpath>\
+<srvpath>$BASE_DIR/tmp/tcpputtest</srvpath>\
+<andchild>true</andchild>\
+<matchname>*.XML,*.CSV,*.JSON</matchname>\
+<timetvl>10</timetvl><timeout>50</timeout>\
+<pname>tcpputfiles_surfdata</pname>"
+
+# 把目录 /tmp/tcpputtest 中的文件下载到 /tmp/tcpgettest 目录中
+$BIN_PROCCTL 20 \
+$BASE_DIR/tools/bin/tcpgetfiles \
+$BASE_DIR/log/idc/tcpgetfiles_surfdata.log \
+"<ip>127.0.0.1</ip><port>5005</port>\
+<ptype>1</ptype>\
+<srvpath>$BASE_DIR/tmp/tcpputtest</srvpath>\
+<clientpath>$BASE_DIR/tmp/tcpgettest</clientpath>\
+<andchild>true</andchild>\
+<matchname>*.XML,*.CSV,*.JSON</matchname>\
+<timetvl>10</timetvl><timeout>50</timeout>\
+<pname>tcpgetfiles_surfdata</pname>"
+
+# 清理 /tmp/tcpgettest 目录中的历史数据文件
+$BIN_PROCCTL 300 \
+$BIN_DELETE \
+$BASE_DIR/tmp/tcpgettest "*" 0.02
+```
+
+```shell
+#!/bin/bash
+
+# 此脚本用于停止数据共享平台全部的服务程序
+
+# 停止调度程序
+killall -9 procctl
+
+# 停止其他的服务程序
+# 尝试让其他服务程序正常终止
+killall crtsurfdata deletefiles gzipfiles ftpgetfiles ftpputfiles
+killall fileserver tcpputfiles tcpgetfiles
+
+# 让其他服务程序有足够的时间退出
+sleep 5 
+
+# 不管服务程序有没有限制，都强制杀死
+killall -9 crtsurfdata deletefiles gzipfiles ftpgetfiles ftpputfiles
+killall -9 fileserver tcpputfiles tcpgetfiles
+
+```
+
+* 疑问
+  * 始终未理解，最终版本的代码里面，为什么使用了两个 `delayed--` ？
+  * ~~能不能讲讲双工、全双工、半双工等概念，以及除此以外还有什么术语？~~ 
+    * **单工（Simplex）**: 数据只能单向传输的通信方式。例如，广播电视信号。
+    * **半双工（Half-Duplex）**: 数据可以双向传输，但**不能同时**进行。例如，对讲机，一方讲话时另一方只能接收。
+    * **全双工（Full-Duplex）**: 数据可以**双向同时**传输。例如，电话通信，两方可以同时讲话和听到对方讲话。
+    * **区别：单 / 双向 + 同时 / 不同时** 
+  * ~~它们是哪个领域的术语？通信领域？还是什么具体的课程可以学到？如果要补充这方便的信息与知识，应该学习什么？计算机网络里面好像没有直接讲到这些概念？那么信息论里面会不会有呢？~~ 
+    * 属于通信领域的基础概念，用于描述通信方式的不同类型。实际上，在计算机网络、数据通信、通信原理、信息论等课程中，都会直接或者间接地涉及这些概念。
+    * 例如，计算机网络（网络协议、传输控制）、数据通信（基础通信技术和协议）、通信原理（通信系统的工作原理）、信息论（信息传输的基础理论和方法，如信道容量、编码理论，虽然**没有直接讲到**这些概念，但提供了**理解这些概念的理论背景**）
+  * ~~我前面的一堆疑问或者提问，可以怎么优化提问的思路和方式？如何更好地用具体的提问，来获取我所需的资源、信息、技术、课程、知识？~~ 
+    * 具体化问题（具体明确）
+    * 分步骤提问（复杂问题分解多个小问题，逐步求解）
+    * 提供背景（简述问题背景，便于理解）
+    * 明确目标（希望得到的信息、希望解决的问题）
+* BUG
+  * ~~1）调试发现，文件可以正常下载，但服务端文件不能正常删除，导致一直重复运行下载代码，陷入死循环。~~ 
+    * 测试发现，输出的速度与是否多使用一个 `delayed--` 有关
+    * 逻辑上，应当是从服务端下载，并且把服务端已下载的文件删除
+    * 已经定位到问题，`filesever.cpp` 的 `remove()` 识别到 `filename` 是客户端的，导致客户端一遍下载文件，一遍删除文件。
+    * 那么，就需要找到是哪一个位置开始，传入的文件名发生了错误，例如某个变量没有赋值，或者弄反了客户端与服务端的文件名
+  * 解决问题
+    * 是 `tcpgetfiles.cpp` 在接受文件内容的时候，传入了客户端自己的文件路径，原本应当传入服务端的文件路径，从而返回报文给服务端，让服务端进行删除。
+
+
+
+* 2024/06/23 19:12:21 30min+52min
+* 2024/06/23 22:35:32 代码 + debug，2h9min
+* 2024/06/23 23:14:35 代码完成 + debug 完成
+* 2024/06/24 20:31:12 脚本完善 + 代码流程整理 26min + 1h18min
+
+------
+
+
+
+## 本篇完
 

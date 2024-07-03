@@ -1,4 +1,5 @@
-* [pdf viewer test](/test/viewer.html)
+* JavaScript ES6
+  * [ES6](/03_ES6/00Task.md)
 * C++ 后台服务器开发
   * [00 Task Ch07~Ch10 总结](/06_cpp_server/00Task.md)
   * [01 Task Ch11~Ch20 总结](/06_cpp_server/01Task.md)
@@ -95,7 +96,7 @@
 * 读吴军《富足》
   * [总结](/103_wj_plenties/读吴军《富足》.md)
 
-
+* [pdf viewer test](/test/viewer.html)
 
 
 

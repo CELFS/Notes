@@ -4,6 +4,7 @@
 
 ### 目录
 
+* JavaScript ES6
 * C++ 后台服务器开发（数据开放平台）
 * Qt 学习与代码实践
 * 轻量级服务器开发（TinyWebServer）

@@ -19,7 +19,9 @@ Date：2023/03/09；Update：2024/07/03
 ### 目录
 
 * Vue 3 入门
-  * [Vue 3](/03_Vue3/01Task.md)
+  * [01 Task Vue 3](/03_Vue3/01Task.md)
+  * [02 Task Vue Router4](/03_Vue3/02Task.md)
+  * [03 Task ElementPlus UI](/03_Vue3/03Task.md)
 * JavaScript ES6
   * [ES6](/03_ES6/00Task.md)
 * C++ 后台服务器开发（数据开放平台）

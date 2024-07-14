@@ -17,7 +17,7 @@ window.$docsify.plugins = [].concat((e, o) => {
             sidebarSublink: "#b4b4b4",
             codeTypeColor: "#ffffff",
             coverBackground: "linear-gradient(to left bottom, hsl(118, 100%, 85%) 0%,hsl(181, 100%, 85%) 100%)",
-            toogleImage: "url(../icons/sun.svg)"
+            toogleImage: "url(./src/icons/sun.svg)"
         },
         light: {
             accent: "#42b983",

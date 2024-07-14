@@ -72,8 +72,8 @@ table {
     }
 } */
 
-/* body.sticky .logo-container {
+.logo-container {
     position: fixed;
-    left: 68px;
+    left: 65px;
     top: 93px;
-} */
+}

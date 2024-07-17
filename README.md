@@ -4,11 +4,14 @@
 
 ### 目录
 
+* TypeScript
 * Node.js
-* ElementPlus UI
-* Vue Router4
-* Vue 3
-* JavaScript ES6
+* Ajax
+* CSS
+* ElementPlus
+* Vue CLI + Vuex + Vue Router 4
+* Vue 3 + Vue 2
+* JavaScript
 * C++ 后台服务器开发（数据开放平台）
 * Qt 学习与代码实践
 * 轻量级服务器开发（TinyWebServer）

@@ -12,3 +12,6 @@ docs/index_clear.html
 index_clear.html
 .history
 Notes.code-workspace
+dist/
+gen_sidebar.exe
+build/

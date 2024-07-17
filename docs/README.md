@@ -1,6 +1,6 @@
 # 学而时习之
 
-Date：2023/03/09；Update：2024/07/03
+Date：2023/03/09；Update：2024/07/18
 
 ------
 
@@ -18,14 +18,25 @@ Date：2023/03/09；Update：2024/07/03
 
 ### 目录
 
+* TypeScript
+  * [00 Task TypeScript](/03_TS/00Task.md)
 * Node.js
   * [00 Task Node.js](/03_Node/00Task.md)
-* Vue 3 入门
+* Ajax
+  * [00 Task Ajax + Axios + Fetch API](/03_Ajax/00Task.md)
+* CSS
+  * [00 Task CSS](/03_CSS/00Task.md)
+* Vue
   * [01 Task Vue 3](/03_Vue3/01Task.md)
   * [02 Task Vue Router4](/03_Vue3/02Task.md)
   * [03 Task ElementPlus UI](/03_Vue3/03Task.md)
-* JavaScript ES6
-  * [ES6](/03_ES6/00Task.md)
+  * [05 Task Vue Router & Vuex](/03_Vue3/05Task.md)
+  * [06 Task Vue CLI + 组件化开发](/03_Vue3/06Task.md)
+  * [07 Task Vue 2 综合案例](/03_Vue3/07Task.md)
+  * [08 Task Vue 3 核心语法](/03_Vue3/08Task.md)
+* JavaScript
+  * [00 Task ES6](/03_ES6/00Task.md)
+  * [00 Task JavaScript + DOM + ES6](/03_JS/00Task.md)
 * C++ 后台服务器开发（数据开放平台）
   * [00 Task Ch07~Ch10 总结](/06_cpp_server/00Task.md)
   * [01 Task Ch11~Ch20 总结](/06_cpp_server/01Task.md)

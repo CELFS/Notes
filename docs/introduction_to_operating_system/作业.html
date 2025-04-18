@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-introduction_to_operating_system/作业" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">作业 | 编程内外</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" name="twitter:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" property="og:url" content="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/作业"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="作业 | 编程内外"><meta data-rh="true" name="description" content="C03"><meta data-rh="true" property="og:description" content="C03"><link data-rh="true" rel="icon" href="/Notes/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/作业"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/作业" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/作业" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous"><link rel="stylesheet" href="/Notes/assets/css/styles.67339a6f.css">
+<script src="/Notes/assets/js/runtime~main.793c07bf.js" defer="defer"></script>
+<script src="/Notes/assets/js/main.ef11fa70.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"dark")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/Notes/img/logo.png"><div role="region" aria-label="跳到主要内容"><a class="skipToContent__HuA" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Notes/"><div class="navbar__logo"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--light_c3lc"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--dark_Ji9V"></div><b class="navbar__title text--truncate">编程内外</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Notes/docs/category/linux-os">Notes</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/CELFS/Notes" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link" icon="github">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_OqSl"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_OAgU colorModeToggle_zRe0"><button class="clean-btn toggleButton_aClM toggleButtonDisabled_GkIb" type="button" disabled="" title="切换浅色/暗黑模式（当前为暗黑模式）" aria-label="切换浅色/暗黑模式（当前为暗黑模式）" aria-live="polite" aria-pressed="true"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_zzlY"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_Z832"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Cx4E"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_liLQ"><div class="docsWrapper_evXH"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_nZiY" type="button"></button><div class="docRoot_jKp6"><aside class="theme-doc-sidebar-container docSidebarContainer_wXyP"><div class="sidebarViewport_LQZ0"><div class="sidebar_T0dy"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_WBBB"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/linux-os">Linux OS</a><button aria-label="展开侧边栏分类 &#x27;Linux OS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/ajax">Ajax</a><button aria-label="展开侧边栏分类 &#x27;Ajax&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/css">CSS</a><button aria-label="展开侧边栏分类 &#x27;CSS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript-es6">JavaScript ES6</a><button aria-label="展开侧边栏分类 &#x27;JavaScript ES6&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript">JavaScript</a><button aria-label="展开侧边栏分类 &#x27;JavaScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/nodejs">Node.js</a><button aria-label="展开侧边栏分类 &#x27;Node.js&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/typescript">TypeScript</a><button aria-label="展开侧边栏分类 &#x27;TypeScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/vue">Vue</a><button aria-label="展开侧边栏分类 &#x27;Vue&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/轻量级服务器开发tinywebserver">轻量级服务器开发（TinyWebServer）</a><button aria-label="展开侧边栏分类 &#x27;轻量级服务器开发（TinyWebServer）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/c-后台服务器开发">C++ 后台服务器开发</a><button aria-label="展开侧边栏分类 &#x27;C++ 后台服务器开发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/mysql-必知必会">MySQL 必知必会</a><button aria-label="展开侧边栏分类 &#x27;MySQL 必知必会&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/Notes/docs/category/操作系统导论">操作系统导论</a><button aria-label="折叠侧边栏分类 &#x27;操作系统导论&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/概述">概述</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/附录">附录</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/Notes/docs/introduction_to_operating_system/作业">作业</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/Linux补充">Linux补充</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/OS概念类比">OS概念类比</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/01-1_虚拟化_CPU">01-1_虚拟化_CPU</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/01-2_虚拟化_内存">01-2_虚拟化_内存</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/01-3_code">01-3_code</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/02-1_并发">02-1_并发</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/02-2_code">02-2_code</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/03-1_持久化">03-1_持久化</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/03-2_code">03-2_code</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/qt">QT</a><button aria-label="展开侧边栏分类 &#x27;QT&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军信息论-40-讲">读吴军《信息论 40 讲》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《信息论 40 讲》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军富足">读吴军《富足》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《富足》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/machine-learning-andrew-ng">Machine Learning (Andrew Ng)</a><button aria-label="展开侧边栏分类 &#x27;Machine Learning (Andrew Ng)&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/机器学习初步周志华">机器学习初步（周志华）</a><button aria-label="展开侧边栏分类 &#x27;机器学习初步（周志华）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/paddle-零基础深度学习第二版">Paddle 零基础深度学习（第二版）</a><button aria-label="展开侧边栏分类 &#x27;Paddle 零基础深度学习（第二版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/动手学深度学习pytorch-版">动手学深度学习（Pytorch 版）</a><button aria-label="展开侧边栏分类 &#x27;动手学深度学习（Pytorch 版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Notes/docs/intro">学而时习之</a></li></ul></nav></div></div></aside><main class="docMainContainer_dhcR"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_hWfg"><div class="docItemContainer_UIwD"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_ViMa" aria-label="页面路径"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/Notes/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_xAfz"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/Notes/docs/category/操作系统导论"><span itemprop="name">操作系统导论</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">作业</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_xgD3 theme-doc-toc-mobile tocMobile_UvqM"><button type="button" class="clean-btn tocCollapsibleButton_ldZF">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>作业</h1></header><h3 class="anchor anchorWithStickyNavbar_QJwc" id="c03">C03<a href="#c03" class="hash-link" aria-label="C03的直接链接" title="C03的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c04">C04<a href="#c04" class="hash-link" aria-label="C04的直接链接" title="C04的直接链接">​</a></h3>
+<ul>
+<li>作业：
+<ul>
+<li>（模拟）模拟作业以模拟器的形式出现，你运行它以确保理解某些内容。模拟器通常是Python程序，它们让你能够生成不同的问题（使用不同的随机种子），也让程序为你解决问题（带-c标志），以便你检查答案。使用-h或--help标志运行任何模拟器，将提供有关模拟器所有选项的更多信息。每个模拟器附带的README文件提供了有关如何运行它的更多详细信息，其中详细描述了每个标志。</li>
+<li>程序process-run.py让你查看程序运行时进程状态如何改变，是在使用CPU（例如，执行相加指令）还是执行I/O（例如，向磁盘发送请求并等待它完成）。详情请参阅README文件。</li>
+</ul>
+</li>
+<li>书中问题：
+<ul>
+<li>1．用以下标志运行程序：./process-run.py -l 5:100,5:100。CPU利用率（CPU使用时间的百分比）应该是多少？为什么你知道这一点？利用 -c标记查看你的答案是否正确。</li>
+<li>2．现在用这些标志运行：./process-run.py -l 4:100,1:0。这些标志指定了一个包含4条指令的进程（都要使用CPU），并且只是简单地发出I/O并等待它完成。完成这两个进程需要多长时间？利用-c检查你的答案是否正确。</li>
+<li>3．现在交换进程的顺序：./process-run.py -l 1:0,4:100。现在发生了什么？交换顺序是否重要？为什么？同样，用-c看看你的答案是否正确。</li>
+<li>4．现在探索另一些标志。一个重要的标志是-S，它决定了当进程发出I/O时系统如何反应。将标志设置为SWITCH_ON_END，在进程进行I/O操作时，系统将不会切换到另一个进程，而是等待进程完成。当你运行以下两个进程时，会发生什么情况？一个执行I/O，另一个执行CPU工作。（-l 1:0,4:100 -c -S SWITCH_ON_END）</li>
+<li>5．现在，运行相同的进程，但切换行为设置，在等待I/O时切换到另一个进程（-l 1:0,4:100 -c -S SWITCH_ON_IO）。现在会发生什么？利用-c来确认你的答案是否正确。</li>
+<li>6．另一个重要的行为是I/O完成时要做什么。利用-I IO_RUN_LATER，当I/O完成时，发出它的进程不一定马上运行。相反，当时运行的进程一直运行。当你运行这个进程组合时会发生什么？（./process-run.py -l 3:0,5:100,5:100,5:100 -S SWITCH_ON_IO -I IO_RUN_LATER -c -p）系统资源是否被有效利用？</li>
+<li>7．现在运行相同的进程，但使用-I IO_RUN_IMMEDIATE设置，该设置立即运行发出I/O的进程。这种行为有何不同？为什么运行一个刚刚完成I/O的进程会是一个好主意？</li>
+<li>8．现在运行一些随机生成的进程，例如-s 1 -l 3:50,3:50, -s 2 -l 3:50,3:50, -s 3 -l 3:50,3:50。看看你是否能预测追踪记录会如何变化？当你使用-I IO_RUN_IMMEDIATE与-I IO_RUN_LATER时会发生什么？当你使用-S SWITCH_ON_IO与-S SWITCH_ON_END时会发生什么？</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c05">C05<a href="#c05" class="hash-link" aria-label="C05的直接链接" title="C05的直接链接">​</a></h3>
+<ul>
+<li>作业：（编码）在这个作业中，你要熟悉一下刚读过的进程管理API。别担心，它比听起来更有趣！如果你找到尽可能多的时间来编写代码，通常会增加成功的概率[5]，为什么不现在就开始呢？</li>
+<li>书中问题：
+<ul>
+<li>1．编写一个调用fork()的程序。在调用fork()之前，让主进程访问一个变量（例如x）并将其值设置为某个值（例如100）。子进程中的变量有什么值？当子进程和父进程都改变x的值时，变量会发生什么？</li>
+<li>2．编写一个打开文件的程序（使用open()系统调用），然后调用fork()创建一个新进程。子进程和父进程都可以访问open()返回的文件描述符吗？当它们并发（即同时）写入文件时，会发生什么？</li>
+<li>3．使用fork()编写另一个程序。子进程应打印“hello”，父进程应打印“goodbye”。你应该尝试确保子进程始终先打印。你能否不在父进程调用wait()而做到这一点呢？</li>
+<li>4．编写一个调用fork()的程序，然后调用某种形式的exec()来运行程序/bin/ls。看看是否可以尝试exec()的所有变体，包括execl()、execle()、execlp()、execv()、execvp()和execvP()。为什么同样的基本调用会有这么多变种？</li>
+<li>5．现在编写一个程序，在父进程中使用wait()，等待子进程完成。wait()返回什么？如果你在子进程中使用wait()会发生什么？</li>
+<li>6．对前一个程序稍作修改，这次使用waitpid()而不是wait()。什么时候waitpid()会有用？</li>
+<li>7．编写一个创建子进程的程序，然后在子进程中关闭标准输出（STDOUT_FILENO）。如果子进程在关闭描述符后调用printf()打印输出，会发生什么？</li>
+<li>8．编写一个程序，创建两个子进程，并使用pipe()系统调用，将一个子进程的标准输出连接到另一个子进程的标准输入。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c06">C06<a href="#c06" class="hash-link" aria-label="C06的直接链接" title="C06的直接链接">​</a></h3>
+<ul>
+<li>作业：（测量）测量作业是小型练习。你可以编写代码在真实机器上运行，从而测量操作系统或硬件性能的某些方面。这样的作业背后的想法是给你一点实际操作系统的实践经验。</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c07">C07<a href="#c07" class="hash-link" aria-label="C07的直接链接" title="C07的直接链接">​</a></h3>
+<ul>
+<li>
+<p>作业：scheduler.py这个程序允许你查看不同调度程序在调度指标（如响应时间、周转时间和总等待时间）下的执行情况。详情请参阅README文件。</p>
+</li>
+<li>
+<p>书中问题：</p>
+<ul>
+<li>1．使用SJF和FIFO调度程序运行长度为200的3个作业时，计算响应时间和周转时间。</li>
+<li>2．现在做同样的事情，但有不同长度的作业，即100、200和300。</li>
+<li>3．现在做同样的事情，但采用RR调度程序，时间片为1。</li>
+<li>4．对于什么类型的工作负载，SJF提供与FIFO相同的周转时间？</li>
+<li>5．对于什么类型的工作负载和量子长度，SJF与RR提供相同的响应时间？</li>
+<li>6．随着工作长度的增加，SJF的响应时间会怎样？你能使用模拟程序来展示趋势吗？</li>
+<li>7．随着量子长度的增加，RR的响应时间会怎样？你能写出一个方程，计算给定N个工作时，最坏情况的响应时间吗？</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c08">C08<a href="#c08" class="hash-link" aria-label="C08的直接链接" title="C08的直接链接">​</a></h3>
+<ul>
+<li>作业：程序mlfq.py允许你查看本章介绍的MLFQ调度程序的行为。详情请参阅README文件。</li>
+<li>书中问题：
+<ul>
+<li>1．只用两个工作和两个队列运行几个随机生成的问题。针对每个工作计算MLFQ的执行记录。限制每项作业的长度并关闭I/O，让你的生活更轻松。</li>
+<li>2．如何运行调度程序来重现本章中的每个实例？</li>
+<li>3．将如何配置调度程序参数，像轮转调度程序那样工作？</li>
+<li>4．设计两个工作的负载和调度程序参数，以便一个工作利用较早的规则4a和4b（用-S标志打开）来“愚弄”调度程序，在特定的时间间隔内获得99%的CPU。</li>
+<li>5．给定一个系统，其最高队列中的时间片长度为10ms，你需要如何频繁地将工作推回到最高优先级级别（带有-B标志），以保证一个长时间运行（并可能饥饿）的工作得到至少5%的CPU？</li>
+<li>6．调度中有一个问题，即刚完成I/O的作业添加在队列的哪一端。-I标志改变了这个调度模拟器的这方面行为。尝试一些工作负载，看看你是否能看到这个标志的效果。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c09">C09<a href="#c09" class="hash-link" aria-label="C09的直接链接" title="C09的直接链接">​</a></h3>
+<ul>
+<li>
+<p>作业：lottery.py这个程序允许你查看彩票调度程序的工作原理。详情请参阅README文件。</p>
+</li>
+<li>
+<p>书中问题：</p>
+<ul>
+<li>
+<p>1．计算3个工作在随机种子为1、2和3时的模拟解。</p>
+</li>
+<li>
+<p>2．现在运行两个具体的工作：每个长度为10，但是一个（工作0）只有一张彩票，另一个（工作1）有100张（−l 10∶1,10∶100）。</p>
+<p>彩票数量如此不平衡时会发生什么？在工作1完成之前，工作0是否会运行？多久？一般来说，这种彩票不平衡对彩票调度的行为有什么影响？</p>
+</li>
+<li>
+<p>3．如果运行两个长度为100的工作，都有100张彩票（−l100∶100,100∶100），调度程序有多不公平？运行一些不同的随机种子来确定（概率上的）答案。不公平性取决于一项工作比另一项工作早完成多少。</p>
+</li>
+<li>
+<p>4．随着量子规模（-q）变大，你对上一个问题的答案如何改变？</p>
+</li>
+<li>
+<p>5．你可以制作类似本章中的图表吗</p>
+<p>还有什么值得探讨的？用步长调度程序，图表看起来如何？</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c10">C10<a href="#c10" class="hash-link" aria-label="C10的直接链接" title="C10的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c11">C11<a href="#c11" class="hash-link" aria-label="C11的直接链接" title="C11的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c12">C12<a href="#c12" class="hash-link" aria-label="C12的直接链接" title="C12的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c13">C13<a href="#c13" class="hash-link" aria-label="C13的直接链接" title="C13的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c14">C14<a href="#c14" class="hash-link" aria-label="C14的直接链接" title="C14的直接链接">​</a></h3>
+<ul>
+<li>作业：
+<ul>
+<li>（编码）在这个作业中，你会对内存分配有所了解。首先，你会写一些错误的程序（好玩！）。然后，利用一些工具来帮助你找到其中的错误。最后，你会意识到这些工具有多棒，并在将来使用它们，从而使你更加快乐和高效。</li>
+<li>你要使用的第一个工具是调试器gdb。关于这个调试器有很多需要了解的知识，在这里，我们只是浅尝辄止。</li>
+<li>你要使用的第二个工具是valgrind [SN05]。该工具可以帮助查找程序中的内存泄露和其他隐藏的内存问题。如果你的系统上没有安装，请访问valgrind网站并安装它。</li>
+</ul>
+</li>
+<li>书中问题：
+<ul>
+<li>1．编写一个名为null.c的简单程序，它创建一个指向整数的指针，将其设置为NULL，然后尝试对其进行释放内存操作。把它编译成一个名为null的可执行文件。当你运行这个程序时会发生什么？</li>
+<li>2．编译该程序，其中包含符号信息（使用-g 标志）。这样做可以将更多信息放入可执行文件中，使调试器可以访问有关变量名称等的更多有用信息。通过输入gdb null，在调试器下运行该程序，然后，一旦gdb运行，输入run。gdb显示什么信息？</li>
+<li>3．对这个程序使用valgrind工具。我们将使用属于valgrind的memcheck工具来分析发生的情况。输入以下命令来运行程序：valgrind --leak-check=yes null。当你运行它时会发生什么？你能解释工具的输出吗？</li>
+<li>4．编写一个使用malloc()来分配内存的简单程序，但在退出之前忘记释放它。这个程序运行时会发生什么？你可以用gdb来查找它的任何问题吗？用valgrind呢（再次使用--leak-check=yes标志）？</li>
+<li>5．编写一个程序，使用malloc()创建一个名为data、大小为100的整数数组。然后，将data[100]设置为0。当你运行这个程序时会发生什么？当你使用valgrind运行这个程序时会发生什么？程序是否正确？</li>
+<li>6．创建一个分配整数数组的程序（如上所述），释放它们，然后尝试打印数组中某个元素的值。程序会运行吗？当你使用valgrind时会发生什么？</li>
+<li>7．现在传递一个有趣的值来释放（例如，在上面分配的数组中间的一个指针）。 会发生什么？你是否需要工具来找到这种类型的问题？</li>
+<li>8．尝试一些其他接口来分配内存。例如，创建一个简单的向量似的数据结构，以及使用realloc()来管理向量的相关函数。使用数组来存储向量元素。当用户在向量中添加条目时，请使用realloc()为其分配更多空间。这样的向量表现如何？它与链表相比如何？使用valgrind来帮助你发现错误。</li>
+<li>9．花更多时间阅读有关使用gdb和valgrind的信息。了解你的工具至关重要，花时间学习如何成为UNIX和C环境中的调试器专家。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c15">C15<a href="#c15" class="hash-link" aria-label="C15的直接链接" title="C15的直接链接">​</a></h3>
+<ul>
+<li>作业：程序relocation.py让你看到，在带有基址和边界寄存器的系统中，如何执行地址转换。详情请参阅README文件。</li>
+<li>书中问题：
+<ul>
+<li>1．用种子1、2和3运行，并计算进程生成的每个虚拟地址是处于界限内还是界限外?如果在界限内，请计算地址转换。</li>
+<li>2．使用以下标志运行：-s 0 -n 10。为了确保所有生成的虚拟地址都处于边界内，要将-l（界限寄存器）设置为什么值？</li>
+<li>3．使用以下标志运行：-s 1 -n 10 -l 100。可以设置界限的最大值是多少，以便地址空间仍然完全放在物理内存中？</li>
+<li>4．运行和第3题相同的操作，但使用较大的地址空间（-a）和物理内存（-p）。</li>
+<li>5．作为边界寄存器的值的函数，随机生成的虚拟地址的哪一部分是有效的？画一个图，使用不同随机种子运行，限制值从0到最大地址空间大小。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c16">C16<a href="#c16" class="hash-link" aria-label="C16的直接链接" title="C16的直接链接">​</a></h3>
+<ul>
+<li>
+<p>作业：该程序允许你查看在具有分段的系统中如何执行地址转换。详情请参阅README文件。</p>
+</li>
+<li>
+<p>书中问题：</p>
+<ul>
+<li>1．先让我们用一个小地址空间来转换一些地址。这里有一组简单的参数和几个不同的随机种子。你可以转换这些地址吗？</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">segmentation.py -a 128 -p 512 -b 0 -l 20 -B 512 -L 20 -s 0</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">segmentation.py -a 128 -p 512 -b 0 -l 20 -B 512 -L 20 -s 1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">segmentation.py -a 128 -p 512 -b 0 -l 20 -B 512 -L 20 -s 2</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>2．现在，让我们看看是否理解了这个构建的小地址空间（使用上面问题的参数）。段0中最高的合法虚拟地址是什么？段1中最低的合法虚拟地址是什么？在整个地址空间中，最低和最高的非法地址是什么？最后，如何运行带有-A标志的segmentation.py来测试你是否正确？</li>
+<li>3．假设我们在一个128字节的物理内存中有一个很小的16字节地址空间。你会设置什么样的基址和界限，以便让模拟器为指定的地址流生成以下转换结果：有效，有效，违反……违反，有效，有效？假设用以下参数：</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">segmentation.py -a 16 -p 128</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  -A 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  --b0 ? --l0 ? --b1 ? --l1 ?</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>4．假设我们想要生成一个问题，其中大约90%的随机生成的虚拟地址是有效的（即不产生段异常）。你应该如何配置模拟器来做到这一点？哪些参数很重要？</li>
+<li>5．你可以运行模拟器，使所有虚拟地址无效吗？怎么做到？</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c17">C17<a href="#c17" class="hash-link" aria-label="C17的直接链接" title="C17的直接链接">​</a></h3>
+<ul>
+<li>作业：程序malloc.py让你探索本章中描述的简单空闲空间分配程序的行为。有关其基本操作的详细信息，请参见README文件。</li>
+<li>书中问题：
+<ul>
+<li>1．首先运行flag -n 10 -H 0 -p BEST -s 0来产生一些随机分配和释放。你能预测malloc()/free()会返回什么吗？你可以在每次请求后猜测空闲列表的状态吗？随着时间的推移，你对空闲列表有什么发现？</li>
+<li>2．使用最差匹配策略搜索空闲列表（-p WORST）时，结果有何不同？什么改变了？</li>
+<li>3．如果使用首次匹配（-p FIRST）会如何？使用首次匹配时，什么变快了？</li>
+<li>4．对于上述问题，列表在保持有序时，可能会影响某些策略找到空闲位置所需的时间。使用不同的空闲列表排序（-l ADDRSORT，-l SIZESORT +，-l SIZESORT-）查看策略和列表排序如何相互影响。</li>
+<li>5．合并空闲列表可能非常重要。增加随机分配的数量（比如说-n 1000）。随着时间的推移，大型分配请求会发生什么？在有和没有合并的情况下运行（即不用和采用-C标志）。你看到了什么结果差异？每种情况下的空闲列表有多大？在这种情况下，列表的排序是否重要？</li>
+<li>6．将已分配百分比-P改为高于50，会发生什么？它接近100时分配会怎样？接近0会怎样？</li>
+<li>7．要生成高度碎片化的空闲空间，你可以提出怎样的具体请求？使用-A标志创建碎片化的空闲列表，查看不同的策略和选项如何改变空闲列表的组织。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c18">C18<a href="#c18" class="hash-link" aria-label="C18的直接链接" title="C18的直接链接">​</a></h3>
+<ul>
+<li>
+<p>作业：在这个作业中，你将使用一个简单的程序（名为paging-linear-translate.py），来看看你是否理解了简单的虚拟—物理地址转换如何与线性页表一起工作。详情请参阅README文件。</p>
+</li>
+<li>
+<p>书中问题：</p>
+<ul>
+<li>
+<p>1．在做地址转换之前，让我们用模拟器来研究线性页表在给定不同参数的情况下如何改变大小。在不同参数变化时，计算线性页表的大小。一些建议输入如下，通过使用-v标志，你可以看到填充了多少个页表项。</p>
+<p>首先，要理解线性页表大小如何随着地址空间的增长而变化：</p>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">paging-linear-translate.py -P 1k -a 1m -p 512m -v -n 0 </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">paging-linear-translate.py -P 1k -a 2m -p 512m -v -n 0 </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">paging-linear-translate.py -P 1k -a 4m -p 512m -v -n 0</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>然后，理解线性页面大小如何随页大小的增长而变化：</p>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">paging-linear-translate.py -P 1k -a 1m -p 512m -v -n 0 </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">paging-linear-translate.py -P 2k -a 1m -p 512m -v -n 0 </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">paging-linear-translate.py -P 4k -a 1m -p 512m -v -n 0</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>在运行这些命令之前，请试着想想预期的趋势。页表大小如何随地址空间的增长而改变？随着页大小的增长呢？为什么一般来说，我们不应该使用很大的页呢？</p>
+</li>
+<li>
+<p>2．现在让我们做一些地址转换。从一些小例子开始，使用-u标志更改分配给地址空间的页数。例如：</p>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">paging-linear-translate.py -P 1k -a 16k -p 32k -v -u 0 </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">paging-linear-translate.py -P 1k -a 16k -p 32k -v -u 25 </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">paging-linear-translate.py -P 1k -a 16k -p 32k -v -u 50 </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">paging-linear-translate.py -P 1k -a 16k -p 32k -v -u 75 </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">paging-linear-translate.py -P 1k -a 16k -p 32k -v -u 100</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>如果增加每个地址空间中的页的百分比，会发生什么？</p>
+</li>
+<li>
+<p>3．现在让我们尝试一些不同的随机种子，以及一些不同的（有时相当疯狂的）地址空间参数：</p>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">paging-linear-translate.py -P 8 -a 32  -p 1024 -v -s 1 </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">paging-linear-translate.py -P 8k -a 32k -p 1m  -v -s 2 </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">paging-linear-translate.py -P 1m -a 256m -p 512m -v -s 3</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>哪些参数组合是不现实的？为什么？</p>
+</li>
+<li>
+<p>4．利用该程序尝试其他一些问题。你能找到让程序无法工作的限制吗？例如，如果地址空间大小大于物理内存，会发生什么情况？</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c19">C19<a href="#c19" class="hash-link" aria-label="C19的直接链接" title="C19的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+</ul>
+<p>本次作业要测算一下TLB的容量和访问TLB的开销。这个想法参考了Saavedra-Barrera的工作[SB92]，他用设计了一个简单而漂亮的用户级程序，来测算缓存层级结构的方方面面。更多细节请阅读他的论文。</p>
+<p>基本原理就是访问一个跨多个内存页的大尺寸数据结构（例如数组），然后统计访问时间。例如，假设一个机器的TLB大小为4（这很小，但对这个讨论有用）。如果写一个程序访问4个或更少的页，每次访问都会命中TLB，因此相对较快。但是，如果在一个循环里反复访问5个或者更多的页，每次访问的开销就会突然跃升，因为发生TLB未命中。</p>
+<p>循环遍历数组一次的基本代码应该像这样：</p>
+<div class="language-cpp codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-cpp codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">int</span><span class="token plain"> jump </span><span class="token operator">=</span><span class="token plain"> PAGESIZE </span><span class="token operator">/</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">sizeof</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">int</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">for</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain">i </span><span class="token operator">=</span><span class="token plain"> </span><span class="token number">0</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"> i </span><span class="token operator">&lt;</span><span class="token plain"> NUMPAGES </span><span class="token operator">*</span><span class="token plain"> jump</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"> i </span><span class="token operator">+=</span><span class="token plain"> jump</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    a</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain">i</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"> </span><span class="token operator">+=</span><span class="token plain"> </span><span class="token number">1</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>在这个循环中，数组a中每页的一个整数被更新，直到NUMPAGES指定的页数。通过对这个循环反复执行计时（比如，在外层循环中执行几亿次这个循环，或者运行几秒钟所需的次数），就可以计算出平均每次访问所用的时间。随着NUMPAGES的增加，寻找开销的跃升，可以大致确定第一级TLB的大小，确定是否存在第二级TLB（如果存在，确定它的大小），总体上很好地理解TLB命中和未命中对于性能的影响。</p>
+<p>图19.5　发现TLB大小和未命中开销：</p>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_94-c1003854c72649d7866213c82c903049.jfif" width="399" height="426" class="img_O9Fa"></p>
+<p>从图19.5中可以看出，如果只访问少数页（8或更少），平均访问时间大约是5ns。如果访问16页或更多，每次访问时间突然跃升到20ns。最后一次开销跃升发生在1024页时，这时每次访问大约要70ns。通过这些数据，我们可以总结出这是一个二级的TLB，第一级较小（大约能存放8～16项），第二级较大，但较慢（大约能存放512项）。第一级TLB的命中和完全未命中的总体差距非常大，大约有14倍。TLB的性能很重要！</p>
+<ul>
+<li>书中问题：
+<ul>
+<li>1．为了计时，可能需要一个计时器，例如gettimeofday()提供的。这种计时器的精度如何？操作要花多少时间，才能让你对它精确计时？（这有助于确定需要循环多少次，反复访问内存页，才能对它成功计时。）</li>
+<li>2．写一个程序，命名为tlb.c，大体测算一下每个页的平均访问时间。程序的输入参数有：页的数目和尝试的次数。</li>
+<li>3．用你喜欢的脚本语言（csh、Python等）写一段脚本来运行这个程序，当访问页面从1增长到几千，也许每次迭代都乘2。在不同的机器上运行这段脚本，同时收集相应数据。需要试多少次才能获得可信的测量结果？</li>
+<li>4．接下来，将结果绘图，类似于上图。可以用ploticus这样的好工具画图。可视化使数据更容易理解，你认为是什么原因？</li>
+<li>5．要注意编译器优化带来的影响。编译器做各种聪明的事情，包括优化掉循环，如果循环中增加的变量后续没有使用。如何确保编译器不优化掉你写的TLB大小测算程序的主循环？</li>
+<li>6．还有一个需要注意的地方，今天的计算机系统大多有多个CPU，每个CPU当然有自己的TLB结构。为了得到准确的测量数据，我们需要只在一个CPU上运行程序，避免调度器把进程从一个CPU调度到另一个去运行。如何做到？（提示：在Google上搜索“pinning a thread”相关的信息）如果没有这样做，代码从一个CPU移到了另一个，会发生什么情况？</li>
+<li>7．另一个可能发生的问题与初始化有关。如果在访问数组a之前没有初始化，第一次访问将非常耗时，由于初始访问开销，比如要求置0。这会影响你的代码及其计时吗？如何抵消这些潜在的开销？</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c20">C20<a href="#c20" class="hash-link" aria-label="C20的直接链接" title="C20的直接链接">​</a></h3>
+<ul>
+<li>作业：这个有趣的小作业会测试你是否了解多级页表的工作原理。是的，前面句子中使用的“有趣”一词有一些争议。该程序叫作“可能不太怪：paging-multilevel-translate.py”。详情请参阅README文件。</li>
+<li>书中问题：
+<ul>
+<li>1．对于线性页表，你需要一个寄存器来定位页表，假设硬件在TLB未命中时进行查找。你需要多少个寄存器才能找到两级页表？三级页表呢？</li>
+<li>2．使用模拟器对随机种子0、1和2执行翻译，并使用-c标志检查你的答案。需要多少内存引用来执行每次查找？</li>
+<li>3．根据你对缓存内存的工作原理的理解，你认为对页表的内存引用如何在缓存中工作？它们是否会导致大量的缓存命中（并导致快速访问）或者很多未命中（并导致访问缓慢）？</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c21">C21<a href="#c21" class="hash-link" aria-label="C21的直接链接" title="C21的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c22">C22<a href="#c22" class="hash-link" aria-label="C22的直接链接" title="C22的直接链接">​</a></h3>
+<ul>
+<li>作业：这个模拟器paging-policy.py允许你使用不同的页替换策略。详情请参阅README文件。</li>
+<li>书中问题：
+<ul>
+<li>1．使用以下参数生成随机地址：-s 0 -n 10，-s 1 -n 10和-s 2 -n 10。将策略从FIFO更改为LRU，并将其更改为OPT。计算所述地址追踪中的每个访问是否命中或未命中。</li>
+<li>2．对于大小为5的高速缓存，为以下每个策略生成最差情况的地址引用序列：FIFO、LRU和MRU（最差情况下的引用序列导致尽可能多的未命中）。对于最差情况下的引用序列，需要的缓存增大多少，才能大幅提高性能，并接近OPT？</li>
+<li>3．生成一个随机追踪序列（使用Python或Perl）。你预计不同的策略在这样的追踪序列上的表现如何？</li>
+<li>4．现在生成一些局部性追踪序列。如何能够产生这样的追踪序列？LRU表现如何？RAND比LRU好多少？CLOCK表现如何？CLOCK使用不同数量的时钟位，表现如何？</li>
+<li>5．使用像valgrind这样的程序来测试真实应用程序并生成虚拟页面引用序列。例如，运行valgrind --tool = lackey --trace-mem = yes ls将为程序ls所做的每个指令和数据引用，输出近乎完整的引用追踪。为了使上述仿真器有用，你必须首先将每个虚拟内存引用转换为虚拟页码参考（通过屏蔽偏移量并向右移位来完成）。为了满足大部分请求，你的应用程序追踪需要多大的缓存？随着缓存大小的增加绘制其工作集的图形。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c26">C26<a href="#c26" class="hash-link" aria-label="C26的直接链接" title="C26的直接链接">​</a></h3>
+<ul>
+<li>
+<p>作业：x86.py这个程序让你看到不同的线程交替如何导致或避免竞态条件。请参阅README文件，了解程序如何工作及其基本输入的详细信息，然后回答以下问题。</p>
+</li>
+<li>
+<p>书中问题：</p>
+<ul>
+<li>
+<p>1．开始，我们来看一个简单的程序，“loop.s”。首先，阅读这个程序，看看你是否能理解它：cat loop.s。然后，用这些参数运行它：</p>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">./x86.py -p loop.s -t 1 -i 100 -R dx</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>这指定了一个单线程，每100条指令产生一个中断，并且追踪寄存器%dx。你能弄清楚%dx在运行过程中的价值吗？你有答案之后，运行上面的代码并使用-c标志来检查你的答案。注意答案的左边显示了右侧指令运行后寄存器的值（或内存的值）。</p>
+</li>
+<li>
+<p>2．现在运行相同的代码，但使用这些标志：</p>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">./x86.py -p loop.s -t 2 -i 100 -a dx=3,dx=3 -R dx</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>这指定了两个线程，并将每个%dx寄存器初始化为3。%dx会看到什么值？使用-c标志运行以查看答案。多个线程的存在是否会影响计算？这段代码有竞态条件吗？</p>
+</li>
+<li>
+<p>3．现在运行以下命令：</p>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">./x86.py -p loop.s -t 2 -i 3 -r -a dx=3,dx=3 -R dx</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>这使得中断间隔非常小且随机。使用不同的种子和-s来查看不同的交替。中断频率是否会改变这个程序的行为？</p>
+</li>
+<li>
+<p>4．接下来我们将研究一个不同的程序（looping-race-nolock.s）。</p>
+<p>该程序访问位于内存地址2000的共享变量。简单起见，我们称这个变量为x。使用单线程运行它，并确保你了解它的功能，如下所示：</p>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">./x86.py -p looping-race-nolock.s -t 1 -M 2000</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>在整个运行过程中，x（即内存地址为2000）的值是多少？使用-c来检查你的答案。</p>
+</li>
+<li>
+<p>5．现在运行多个迭代和线程：</p>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">./x86.py -p looping-race-nolock.s -t 2 -a bx=3 -M 2000</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>你明白为什么每个线程中的代码循环3次吗？x的最终值是什么？</p>
+</li>
+<li>
+<p>6．现在以随机中断间隔运行：</p>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">./x86.py -p looping-race-nolock.s -t 2 -M 2000 -i 4 -r -s 0</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>然后改变随机种子，设置-s 1，然后-s 2等。只看线程交替，你能说出x的最终值是什么吗？中断的确切位置是否重要？在哪里发生是安全的？中断在哪里会引起麻烦？换句话说，临界区究竟在哪里？</p>
+</li>
+<li>
+<p>7．现在使用固定的中断间隔来进一步探索程序。运行：</p>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">./x86.py -p looping-race-nolock.s -a bx=1 -t 2 -M 2000 -i 1</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>看看你能否猜测共享变量x的最终值是什么。当你改用-i 2，-i 3等标志呢？对于哪个中断间隔，程序会给出“正确的”最终答案？</p>
+</li>
+<li>
+<p>8．现在为更多循环运行相同的代码（例如set -a bx = 100）。使用-i标志设置哪些中断间隔会导致“正确”结果？哪些间隔会导致令人惊讶的结果？</p>
+</li>
+<li>
+<p>9．我们来看本作业中最后一个程序（wait-for-me.s）。</p>
+<p>像这样运行代码：</p>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">./x86.py -p wait-for-me.s -a ax=1,ax=0 -R ax -M 2000</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>这将线程0的%ax寄存器设置为1，并将线程1的值设置为0，在整个运行过程中观察%ax和内存位置2000的值。代码的行为应该如何？线程使用的2000位置的值如何？它的最终值是什么？</p>
+</li>
+<li>
+<p>10．现在改变输入：</p>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">./x86.py -p wait-for-me.s -a ax=0,ax=1 -R ax -M 2000</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>线程行为如何？线程0在做什么？改变中断间隔（例如，-i 1000，或者可能使用随机间隔）会如何改变追踪结果？程序是否高效地使用了CPU？</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c27">C27<a href="#c27" class="hash-link" aria-label="C27的直接链接" title="C27的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c28">C28<a href="#c28" class="hash-link" aria-label="C28的直接链接" title="C28的直接链接">​</a></h3>
+<ul>
+<li>作业：程序x86.py允许你看到不同的线程交替如何导致或避免竞争条件。请参阅README文件，了解程序如何工作及其基本输入的详细信息，然后回答以下问题。</li>
+<li>书中问题：
+<ul>
+<li>1．首先用标志-p flag.s运行x86.py。该代码通过一个内存标志“实现”锁。你能理解汇编代码试图做什么吗？</li>
+<li>2．使用默认值运行时，flag.s是否按预期工作？它会产生正确的结果吗？使用-M和-R标志跟踪变量和寄存器（并打开-c查看它们的值）。你能预测代码运行时标志最终会变成什么值吗？</li>
+<li>3．使用-a标志更改寄存器%bx的值（例如，如果只运行两个线程，就用-a bx = 2，bx = 2）。代码是做什么的？对这段代码问上面的问题，答案如何？</li>
+<li>4．对每个线程将bx设置为高值，然后使用-i标志生成不同的中断频率。什么值导致产生不好的结果？什么值导致产生良好的结果？</li>
+<li>5．现在让我们看看程序test-and-set.s。首先，尝试理解使用xchg指令构建简单锁原语的代码。获取锁怎么写？释放锁如何写？</li>
+<li>6．现在运行代码，再次更改中断间隔（-i）的值，并确保循环多次。代码是否总能按预期工作？有时会导致CPU使用率不高吗？如何量化呢？</li>
+<li>7．使用-P标志生成锁相关代码的特定测试。例如，执行一个测试计划，在第一个线程中获取锁，但随后尝试在第二个线程中获取锁。正确的事情发生了吗？你还应该测试什么？</li>
+<li>8．现在让我们看看peterson.s中的代码，它实现了Person算法（在文中的补充栏中提到）。研究这些代码，看看你能否理解它。</li>
+<li>9．现在用不同的-i值运行代码。你看到了什么样的不同行为？</li>
+<li>10．你能控制调度（带-P标志）来“证明”代码有效吗？你应该展示哪些不同情况？考虑互斥和避免死锁。</li>
+<li>11．现在研究ticket.s中ticket锁的代码。它是否与本章中的代码相符？</li>
+<li>12．现在运行代码，使用以下标志：-a bx=1000, bx=1000（此标志设置每个线程循环1000次）。看看随着时间的推移发生了什么，线程是否花了很多时间自旋等待锁？</li>
+<li>13．添加更多的线程，代码表现如何？</li>
+<li>14．现在来看yield.s，其中我们假设yield指令能够使一个线程将CPU的控制权交给另一个线程（实际上，这会是一个OS原语，但为了简化仿真，我们假设 有一个指令可以完成任务）。找到一个场景，其中test-and-set.s浪费周期旋转，但yield.s不会。节省了多少指令？这些节省在什么情况下会出现？</li>
+<li>15．最后来看test-and-test-and-set.s。这把锁有什么作用？与test-and-set.s相比，它实现了什么样的优点？</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c29">C29<a href="#c29" class="hash-link" aria-label="C29的直接链接" title="C29的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c30">C30<a href="#c30" class="hash-link" aria-label="C30的直接链接" title="C30的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c31">C31<a href="#c31" class="hash-link" aria-label="C31的直接链接" title="C31的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c32">C32<a href="#c32" class="hash-link" aria-label="C32的直接链接" title="C32的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c33">C33<a href="#c33" class="hash-link" aria-label="C33的直接链接" title="C33的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c34">C34<a href="#c34" class="hash-link" aria-label="C34的直接链接" title="C34的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c35">C35<a href="#c35" class="hash-link" aria-label="C35的直接链接" title="C35的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c36">C36<a href="#c36" class="hash-link" aria-label="C36的直接链接" title="C36的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c37">C37<a href="#c37" class="hash-link" aria-label="C37的直接链接" title="C37的直接链接">​</a></h3>
+<ul>
+<li>作业：本作业使用disk.py来帮助读者熟悉现代磁盘的工作原理。它有很多不同的选项，与大多数其他模拟不同，它有图形动画，可以准确显示磁盘运行时发生的情况。详情请参阅README文件。</li>
+<li>书中问题：
+<ul>
+<li>1．计算以下几组请求的寻道、旋转和传输时间：-a 0，-a 6，-a 30，-a 7，30，8，最后-a 10，11，12，13。</li>
+<li>2．执行上述相同请求，但将寻道速率更改为不同值：-S 2，-S 4，-S 8，-S 10，-S 40，-S 0.1。时代如何变化？</li>
+<li>3．同样的请求，但改变旋转速率：-R 0.1，-R 0.5，-R 0.01。时间如何变化？</li>
+<li>4．你可能已经注意到，对于一些请求流，一些策略比FIFO更好。例如，对于请求流-a 7，30，8，处理请求的顺序是什么？现在在相同的工作负载上运行最短寻道时间优先（SSTF）调度程序（-p SSTF）。每个请求服务需要多长时间（寻道、旋转、传输）？</li>
+<li>5．现在做同样的事情，但使用最短的访问时间优先（SATF）调度程序（-p SATF）。它是否对-a 7，30.8指定的一组请求有所不同？找到SATF明显优于SSTF的一组请求。出现显著差异的条件是什么？</li>
+<li>6．你可能已经注意到，该磁盘没有特别好地处理请求流-a 10，11，12，13。这是为什么？你可以引入一个磁道偏斜来解决这个问题（-o skew，其中skew是一个非负整数）？考虑到默认寻道速率，偏斜应该是多少，才能尽量减少这一组请求的总时间？对于不同的寻道速率（例如，-S 2，-S 4）呢？一般来说，考虑到寻道速率和扇区布局信息，你能否写出一个公式来计算偏斜？</li>
+<li>7．多区域磁盘将更多扇区放到外圈磁道中。以这种方式配置此磁盘，请使用-z标志运行。具体来说，尝试运行一些请求，针对使用-z 10，20，30的磁盘（这些数字指定了扇区在每个磁道中占用的角度空间。在这个例子中，外圈磁道每隔10度放入一个扇区，中间磁道每20度，内圈磁道每30度一个扇区）。运行一些随机请求（例如，-a -1 -A 5，-1，0，它通过-a -1标志指定使用随机请求，并且生成从0到最大值的五个请求），看看你是否可以计算寻道、旋转和传输时间。使用不同的随机种子（-s 1，-s 2等）。外圈，中间和内圈磁道的带宽（每单位时间的扇区数）是多少？</li>
+<li>8．调度窗口确定一次磁盘可以接受多少个扇区请求，以确定下一个要服务的扇区。生成大量请求的某种随机工作负载（例如，-A 1000，-1，0，可能用不同的种子），并查看调度窗口从1变为请求数量时，SATF调度器需要多长时间（即-w 1至-w 1000，以及其间的一些值）。需要多大的调度窗口才能达到最佳性能？制作一张图并看看。提示：使用-c标志，不要使用-G打开图形，以便更快运行。当调度窗口设置为1时，你使用的是哪种策略？</li>
+<li>9．在调度程序中避免饥饿非常重要。对于SATF这样的策略，你能否想到一系列的请求，导致特定扇区的访问被推迟了很长时间？给定序列，如果使用有界的SATF（bounded SATF ，BSATF）调度方法，它将如何执行？在这种方法中，你可以指定调度窗口（例如-w 4）以及BSATF策略（-p BSATF）。这样，调度程序只在当前窗口中的所有请求都被服务后，才移动到下一个请求窗口。这是否解决了饥饿问题？与SATF相比，它的表现如何？一般来说，磁盘如何在性能与避免饥饿之间进行权衡？</li>
+<li>10．到目前为止，我们看到的所有调度策略都很贪婪（greedy），因为它们只是选择下一个最佳选项，而不是在一组请求中寻找最优调度。你能找到一组请求，导致这种贪婪方法不是最优吗？</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c38">C38<a href="#c38" class="hash-link" aria-label="C38的直接链接" title="C38的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c39">C39<a href="#c39" class="hash-link" aria-label="C39的直接链接" title="C39的直接链接">​</a></h3>
+<ul>
+<li>作业：在这次作业中，我们将熟悉本章中描述的API是如何工作的。为此，你只需编写几个不同的程序，主要基于各种UNIX实用程序。</li>
+<li>书中问题：
+<ul>
+<li>1．Stat：实现一个自己的命令行工具stat，实现对一个文件或目录调用stat() 函数即可。将文件的大小、分配的磁盘块数、引用数等信息打印出来。当目录的内容发生变化时，目录的引用计数如何变化？有用的接口：stat()。</li>
+<li>2．列出文件：编写一个程序，列出指定目录内容。如果没有传参数，则程序仅输出文件名。当传入-l 参数时，程序需要打印出文件的所有者，所属组权限以及stat() 函数获得的一些其他信息。另外还要支持传入要读取的目录作为参数，比如myls -l directory。如果没有传入目录参数，则用当前目录作为默认参数。有用的接口：stat()、opendir()、readdir()和getcwd()。</li>
+<li>3．Tail：编写一个程序，输出一个文件的最后几行。这个程序运行后要能跳到文件末尾附近，然后一直读取指定的数据行数，并全部打印出来。运行程序的命令是mytail -n file， 其中参数n是指从文件末尾数起要打印的行数。有用的接口：stat()、lseek()、open()、read()和close()。</li>
+<li>4．递归查找：编写一个程序，打印指定目录树下所有的文件和目录名。比如，当不带参数运行程序时，会从当前工作目录开始递归打印目录内容以及其所有子目录的所有内容，直到打印完以当前工作目录为根的整棵目录树。如果传入了一个目录参数，则以这个目录为根开始递归打印。可以添加更多的参数来限制程序的递归遍历操作，可以参照find 命令。有用的接口：自己想一下。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c40">C40<a href="#c40" class="hash-link" aria-label="C40的直接链接" title="C40的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c41">C41<a href="#c41" class="hash-link" aria-label="C41的直接链接" title="C41的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c42">C42<a href="#c42" class="hash-link" aria-label="C42的直接链接" title="C42的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c43">C43<a href="#c43" class="hash-link" aria-label="C43的直接链接" title="C43的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c44">C44<a href="#c44" class="hash-link" aria-label="C44的直接链接" title="C44的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c45">C45<a href="#c45" class="hash-link" aria-label="C45的直接链接" title="C45的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c46">C46<a href="#c46" class="hash-link" aria-label="C46的直接链接" title="C46的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c47">C47<a href="#c47" class="hash-link" aria-label="C47的直接链接" title="C47的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c48">C48<a href="#c48" class="hash-link" aria-label="C48的直接链接" title="C48的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c49">C49<a href="#c49" class="hash-link" aria-label="C49的直接链接" title="C49的直接链接">​</a></h3>
+<ul>
+<li>作业：本节引入了afs.py，这是一个简单的AFS模拟器，可用于增强你对Andrew文件系统工作原理的理解。阅读README文件，以获取更多详细信息。</li>
+<li>书中问题：
+<ul>
+<li>1．运行一些简单的场景，以确保你可以预测客户端将读取哪些值。改变随机种子标志（-s），看看是否可以追踪并预测存储在文件中的中间值和最终值。还可以改变文件数（-f），客户端数（-C）和读取比率（-r，介于0到1之间），这样更有挑战。你可能还想生成稍长的追踪，记录更有趣的交互，例如（-n 2或更高）。</li>
+<li>2．现在执行相同的操作，看看是否可以预测AFS服务器发起的每个回调。尝试使用不同的随机种子，并确保使用高级别的详细反馈（例如，-d 3），来查看当你让程序计算答案时（使用-c），何时发生回调。你能准确猜出每次回调发生的时间吗？发生一次回调的确切条件是什么？</li>
+<li>3．与上面类似，运行一些不同的随机种子，看看你是否可以预测每一步的确切缓存状态。用-c和-d 7运行，可以观察到缓存状态。</li>
+<li>4．现在让我们构建一些特定的工作负载。用-A oa1:w1:c1,oa1:r1:c1标志运行该模拟程序。在用随机调度程序运行时，客户端1在读取文件a时，观察到的不同可能值是什么（尝试不同的随机种子，看看不同的结果）？在两个客户端操作的所有可能的调度重叠中，有多少导致客户端1读取值1，有多少读取值0？</li>
+<li>5．现在让我们构建一些具体的调度。当使用-A oa1:w1:c1,oa1:r1:c1标志运行时，也用以下调度方案来运行：-S 01, -S 100011, -S 011100，以及其他你可以想到的调度方案。客户端1读到什么值？</li>
+<li>6．现在使用此工作负载来运行：-A oa1:w1:c1,oa1:w1:c1，并按上述方式更改调度方式。用-S 011100运行时会发生什么？用-S 010011时怎么样？确定文件的最终值有什么重要意义？</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="c50">C50<a href="#c50" class="hash-link" aria-label="C50的直接链接" title="C50的直接链接">​</a></h3>
+<ul>
+<li>作业：</li>
+<li>书中问题：
+*</li>
+</ul>
+<hr></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/Notes/docs/introduction_to_operating_system/附录"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">附录</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/Notes/docs/introduction_to_operating_system/Linux补充"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">Linux补充</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_G4nv thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#c03" class="table-of-contents__link toc-highlight">C03</a></li><li><a href="#c04" class="table-of-contents__link toc-highlight">C04</a></li><li><a href="#c05" class="table-of-contents__link toc-highlight">C05</a></li><li><a href="#c06" class="table-of-contents__link toc-highlight">C06</a></li><li><a href="#c07" class="table-of-contents__link toc-highlight">C07</a></li><li><a href="#c08" class="table-of-contents__link toc-highlight">C08</a></li><li><a href="#c09" class="table-of-contents__link toc-highlight">C09</a></li><li><a href="#c10" class="table-of-contents__link toc-highlight">C10</a></li><li><a href="#c11" class="table-of-contents__link toc-highlight">C11</a></li><li><a href="#c12" class="table-of-contents__link toc-highlight">C12</a></li><li><a href="#c13" class="table-of-contents__link toc-highlight">C13</a></li><li><a href="#c14" class="table-of-contents__link toc-highlight">C14</a></li><li><a href="#c15" class="table-of-contents__link toc-highlight">C15</a></li><li><a href="#c16" class="table-of-contents__link toc-highlight">C16</a></li><li><a href="#c17" class="table-of-contents__link toc-highlight">C17</a></li><li><a href="#c18" class="table-of-contents__link toc-highlight">C18</a></li><li><a href="#c19" class="table-of-contents__link toc-highlight">C19</a></li><li><a href="#c20" class="table-of-contents__link toc-highlight">C20</a></li><li><a href="#c21" class="table-of-contents__link toc-highlight">C21</a></li><li><a href="#c22" class="table-of-contents__link toc-highlight">C22</a></li><li><a href="#c26" class="table-of-contents__link toc-highlight">C26</a></li><li><a href="#c27" class="table-of-contents__link toc-highlight">C27</a></li><li><a href="#c28" class="table-of-contents__link toc-highlight">C28</a></li><li><a href="#c29" class="table-of-contents__link toc-highlight">C29</a></li><li><a href="#c30" class="table-of-contents__link toc-highlight">C30</a></li><li><a href="#c31" class="table-of-contents__link toc-highlight">C31</a></li><li><a href="#c32" class="table-of-contents__link toc-highlight">C32</a></li><li><a href="#c33" class="table-of-contents__link toc-highlight">C33</a></li><li><a href="#c34" class="table-of-contents__link toc-highlight">C34</a></li><li><a href="#c35" class="table-of-contents__link toc-highlight">C35</a></li><li><a href="#c36" class="table-of-contents__link toc-highlight">C36</a></li><li><a href="#c37" class="table-of-contents__link toc-highlight">C37</a></li><li><a href="#c38" class="table-of-contents__link toc-highlight">C38</a></li><li><a href="#c39" class="table-of-contents__link toc-highlight">C39</a></li><li><a href="#c40" class="table-of-contents__link toc-highlight">C40</a></li><li><a href="#c41" class="table-of-contents__link toc-highlight">C41</a></li><li><a href="#c42" class="table-of-contents__link toc-highlight">C42</a></li><li><a href="#c43" class="table-of-contents__link toc-highlight">C43</a></li><li><a href="#c44" class="table-of-contents__link toc-highlight">C44</a></li><li><a href="#c45" class="table-of-contents__link toc-highlight">C45</a></li><li><a href="#c46" class="table-of-contents__link toc-highlight">C46</a></li><li><a href="#c47" class="table-of-contents__link toc-highlight">C47</a></li><li><a href="#c48" class="table-of-contents__link toc-highlight">C48</a></li><li><a href="#c49" class="table-of-contents__link toc-highlight">C49</a></li><li><a href="#c50" class="table-of-contents__link toc-highlight">C50</a></li></ul></div></div></div></div></main></div></div></div></div>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-machine_learning/Task01" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">Task01 | 编程内外</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" name="twitter:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" property="og:url" content="https://CELFS.github.io/Notes/docs/machine_learning/Task01"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Task01 | 编程内外"><meta data-rh="true" name="description" content="1.0 绪论"><meta data-rh="true" property="og:description" content="1.0 绪论"><link data-rh="true" rel="icon" href="/Notes/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://CELFS.github.io/Notes/docs/machine_learning/Task01"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/machine_learning/Task01" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/machine_learning/Task01" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous"><link rel="stylesheet" href="/Notes/assets/css/styles.67339a6f.css">
+<script src="/Notes/assets/js/runtime~main.793c07bf.js" defer="defer"></script>
+<script src="/Notes/assets/js/main.ef11fa70.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"dark")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/Notes/img/logo.png"><div role="region" aria-label="跳到主要内容"><a class="skipToContent__HuA" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Notes/"><div class="navbar__logo"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--light_c3lc"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--dark_Ji9V"></div><b class="navbar__title text--truncate">编程内外</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Notes/docs/category/linux-os">Notes</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/CELFS/Notes" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link" icon="github">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_OqSl"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_OAgU colorModeToggle_zRe0"><button class="clean-btn toggleButton_aClM toggleButtonDisabled_GkIb" type="button" disabled="" title="切换浅色/暗黑模式（当前为暗黑模式）" aria-label="切换浅色/暗黑模式（当前为暗黑模式）" aria-live="polite" aria-pressed="true"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_zzlY"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_Z832"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Cx4E"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_liLQ"><div class="docsWrapper_evXH"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_nZiY" type="button"></button><div class="docRoot_jKp6"><aside class="theme-doc-sidebar-container docSidebarContainer_wXyP"><div class="sidebarViewport_LQZ0"><div class="sidebar_T0dy"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_WBBB"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/linux-os">Linux OS</a><button aria-label="展开侧边栏分类 &#x27;Linux OS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/ajax">Ajax</a><button aria-label="展开侧边栏分类 &#x27;Ajax&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/css">CSS</a><button aria-label="展开侧边栏分类 &#x27;CSS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript-es6">JavaScript ES6</a><button aria-label="展开侧边栏分类 &#x27;JavaScript ES6&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript">JavaScript</a><button aria-label="展开侧边栏分类 &#x27;JavaScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/nodejs">Node.js</a><button aria-label="展开侧边栏分类 &#x27;Node.js&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/typescript">TypeScript</a><button aria-label="展开侧边栏分类 &#x27;TypeScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/vue">Vue</a><button aria-label="展开侧边栏分类 &#x27;Vue&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/轻量级服务器开发tinywebserver">轻量级服务器开发（TinyWebServer）</a><button aria-label="展开侧边栏分类 &#x27;轻量级服务器开发（TinyWebServer）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/c-后台服务器开发">C++ 后台服务器开发</a><button aria-label="展开侧边栏分类 &#x27;C++ 后台服务器开发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/mysql-必知必会">MySQL 必知必会</a><button aria-label="展开侧边栏分类 &#x27;MySQL 必知必会&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/操作系统导论">操作系统导论</a><button aria-label="展开侧边栏分类 &#x27;操作系统导论&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/qt">QT</a><button aria-label="展开侧边栏分类 &#x27;QT&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军信息论-40-讲">读吴军《信息论 40 讲》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《信息论 40 讲》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军富足">读吴军《富足》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《富足》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/machine-learning-andrew-ng">Machine Learning (Andrew Ng)</a><button aria-label="展开侧边栏分类 &#x27;Machine Learning (Andrew Ng)&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/Notes/docs/category/机器学习初步周志华">机器学习初步（周志华）</a><button aria-label="折叠侧边栏分类 &#x27;机器学习初步（周志华）&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task00">Task00</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/Notes/docs/machine_learning/Task01">Task01</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task02">Task02</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task03">Task03</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task04">Task04</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task05">Task05</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task06">Task06</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task07">Task07</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task08">Task08</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/paddle-零基础深度学习第二版">Paddle 零基础深度学习（第二版）</a><button aria-label="展开侧边栏分类 &#x27;Paddle 零基础深度学习（第二版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/动手学深度学习pytorch-版">动手学深度学习（Pytorch 版）</a><button aria-label="展开侧边栏分类 &#x27;动手学深度学习（Pytorch 版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Notes/docs/intro">学而时习之</a></li></ul></nav></div></div></aside><main class="docMainContainer_dhcR"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_hWfg"><div class="docItemContainer_UIwD"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_ViMa" aria-label="页面路径"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/Notes/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_xAfz"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/Notes/docs/category/机器学习初步周志华"><span itemprop="name">机器学习初步（周志华）</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Task01</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_xgD3 theme-doc-toc-mobile tocMobile_UvqM"><button type="button" class="clean-btn tocCollapsibleButton_ldZF">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>Task01</h1></header><h3 class="anchor anchorWithStickyNavbar_QJwc" id="10-绪论">1.0 绪论<a href="#10-绪论" class="hash-link" aria-label="1.0 绪论的直接链接" title="1.0 绪论的直接链接">​</a></h3>
+<p>Date：2022/10/18</p>
+<hr>
+<p>[TOC]</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="11-阅读建议">1.1 阅读建议<a href="#11-阅读建议" class="hash-link" aria-label="1.1 阅读建议的直接链接" title="1.1 阅读建议的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="1-1-1_阅读建议" src="/Notes/assets/images/1-1-1_阅读建议-73af7135189ee2d8204d05b76a6e7c98.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>大道至简——PPT 讲授风格给我的感悟。</li>
+<li>读三遍，期间分隔、穿插阅读其他；第一遍要快，例如400页，30天，每天读15页</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221018202930577" src="/Notes/assets/images/image-20221018202930577-aecb273d649bdcc006474f2978e0b33b.png" width="836" height="171" class="img_O9Fa"></p>
+<ul>
+<li>模式分类（前三章）</li>
+<li>现代模式识别（公式推导）</li>
+<li>统计学习方法（加强学习）</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="12-课程定位-steam">1.2 课程定位 STEAM<a href="#12-课程定位-steam" class="hash-link" aria-label="1.2 课程定位 STEAM的直接链接" title="1.2 课程定位 STEAM的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="1-2-1_科学、技术、工程、应用" src="/Notes/assets/images/1-2-1_科学、技术、工程、应用-d96cd527b7360c4554313d8a314a2ac8.png" width="868" height="589" class="img_O9Fa"></p>
+<ul>
+<li>这门课主要集中在科学、技术，涉及部分工程，不怎么讲应用</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="14-典型的机器学习过程">1.4 典型的机器学习过程<a href="#14-典型的机器学习过程" class="hash-link" aria-label="1.4 典型的机器学习过程的直接链接" title="1.4 典型的机器学习过程的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="1-4-1_数据、标记、训练、模型、学习算法；关键在于理解什么数据、什么模型适配" src="/Notes/assets/images/1-4-1_数据、标记、训练、模型、学习算法；关键在于理解什么数据、什么模型适配-51dd545121a0afc9e150b450f782e19a.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>
+<p>摘要：</p>
+<ul>
+<li>数据、标记、训练、模型、学习算法；</li>
+<li><strong>关键在于理解什么数据、什么模型适配</strong></li>
+</ul>
+</li>
+<li>
+<p>模型：这门课统称为在数据中产生的东西，是个抽象概念。<strong>从数据中产生出来的，能够帮助你处理未来事件的东西。</strong></p>
+</li>
+<li>
+<p>不同声音：David Hand（P01 底部）</p>
+</li>
+<li>
+<p><strong>特别需要了解和把握的：</strong></p>
+<ul>
+<li>1、一个算法，针对什么数据是有效的</li>
+<li>2、这样的数据需要满足什么样的特点</li>
+<li>3、它产生的模型，又在什么情况下有效</li>
+<li>4、模型本身，又具有什么样的特点</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="15-计算学习理论">1.5 计算学习理论<a href="#15-计算学习理论" class="hash-link" aria-label="1.5 计算学习理论的直接链接" title="1.5 计算学习理论的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="1-5-1_计算学习理论；最重要的PAC" src="/Notes/assets/images/1-5-1_计算学习理论；最重要的PAC-3772ecbee9a9f2476ffacda63f763738.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>计算学习理论，最重要的理论模型——PAC</li>
+<li>确定的规则：如 90°</li>
+<li>当有许多因素共同产生影响，但具体怎么影响我不知道——这时需要使用机器学习。
+<ul>
+<li>从问题性质的角度，当我们的知识已经不能给出确定的结果时，我们从数据中分析，帮助给出答案——这时就不能指望百分百正确了，因为这不是我们能够清楚了解的问题。</li>
+<li>从计算要求的角度，初步算法，P?=NP，通常碰到的问题，都超出了这个范畴，即就算给了你解，你能否在多项式时间内验证这个解有多好，都做不到。如果每次能得到=0或=1，说明构造性地证明了P?=NP问题，反过来，由于0和1不可达，因此模型都是概率近似正确。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="16-基本术语">1.6 基本术语<a href="#16-基本术语" class="hash-link" aria-label="1.6 基本术语的直接链接" title="1.6 基本术语的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20221018142607716" src="/Notes/assets/images/image-20221018142607716-8bc3d5c0a767b3ce9b70fcc6c98af7eb.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>
+<p><strong>关于数据的术语</strong></p>
+<ul>
+<li>一张表就可以清晰地解释——想起之前自己梳理概念，读了几天才过去了。</li>
+<li>注意的是：<strong>sample 定义比较含糊</strong>，有时候指单个示例，有时候指整个数据集（来源默认是世界整体的相关可能性构成的空间），需根据上下文判断所指。</li>
+</ul>
+</li>
+<li>
+<p><strong>关于模型的术语</strong></p>
+<ul>
+<li>模型即揭示的规律——一个好瓜的规律
+<ul>
+<li><strong>显式的（颜色等）</strong></li>
+<li><strong>隐式的（神经网络）</strong></li>
+</ul>
+</li>
+<li>不一定正确——因此形成的是一个假设
+<ul>
+<li>同时对应——真相</li>
+</ul>
+</li>
+<li>学习器——从学习过程考虑这个模型，可理解为给定数据、参数，输出的实例
+<ul>
+<li>同理有分类器（分类模型）、回归器（回归模型）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>关于输出的术语</strong></p>
+<ul>
+<li>二分类是最基本的问题——因为多分类都可以看作若干个二分类</li>
+<li>正类、反类
+<ul>
+<li>通常假设两者可交换的（非常重要），意味着两者满足的分布、很多性质是差不多的。</li>
+<li>但若两者比例悬殊，交换后性质就发生变化了。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>关于学习任务的术语</strong></p>
+<ul>
+<li>有导师、无导师学习</li>
+</ul>
+</li>
+<li>
+<p><strong>关于未知数据的术语</strong>（ML运用概率统计的基础理论，假设背后存在某种分布规律）</p>
+<ul>
+<li><strong>独立同分布（i.i.d.）</strong>
+<ul>
+<li>基本假设：独立同分布、随机事件，否则由统计来推断原来概率分布的这个工具就站不住脚了。</li>
+<li>但是，如果同一个店铺A买了东西，B也买了东西，可能B是A的朋友——因此独立同分布就产生疑问。这是<strong>目前机器学习最前沿的研究之一</strong>：<strong>如何突破独立同分布的假设</strong>，而这里面往往需要引入一些现代的数学技术，或者需要对原理的概率统计技术的一个改变。作为入门课程，知道这些事在做、可以做即可，还是要从独立同分布的假设开始学习。【这个认知绝了，顿悟】</li>
+</ul>
+</li>
+<li>泛化
+<ul>
+<li>即 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">\epsilon</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em"></span><span class="mord mathnormal">ϵ</span></span></span></span> 能达到多少，有时候需要推导一个<strong>理论的泛化界</strong>——即最好能够做到什么程度，如果发现最好的结果都是做到无限差，说明这件事根本不可用ML做。
+<ul>
+<li>&lt; 0.5 说明不要做了</li>
+<li>&lt; 0.2 可以设计做</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>【感悟】</p>
+<ul>
+<li>真正的高屋建瓴——当时我学习就没想过从这几大维度对如此涌现的术语进行分类，从而走了许多弯路。因此，<strong>搞清基础概念、做好认知分类</strong>是非常重要的——这有助于形成网状的记忆与联系。</li>
+</ul>
+</li>
+<li>
+<p>视频断层</p>
+<ul>
+<li>版本空间</li>
+<li>学习、搜索、优化</li>
+<li>色泽 = *</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="17-归纳偏好">1.7 归纳偏好<a href="#17-归纳偏好" class="hash-link" aria-label="1.7 归纳偏好的直接链接" title="1.7 归纳偏好的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20221018145636828" src="/Notes/assets/images/image-20221018145636828-125b8661c332a6dcff8c66645e0c86b2.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>选最简单的，认为是好的（更平滑、更美的——背后的原理是奥卡姆剃刀）</li>
+<li>确定 “更简单” 不是个简单的问题——如何衡量简单，尽管有准则，但面临的变化非常多</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221018145911169" src="/Notes/assets/images/image-20221018145911169-dd959abbe49daf5a4d80efdd6ec7b80e.png" width="834" height="195" class="img_O9Fa"></p>
+<ul>
+<li>从事久后
+<ul>
+<li>通常不会说一个算法好坏</li>
+<li>而说真正work的不是算法，而是背后的假设，即偏好什么——这个偏好对当前问题是否合适。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="18-nfl-定理">1.8 NFL 定理<a href="#18-nfl-定理" class="hash-link" aria-label="1.8 NFL 定理的直接链接" title="1.8 NFL 定理的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20221018150150489" src="/Notes/assets/images/image-20221018150150489-4afeb93b17c65018f6e17df5e651fd7e.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221018150353956" src="/Notes/assets/images/image-20221018150353956-595f5da5495f5a76e7b3cd287a403e63.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>流行的算法——只是在比较多的问题，有较好的结果，但并非100%覆盖问题。</li>
+<li>算法的好坏必须与具体的问题一起讨论，这就如同单独讨论一个点的瞬时变化率是没有意义的——因为缺少了过程，缺少必须的对比对象。
+<ul>
+<li>在谈论问题的时候
+<ul>
+<li>明确 X 和 Y，才是一个完整的问题</li>
+<li>如果抛开XY泛泛地谈分类、推荐等，对于ML学习者还算不上一个问题。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221018150927857" src="/Notes/assets/images/image-20221018150927857-9e8be41bb20db3f99e693ce5d941342f.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>最糟糕的学习——以为学完套路就行，现实试过都不行，就以为ML没有用。</li>
+<li>现实中的机器学习应用——巨大的差别：千变万化——无招胜有招。</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221018151226386" src="/Notes/assets/images/image-20221018151226386-12e887e78a5dfdfb06f9f4d1d91add9b.png" width="807" height="382" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="01-exam">【01 EXAM】<a href="#01-exam" class="hash-link" aria-label="【01 EXAM】的直接链接" title="【01 EXAM】的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20221018152144653" src="data:image/png;base64,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" width="811" height="94" class="img_O9Fa"></p>
+<ul>
+<li>错误的选项。P03，预测任务，预测之前需要先学习（这里似乎只讨论有监督学习）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221018152125682" src="/Notes/assets/images/image-20221018152125682-7e8615e94eb249c358944b1aae00738b.png" width="757" height="325" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221018152340968" src="/Notes/assets/images/image-20221018152340968-e66f59f86df290c785105361e663b867.png" width="813" height="172" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221018153253424" src="/Notes/assets/images/image-20221018153253424-d2c61494b08ee29ec1a90037d9ce3b83.png" width="809" height="173" class="img_O9Fa"></p>
+<ul>
+<li>总觉得聚类和分类容易混淆</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221018202757397" src="/Notes/assets/images/image-20221018202757397-34f2b7b452a97ed5cb802c4bff95e07e.png" width="856" height="339" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221018153347811" src="/Notes/assets/images/image-20221018153347811-35a544bc31d210ae48e5ca8d7560e4c9.png" width="818" height="296" class="img_O9Fa"></p>
+<ul>
+<li>ML 解题中的 “易得”</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221018153417551" src="/Notes/assets/images/image-20221018153417551-b1948e0806c6e699f7d2c2f442beaef3.png" width="808" height="174" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221018153454771" src="/Notes/assets/images/image-20221018153454771-816f796b12cd818d5f550b2d05c77886.png" width="805" height="424" class="img_O9Fa"></p>
+<ul>
+<li>错误的是，并不总有一个最优学习算法</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019234839559" src="/Notes/assets/images/image-20221019234839559-4f0193d93a1300fc218fef151a3f8ad0.png" width="707" height="229" class="img_O9Fa"></p>
+<p>2022/10/18 15:35:13 24min + 51min + 21min + 46min = 142min = 2.36h</p>
+<hr></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/Notes/docs/machine_learning/Task00"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">Task00</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/Notes/docs/machine_learning/Task02"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">Task02</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_G4nv thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#10-绪论" class="table-of-contents__link toc-highlight">1.0 绪论</a></li><li><a href="#11-阅读建议" class="table-of-contents__link toc-highlight">1.1 阅读建议</a></li><li><a href="#12-课程定位-steam" class="table-of-contents__link toc-highlight">1.2 课程定位 STEAM</a></li><li><a href="#14-典型的机器学习过程" class="table-of-contents__link toc-highlight">1.4 典型的机器学习过程</a></li><li><a href="#15-计算学习理论" class="table-of-contents__link toc-highlight">1.5 计算学习理论</a></li><li><a href="#16-基本术语" class="table-of-contents__link toc-highlight">1.6 基本术语</a></li><li><a href="#17-归纳偏好" class="table-of-contents__link toc-highlight">1.7 归纳偏好</a></li><li><a href="#18-nfl-定理" class="table-of-contents__link toc-highlight">1.8 NFL 定理</a></li><li><a href="#01-exam" class="table-of-contents__link toc-highlight">【01 EXAM】</a></li></ul></div></div></div></div></main></div></div></div></div>
+</body>
+</html>

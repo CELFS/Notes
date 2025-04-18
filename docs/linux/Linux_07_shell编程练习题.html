@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-linux/Linux_07_shell编程练习题" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">Linux_07_shell编程练习题 | 编程内外</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" name="twitter:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" property="og:url" content="https://CELFS.github.io/Notes/docs/linux/Linux_07_shell编程练习题"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Linux_07_shell编程练习题 | 编程内外"><meta data-rh="true" name="description" content="07 shell编程练习题"><meta data-rh="true" property="og:description" content="07 shell编程练习题"><link data-rh="true" rel="icon" href="/Notes/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://CELFS.github.io/Notes/docs/linux/Linux_07_shell编程练习题"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/linux/Linux_07_shell编程练习题" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/linux/Linux_07_shell编程练习题" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous"><link rel="stylesheet" href="/Notes/assets/css/styles.67339a6f.css">
+<script src="/Notes/assets/js/runtime~main.793c07bf.js" defer="defer"></script>
+<script src="/Notes/assets/js/main.ef11fa70.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"dark")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/Notes/img/logo.png"><div role="region" aria-label="跳到主要内容"><a class="skipToContent__HuA" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Notes/"><div class="navbar__logo"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--light_c3lc"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--dark_Ji9V"></div><b class="navbar__title text--truncate">编程内外</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Notes/docs/category/linux-os">Notes</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/CELFS/Notes" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link" icon="github">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_OqSl"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_OAgU colorModeToggle_zRe0"><button class="clean-btn toggleButton_aClM toggleButtonDisabled_GkIb" type="button" disabled="" title="切换浅色/暗黑模式（当前为暗黑模式）" aria-label="切换浅色/暗黑模式（当前为暗黑模式）" aria-live="polite" aria-pressed="true"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_zzlY"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_Z832"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Cx4E"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_liLQ"><div class="docsWrapper_evXH"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_nZiY" type="button"></button><div class="docRoot_jKp6"><aside class="theme-doc-sidebar-container docSidebarContainer_wXyP"><div class="sidebarViewport_LQZ0"><div class="sidebar_T0dy"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_WBBB"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/Notes/docs/category/linux-os">Linux OS</a><button aria-label="折叠侧边栏分类 &#x27;Linux OS&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_00_C++开发环境配置实验">Linux_00_C++开发环境配置实验</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_00_环境配置个人优化">Linux_00_环境配置个人优化</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_01_Linux环境下，部分软件安装">Linux_01_Linux环境下，部分软件安装</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_02_shell环境的熟悉与使用">Linux_02_shell环境的熟悉与使用</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_03_文件的特殊权限">Linux_03_文件的特殊权限</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_04_用户管理测验">Linux_04_用户管理测验</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_05_进程管理_个人随堂笔记">Linux_05_进程管理_个人随堂笔记</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_06_数据提取练习题">Linux_06_数据提取练习题</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/Notes/docs/linux/Linux_07_shell编程练习题">Linux_07_shell编程练习题</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_08_保存完整网页">Linux_08_保存完整网页</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/ajax">Ajax</a><button aria-label="展开侧边栏分类 &#x27;Ajax&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/css">CSS</a><button aria-label="展开侧边栏分类 &#x27;CSS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript-es6">JavaScript ES6</a><button aria-label="展开侧边栏分类 &#x27;JavaScript ES6&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript">JavaScript</a><button aria-label="展开侧边栏分类 &#x27;JavaScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/nodejs">Node.js</a><button aria-label="展开侧边栏分类 &#x27;Node.js&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/typescript">TypeScript</a><button aria-label="展开侧边栏分类 &#x27;TypeScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/vue">Vue</a><button aria-label="展开侧边栏分类 &#x27;Vue&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/轻量级服务器开发tinywebserver">轻量级服务器开发（TinyWebServer）</a><button aria-label="展开侧边栏分类 &#x27;轻量级服务器开发（TinyWebServer）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/c-后台服务器开发">C++ 后台服务器开发</a><button aria-label="展开侧边栏分类 &#x27;C++ 后台服务器开发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/mysql-必知必会">MySQL 必知必会</a><button aria-label="展开侧边栏分类 &#x27;MySQL 必知必会&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/操作系统导论">操作系统导论</a><button aria-label="展开侧边栏分类 &#x27;操作系统导论&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/qt">QT</a><button aria-label="展开侧边栏分类 &#x27;QT&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军信息论-40-讲">读吴军《信息论 40 讲》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《信息论 40 讲》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军富足">读吴军《富足》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《富足》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/machine-learning-andrew-ng">Machine Learning (Andrew Ng)</a><button aria-label="展开侧边栏分类 &#x27;Machine Learning (Andrew Ng)&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/机器学习初步周志华">机器学习初步（周志华）</a><button aria-label="展开侧边栏分类 &#x27;机器学习初步（周志华）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/paddle-零基础深度学习第二版">Paddle 零基础深度学习（第二版）</a><button aria-label="展开侧边栏分类 &#x27;Paddle 零基础深度学习（第二版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/动手学深度学习pytorch-版">动手学深度学习（Pytorch 版）</a><button aria-label="展开侧边栏分类 &#x27;动手学深度学习（Pytorch 版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Notes/docs/intro">学而时习之</a></li></ul></nav></div></div></aside><main class="docMainContainer_dhcR"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_hWfg"><div class="docItemContainer_UIwD"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_ViMa" aria-label="页面路径"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/Notes/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_xAfz"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/Notes/docs/category/linux-os"><span itemprop="name">Linux OS</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Linux_07_shell编程练习题</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_xgD3 theme-doc-toc-mobile tocMobile_UvqM"><button type="button" class="clean-btn tocCollapsibleButton_ldZF">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>Linux_07_shell编程练习题</h1></header><h3 class="anchor anchorWithStickyNavbar_QJwc" id="07-shell编程练习题">07 shell编程练习题<a href="#07-shell编程练习题" class="hash-link" aria-label="07 shell编程练习题的直接链接" title="07 shell编程练习题的直接链接">​</a></h3>
+<p>创建信息：2021年6月25日23:00:23  By CELFS</p>
+<p>修改信息：2021年6月26日03:57:20  By CELFS</p>
+<ul>
+<li>完成题6</li>
+</ul>
+<p>修改信息：2021年6月26日18:26:22  By CELFS</p>
+<ul>
+<li>完成题11，截止目前，测评解锁可能出现bug，未出现12-14题</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="0-测评截图">0 测评截图<a href="#0-测评截图" class="hash-link" aria-label="0 测评截图的直接链接" title="0 测评截图的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20210626182610843" src="/Notes/assets/images/image-20210626182610843-124aab36c44be9385a38dad93b9c9c88.png" width="2308" height="1184" class="img_O9Fa"></p>
+<hr>
+<div style="page-break-after:always"></div>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="1-整除问题">1 整除问题<a href="#1-整除问题" class="hash-link" aria-label="1 整除问题的直接链接" title="1 整除问题的直接链接">​</a></h3>
+<ul>
+<li>
+<p>题干</p>
+<img decoding="async" loading="lazy" src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626183057554.png" alt="image-20210626183057554" style="zoom:33%" class="img_O9Fa"> 
+</li>
+<li>
+<p>代码实现</p>
+</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">#!/bin/bash</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">read a b</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">#使用符号运算符“==”亦可</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">if [[ $[a % b] -eq 0 ]];then</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    echo &quot;YES&quot;</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">else </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    echo &quot;NO&quot;</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">fi</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<hr>
+<div style="page-break-after:always"></div>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="2-七的奇数倍">2 七的奇数倍<a href="#2-七的奇数倍" class="hash-link" aria-label="2 七的奇数倍的直接链接" title="2 七的奇数倍的直接链接">​</a></h3>
+<ul>
+<li>
+<p>题干</p>
+<img decoding="async" loading="lazy" src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626183313115.png" alt="image-20210626183313115" style="zoom:33%" class="img_O9Fa"> 
+</li>
+<li>
+<p>代码实现</p>
+</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">#!/bin/bash</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">read n</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">#C语言中的&amp;&amp;语法有效</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">if [[ $[n % 7] == 0 &amp;&amp; $[n % 2] != 0 ]];then</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    echo &quot;YES&quot;</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">else</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    echo &quot;NO&quot;</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">fi</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<hr>
+<div style="page-break-after:always"></div>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="3-一个月有多少天">3 一个月有多少天<a href="#3-一个月有多少天" class="hash-link" aria-label="3 一个月有多少天的直接链接" title="3 一个月有多少天的直接链接">​</a></h3>
+<ul>
+<li>
+<p>题干</p>
+<img decoding="async" loading="lazy" src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626183341145.png" alt="image-20210626183341145" style="zoom:33%" class="img_O9Fa"> 
+</li>
+<li>
+<p>思路：</p>
+<ul>
+<li>构造函数判断平闰年即可。</li>
+</ul>
+</li>
+<li>
+<p>历程：</p>
+<ul>
+<li>主要绊脚石在函数传参语法、数字下标运算语法，查找相关资料后（详见问题4参考链接）暂且解决。</li>
+</ul>
+</li>
+<li>
+<p>代码实现</p>
+</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">#!/bin/bash</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">read y m</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">#判断平闰年</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">function is_a_leap_year {</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    if [[ ($[$y % 100] == 0 &amp;&amp; $[$y % 400] == 0) || ($[$y % 100] != 0 &amp;&amp; $[$y % 4] == 0) ]];then</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        echo 1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    else</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        echo 0</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    fi</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">}</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">declare -a days</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">days=(31 28 31 30 31 30 31 31 30 31 30 31)</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">#存储函数返回值，用作判断</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">result=`is_a_leap_year`</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">if [[ $result != 0 ]];then</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    days[1]=29</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    echo ${days[`expr $m - 1`]}</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">else</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    echo ${days[`expr $m - 1`]}</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">fi</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<hr>
+<div style="page-break-after:always"></div>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="4-买文具">4 买文具<a href="#4-买文具" class="hash-link" aria-label="4 买文具的直接链接" title="4 买文具的直接链接">​</a></h3>
+<ul>
+<li>
+<p>题干：</p>
+<img decoding="async" loading="lazy" src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626010813869.png" alt="image-20210626010813869" style="zoom:33%" class="img_O9Fa">  
+</li>
+<li>
+<p>读题：考察的应该是浮点数运算、比较大小</p>
+</li>
+<li>
+<p>思路：</p>
+<ul>
+<li><strong>扩大为整数优先得出结果</strong>，初步查阅资料发现，let仅支持整数运算，需找到对应其他数值形式的命令与语法，有时间再学习shell浮点数运算，暂时放一下。</li>
+</ul>
+</li>
+<li>
+<p><strong>疑问及代码</strong></p>
+<ul>
+<li>shell比较两数大小，在使用运算符号“&gt;=”情况下，例如107和12，得到的结果是107&lt;12，而130和12，得到的结果是130&gt;12，问题出现在比较的数位上，三位数只比较了前面两个数位的大小，相当于10和12比，13和12比。【已解决，更换为“-ge”比较符】【但问题的根源是什么？shell语言下的符号是按位比较？】</li>
+</ul>
+</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">#问题代码</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">#!/bin/bash</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">read a b</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">cnt=0</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">sum=$[$[$a * 10] + $b]</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">#此处比较运算符，如果用符号，就会按b的位数多少来与a的前面相同位数比较，想起了位运算，但好像没什么关系</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">while [[ $sum &gt; 26 || $sum == 26]];do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    let sum-=26</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    let cnt++</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">echo $cnt</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>运行截图【失败】</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20210626001834137" src="/Notes/assets/images/image-20210626001834137-9510971d431ce7334f6c529fccfd1b35.png" width="2560" height="433" class="img_O9Fa"></p>
+<ul>
+<li>代码实现【成功】</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">#!/bin/bash</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">read a b</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">cnt=0</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">sum=$[$[$a * 10] + $b]</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">while [[ $sum -ge 26 ]];do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    let sum-=26</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    let cnt++</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">echo $cnt</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>参考
+<ul>
+<li><strong>运算符相关</strong>
+<ul>
+<li>Shell 基本运算符 | 菜鸟教程  <a href="https://www.runoob.com/linux/linux-shell-basic-operators.html" target="_blank" rel="noopener noreferrer">https://www.runoob.com/linux/linux-shell-basic-operators.html</a></li>
+<li>Shell (())：对整数进行数学运算  <a href="http://c.biancheng.net/view/2480.html" target="_blank" rel="noopener noreferrer">http://c.biancheng.net/view/2480.html</a></li>
+<li>(1条消息) shell中实现浮点数运算_jichenchen1990的专栏-CSDN博客_shell浮点数  <a href="https://blog.csdn.net/jichenchen1990/article/details/76059977" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/jichenchen1990/article/details/76059977</a></li>
+<li>shell运算符与表达式_pansaky的博客-CSDN博客_shell计算表达式  <a href="https://blog.csdn.net/pansaky/article/details/86530754" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/pansaky/article/details/86530754</a></li>
+</ul>
+</li>
+<li><strong>判断语句相关</strong>
+<ul>
+<li>(1条消息) 一起学Bash脚本：判断语句_Day_and_Night_2017的博客-CSDN博客  <a href="https://blog.csdn.net/Day_and_Night_2017/article/details/116454894" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/Day_and_Night_2017/article/details/116454894</a></li>
+<li>(转)bash条件判断之if语句 - liujiacai - 博客园  <a href="https://www.cnblogs.com/liujiacai/p/9012857.html" target="_blank" rel="noopener noreferrer">https://www.cnblogs.com/liujiacai/p/9012857.html</a></li>
+</ul>
+</li>
+<li><strong>返回值、传参相关</strong>
+<ul>
+<li>Bash：将函数作为参数传递 - ITranslater  <a href="https://www.itranslater.com/qa/details/2326003297267745792" target="_blank" rel="noopener noreferrer">https://www.itranslater.com/qa/details/2326003297267745792</a></li>
+<li>Bash：传递一个函数作为参数 - 编程之家  <a href="https://www.jb51.cc/bash/390967.html" target="_blank" rel="noopener noreferrer">https://www.jb51.cc/bash/390967.html</a></li>
+<li>shell获取函数的返回值 - 每天1990 - 博客园  <a href="https://www.cnblogs.com/meitian/p/5662022.html" target="_blank" rel="noopener noreferrer">https://www.cnblogs.com/meitian/p/5662022.html</a></li>
+<li>(1条消息) shell 函数返回值接收问题_Tinghua_M的博客-CSDN博客_shell 函数返回值  <a href="https://blog.csdn.net/mdx20072419/article/details/9381339?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/mdx20072419/article/details/9381339?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control</a></li>
+<li>(1条消息) SHELL中获取函数返回值_柳鲲鹏-CSDN博客_shell 获取方法返回值  <a href="https://blog.csdn.net/quantum7/article/details/103085715?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_baidulandingword-0&amp;spm=1001.2101.3001.4242" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/quantum7/article/details/103085715?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_baidulandingword-0&amp;spm=1001.2101.3001.4242</a></li>
+<li>(1条消息) Bash函数返回值(转)_weixin_33788244的博客-CSDN博客  <a href="https://blog.csdn.net/weixin_33788244/article/details/92021783" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/weixin_33788244/article/details/92021783</a></li>
+</ul>
+</li>
+<li><strong>针对符号比较运算符的查阅【未果】</strong>
+<ul>
+<li>(1条消息) shell语言，判断一个数字与10的大小_seaVip-CSDN博客  <a href="https://blog.csdn.net/I_peter/article/details/78711357" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/I_peter/article/details/78711357</a></li>
+<li>shell脚本学习（2）比较两个数字大小 - JUSTZHI - 博客园  <a href="https://www.cnblogs.com/me80/p/7989992.html" target="_blank" rel="noopener noreferrer">https://www.cnblogs.com/me80/p/7989992.html</a></li>
+<li>shell中比较两个小数的大小-caojiangfeng-ChinaUnix博客  <a href="http://blog.chinaunix.net/uid-20754793-id-177765.html" target="_blank" rel="noopener noreferrer">http://blog.chinaunix.net/uid-20754793-id-177765.html</a></li>
+</ul>
+</li>
+<li><strong>其他</strong>
+<ul>
+<li>Linux let 命令 | 菜鸟教程  <a href="https://www.runoob.com/linux/linux-comm-let.html" target="_blank" rel="noopener noreferrer">https://www.runoob.com/linux/linux-comm-let.html</a></li>
+<li>bash数组应用之：数组下标的问题 - 简书  <a href="https://www.jianshu.com/p/4ad2a61ae5c3?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation" target="_blank" rel="noopener noreferrer">https://www.jianshu.com/p/4ad2a61ae5c3?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<div style="page-break-after:always"></div>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="5-计数问题">5 计数问题<a href="#5-计数问题" class="hash-link" aria-label="5 计数问题的直接链接" title="5 计数问题的直接链接">​</a></h3>
+<ul>
+<li>
+<p>题干</p>
+<img decoding="async" loading="lazy" src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626012826034.png" alt="image-20210626012826034" style="zoom:33%" class="img_O9Fa">  
+</li>
+<li>
+<p>读题：区间、整数、单个数字出现次数，循环，管道</p>
+</li>
+<li>
+<p>思路：</p>
+<ul>
+<li>考虑拆分各数值，但如果<code>n</code>太大拆分不现实，拆分尝试cut命令，或考虑按位求余数</li>
+<li>假设用C语言实现，考虑while循环，按位以字符串的形式存储，遍历比较是否与x相等，计数得到结果；类似的，尝试将思路转换为shell脚本语法；</li>
+<li><strong>最后，在调试cut命令之后，觉得可以使用循环嵌套，首先获取n的位数，每一位输入数字按字符读取，可得到结果【简而言之，就是有多少位，一个数就被cut多少次】</strong></li>
+</ul>
+</li>
+<li>
+<p>历程</p>
+<ul>
+<li>判断语句，必须后面跟条件值，不像C语言，返回值1、0可以直接控制循环执行？【这个问题的出现，主要原因应该是以往的学习更为强调理论知识的系统性，而本次学习在简要了解语法的前提下，从<strong>具体题目实践出发</strong>，时间成本可以缩短，语法在做题当中碰碰撞撞，加深了印象，虽然使用过程中有意往C语言语法上靠，但还是挺多不一样的地方】</li>
+<li>需梳理shell循环、条件语句、变量中的各类括号应用场景、语法定义、异同。</li>
+</ul>
+</li>
+<li>
+<p>不足</p>
+<ul>
+<li><strong>时间复杂度较大（n^2^），在测试的时候有个数停了几秒</strong></li>
+<li>对于时间复杂度的计算，以往无论是自学还是平台的课程预习，也没能清晰理解，虽然在这段时间学习了C语言之后，有了一些更系统的理解，但实际的计算方式总归有点模糊，比如log是怎么来的，之前于船长的C语言任务卡里有讲到素数筛的时间复杂度，个人理解上还是觉得缺少个可视化的对应关系，例如基本代码——通用模型——复杂度对应关系。</li>
+</ul>
+</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">#!/bin/bash</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">read n x</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">#判断n的位数</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">target=$n</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">len=1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">while [[ $(($target/ 10)) != 0 ]];do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    let len++</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    let target/=10</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">#通过管道按位切割，暴力穷举所有出现的单个位数字</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">cnt=0</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">#seq的作用，相当于python的range，但右端点开闭关系不同</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">for i in $(seq 1 $n);do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    for j in $(seq 1 $len);do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        if [[ $(echo $i | cut -c $j) == $x ]];then</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            let cnt++</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        fi</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">echo $cnt</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>运行截图</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20210626024320749" src="/Notes/assets/images/image-20210626024320749-d1c7960b7b1951c2e837a4d269e1154b.png" width="2560" height="242" class="img_O9Fa"></p>
+<hr>
+<div style="page-break-after:always"></div>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="6-校门口的树">6 校门口的树<a href="#6-校门口的树" class="hash-link" aria-label="6 校门口的树的直接链接" title="6 校门口的树的直接链接">​</a></h3>
+<ul>
+<li>
+<p>题干</p>
+<img decoding="async" loading="lazy" src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626031307884.png" alt="image-20210626031307884" style="zoom:33%" class="img_O9Fa"> 
+</li>
+<li>
+<p>示例</p>
+</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">500 3</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">150 300</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">100 200</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">470 471</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">&gt;&gt;&gt;298</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>读题：数轴，整数，区间移除，重合。</li>
+<li>思路：
+<ul>
+<li>总树：L+1；</li>
+<li>考虑用数组标记区域，M控制循环读入次数。</li>
+</ul>
+</li>
+<li>历程
+<ul>
+<li>主要绊脚石还是在判断运算符，宿船长在任务制里使用的是<code>${tree[$i]}x == x</code></li>
+<li>变量的取值，花括号与否，需对标相关理论知识。</li>
+</ul>
+</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">#!/bin/bash</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">read L M</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">for (( i = 0; i &lt; $M; i++));do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    read start end</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    for j in $(seq $start $end);do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        tree[$j]=1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">cnt=0</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">for (( i = 0; i &lt;= $L; i++ ));do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    if [[ ${tree[$i]} -eq 0 ]];then</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        let cnt++</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    fi</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">echo $cnt</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>运行截图</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20210626035520953" src="/Notes/assets/images/image-20210626035520953-4c5a85abbf73e218a2eb774281179b1c.png" width="2560" height="206" class="img_O9Fa"></p>
+<hr>
+<div style="page-break-after:always"></div>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="7-插队">7 插队<a href="#7-插队" class="hash-link" aria-label="7 插队的直接链接" title="7 插队的直接链接">​</a></h3>
+<ul>
+<li>
+<p>题干</p>
+<img decoding="async" loading="lazy" src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626035646257.png" alt="image-20210626035646257" style="zoom:33%" class="img_O9Fa"> 
+</li>
+<li>
+<p>示例</p>
+</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">7</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">7 2 3 4 5 6 1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">3</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">&gt;&gt;&gt;7 2 1 3 4 5 6</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>
+<p>读题：把最后一个数，插入到指定位置。</p>
+</li>
+<li>
+<p>思路：</p>
+<ul>
+<li>n控制循环次数，插入位改变值，其后索引加1，两个数组可以实现；</li>
+<li>多数组操作，可能涉及数组<strong>深浅拷贝</strong>问题。【然而并没有涉及到】</li>
+</ul>
+</li>
+<li>
+<p>历程</p>
+<ul>
+<li>echo 1 2 3 4 5传入的数列，假若赋值给数组，只会存储在数组首位，因此需循环获取【这个问题的出现，是由于<code>read num</code>以一个变量读入一行数值】；</li>
+<li><strong>数组下标运算表达<code>expr $i - 1</code>太繁琐；</strong></li>
+<li>touch创建文件后，写好bash文件第一行语法，需重新打开文件vim的配色才能生效，每次都需操作不太现实，需进一步调试环境。</li>
+</ul>
+</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">#!/bin/bash</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">read n</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">read num</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">read x</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">j=0</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">for i in $num;do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">#这里曾经改错名字，遗漏arr的“1”导致引出了许多不必要的赋值问题</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    arr1[$j]=$i</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    arr2[$j]=$i</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    let j++</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">arr2[`expr $x - 1`]=${arr1[`expr $n - 1`]}</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">#下面for循环条件表达式由于语法问题，曾陷入瓶颈</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">for (( i = $x; i &lt;= $n; i++ ));do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    arr2[$i]=${arr1[`expr $i - 1`]}</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">#由于上述实现逐一推后赋值，末位将多出原来的值，移除即可</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">unset arr2[$n]</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">#echo ${arr1[@]}</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">echo ${arr2[*]}</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>运行截图</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20210626142607919" src="/Notes/assets/images/image-20210626142607919-957dc54141bc4e9e4e050678cd119f57.png" width="2560" height="193" class="img_O9Fa"></p>
+<ul>
+<li>参考
+<ul>
+<li>Shell删除数组元素（也可以删除整个数组）  <a href="http://c.biancheng.net/view/819.html" target="_blank" rel="noopener noreferrer">http://c.biancheng.net/view/819.html</a></li>
+<li>Shell 数组 | 菜鸟教程  <a href="https://www.runoob.com/linux/linux-shell-array.html" target="_blank" rel="noopener noreferrer">https://www.runoob.com/linux/linux-shell-array.html</a></li>
+<li>Shell数组的增删改查 - 唐胜伟 - 博客园  <a href="https://www.cnblogs.com/tangshengwei/p/5446315.html" target="_blank" rel="noopener noreferrer">https://www.cnblogs.com/tangshengwei/p/5446315.html</a></li>
+<li>shell-数组复制 - Tool_Man - 博客园  <a href="https://www.cnblogs.com/hxlinux/p/13047343.html" target="_blank" rel="noopener noreferrer">https://www.cnblogs.com/hxlinux/p/13047343.html</a></li>
+<li>Li ux shell 四则运算_风雪舞者的技术博客_51CTO博客  <a href="https://blog.51cto.com/happytree007/1712338" target="_blank" rel="noopener noreferrer">https://blog.51cto.com/happytree007/1712338</a></li>
+<li>shell下求表达式值的方法 - 向前进 - 博客园  <a href="https://www.cnblogs.com/edward259/archive/2010/07/07/1772838.html" target="_blank" rel="noopener noreferrer">https://www.cnblogs.com/edward259/archive/2010/07/07/1772838.html</a></li>
+<li>shell 中的单行注释和多行注释 - 虚生 - 博客园  <a href="https://www.cnblogs.com/dylancao/p/9516237.html" target="_blank" rel="noopener noreferrer">https://www.cnblogs.com/dylancao/p/9516237.html</a></li>
+<li>Shell字符串详解  <a href="http://c.biancheng.net/view/821.html" target="_blank" rel="noopener noreferrer">http://c.biancheng.net/view/821.html</a></li>
+<li>Shell 变量 | 菜鸟教程  <a href="https://www.runoob.com/linux/linux-shell-variable.html" target="_blank" rel="noopener noreferrer">https://www.runoob.com/linux/linux-shell-variable.html</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<div style="page-break-after:always"></div>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="8-走楼梯">8 走楼梯<a href="#8-走楼梯" class="hash-link" aria-label="8 走楼梯的直接链接" title="8 走楼梯的直接链接">​</a></h3>
+<ul>
+<li>
+<p>题干</p>
+<img decoding="async" loading="lazy" src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626143321431.png" alt="image-20210626143321431" style="zoom:33%" class="img_O9Fa"> 
+</li>
+<li>
+<p>读题：递推实现。</p>
+</li>
+<li>
+<p>思路：</p>
+<ul>
+<li>开始条件
+<ul>
+<li>n=1，1种；n=2 2种；n=3 3种；</li>
+<li>n=4 五种
+<ul>
+<li>1111、22、112、121、211</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>递推关系
+<ul>
+<li>后一项=前两项之和【通过前几项，暂且判断；具体证明需数学归纳法】</li>
+<li>f(n)=f(n-1)+f(n-2)</li>
+<li>与此类似的有：斐波那契数列、兔子问题、杨辉/帕斯卡三角、C语言预习课中的蒜头爬楼梯题目</li>
+</ul>
+</li>
+<li>终止条件
+<ul>
+<li>从n递归回n=1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>历程</p>
+<ul>
+<li>对于数组下标的表示，如果嵌套太多，考虑将一部分结构存储在</li>
+</ul>
+</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">#!/bin/bash</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">read n</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">declare -a step</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">step[0]=1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">step[1]=2</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">for (( i = 2; i &lt; $n; i++ ));do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    val_1=`expr $i - 1`</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    val_2=`expr $i - 2`</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    step[$i]=`expr ${step[$val_1]} + ${step[$val_2]}`</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">if (( $n == 1 ));then</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    unset step[1]</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">fi</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">echo ${step[*]}</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>运行截图</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20210626154451916" src="/Notes/assets/images/image-20210626154451916-953475a6e39c77fc76eb544ddf4b16b4.png" width="2560" height="121" class="img_O9Fa"></p>
+<hr>
+<div style="page-break-after:always"></div>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="9-比身高">9 比身高<a href="#9-比身高" class="hash-link" aria-label="9 比身高的直接链接" title="9 比身高的直接链接">​</a></h3>
+<ul>
+<li>
+<p>题干</p>
+<img decoding="async" loading="lazy" src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626154757534.png" alt="image-20210626154757534" style="zoom:33%" class="img_O9Fa"> 
+</li>
+<li>
+<p>示例</p>
+</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">4</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">2</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">3</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">&gt;&gt;&gt;2</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>读题：
+<ul>
+<li>找指定数值，符合前后比其大的数值个数；
+<ul>
+<li>样例符合的是：第二个1（1个）、3（0个）</li>
+</ul>
+</li>
+<li>指定位置的数值，检索位置前后，比较大小、计数；</li>
+<li>如果按照样例，“比他高”应该是“比他矮”，题干两个“他”指代的对象应该是不同的，否则会产生矛盾；【<strong>已解决</strong>，属题干理解不到位，主要问题在于，输出的是人数，不是身高】</li>
+</ul>
+</li>
+<li>思路
+<ul>
+<li>二分法？</li>
+<li>【反向】假设已经找到这样的位置x，那么需对x前后两部分数值分段计数；</li>
+<li>【正向】从第一个数值开始，依次寻找较大值y，对y逐一分段检索统计，前后为0，那么这个数就是<strong>最大值</strong>；</li>
+<li><strong>最后确定思路：遍历——向两端比较大小——记录较大值出现次数——比较两边是否相等——相等则计数</strong>
+<ul>
+<li>分段表示
+<ul>
+<li>1——（-∞，0）（2，n）【实际操作将0位赋值为0，判断语句从1计算】</li>
+<li>2——（0，1）（3，n）</li>
+<li>3——（0，2）（4，n）</li>
+<li>a——（0，a-1）（a+1，n）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>考虑<strong>数形结合</strong>，这题实际上找的是<strong>该点前后极大值个数（好像也不对，例如下面3就不是极值）</strong>（如下图所示），若相等则符合要求【应该可以使用离散数学的一些工具，可惜没学过】</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">#假设输入为1213，关系如下</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">						3(0,0)√</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">		2(0,1)			|</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">1(0,2)	|		1(1,1)√	|</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">|_______|_______|_______|_______</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">1		2		3		4</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">#假设输入为5121341，关系如下</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">5(0,0)√</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">|										4(1,0)</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">|								3(1,1)√ |</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">|				2(1,2)			|		|</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">|		1(1,3)	|		1(2,2)√	|		|		1(4,0)</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">|_______|_______|_______|_______|_______|_______|__________</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">1		2		3		4		5		6		7</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>代码实现</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">#!/bin/bash</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">read N</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">for i in $(seq 1 $N);do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    read num</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    arr[$i]=$num</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">cnt=0</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">for (( i = 1; i &lt;= $N; i++ ));do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    left_cnt=0</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    right_cnt=0</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    #val命名取决于区间上的端点位置，与左右部分无关</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    val_right=`expr $i - 1`</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    val_left=`expr $i + 1`</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    arr[0]=0</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    #分段判断</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    #左半部分，若有较大值，则计数+1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    for j in $(seq 0 $val_right);do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        if [[ ${arr[$j]} -gt ${arr[$i]} ]];then</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            let left_cnt++</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        fi</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    #右半部分，若有较大值，则计数+1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    for j in $(seq $val_left $N);do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        if [[ ${arr[$j]} -gt ${arr[$i]} ]];then</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            let right_cnt++</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        fi</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    #若两者相等，则计数+1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    if [[ $left_cnt -eq $right_cnt ]];then</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        let cnt++</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    fi</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">echo ${cnt}</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<hr>
+<div style="page-break-after:always"></div>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="10-爬楼梯">10 爬楼梯<a href="#10-爬楼梯" class="hash-link" aria-label="10 爬楼梯的直接链接" title="10 爬楼梯的直接链接">​</a></h3>
+<ul>
+<li>
+<p>题干</p>
+<img decoding="async" loading="lazy" src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626172731986.png" alt="image-20210626172731986" style="zoom:33%" class="img_O9Fa"> 
+</li>
+<li>
+<p>读题：与C语言程序设计课程中的“蒜头爬楼梯”题目一样。</p>
+</li>
+<li>
+<p>思路：</p>
+<ul>
+<li>开始条件
+<ul>
+<li>n=2 1种，n=3 1种，n=4 1种，n=5 2种；</li>
+<li>n=6 2种【由4 3相加】
+<ul>
+<li>222、33</li>
+</ul>
+</li>
+<li>n=7 3种【由5 4相加】
+<ul>
+<li>223、232、322</li>
+</ul>
+</li>
+<li>n=8 4种【由6 5相加】
+<ul>
+<li>2222、233、323、332</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>递推关系
+<ul>
+<li>f(n)=f(n-2)+f(n-3)</li>
+<li>这样的关系，是由什么决定的？递推的形式多种多样，但本质是什么？如何更形象地理解？</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">#!/bin/bash</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">read N</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">step[1]=0</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">step[2]=1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">step[3]=1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">for (( i = 4; i &lt;= $N; i++ ));do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    val1=`expr $i - 2`</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    val2=`expr $i - 3`</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    step[$i]=`expr ${step[$val1]} + ${step[$val2]}`</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">echo ${step[$N]}</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<hr>
+<div style="page-break-after:always"></div>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="11斐波那契数列">11斐波那契数列<a href="#11斐波那契数列" class="hash-link" aria-label="11斐波那契数列的直接链接" title="11斐波那契数列的直接链接">​</a></h3>
+<ul>
+<li>
+<p>题干</p>
+<img decoding="async" loading="lazy" src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626181310101.png" alt="image-20210626181310101" style="zoom:33%" class="img_O9Fa"> 
+</li>
+<li>
+<p>读题：顾名思义，与第8题一样，修改一下起始值与输出值即可。</p>
+</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">#!/bin/bash</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">read n</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">declare -a step</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">step[0]=1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">step[1]=1</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">for (( i = 2; i &lt; $n; i++ ));do</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    val_1=`expr $i - 1`</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    val_2=`expr $i - 2`</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    step[$i]=`expr ${step[$val_1]} + ${step[$val_2]}`</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">done</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">if (( $n == 1 ));then</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    unset step[1]</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">fi</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">echo ${step[-1]}</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="12-to-be-continued">12 To Be Continued……<a href="#12-to-be-continued" class="hash-link" aria-label="12 To Be Continued……的直接链接" title="12 To Be Continued……的直接链接">​</a></h3></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/Notes/docs/linux/Linux_06_数据提取练习题"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">Linux_06_数据提取练习题</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/Notes/docs/linux/Linux_08_保存完整网页"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">Linux_08_保存完整网页</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_G4nv thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#07-shell编程练习题" class="table-of-contents__link toc-highlight">07 shell编程练习题</a></li><li><a href="#0-测评截图" class="table-of-contents__link toc-highlight">0 测评截图</a></li><li><a href="#1-整除问题" class="table-of-contents__link toc-highlight">1 整除问题</a></li><li><a href="#2-七的奇数倍" class="table-of-contents__link toc-highlight">2 七的奇数倍</a></li><li><a href="#3-一个月有多少天" class="table-of-contents__link toc-highlight">3 一个月有多少天</a></li><li><a href="#4-买文具" class="table-of-contents__link toc-highlight">4 买文具</a></li><li><a href="#5-计数问题" class="table-of-contents__link toc-highlight">5 计数问题</a></li><li><a href="#6-校门口的树" class="table-of-contents__link toc-highlight">6 校门口的树</a></li><li><a href="#7-插队" class="table-of-contents__link toc-highlight">7 插队</a></li><li><a href="#8-走楼梯" class="table-of-contents__link toc-highlight">8 走楼梯</a></li><li><a href="#9-比身高" class="table-of-contents__link toc-highlight">9 比身高</a></li><li><a href="#10-爬楼梯" class="table-of-contents__link toc-highlight">10 爬楼梯</a></li><li><a href="#11斐波那契数列" class="table-of-contents__link toc-highlight">11斐波那契数列</a></li><li><a href="#12-to-be-continued" class="table-of-contents__link toc-highlight">12 To Be Continued……</a></li></ul></div></div></div></div></main></div></div></div></div>
+</body>
+</html>

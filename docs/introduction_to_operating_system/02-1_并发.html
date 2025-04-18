@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-introduction_to_operating_system/02-1_并发" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">02-1_并发 | 编程内外</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" name="twitter:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" property="og:url" content="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/02-1_并发"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="02-1_并发 | 编程内外"><meta data-rh="true" name="description" content="02 并发"><meta data-rh="true" property="og:description" content="02 并发"><link data-rh="true" rel="icon" href="/Notes/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/02-1_并发"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/02-1_并发" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/02-1_并发" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous"><link rel="stylesheet" href="/Notes/assets/css/styles.67339a6f.css">
+<script src="/Notes/assets/js/runtime~main.793c07bf.js" defer="defer"></script>
+<script src="/Notes/assets/js/main.ef11fa70.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"dark")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/Notes/img/logo.png"><div role="region" aria-label="跳到主要内容"><a class="skipToContent__HuA" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Notes/"><div class="navbar__logo"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--light_c3lc"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--dark_Ji9V"></div><b class="navbar__title text--truncate">编程内外</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Notes/docs/category/linux-os">Notes</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/CELFS/Notes" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link" icon="github">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_OqSl"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_OAgU colorModeToggle_zRe0"><button class="clean-btn toggleButton_aClM toggleButtonDisabled_GkIb" type="button" disabled="" title="切换浅色/暗黑模式（当前为暗黑模式）" aria-label="切换浅色/暗黑模式（当前为暗黑模式）" aria-live="polite" aria-pressed="true"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_zzlY"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_Z832"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Cx4E"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_liLQ"><div class="docsWrapper_evXH"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_nZiY" type="button"></button><div class="docRoot_jKp6"><aside class="theme-doc-sidebar-container docSidebarContainer_wXyP"><div class="sidebarViewport_LQZ0"><div class="sidebar_T0dy"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_WBBB"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/linux-os">Linux OS</a><button aria-label="展开侧边栏分类 &#x27;Linux OS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/ajax">Ajax</a><button aria-label="展开侧边栏分类 &#x27;Ajax&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/css">CSS</a><button aria-label="展开侧边栏分类 &#x27;CSS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript-es6">JavaScript ES6</a><button aria-label="展开侧边栏分类 &#x27;JavaScript ES6&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript">JavaScript</a><button aria-label="展开侧边栏分类 &#x27;JavaScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/nodejs">Node.js</a><button aria-label="展开侧边栏分类 &#x27;Node.js&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/typescript">TypeScript</a><button aria-label="展开侧边栏分类 &#x27;TypeScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/vue">Vue</a><button aria-label="展开侧边栏分类 &#x27;Vue&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/轻量级服务器开发tinywebserver">轻量级服务器开发（TinyWebServer）</a><button aria-label="展开侧边栏分类 &#x27;轻量级服务器开发（TinyWebServer）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/c-后台服务器开发">C++ 后台服务器开发</a><button aria-label="展开侧边栏分类 &#x27;C++ 后台服务器开发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/mysql-必知必会">MySQL 必知必会</a><button aria-label="展开侧边栏分类 &#x27;MySQL 必知必会&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/Notes/docs/category/操作系统导论">操作系统导论</a><button aria-label="折叠侧边栏分类 &#x27;操作系统导论&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/概述">概述</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/附录">附录</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/作业">作业</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/Linux补充">Linux补充</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/OS概念类比">OS概念类比</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/01-1_虚拟化_CPU">01-1_虚拟化_CPU</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/01-2_虚拟化_内存">01-2_虚拟化_内存</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/01-3_code">01-3_code</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/Notes/docs/introduction_to_operating_system/02-1_并发">02-1_并发</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/02-2_code">02-2_code</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/03-1_持久化">03-1_持久化</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/03-2_code">03-2_code</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/qt">QT</a><button aria-label="展开侧边栏分类 &#x27;QT&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军信息论-40-讲">读吴军《信息论 40 讲》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《信息论 40 讲》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军富足">读吴军《富足》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《富足》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/machine-learning-andrew-ng">Machine Learning (Andrew Ng)</a><button aria-label="展开侧边栏分类 &#x27;Machine Learning (Andrew Ng)&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/机器学习初步周志华">机器学习初步（周志华）</a><button aria-label="展开侧边栏分类 &#x27;机器学习初步（周志华）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/paddle-零基础深度学习第二版">Paddle 零基础深度学习（第二版）</a><button aria-label="展开侧边栏分类 &#x27;Paddle 零基础深度学习（第二版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/动手学深度学习pytorch-版">动手学深度学习（Pytorch 版）</a><button aria-label="展开侧边栏分类 &#x27;动手学深度学习（Pytorch 版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Notes/docs/intro">学而时习之</a></li></ul></nav></div></div></aside><main class="docMainContainer_dhcR"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_hWfg"><div class="docItemContainer_UIwD"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_ViMa" aria-label="页面路径"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/Notes/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_xAfz"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/Notes/docs/category/操作系统导论"><span itemprop="name">操作系统导论</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">02-1_并发</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_xgD3 theme-doc-toc-mobile tocMobile_UvqM"><button type="button" class="clean-btn tocCollapsibleButton_ldZF">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>02-1_并发</h1></header><h3 class="anchor anchorWithStickyNavbar_QJwc" id="02-并发">02 并发<a href="#02-并发" class="hash-link" aria-label="02 并发的直接链接" title="02 并发的直接链接">​</a></h3>
+<p>Date：2023/05/28 13:01:27</p>
+<hr>
+<p>[TOC]</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第25章-关于并发的对话">第25章 关于并发的对话<a href="#第25章-关于并发的对话" class="hash-link" aria-label="第25章 关于并发的对话的直接链接" title="第25章 关于并发的对话的直接链接">​</a></h3>
+<ul>
+<li>摘录
+<ul>
+<li>例子：桃子，每个食客首先在视觉上识别桃子，然后试图抓住并吃掉桃子。这种方法有什么问题？</li>
+<li>让很多人同时抓起桃子，速度更快。但以我的方式，我们只是一次一个，这是正确的，但速度较慢。最好的方法是既快速又正确。</li>
+<li>永远不要忘记具体概念。</li>
+<li>多线程应用程序中，每个线程都像在这个程序中运行的独立代理程序，代表程序做事。但是这些线程访问内存，对于它们来说，每个内存节点就像一个桃子。如果我们不协调线程之间的内存访问，程序将无法按预期工作。懂了吗？</li>
+<li>操作系统本身是第一个并发程序——它必须非常小心地访问自己的内存，否则会发生许多奇怪而可怕的事情。</li>
+</ul>
+</li>
+<li>多线程（multi-threaded）应用程序、线程（thread）、锁（lock）、条件变量（condition variable）</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第26章-并发介绍">第26章 并发：介绍<a href="#第26章-并发介绍" class="hash-link" aria-label="第26章 并发：介绍的直接链接" title="第26章 并发：介绍的直接链接">​</a></h3>
+<ul>
+<li>
+<p>线程（thread）：</p>
+<ul>
+<li>定位：为单个运行进程提供的新抽象。</li>
+<li>复用、执行点、多线程（multi-threaded）、程序计数器；每个线程类似于<strong>独立的</strong>进程，<strong>但它们共享地址空间</strong>，从而能够访问相同的数据。</li>
+<li>结构对比：程序计数器（PC）、一组计算寄存器、线程（T1）、线程（T2）、上下文切换（context switch）、进程控制块（Process Control Block，PCB）、线程控制块（Thread Control Block，TCB）、线程本地（thread-local）存储</li>
+<li>主要区别：
+<ul>
+<li>地址空间保持不变（即不需要切换当前使用的页表）。</li>
+<li>单线程（single-threaded）进程（一个栈），多线程（每个线程一个栈）</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_118-b7175160012459a9106ed86722324950.jfif" width="777" height="456" class="img_O9Fa"></p>
+</li>
+<li>
+<p>实例：线程创建</p>
+<ul>
+<li>类似函数调用，为被调用例程创建一个新的执行线程，可独立于调用者运行，返回顺序不定。</li>
+</ul>
+</li>
+<li>
+<p>为什么更糟糕：共享数据</p>
+<ul>
+<li>确定的（deterministic）、反汇编程序（disassembler）</li>
+<li><code>prompt&gt; objdump -d main</code> （产生程序中所有指令的长列表）</li>
+</ul>
+</li>
+<li>
+<p>核心问题：不可控的调度</p>
+<ul>
+<li>时钟中断发生、寄存器虚拟化、例子（51 覆盖，少了一次递增）、可变长度指令、<strong>竞态条件（race condition）</strong>、不确定的（indeterminate）、临界区（critical section）、互斥（mutual exclusion）</li>
+<li>由于运气不好（即在执行过程中发生的上下文切换），我们得到了错误的结果。</li>
+<li>临界区是访问共享变量（或更一般地说，共享资源）的代码片段，<strong>一定不能</strong>由多个线程同时执行。</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_122-185a42e9162c98e8d24c3b91365c988b.jfif" width="652" height="458" class="img_O9Fa"></p>
+</li>
+<li>
+<p>原子性愿望</p>
+<ul>
+<li>原子方式（atomically）执行（无中间态）、同步原语（synchronization primitive，有用指令+通用集合）、多线程代码、同步受控访问、互斥原语、条件变量（condition variable）</li>
+<li><strong>临界区</strong>：指访问共享资源的一段代码，资源通常是一个变量或数据结构。</li>
+<li><strong>竞态条件</strong>：出现在多个执行线程大致同时进入临界区时，它们都试图更新共享的数据结构，导致了令人惊讶的（也许是不希望的）结果。</li>
+<li><strong>不确定性</strong>：程序由一个或多个竞态条件组成，程序的输出因运行而异，具体取决于哪些线程在何时运行，从而导致结果是不确定的。</li>
+<li><strong>不确定性</strong>：</li>
+<li><strong>互斥执行</strong>：可以保证只有一个线程进入临界区，从而避免出现竞态，并产生确定的程序输出。</li>
+<li>关键问题：如何实现同步</li>
+</ul>
+</li>
+<li>
+<p>还有一个问题：等待另一个线程</p>
+<ul>
+<li>线程的<strong>交互</strong>
+<ul>
+<li>访问共享变量</li>
+<li>线程等待</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>小结：为什么操作系统课要研究并发</p>
+<ul>
+<li>操作系统是第一个并发程序、inode、不合时宜的中断、<strong>原子操作</strong>、事务（transaction）</li>
+<li>原子化（atomic）：“全部或没有”</li>
+</ul>
+</li>
+<li>
+<p>疑问 / 感悟</p>
+<ul>
+<li>“封装” 是否属于利用原子性特征？合适的抽象，隐蔽某些细节，看作一个整体。</li>
+<li>线程的交互，更像是线程之间存在的各种相互作用情况。</li>
+</ul>
+</li>
+</ul>
+<p>2023/05/28 20:31:17</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第27章-插叙线程api">第27章 插叙：线程API<a href="#第27章-插叙线程api" class="hash-link" aria-label="第27章 插叙：线程API的直接链接" title="第27章 插叙：线程API的直接链接">​</a></h3>
+<ul>
+<li>
+<p>关键问题：如何创建和控制线程？</p>
+<ul>
+<li>创建、控制、接口、易用、实用</li>
+</ul>
+</li>
+<li>
+<p>线程创建</p>
+<ul>
+<li>创建新线程、POSIX、函数指针（function pointer）、void指针、参数打包、返回值打包</li>
+<li>另一个活着的执行实体，它有自己的调用栈，与程序中所有当前存在的线程在相同的地址空间内运行。</li>
+</ul>
+</li>
+<li>
+<p>线程完成</p>
+<ul>
+<li>必须调用函数 <code>pthread_join()</code> ，但并非所有多线程代码都使用 join 函数（多线程Web服务器，长期程序，但 join 可确保所需工作完成）</li>
+<li>过程调用（procedure call）</li>
+</ul>
+</li>
+<li>
+<p>锁（lock）</p>
+<ul>
+<li>临界区 =&gt; 锁保护</li>
+<li>缺乏正确的初始化（lack of proper initialization）、在调用获取锁和释放锁时没有检查错误代码</li>
+</ul>
+</li>
+<li>
+<p>条件变量（condition variable）</p>
+<ul>
+<li>线程库、主要组件、标记变量（易错、自旋）、标志同步、编译并发程序</li>
+<li><code>int pthread_cond_wait(); </code></li>
+<li><code>int pthread_cond_signal();</code></li>
+</ul>
+</li>
+<li>
+<p>编译和运行</p>
+<ul>
+<li><code>pthread.h</code></li>
+<li><code>prompt&gt; gcc -o main main.c -Wall -pthread</code></li>
+</ul>
+</li>
+<li>
+<p>线程 API 指导</p>
+<ul>
+<li>保持简洁。</li>
+<li>让线程交互减到最少。</li>
+<li>初始化锁和条件变量。</li>
+<li>检查返回值。</li>
+<li>注意传给线程的参数和返回值。</li>
+<li>每个线程都有自己的栈。</li>
+<li>线程之间总是通过条件变量发送信号。（线程局部变量、线程之间共享数据，值要在堆或者其他全局可访问的位置）</li>
+<li>多查手册。</li>
+</ul>
+</li>
+<li>
+<p>疑问</p>
+<ul>
+<li>如何理解 “因此，将唤醒视为某种事物可能已经发生变化的暗示，而不是绝对的事实，这样更安全。” ？</li>
+</ul>
+</li>
+<li>
+<p>摘录</p>
+<ul>
+<li>线程创建、通过锁创建互斥执行、通过条件变量的信号和等待。</li>
+<li><code>man -k pthread</code></li>
+<li>复杂的、正确的、高性能的</li>
+<li>线程难的部分不是API，而是如何构建并发程序的棘手逻辑</li>
+</ul>
+</li>
+</ul>
+<p>2023/05/31 22:34:29</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第28章-锁">第28章 锁<a href="#第28章-锁" class="hash-link" aria-label="第28章 锁的直接链接" title="第28章 锁的直接链接">​</a></h3>
+<ul>
+<li>锁的基本思想
+<ul>
+<li>锁变量（lock variable）、可用的（available / unlocked / free）、被占用的（acquired / locked / held）、（锁的）持有者（owner）</li>
+<li>锁为程序员提供了最小程度的调度控制。</li>
+<li>线程（视为程序员创建的实体）、控制权（获得）</li>
+<li>目的：给临时区加锁，可保证临时区只有一个线程活跃（混乱 =&gt; 可控）。</li>
+</ul>
+</li>
+<li>Pthread 锁
+<ul>
+<li>POSIX 库、互斥量（mutex）</li>
+<li>预留参数入口，可用不同的锁保护不同的变量：这样可以增加并发，不同于任何临界区都使用同一个大锁（ <strong>粗粒度的锁策略</strong> ），通常大家会用不同的锁保护不同的数据和结构，从而允许更多的线程进入临界区（ <strong>细粒度的方案</strong> ）。</li>
+</ul>
+</li>
+<li>实现一个锁
+<ul>
+<li>关键问题：怎样实现一个锁
+<ul>
+<li>高效（低成本提供互斥）、特性、硬件支持、系统支持（计算机体系结构的指令集：硬件原语）、互斥原语</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>评价锁
+<ul>
+<li>互斥（mutual exclusion）、公平性（fairness）、性能（performance）</li>
+</ul>
+</li>
+<li>控制中断
+<ul>
+<li>在临界区关闭中断（早期，为单处理器系统开发）、缺点很多（依赖特权操作，不通用）、不支持多处理器、中断丢失可能会导致严重的系统问题、效率低</li>
+<li>Dekker 算法（Dekker’s algorithm）、Peterson算法（Peterson’s algorithm，针对两个线程，flag、turn）、松散内存一致性模型</li>
+</ul>
+</li>
+<li>测试并设置指令（原子交换）
+<ul>
+<li>测试并设置指令（test-and-set instruction）/ 原子交换（atomic exchange）、自旋等待（spin-wait，性能浪费)、并发编程（正确性）</li>
+</ul>
+</li>
+<li>实现可用的自旋锁
+<ul>
+<li>SPARC：ldstub（load/store unsigned byte，加载/保存无符号字节）</li>
+<li>x86：xchg（atomic exchange，原子交换）</li>
+<li>测试并设置指令、原子地（atomically）、自旋锁（spin lock）、抢占式调度器（preemptive scheduler，即不断通过时钟中断一个线程，运行其他线程）</li>
+<li>实现：将测试（test旧的锁值）和设置（set新的值）合并为一个原子操作</li>
+<li>提示：从恶意调度程序（malicious scheduler）的角度想想并发</li>
+</ul>
+</li>
+<li>评价自旋锁
+<ul>
+<li>正确性（correctness）：能够互斥</li>
+<li>公平性（fairness）：无</li>
+<li>性能（performance）：单 CPU 开销很大，多 CPU 性能好（临界区短）</li>
+</ul>
+</li>
+<li>比较并交换
+<ul>
+<li>比较并交换指令（SPARC：compare-and-swap，x86：compare-and-exchange）、无等待同步（wait-free synchronization）</li>
+</ul>
+</li>
+<li>链接的加载和条件式存储指令
+<ul>
+<li>链接的加载（load-linked）、条件式存储（store-conditional）、Alpha、PowerPC、ARM、劳尔定律（Lauer’s Law，少即是多）、布尔条件短路、条件式存储失败的发生</li>
+<li>store-conditional 关键区别：只有上一次加载的地址在期间都没有更新时，才会成功，（同时更新刚才链接的加载的地址的值）。</li>
+</ul>
+</li>
+<li>获取并增加（fetch-and-add）
+<ul>
+<li>变量 <code>ticket</code> 和 <code>turn</code> 构建锁</li>
+<li>能够保证所有线程都能抢到锁（unlock 是增加 turn，从而下一个等待程序可进入临界区）</li>
+</ul>
+</li>
+<li>自旋过多：怎么办
+<ul>
+<li>基于硬件：简单、有效</li>
+<li>缺点：某些场景效率低下（不必要地自旋，带来时间片浪费，N-1）</li>
+<li>关键问题：怎样避免自旋</li>
+</ul>
+</li>
+<li>简单方法：让出来吧，宝贝
+<ul>
+<li>思想：在要自旋的时候，放弃 CPU。</li>
+<li>利用原语 <code>yield()</code> ，使得运行态变为就绪态，从而允许其他线程运行。</li>
+<li>本质：取消调度（deschedules）</li>
+<li>轮转调度程序</li>
+</ul>
+</li>
+<li>使用队列：休眠替代自旋
+<ul>
+<li>目标：必须显式地施加某种控制，决定锁释放时，谁能抢到锁。</li>
+<li><code>park()</code> 、<code>unpark(threadID)</code> 、<code>guard</code> 、<code>separk()</code> 、唤醒/等待竞争（wakeup/waiting race）</li>
+<li>线程被唤醒时，就像是从park()调用返回。但是，此时它没有持有guard，所以也不能将flag设置为1。</li>
+</ul>
+</li>
+<li>不同操作系统，不同实现
+<ul>
+<li><code>futex</code>：每个 futex 都关联一个特定的物理内存位置，也有一个事先建好的内核队列。</li>
+<li>``futex_wait(address, expected)<code> 、</code>futex_wake(address)`</li>
+<li><code>nptl</code> 库的 <code>lowlevellock.h</code>（源于 <code>gnu libc</code> 库）：类似一个整数掰开使用，分别标记锁是否被持有、等待者个数、负数则被持有</li>
+</ul>
+</li>
+<li>两阶段锁（two-phase lock，Dahm 锁）
+<ul>
+<li>杂合（hybrid）方案</li>
+<li>步骤
+<ul>
+<li>两阶段锁的第一阶段会先自旋一段时间，希望它可以获取锁。</li>
+<li>若第一个自旋阶段未获得锁，第二阶段调用者会睡眠，直到锁可用。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>疑问 / 感悟
+<ul>
+<li>目前为止，这里前后提到的工具，都是为了解决 51 例子的问题，即临界区带来的计数冲突问题，而解决这个问题的核心，始终围绕着 “原子性”。</li>
+<li>了解到 Peterson 算法，想起 Linux 的 <code>fg</code> 指令，难道是 flag 的意思吗？</li>
+<li>如何理解 “其他线程都在竞争锁，都会在放弃CPU之前，自旋一个时间片，浪费CPU周期。” 以及 “然而，临界区一般都很短，因此很快锁就可用，然后线程B获得锁。” ？</li>
+<li>如何理解 “返回该内存地址的实际值，让调用者能够知道执行是否成功。” ？为什么返回的是原来的值？这个信息够用吗？对比前面返回 old，似乎一样的思想。</li>
+<li>如何理解 “线程被唤醒时，就像是从park()调用返回。但是，此时它没有持有guard，所以也不能将flag设置为1” ？</li>
+</ul>
+</li>
+<li>摘录
+<ul>
+<li>Pilot操作系统、RDLK（读锁）、Buzz Locks、高度优化的</li>
+<li>针对不同锁算法的优秀而全面的调查。</li>
+<li>留给读者一个问题：如果我们在park()之后，才把guard设置为0释放锁，会发生什么呢？提示一下，这是有问题的。</li>
+</ul>
+</li>
+</ul>
+<p>2023/06/03 23:29:16 to 28.12，2023/06/04 18:22:58</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第29章-基于锁的并发数据结构">第29章 基于锁的并发数据结构<a href="#第29章-基于锁的并发数据结构" class="hash-link" aria-label="第29章 基于锁的并发数据结构的直接链接" title="第29章 基于锁的并发数据结构的直接链接">​</a></h3>
+<ul>
+<li>
+<p>关键问题：如何给数据结构加锁？</p>
+<ul>
+<li>线程安全（thread safe）、并发访问（concurrently）</li>
+</ul>
+</li>
+<li>
+<p>并发计数器</p>
+<ul>
+<li>简单但无法扩展
+<ul>
+<li>只是加了一把锁，在调用函数操作该数据结构时获取锁，从调用返回时释放锁。</li>
+<li>请注意，如果数据结构导致的运行速度不是太慢，那就没事！如果简单的方案就能工作，就不需要精巧的设计。</li>
+<li>观察者（monitor）、完美扩展（perfect scaling）</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="data:;base64,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" width="516" height="401" class="img_O9Fa"></p>
+<ul>
+<li>
+<p>可扩展的计数</p>
+<ul>
+<li>懒惰计数器（sloppy counter）、局部锁、全局锁、锁同步、频度、阈值 S（sloppiness，越大扩展性越强）</li>
+<li>多个局部计数器、一个全局计数器、每个局部计数器有一个锁、全局计数器有一个锁</li>
+<li>懒惰计数器是在准确性、性能之间折中</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="data:;base64,iVBORw0KGgoAAAANSUhEUgAAAhYAAAGKCAYAAABQCwh2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAh1AAAIdQB1ttWeQAAJK1JREFUeF7t3QuV28q2BdBLIRRC4VAIhUfhUQiFphAKoRAKoRAKoXDeXXm9z6lU9LMs2ZI85xjV/sifatlWLW/J0n/+BgDYiGABAGxGsAAANnPYYPGf/yzv2s+fPwdPAYDHOlyw+Pjx469QsSRYfP/+/Z/btu3r16/vtwAAHulQweLbt2+/qg0VEObkNp8/f/777e3tt1MA4DkOV7GIJcHix48fQgQAHMxpg8XcdADg8U4dLKp9+vTp/VoA4JlOGSyyLcX//u///hYu0my0CQDPddqKRet//ud//rlPfikCADzHJYJFZEPONfcDALZzmWARFS6mVolkFcpU+/Dhw69TAOB2lwoW+QnqXLDIapOplh10CRYAsM6lgkXMBYs5FTAAgNtdsmJxj4QKFQsAWOdSwSL3uXdvnIIFAKx3umBRxxJpB/86GNkWgUCwAID1Dhcs2iOWjqnpbduKbSwAYL1DViyeScUCANYTLDoqFgCwnmDRUbEAgPUEi45gAQDrCRYdwQIA1hMsOraxAID1BIuOigUArCdYdFQsAGA9waKjYgEA6wkWHcECANYTLDqCBQCsJ1h0bGMBAOsJFh0VCwBYT7DoqFgAwHqCRUfFAgDWEyw6ggUArCdYdAQLAFhPsOjYxgIA1hMsOioWALCeYNFRsQCA9QSLjooFAKwnWHQECwBYT7DoCBYAsJ5g0bGNBQCsJ1h0VCwAYD3BoqNiAQDrCRYdFQsAWE+w6AgWALCeYNERLABgPcGiYxsLAFhPsOioWADAeoJFR8UCANYTLDoqFgCwnmDRESwAYD3BoiNYAMB6gkXHNhYAsJ5g0VGxAID1BIuOigUArCdYdFQsAGA9waIjWADAeoJFR7AAgPUEi45tLABgPcGio2IBAOsJFh0VCwBYT7DoqFgAwHqCRUewAID1BIuOYAEA6wkWHdtYAMB6gkVHxQIA1hMsOioWALCeYNFRsQCA9QSLjmABAOsJFh3BAgDWEyw6trEAgPUEi46KBQCsJ1h0VCwAYD3BoqNiAQDrCRYdwQIA1hMsOoIFAKwnWHRsYwEA6wkWHRULAFhPsOioWADAeoJFR8UCANZ7+WDx9vb2fu7/CRYAsN7LB4sPHz78/Z///Dsb+mCRabkNADDPqpD/SniocNFuY9FeDwDMM2q+qxBRFQuhAgBuZ+RsVJgQKgBgHaNnR6gAgPWMoI22WiFcAMDtjJ7vKkxkGwvhAgDWMXL+VwJE/aS0gkX9DFW4AIDlXn7UbENFtL8KiX4/FwDAOCNmpw0WP378eL8WAFhCsOhUsEioUKkAgNsYOTsJFmmhagEAtxEsOlWxiI8fP/5xkDIAYJxg0WmDRVgdAgDLGTU7ggUArGfU7LTbWERCxl9//fV+CQCYIlh0+opFqFoAwDJGzI5gAQDrGTE7Q8Hi69evwgUALGC07PTbWBTBAgDmGS07QxWLSLD4/v37+yUAYIhg0RkLFqFqAQDTjJSdsVUhIVgAwDQjZWeqYpH9WXz+/Pn9EgDQEyw6U8HCEU8BYNohR8lUBZYM4DXQp221d8ypVSEhWADAuEONkt++ffsnKMwN4J8+ffr7w4cP75f+3xaD/lTFIhJ67OIbAIYd8uv3kmAxND0/B703XMxVLGKLAAMAV3TKYJFpQ1WFnz9//pqWysdacxWLECwAYNjpgkWFh7e3t/drfjd13yWWBItaZQMA/O50waIG9Ry/Y8jUfZdYEizinucAgKs6XbCYCw7ZoPOeQX/JNhaR5xgLNwDwqi4XLOamz1lasXDEUwD40+WCxaMqFnHP8wDAFV0uWCydPtWWVCwi+9JYelsAeAWnCxZzv8iYq1hkXxfZY2dOh87fEhbs4hsAfne6YPGIn5suXRUS9zwXAFzN6YJFZNpQVeFRO8hqJeB8/Pjx/RIAvLZFwaIG+rGW1QdbqsedMjQ9qzPm7jfn1mAR9z4nAFzF6IhYg/Qtbatv7vV4UxIA2kCz1c8/b10VEnneVEsA4NUNjsQ5emcN7mm5nKN6ppUMpHVde9u0se0f5uR+qRa0j/Ply5f3qX9qn7vt2z3WVCxyn/QBAF7dH6NhDdRrqg8ZkOtXGWcdaNdULEKwAIAuWGwVCOonoWccbNdULCKByi6+AXh1/4z8CQFbD4xZhbJmkH6mtcHCLr4BoKtYsH5VSAgWALw6I2FnbcUi7gklAHAFgkXnnmBRO+gCgFe1ySiYgfhs21KMubfqIFgA8MoWjYL56WkGzLT2Z6jtrz+q5cBcZ3ZPxSIyf/ILEQB4RYuCRXZUldDQqrJ/tagda53ZvRWLOPs8AIC1Fo2AQwNlBYp+2r2D8rPdW7GIzJOzV24AYI1VwaI9jkjOt7batfazbBEscv9+ngHAK1gVLCpUDO32++wD6harQvw6BIBXtWj0yzYW2X4i5o4FcoVgscUvXBK61h6MDQDOanEKqA04q+UXIa0MyDXtzLYKFvWLGQB4JUa+zharQopgAcCrMfJ1tqpYRILFp0+f3i8BwPUJFp0tKxY24gTg1Rj1OltWLEKwAOCV/DPq7bHXzDzmloP0I2wdLK6wN1IAWOq3ES8DYNq9O7lqjyFyNluuCgm/DgHglfwx4rUHHKt9VyyVb/p137MOpltXLCLzov95LgBc0eDo31YcqqWKkX1ZDJ32t/3y5cv7I53PHsGi5hEAXN3kaFfbByxtQ7v4PputV4WUzB8AuLpFo91QVaJtV9pXwx4Vi8h8ynwEgCvzNbqzV8XCRpwAvAIjXWevikUIFgBcnZGus3ewuPWXNgBwJoJFZ69VIVFHiAWAqzLKdfasWESCRY4hAgBXJFh09g4WdvENwJUZ4Tp7rgqJ79+/CxYAXJYRrrN3xSISLL5+/fp+CQCuQ7Do7F2xCBtxAnBVRrfOIyoWIVgAcEVGt84jg8UjngcAHkmw6DxiVUjk+CqqFgBcjZGt86iKRQgWAFyNka3zyGDx4cOHSxxqHgCKYNF51KqQ+PLli6oFAJdiVOs8smIRCRY/fvx4vwQA5yZYdB5ZsQgbcQJwJUa0zqMrFqlWCBYAXMUfI1oOkvXKHh0sIsEi21sAwNn9Fiw+f/78a5BLuMj5e9sZPXpVSOTXIaoWAFzBP6PZz58/fw1uW7ezeUbFIs44rwCg99totke4OFvl4pnB4tGVEgDY2h9fk7faxqKCRcr8Z/KMVSGRMJP5BQBntkuwqMpHfkp5Ns+qWIRgAcDZLQoWtw543759O+2uqp9VsYhUd85W4QGA1mywqB04LW1vb29/f//+/f3e5/PMisXXr19/zUMAOKvZYNEHhyXtzJ4ZLCLz78zBDIDX9kcKGFqF0YeFoZ05nT1QlGeuCokrhDMAXtcfI9iSbSyuHiyeWbGoDV8B4IwEi86zg0VkXmZ7CwA4m0Vp4NWCxTNXhURWR11lfgLwWhYHi/yENBsV5jR702wvp9Vt0s7sCBWLECwAOKPfRq92l97l1p+bpp3ZESoWkfl4xh2MAfDafksBQwGhqhBZ5z93vi7bj8X9UhWysywAzuafYFFh4igD67Mc6f+vcAcAZ/Fr5PITx38dZVVIVNgDgLP4NWq9coWid6SKRVYtCRYAnMnoqFWD2r3tbPtjONqqoMzDHz9+vF8CgGMbDRZ9QLinncmRVoXEGechAK/LiNU5WsUiBAsAzsKI1TlaxSISLHI4egA4OsGic8SKRY7fMnQMFwA4GsGic8RgEVaHAHAGs6PVq+1W+oirQiLBQtUCgKObDBYZzF7tm/JRKxbZxkLVAoCjmxypMsAKFschWABwdP+MVGODllUhx5HXSLgA4Mh+CxZ7tLM5csUiR4094zwF4HX8GqW+fPnyRyDYqh11kB5z5IpFZJ6e+bD0AFzb7NfftatC2nBxJkeuWMQZwxoAr2PXYPHhw4f3S+dx9GARZwtrALyOVcEiRyzN4Pbx48f3a/501sHv6KtCIvP28+fP75cA4DhuDhYVKto25KzHtjhDxSJ9nAp1APAsNwWLb9++/RMmcn1arruSMwSLGAt0APBMNwWLVxjMzrAqJPJanHEbFgCu7aZg8QqOXrGo16N+ItxL/7O6CgCe4Y+RKYPSq4WJ1tErFtloswJFTn/+/PnrfNS0q62eAuA8/ggWGZjubWd29IpFVIBIqxBRByn78ePHr8sA8Ay/pYB8+60B65525orHGYJFVJBIS39z2lYvAOAZBssLUz8VHVt/n4HtCo6+KqTVhgu7+QbgCASLzlkqFtEGCwA4gsERaWqvjoLFMVSoaFdfAcCz/TEaZWCdqljkZ45DrhQsjr4qpLapqA01hQsAjuKPkagGqHvbWR29YjH2k9JUks4+7wE4v99GofyaY6v2119/vT/quRy9YpHgMLahZuZ7ptsjJwDPcvqvt2M/kV3r6BWLOfnfp1ZlAcCeTh8s+kBRba2zB4u45/8HgHucegTaY9fVR18VskS7228AeKRTjz57DJ5XqFjEx48fhQsAHu60I097vIwtB9CrBIvIfHFAMgAe6bTBog0VbbvXFVaFtDJPxvY9AgBbu0StPBWGrcLFlSoWUXvoBIBHuNSIs0W4uFrFIrJfi2xzAQB7u9xX2S2CxZUqFiXzRLgAYG8vFyxq+lS7YrCoHYk5vDoAe7pcsIgMoGtdtWIR+d/umTcAMEew6FxxG4tW5s2V/z8AnutywSIDZ470udaVKxZFuABgL6cMFtkvw9DRUxMIsuOse1y9YhHZziLhIttdAMCWThksMvBnYGzbVocKf4WKRdjlNwB7OP3IsvW37lcJFlGhDAC2YlTpvMKqkFaCRfbOCQBbECw6r1SxiGzoqmoBwFaMKJ1XCxaR7VOECwC2YDTpvNqqkJJgsdUGsAC8LsGi84oVi5Jw8e3bt/dLAHA7waLzqhWLyD5ArBIB4B5Gkc4rVywiwUK4AGAtI0jn1YNFJFgM7dkUAOYIFp1XXhVSfvz48Stc5BQAbiFYdFQs/l8qFlaJAHArI0dHsPjXp0+fhAsAbmLU6FgV8rsEC0ELgKUEi46Kxe+yXwtVCwCWMmJ0VCz+ZJffACxltOioWAxLuLDLbwDmCBYdwWJcqhZfvnx5vwQAfxIsOlaFjHt7e7NKBIBJRomOisW0VCyECwDGGCE6gsW8BIuPHz++XwKAfwkWHatClkm4cIh1AHqCRUfFYpnMJ6tEAOgZGToqFsslgAkXALSMCh0Vi9skWOSYIgAQgkVHsLhNHWLd9hYAhGDRsSpknYSLnz9/vl8C4FUJFh0Vi3X++usv21sAIFj0BIv1EiwSMAB4XYJFx6qQ9b5+/WqVCMCLEyw6Khb3+f79u1UiAC/MCNBRsbhfgoVDrAO8JsGio2KxjYQL8xHg9QgWHcFiOwkXWTUCwOsQLDpWhWzn7e3N9hYAL8ZSv6Nisa0EC+EC4HVY4ncEi21VsPjy5cv7Nb/LNPMb4DoEi45VIduqY4mk5XyrrgfgOizVOyoW28sOs/oQIVQAXJMle0fFYh+146zs30KoALguS/eOisV+KlwIFQDXZQnfESz2U6GimmOKAFyPYNGxKmQfFSai3aDT0VABrkWw6KhYbK8NFeXbt2//XJ+WI6MCcH6CRUew2NZQqCjtNhdpHz9+fJ8CwFkJFh2rQp5nKoQAcA6W4h0Vi+eqcGHbC4BzEiw6KhbPl+0tKmD45QjAuQgWHRWL48g2FwkXnz9/fr8GgKMTLDqCxbEM7Q4cgOOytO5YFXJMCXsJF14bgGMTLDoqFsemegFwbJbQHcHi+OpAZjbsBDgewaJjVcg5tEdLBeA4BIuOisW51C9H3t7e3q8B4JkEi46Kxfm0+73IAc4AeB7BoqNicV617YVgCPA8gkVHsDi39pDsADyepW/HqpBrSDhMuLDtBcBjCRYdFYtrUb0AeCxL3I5gcT0VLvITVQD2JVh0rAq5pvrlSH6eCsB+BIuOisW11X4vvnz58n4NAFsSLDoqFtdXe+1Ms1twgG0JFh0Vi9fx119//QoXnz59er8GgHsJFh3B4rW01YuYe+0zXZUDYJxg0bEq5DWlalEBI20oPOR9UQEEgGGWkh0Vi9fWhotWrTYBYJolZUewoA8XFSoc4AxgnmDRsSqEyK7A24AhVAAsI1h0VCwoeS+04SLvCwEDYJpg0VGxINptKtpw0TYA/mTp2FGxoH4h0lYnao+dkd2DV/BIsx8MgH8JFh3B4rXltU9YGPq56dAvQ3K7uk9ats2wnwvglQkWHatCXlsfHHofPnx4Pzcs0ytkJIjYJgN4NYJFR8WCLSRQVMBImwskAFchWHQEC7aWbTLaPXt6fwFXJlh0rAphb23IyOHbrS4BrkSw6KhY8EgVMKoBnJ0lWUfFgmdoj7Kalg0/Ac5IsOioWPBs3759+/U+rJDx+fPn9yl/yvRswzEm07O6BeBRBIuOYMHRtDvjSshot8moY5okjPRyvV+jAI8mWHSsCuHIKmBUi1Qscj6rU0o7HeCRLHk6KhacQcJEuzOuahUy0gCewdKnI1hwNqlU5D3bBoxsV2HbCuAZBIuOVSGcVQLFUBWjb9lGI80xTYA9CBYdFQvOqEJDDG1zUWGiNvbsWwJJjuC6t7kjwfrswfkJFh0VC86mwkErq0Fy3dRPUUutNqn79K0+E1usWsnjjQWYWp0z9AsX4DwEi46KBWeSgXjsJ6X5aeoWA3UFizzWUEt4WRJgSu7Th4uqpLRVFuCcBIuOYMGZZDCekgF7TxUuxlq246jWqulRAcg2H3ANlwgW+faz1S6Q69sZsE6qDmntT1/bls9qPrM5X6ftTr+Aczt1sKjybEml4d5qg4oF7CfbaaSKMrYRaVrCRqoY1Z5p7vmf3T84otMGiwz+WQj1ct0t63t7ggXsr92mosJESUUjvx7J6dzPZ7P9SLU91PMMmZoGr+y0n4p8oId+unbvh92qENhXvuX3n9FbPre1LUY+/3W/uXaPocfY4nH3MLdKeGxDX9jS8T4ZC4xVK0qmrf1pnIoF7Kc+u/2vPxIWcv1W20qlgpHKZU7zuFMtAaXamLptVBXlaKr6M/Z/1PYsR9pIdmqex9z0RztTf7Pd0lR/8j7Yq7+nDBb1ARmTaWurDioWsJ98NqdWW2T6Pasyb5WgUy0L2Tz/UOun5YvLI/u5VAaT9K//cpTAluuPJn0aq6JMTXuW9Gks/E5Ne4YK60PjWb1PBItGZkjamLnpU1QsgF59manWX17TsnBPlWHo9F55/BpQ6vmOqu9fDYhHXW3T9+0M/W0DRPW33a5pa4JFR7AAehk0apmydPmSgDDWlqyimWrpT9sySLSn7WCX06Or/6s/f1TpX+Ztf/6I+iCR83tXVo7/jhuQGZM2Zm76lASLodIR8JqGBudcfuZgklUxtTqmzler5d8zW31Bmzttz7f3r2nt9COdpp2lv2ntqrxcv7eXCxb5IE61JLm8CEPTNE17rVbLklunPbvVNhUVNDK4DN1uj5bnqnmjHa8JFiNqBo2Zml7T6ltIe1rn2+uPfr5v9zzWI88PXXfk81PTjnZ+6Lpnne/b3H3GTsfO7306dd3Ybdrze103dJtquW6stfep00dcN3Za58dae5tnnvbX9efb6/rbPvO0zvdtr402yymDRW04NSbTkprXqPLRWWRe5FvJWeS1yTrms5h6nx2R/u7r6P3tl411vtaz7z2grJF+VT/b09om4GjStwzYdb7m7ZF+EdJK3/K6Vz8f0d9jf0omZMaMmZo2R7DYV16bfh8GR3bPe+kZ9HdfR+5vbRDaai/Xfi4ysBxF+lODdLT9zfmjhYv0qR2Q+/4eKbhVgKhVH3U58uWunba139+FJ5I349CLmOvveTMKFvvKm1nFYj/6uy/93U72wNqGiuj7e6T+Z7zpx5Yj9zcBqA1BbbAoe/X3OHNhhX6mVCK/R4LFXiluD/lgqljsZ68P3l70d1/6uy/93c9QsNjLuV7FTs2oJMmEgT79rqFisa+8XoLFfvR3X/q7L/3dj2DxRILFvvLGtipkP/q7L/3dl/7up7areIRzvYoPYFXIvvLGVrHYj/7uS3/3pb/7UbF4IhWLfeWNLVjsR3/3pb/70t/9qFgAAKckWAAAmxEsAIDNCBYAwGYECwBgM4IFALAZwaJzpn1Y1M+HzvYTrXL0fte8PWo/++MWLFX/09vb2/s1+7p1PtZtj7IjtaV9X3q7ey19jupP9l8wJ8ftqNt//fr1/dr71OM9Yplaz/VoS/+3refF0s/uLfNlbR+HnuPxr8RBZbfgQzPoqKqvfTvLXi2zY6/094hy4J52XtZRI7da4N5r7Xs1t8//8ihtP9s2Nh+Hbpv2qADUyr5h8txL51e9R9L2svR1r9v0bWw+Zlq77556/6+VwNs+b7X0f0wGs6H7TMn7KLfZ6j1d/3ffhix9LdbMizHte2xu30V53vYQF3l9xwJDLYv7tqSP9Rqktda/ey6kPlRDM+iI0sf222r74p6h/+nvvQuvvdSA0n/LO0oQWvNerW+jj9wxWUJZv6O5XB7rd13f9rGuG7r9nta81u0Asoelr3tNr1Bce1scu9/U9e3AtFQFhDbEtIPw2Hsw0/I/5r3ano6p+b2lpX2o6+p/GlP/963zYkgFiTx3/5i9eo7e0HPWcnhtH9sw1tr2lTm5owwec8YSer3AU2+6I0gf6wNyNDUPe0cLQmP97NV8XlIO31IbfFtjA8KSb1OPsOa5siCOR/Rz7jnm5mMfFsYeb+55xoyFkanglS8at7w/1/Ztyppl5ly4WTMv5iQw5n5TFYtMH/p/hvqb64Ys6WPdd+h2t/9nF1YfviOb6l+96Y4cLOrDVt+ijyZ9SqtvfOWswSK3GVt4PMPQfJx7v+b2YwvpLVW1qn/t51T/c9/+f9va1HPkMzWmKhf9fBx7vKnnWWvsMW95f9bqgK1Wf5QKh7e4Z7wYmxdz6nUc+8xM9anuO7capcz1MYEwhm63bq5c1D1vlCOYe9M9WxYG9WY8asWiBpc/Pij/vTz2bfAZhvrYW3KbR8tn7NaB+1H/x5rnaW//iH7e8xy531iwaAf3LD9yXX1Wt1LP1arnqjb3GRt6jHvV6pulfSj1rX6Neq5bzVUs5h4305aOD1OP1V4/dLvb/7MLu0qwOKq2b0etWET6Va0ur/lGs6e2f0MyKGR6vz44besBY6ksDG8NFTH1f26lraS0G8ml5XM1JAvodlrdfk/3PMfY/eox29L2Hu+RPG4/qGUQ7wf2tKF53m470L9Ga95XJZ+RoT7MuWe8yP2WVg5ac18e5/o+N72V2w31sa+MDT3murlyUWcPFkMv8FH03wKOWrEoNS/TxgaWZ6q+jWn7n0GztNc/Si0Mq90yP2uBv7e2fzVItYNXBbTW2Lf/Pa19jrn5WI+75rGXqG/ac6b60U6rVSH1uGn9Mmat9nmmrK1YZIPINfeL+n/vqVgsee6xPuaz23/JGnrMdf/dRZ05WNRC8Kj6lHvkikX032Bu2YL7EapfY6am17RHVS5qIdW2pW657T2m+jU0rQ8VMfUYW1n7HHP3qWXf2sefk8dc+hka68fQdWVq2hr1eFOPuXa8yH3WVlgeVbHIbYb6uPR9f/tcubAzB4sj93uob0euWKRvFYTagFHfko6g+jRmanpbQXi0+owNLaB6ud3aBfCt8lxj33hrNUlVfvJtcei9kNuk7WnNc+T2U/Mxr0UN+vX4tz7HlHzDvbXsP7QszuW2+taqz+mS99VSc/NhTcVizbxoPaJikXk89PgJM0PhcOgxb5srFzf0Zj6Do63/b+UNmm/GWRC3rRYEdflRA8icoUpKrds90ntjrj/3Tt/TkufO++aR74n0ZyxYRKbXoJbz7Xu5Wv1fdXkP9RxLZT5OrXoaerxaDt7yPGPyGk7N1zG1fGjl8tSyLtO3DBb1uR9z63iRQXloldottqhYtBvq9vJ6jfUx923f79XqOevyr9v++ssvZwwW6fNYej2CetPNtX5VybOkL0MLp+rn2DemR6v+jLl3+p7mnjvv5y0HiCXSn6mFfqa3wWJJ28Mtj53BZ2oQqQ18p76FToWSJZb2dUh/31ye+vxl+tbvm6n+31qxuOW2Y+6pWMyFkpi775IW9/+nF3K2YJEP2bO28L/XUbexSJ/GFk6ZdqVgMbWA2VOee+ybZ/r0jArckvk1Z+4xtrD0OfL5mqsU1LfN+pbZysCVaWurRjUArjW0qjSXpx7znucbslXF4t550doiHAy5p4+5X3/fbf7bizhTsMibfuzNdZTBb8rQguMI0qepYHGU6lD6Mjf/Mn2oErTlgm6NseeeChX5P+799jylvr0PyedpyfzKbfaer0ueI/NxLFS08zGVijzWUKUmj5Fpa+Z5Pe6QhJgln6Hcv6+kVBAaMrTq5F55vKlgtaRiscW8aNVnd+p+6dfQa5r7Db0v0o+xZd6SPuZx+/9x21fi5M4SLCpJj7WxN8mRHLViUQuvvhKUweVI87Ve6ykV3vqF49B1W8tzZH61g0MtZIcWVDWwT7W9jX3+lz73I/o59xyZt3WbsdaqwbEPELluTeWoBr6pVmo5NvQeGXt/TvV3jXrNh/owZ+z9Um6ZF0vVY05VLKJ/7AqKvS36OHS72/+zC6sZNJT2jqL6ONXm3nRHcNSKRdSCJQuOWngkcBxJvdZz3yayAO7/lzXfQm9V/Wtbnn/I0G2H2iPUgradX0s9op/1HEMDb02bakOvQVVk2v95zXuk7jvXSr032za3+iaG3tNrDfVh6fKzbj9WHVjSblX3y/89p26XNjRfa97NtTlDt1v/igAAdAQLAGAzggUAsBnBAgDYjGABAGxGsAAANiNYAACbESwAgM0IFgDAZgQLAGAzggUAsBnBAk6q9vXfHweg9t3fHlipDN1+TD3O2O1r+tBxK6bk4FNLjnUwJAehmpM+jR1Aqw4yt3QeALcTLOCkxg7bXAP+kKlpvdxubCCvA7WNPdbSQy0nlOS2S1p70KQpdZuh8FD9zoG3WgkcRzvQHJzVsiUMcDg10PZqYI22mpCBtr390H1bmT4WLPrHatXhsKeqElU56Afz9qiaQ0fYzH2mDuedADL13Jk29Lx1/dpKCvCv6SULcFhLKhZD5/s2JtMqWFRYuLW1waYOUZ3BP3K+V7ep/62/TS731YZWha08bx2a/9Y2tAoJWG58qQIcWj/4vr29/Wp1Xc5nEM9p1O0i5+e2M8hthioW9Rxfv359v+Zfnz9/Ht3mokJD9WdM+7x9P3N5qmKR6VNVh0xPA/bjEwYnlMGzgkUG+JzWqoOhwbO9nLCRwX9um4J6nLQEhlLX5f5pef46X9OGvvWvCRZRz1XnxyoWU6tnSqbP3Qa4j08YnFAG3j5Y1IDZn88gX6sIhlqvrstpBvG6bySQ9PfJ5TZ4jGmDRU5vbbXh5VjFom7XqnlTQae/TV2u1TPA/X7/FAKHl0GwrVhEDZBt1aDO53ZtOCi5PPTriLpd3bfO12k/COe6Pljkun5Vy9qKRSvTxioWmZbWVkvq/8lz5nzf6j5LghGwjGABJ5OBMAPvULAYOt8Gi1QcamDP5f7b/9B9S61quKW121v0wSLns4FlW8Goikg9bwb/Nohk2lDFou6f1uorFr2h+wD38YmCE6nB/ZZg0a7OSLUhpzWAt4N0DfxpkdMa4IdWgYwZG8SHgkX7XEPn65cdVaXI+T5Y1CqSoW0sKljk/87t+pZp/X2A+/hEwYlkUK2BcItg0a6uyOW0BIC6XMEi56Pul1aPmdM637bemmDRno+c71eF1PSpYJHKR56/b5nW3we4j08UnNRQsBhquV0N/DXQDlUsepmeQbxuHzUY99tZtDI9lYZe3XcuWMyFn7bPeayEhpgKFqlODMm0/j7AfXyi4KT6YJEBNxshtoNlbcPQVywip+2g3cv0qliUCge5Xx5rqGX6LcGi7pNW6nJ7XeRyGywSHMpUsMh86fs59LzA/Xyi4KTaYFFqoKyWwTzGgsVcxWIsWFQ4GJLp91Qsoi6nv1EVk1zXrwopQ8GifvmhYgGP4xMFJzUXLBIa6rRfFVK3vTVY1OqJLYJFHqsCQ53W8+V2aVWRyPk6HeuzVSFwDD5RcFJ9sMg3+Qza7WCZ03bjzdpmoqatXRUy1+aCRX/7tKpOVCCqFul/5PKaYJFp6VPf2ucAtuETBSdVYaHU+XawrG/8pabVBo9TcruxYHFvxSKnaX1IaINP1O3qupzesipExQIezycKTqqtWLSD49hg2Q68fbVjSKaPBYuqLgzJ9LlgMSTT0nrt9Tm9pWJxyzYW+Z+qMgKsN71kAQ6rwsFYVaJVqxdqW4YYul0r0/pgMbSNRSoIaXmOqjjcGixyv6EqSv1vCQa16mLNqpAlwaLO9/8zcBvBAk5qrOrQDpZRA3IbKqKuH3qMyPVjFYuhcNA+3lBIGLvv3GqZ9ie0aWPVkjZY5Da531xLX4YuA+sJFnBSKdsPbW+QwTXXJ0gMTW/VQDwk0zJYt6pi0VdJSqaNBYUKFmP3nZL7pU39P+mrVRnwfIIFALAZwQIA2IxgAQBsRrAAADby99//B/BfNLEFvaKuAAAAAElFTkSuQmCC" width="534" height="394" class="img_O9Fa"></p>
+</li>
+</ul>
+</li>
+<li>
+<p>并发链表</p>
+<ul>
+<li>异常控制流容易产生错误。</li>
+<li>调整代码，让获取锁和释放锁只环绕插入代码的真正临界区。</li>
+<li>减少了代码中需要获取锁、释放锁的地方，降低了代码中不小心引入缺陷（诸如在返回前忘记释放锁）的可能性。</li>
+<li>扩展链表
+<ul>
+<li>过手锁（hand-over-hand locking / 作锁耦合 lock coupling）
+<ul>
+<li>原理：每个节点都有一个锁，替代之前整个链表一个锁。</li>
+<li>缺点：开销</li>
+</ul>
+</li>
+<li>更多并发不一定更快，可实现两种方案，测试它们的表现，一目了然，或者杂合方案。</li>
+<li>当心锁和控制流</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>并发队列</p>
+<ul>
+<li>添加一把大锁，两个锁 head、tail，假节点</li>
+</ul>
+</li>
+<li>
+<p>并发散列表</p>
+<ul>
+<li>散列桶、避免不成熟的优化（premature optimization，Knuth定律）、BKL（大内核锁，big kernel lock）</li>
+</ul>
+</li>
+<li>
+<p>疑问 / 感悟</p>
+<ul>
+<li>如何理解 “注意控制流的变化导致函数返回和退出，或其他错误情况导致函数停止执行” ？（状态恢复，易出错）</li>
+</ul>
+</li>
+<li>
+<p>摘录</p>
+<ul>
+<li>计数器、链表队列、散列表、B树、数据库课程、非阻塞数据结构、并发算法和数据结构</li>
+<li>控制流变化时注意获取锁和释放锁；增加并发不一定能提高性能；有性能问题的时候再做优化。</li>
+<li>我们让整个应用的某一小部分变快，却没有提高整体性能，其实没有价值。</li>
+<li>将观察者作为并发原语引入。</li>
+</ul>
+</li>
+</ul>
+<p>2023/06/04 20:50:54 to 29.3，2023/06/04 23:13:25</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第30章-条件变量">第30章 条件变量<a href="#第30章-条件变量" class="hash-link" aria-label="第30章 条件变量的直接链接" title="第30章 条件变量的直接链接">​</a></h3>
+<ul>
+<li>关键问题：如何等待一个条件？</li>
+<li>定义和程序
+<ul>
+<li>条件变量（condition variable）、显式队列、执行状态（即条件，condition）、等待（waiting）、“私有信号量”</li>
+<li><code>pthread_cond_t c;</code> 、<code>wait()</code> 、<code>signal()</code></li>
+</ul>
+</li>
+<li>生产者/消费者（有界缓冲区）问题
+<ul>
+<li>通用的信号量、管道（并发进程）、有界缓冲区（共享资源）、一般化、生产者（producer）线程、消费者（consumer）线程</li>
+<li>有问题的方案
+<ul>
+<li>信号逻辑、信号释义、Mesa 语义（Mesa semantic）、Hoare 语义（Hoare semantic）</li>
+</ul>
+</li>
+<li>较好但仍有问题的方案：使用 While 语句替代 If
+<ul>
+<li>总是使用while循环（always use while loop）</li>
+<li>信号显然需要，但必须更有指向性。消费者不应该唤醒消费者，而应该只唤醒生产者，反之亦然。</li>
+</ul>
+</li>
+<li>单值缓冲区的生产者/消费者方案
+<ul>
+<li>解决：使用两个条件变量，而不是一个，以便正确地发出信号。</li>
+<li><code>empty</code> 、<code>fill</code></li>
+</ul>
+</li>
+<li>最终的生产者/消费者方案
+<ul>
+<li>缓冲区结构本身、<code>put()</code> 、<code>get()</code> 、假唤醒（spurious wakeup）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>覆盖条件
+<ul>
+<li>内存不足 =&gt; 等待、歧义 =&gt; 异常、覆盖条件（covering condition）、保守策略、广播信号、同步原语</li>
+</ul>
+</li>
+<li>疑问 / 感悟
+<ul>
+<li>这章有较多描述过程的信息，暂未消化。</li>
+<li>如何理解 “这段代码是有问题的。假设子线程立刻运行，并且调用thr_exit()。在这种情况下，子线程发送信号，但此时却没有在条件变量上睡眠等待的线程。” ？</li>
+<li>从管道的并发，能够很形象地理解并发概念，本质是在排队，而通常是高速地排队，让用户产生两个进程在同时运行的错觉，其实它们在高速地切换？</li>
+<li>尽管前面几章出现了多次，但实际还对原语相关的术语不清晰，原语意思为 “可原子执行的语句（块）” ？而同步原语，意思为 “用于实现同步操作的原语” ？</li>
+</ul>
+</li>
+<li>摘录
+<ul>
+<li>[D01] “My recollections of operating system design” E.W. Dijkstra April, 2001 如果你对这一领域的先驱们如何提出一些非常基本的概念（诸如 “中断” 和 “栈” 等概念）感兴趣，那么它是一本很好的读物！</li>
+</ul>
+</li>
+</ul>
+<p>2023/06/08 17:20:11</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第31章-信号量">第31章 信号量<a href="#第31章-信号量" class="hash-link" aria-label="第31章 信号量的直接链接" title="第31章 信号量的直接链接">​</a></h3>
+<ul>
+<li>关键问题：如何使用信号量？</li>
+<li>“最短路径” 算法、结构化编程、信号量</li>
+<li>信号量的定义
+<ul>
+<li>定义：有一个整数值的对象，可用两个函数操作。</li>
+<li><code>sem_wait()</code> 、<code>sem_post()</code> 、恒定关系值</li>
+</ul>
+</li>
+<li>二值信号量（锁）
+<ul>
+<li>信号量用法：
+<ul>
+<li>一：用信号量作为锁</li>
+<li>二：线程暂停，等待条件的场景</li>
+</ul>
+</li>
+<li>调度程序状态（scheduler state）、二值信号量（binary semaphore）</li>
+<li>**初始值为 1 **</li>
+</ul>
+</li>
+<li>信号量用作条件变量
+<ul>
+<li><strong>初始值为 0</strong></li>
+</ul>
+</li>
+<li>生产者/消费者（有界缓冲区）问题
+<ul>
+<li>问题：老数据被覆盖</li>
+<li>解决方案：增加互斥，问题：死锁</li>
+<li>避免死锁：循环等待（互相等待对方）</li>
+<li>最终可行方案：只需减少锁的作用域（现在理解，将来使用）</li>
+</ul>
+</li>
+<li>读者—写者锁（reader-writer lock）
+<ul>
+<li>锁定原语、写锁、读锁、Hill 定律（Hill’s Law，简单笨方法）、辅助函数</li>
+<li>问题：公平性不足，开销大，性能劣势</li>
+</ul>
+</li>
+<li>哲学家就餐问题（dining philosopher’s problem）
+<ul>
+<li>假定有5位“哲学家”围着一个圆桌。每两位哲学家之间有一把餐叉（一共5把）。哲学家有时要思考一会，不需要餐叉；有时又要就餐。而一位哲学家只有同时拿到了左手边和右手边的两把餐叉，才能吃到东西。</li>
+<li>关键挑战：如何实现 getforks() 和 putforks() 函数，保证没有死锁，没有哲学家饿死，并且并发度更高（尽可能让更多哲学家同时吃东西）。</li>
+<li>有问题的解决方案
+<ul>
+<li>死锁（deadlock）：假设每个哲学家都拿到了左手边的餐叉，他们每个都会阻塞住，并且一直等待另一个餐叉。</li>
+</ul>
+</li>
+<li>一种方案：破除依赖
+<ul>
+<li>优化：修改某个或者某些哲学家的取餐叉顺序</li>
+<li>吸烟者问题（cigarette smoker’s problem）、理发师问题（sleeping barber problem）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如何实现信号量
+<ul>
+<li>底层同步原语（锁和条件变量）、小心泛化</li>
+<li>结构：一把锁、一个条件变量和一个状态的变量</li>
+</ul>
+</li>
+<li>疑问 / 感悟
+<ul>
+<li>如何确定信号量初始值？按照原文的例子，是结合进程顺序假设的逻辑链反推的。比较不同的路径顺序，如果没有卡住，则有效。</li>
+<li>如何理解并发链表 “插入操作会修改链表的状态（因此传统的临界区有用），而查找操作只是读取该结构，只要没有进行插入操作，我们可以并发的执行多个查找操作” ？</li>
+<li>可否把锁理解为：一种为了确保在临界区出现时，不会产生有歧义计数的保护性原语（行为封装）？</li>
+<li>如何理解 “在这种情况下，读者也会获取写锁，即在writelock信号量上调用sem_wait()，最后调用sem_post()释放lock。” ？</li>
+<li><code>wait()</code> 传入参数，等待的是谁？而用 <code>get</code> 和 <code>put</code> 相当于等到获取了相应的锁位为止？</li>
+</ul>
+</li>
+<li>摘录
+<ul>
+<li>我们首先关注如何使用这些原语，稍后再讨论如何实现。</li>
+<li>如果你想追踪自己的例子，那么请尝试一个场景，多个线程排队等待锁。在这样的追踪中，信号量的值会是什么？</li>
+<li>问题来了：信号量的初始值应该是多少？</li>
+<li>总是优先尝试简单的笨办法。</li>
+<li>内核黑客、分层系统式的模块化、暗示、<code>P()</code>（代指荷兰语单词 “to probe”），<code>V()</code>（代指荷兰语单词 “to test”）</li>
+</ul>
+</li>
+</ul>
+<p>2023/06/09 17:53:56</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第32章-常见并发问题">第32章 常见并发问题<a href="#第32章-常见并发问题" class="hash-link" aria-label="第32章 常见并发问题的直接链接" title="第32章 常见并发问题的直接链接">​</a></h3>
+<ul>
+<li>关键问题：如何处理常见的并发缺陷</li>
+<li>有哪些类型的缺陷：非死锁相关、死锁缺陷</li>
+<li>非死锁缺陷（97% 如下两类）
+<ul>
+<li>违反原子性缺陷（atomicity violation）：“违反了多次内存访问中预期的可串行性（即代码段本意是原子的，但在执行中并没有强制实现原子性）”。</li>
+<li>违反顺序缺陷（order violation）：“两个内存访问的预期顺序被打破了（即 A 应该在 B 之前执行，但是实际运行中却不是这个顺序）”</li>
+<li>强制顺序、现代代码集、更自动化的代码检查工具</li>
+</ul>
+</li>
+<li>死锁缺陷
+<ul>
+<li>关键问题：如何对付死锁</li>
+<li>为什么发生死锁
+<ul>
+<li>组件之间的复杂依赖；</li>
+<li>封装（encapsulation）导致模块化和锁不是很契合。</li>
+</ul>
+</li>
+<li>产生死锁的 4 个条件
+<ul>
+<li>**互斥：**线程对于需要的资源进行互斥的访问（例如一个线程抢到锁）。</li>
+<li>**持有并等待：**线程持有了资源（例如已将持有的锁），同时又在等待其他资源（例如，需要获得的锁）。</li>
+<li>**非抢占：**线程获得的资源（例如锁），不能被抢占。</li>
+<li>**循环等待：**线程之间存在一个环路，环路上每个线程都额外持有一个资源，而这个资源又是下一个线程要申请的。</li>
+</ul>
+</li>
+<li>预防
+<ul>
+<li>循环等待
+<ul>
+<li>全序（total ordering）、偏序（partial ordering）</li>
+<li>顺序只是一种约定，通过锁的地址来强制锁的顺序。</li>
+</ul>
+</li>
+<li>持有并等待：原子地抢锁，任何线程在任何时候抢占锁时，先抢到全局的 prevention 锁（不适用于封装，且可能降低并发）。</li>
+<li>非抢占
+<ul>
+<li>活锁（livelock）：两个线程有可能一直重复这一序列，又同时都抢锁失败。</li>
+<li>解决：先随机等待一个时间</li>
+</ul>
+</li>
+<li>互斥
+<ul>
+<li>无等待（wait-free）数据结构、比较并交换指令、链表插入（例子）、传统的锁、无等待同步</li>
+</ul>
+</li>
+<li>通过调度避免死锁
+<ul>
+<li>死锁避免（avoidance）、银行家算法</li>
+<li>保守的静态方案会明显增加完成任务的总时间。</li>
+</ul>
+</li>
+<li>检查和恢复
+<ul>
+<li>允许死锁偶尔发生，检查到死锁时再采取行动</li>
+<li>不要总是完美（TOM WEST 定律）：“不是所有值得做的事情都值得做好”。</li>
+<li>死锁检测和恢复技术、死锁检测器、资源图、数据库并发</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>2023/06/10 4:05:44</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第33章-基于事件的并发进阶">第33章 基于事件的并发（进阶）<a href="#第33章-基于事件的并发进阶" class="hash-link" aria-label="第33章 基于事件的并发（进阶）的直接链接" title="第33章 基于事件的并发（进阶）的直接链接">​</a></h3>
+<ul>
+<li>关键问题：不用线程，如何构建并发服务器
+<ul>
+<li>基于事件的并发（event-based concurrency，如 node.js）、</li>
+<li>问题场景：
+<ul>
+<li>多线程应用中，正确处理并发很有难度；</li>
+<li>开发者无法控制多线程在某一时刻的调度。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>基本想法：事件循环（event loop）
+<ul>
+<li>我们等待某事（即“事件”）发生；当它发生时，检查事件类型，然后做少量的相应工作（可能是I/O请求，或者调度其他事件准备后续处理）。</li>
+<li>事件处理程序（event handler，唯一活动）、对调度的显式控制</li>
+</ul>
+</li>
+<li>重要 API：select()（ 或 poll() ）
+<ul>
+<li>检查是否有任何应该关注的进入I/O。</li>
+<li>阻塞（或同步，synchronous）接口、非阻塞（或异步，asynchronous）接口、非阻塞事件循环</li>
+<li><code>select()</code>
+<ul>
+<li>可以让你检查描述符是否可以读取和写入</li>
+<li>请注意超时参数（常见 NULL，0）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用 select()
+<ul>
+<li>传入消息、网络套接字</li>
+</ul>
+</li>
+<li>为何更简单？无须锁
+<ul>
+<li>线程化程序、并发性错误、细粒度控制</li>
+<li>提示：请勿阻塞基于事件的服务器</li>
+</ul>
+</li>
+<li>一个问题：阻塞系统调用
+<ul>
+<li>自然重叠（overlap）、常自然和直接。</li>
+</ul>
+</li>
+<li>解决方案：异步 I/O
+<ul>
+<li>异步 I/O（asynchronous I/O）、struct aiocb 或 AIO 控制块（AIO control block）、异步读取（asynchronous read）、EINPROGRESS、轮询（poll）、基于中断（interrupt）、UNIX 信号（signal）、现代 UNIX 变体、信号处理程序（signal handler）、HUP（挂断）、INT（中断）、SEGV（段违规）、SIG 前缀、信号捕捉</li>
+</ul>
+</li>
+<li>另一个问题：状态管理
+<ul>
+<li>手工栈管理（manual stack management）、基于事件编程</li>
+<li>“延续（continuation）”：基本上，在某些数据结构中，记录完成处理该事件需要的信息。当事件发生时（即磁盘I/O完成时），查找所需信息并处理事件。</li>
+</ul>
+</li>
+<li>什么事情仍然很难
+<ul>
+<li>当系统从单个CPU转向多个CPU时，基于事件的方法的一些简单性就消失了。</li>
+<li>在现代多核系统上，无锁的简单事件处理已不再可能，且不能很好地与某些类型的系统活动集成。</li>
+<li>虽然异步磁盘 I/O 现在可以在大多数平台上使用，但是花了很长时间才做到这一点，而且与异步网络 I/O 集成不会像你想象的那样有简单和统一的方式。</li>
+<li>显式阻塞、隐式阻塞、函数语义变化、集成难度、线程、事件、Tcl/Tk</li>
+</ul>
+</li>
+<li>疑问 / 感悟
+<ul>
+<li>异步调用的单词 asynchronous，为什么看着比较奇怪？</li>
+</ul>
+</li>
+</ul>
+<p>2023/06/10 21:59:50</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第34章-并发的总结对话">第34章 并发的总结对话<a href="#第34章-并发的总结对话" class="hash-link" aria-label="第34章 并发的总结对话的直接链接" title="第34章 并发的总结对话的直接链接">​</a></h3>
+<ul>
+<li>摘录
+<ul>
+<li>可以看看最早的并发算法的论文，有很多都是有问题的，所以不理解这些代码也不必难过。</li>
+<li>为了写出写出正确的并发程序。首先，尽可能简单。避免复杂的线程交互，使用已被证实的线程交互方式。</li>
+<li>只在需要的时候才并发，尽可能不用它。过早地优化是最糟糕的。</li>
+<li>我们学习到的知识仅仅是冰山一角，还需要大量的阅读学习，以及大量的编码练习。课程上的时间是远远不够的。</li>
+<li>相互穿插、生产者—消费者队列、范式、并行的数据分析代码</li>
+</ul>
+</li>
+</ul>
+<p>2023/06/11 1:50:22</p>
+<hr></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/Notes/docs/introduction_to_operating_system/01-3_code"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">01-3_code</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/Notes/docs/introduction_to_operating_system/02-2_code"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">02-2_code</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_G4nv thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#02-并发" class="table-of-contents__link toc-highlight">02 并发</a></li><li><a href="#第25章-关于并发的对话" class="table-of-contents__link toc-highlight">第25章 关于并发的对话</a></li><li><a href="#第26章-并发介绍" class="table-of-contents__link toc-highlight">第26章 并发：介绍</a></li><li><a href="#第27章-插叙线程api" class="table-of-contents__link toc-highlight">第27章 插叙：线程API</a></li><li><a href="#第28章-锁" class="table-of-contents__link toc-highlight">第28章 锁</a></li><li><a href="#第29章-基于锁的并发数据结构" class="table-of-contents__link toc-highlight">第29章 基于锁的并发数据结构</a></li><li><a href="#第30章-条件变量" class="table-of-contents__link toc-highlight">第30章 条件变量</a></li><li><a href="#第31章-信号量" class="table-of-contents__link toc-highlight">第31章 信号量</a></li><li><a href="#第32章-常见并发问题" class="table-of-contents__link toc-highlight">第32章 常见并发问题</a></li><li><a href="#第33章-基于事件的并发进阶" class="table-of-contents__link toc-highlight">第33章 基于事件的并发（进阶）</a></li><li><a href="#第34章-并发的总结对话" class="table-of-contents__link toc-highlight">第34章 并发的总结对话</a></li></ul></div></div></div></div></main></div></div></div></div>
+</body>
+</html>

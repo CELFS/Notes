@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-information_theory/导论_01-03" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">导论_01-03 | 编程内外</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" name="twitter:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" property="og:url" content="https://CELFS.github.io/Notes/docs/information_theory/导论_01-03"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="导论_01-03 | 编程内外"><meta data-rh="true" name="description" content="00 导论"><meta data-rh="true" property="og:description" content="00 导论"><link data-rh="true" rel="icon" href="/Notes/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://CELFS.github.io/Notes/docs/information_theory/导论_01-03"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/information_theory/导论_01-03" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/information_theory/导论_01-03" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous"><link rel="stylesheet" href="/Notes/assets/css/styles.67339a6f.css">
+<script src="/Notes/assets/js/runtime~main.793c07bf.js" defer="defer"></script>
+<script src="/Notes/assets/js/main.ef11fa70.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"dark")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/Notes/img/logo.png"><div role="region" aria-label="跳到主要内容"><a class="skipToContent__HuA" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Notes/"><div class="navbar__logo"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--light_c3lc"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--dark_Ji9V"></div><b class="navbar__title text--truncate">编程内外</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Notes/docs/category/linux-os">Notes</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/CELFS/Notes" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link" icon="github">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_OqSl"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_OAgU colorModeToggle_zRe0"><button class="clean-btn toggleButton_aClM toggleButtonDisabled_GkIb" type="button" disabled="" title="切换浅色/暗黑模式（当前为暗黑模式）" aria-label="切换浅色/暗黑模式（当前为暗黑模式）" aria-live="polite" aria-pressed="true"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_zzlY"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_Z832"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Cx4E"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_liLQ"><div class="docsWrapper_evXH"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_nZiY" type="button"></button><div class="docRoot_jKp6"><aside class="theme-doc-sidebar-container docSidebarContainer_wXyP"><div class="sidebarViewport_LQZ0"><div class="sidebar_T0dy"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_WBBB"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/linux-os">Linux OS</a><button aria-label="展开侧边栏分类 &#x27;Linux OS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/ajax">Ajax</a><button aria-label="展开侧边栏分类 &#x27;Ajax&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/css">CSS</a><button aria-label="展开侧边栏分类 &#x27;CSS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript-es6">JavaScript ES6</a><button aria-label="展开侧边栏分类 &#x27;JavaScript ES6&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript">JavaScript</a><button aria-label="展开侧边栏分类 &#x27;JavaScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/nodejs">Node.js</a><button aria-label="展开侧边栏分类 &#x27;Node.js&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/typescript">TypeScript</a><button aria-label="展开侧边栏分类 &#x27;TypeScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/vue">Vue</a><button aria-label="展开侧边栏分类 &#x27;Vue&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/轻量级服务器开发tinywebserver">轻量级服务器开发（TinyWebServer）</a><button aria-label="展开侧边栏分类 &#x27;轻量级服务器开发（TinyWebServer）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/c-后台服务器开发">C++ 后台服务器开发</a><button aria-label="展开侧边栏分类 &#x27;C++ 后台服务器开发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/mysql-必知必会">MySQL 必知必会</a><button aria-label="展开侧边栏分类 &#x27;MySQL 必知必会&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/操作系统导论">操作系统导论</a><button aria-label="展开侧边栏分类 &#x27;操作系统导论&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/qt">QT</a><button aria-label="展开侧边栏分类 &#x27;QT&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/Notes/docs/category/读吴军信息论-40-讲">读吴军《信息论 40 讲》</a><button aria-label="折叠侧边栏分类 &#x27;读吴军《信息论 40 讲》&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/Notes/docs/information_theory/导论_01-03">导论_01-03</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/information_theory/信息产生_04-18">信息产生_04-18</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/information_theory/信息传播_19-28">信息传播_19-28</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/information_theory/信息应用_29-40">信息应用_29-40</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/information_theory/复盘">复盘</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军富足">读吴军《富足》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《富足》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/machine-learning-andrew-ng">Machine Learning (Andrew Ng)</a><button aria-label="展开侧边栏分类 &#x27;Machine Learning (Andrew Ng)&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/机器学习初步周志华">机器学习初步（周志华）</a><button aria-label="展开侧边栏分类 &#x27;机器学习初步（周志华）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/paddle-零基础深度学习第二版">Paddle 零基础深度学习（第二版）</a><button aria-label="展开侧边栏分类 &#x27;Paddle 零基础深度学习（第二版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/动手学深度学习pytorch-版">动手学深度学习（Pytorch 版）</a><button aria-label="展开侧边栏分类 &#x27;动手学深度学习（Pytorch 版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Notes/docs/intro">学而时习之</a></li></ul></nav></div></div></aside><main class="docMainContainer_dhcR"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_hWfg"><div class="docItemContainer_UIwD"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_ViMa" aria-label="页面路径"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/Notes/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_xAfz"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/Notes/docs/category/读吴军信息论-40-讲"><span itemprop="name">读吴军《信息论 40 讲》</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">导论_01-03</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_xgD3 theme-doc-toc-mobile tocMobile_UvqM"><button type="button" class="clean-btn tocCollapsibleButton_ldZF">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>导论_01-03</h1></header><h2 class="anchor anchorWithStickyNavbar_QJwc" id="00-导论">00 导论<a href="#00-导论" class="hash-link" aria-label="00 导论的直接链接" title="00 导论的直接链接">​</a></h2>
+<p>Date：2022/01/07 14:27:38</p>
+<hr>
+<p>[TOC]</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="00-目的">00 目的<a href="#00-目的" class="hash-link" aria-label="00 目的的直接链接" title="00 目的的直接链接">​</a></h3>
+<p>​		前面按关键词分类学习了吴军老师的部分专栏，明确认识到抱有目的去学习的重要性，这是对自己的有限时间负责的表现。</p>
+<p>​		随着计算机科学相关知识与技能的深入学习，以及受到老师的《数学之美》、《浪潮之巅》的思想感染，我意识到信息论的“道”渗透在吴军老师前面专栏的方方面面。所谓“取法乎上，得乎其中”，我决定系统地学习老师的《信息论 40 讲》专栏，作为我系统入门《信息论基础》（Tomas M. Cover）的蓝图与知识铺垫。</p>
+<p>​		若非系统性地学习，知识之间的联系就很浅薄，记忆和理解程度就难拔高。</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="00-信息时代每个人的必修课">00 信息时代每个人的必修课<a href="#00-信息时代每个人的必修课" class="hash-link" aria-label="00 信息时代每个人的必修课的直接链接" title="00 信息时代每个人的必修课的直接链接">​</a></h3>
+<ul>
+<li>信息时代最大的特征：不确定性。
+<ul>
+<li>不确定性、非连续变化；</li>
+</ul>
+</li>
+<li>认知发展：未知——确定——不确定</li>
+<li>==<strong>利用信息消除不确定性。</strong>==
+<ul>
+<li>信息论提供的方法和工具；</li>
+</ul>
+</li>
+<li>知识分为“道”和“术”，收获三种能力
+<ul>
+<li>==模块一，信息产生：==
+<ul>
+<li>在面对大量信息时，排除噪音，提取利用有效信息，科学做决策的能力；</li>
+</ul>
+</li>
+<li>==模块二，信息传播：==
+<ul>
+<li>向外界传递信息时，平衡分配有限资源，增加沟通带宽，放大影响力的能力；</li>
+</ul>
+</li>
+<li>==模块三，信息应用：==
+<ul>
+<li>看懂信息应用的逻辑和通信发展的趋势，提前抓住新机遇的能力。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>总结
+<ul>
+<li>一个人的思维方式和做事方式常常决定了一个人能够走多远，而在历史的任何时期，都有最适合时代的方法论。</li>
+<li>任何一个探索者需清楚的三件事：
+<ul>
+<li>我们现在的==位置==；（哲学）</li>
+<li>我们的==目标==；（个人）</li>
+<li>通向目标的==道路==。（方法论/理性的工具）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="01-影响世界的三比特信息">01 影响世界的三比特信息<a href="#01-影响世界的三比特信息" class="hash-link" aria-label="01 影响世界的三比特信息的直接链接" title="01 影响世界的三比特信息的直接链接">​</a></h3>
+<ul>
+<li>诺威格博士
+<ul>
+<li>eg：泡沫，银行股 VS 信息公司；</li>
+<li>==<strong>“不要重视钱而轻视信息”</strong>==
+<ul>
+<li>eg：佐尔格向莫斯科发去”日本将南下“；</li>
+<li>eg：秦赵长平之战，信息缺失；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>从信息论的角度看，它们的信息量有多大？
+<ul>
+<li>非此即彼，0/1，1 bit；
+<ul>
+<li>可能性 50%，消除不确定性所需信息为 1 bit；</li>
+<li><strong>==50% 相当于没有信息量；==</strong></li>
+</ul>
+</li>
+<li>一种情况可能性大，1/3、2/3，消除不确定性需 0.9 bit；（应该是加权平均）</li>
+<li>==<strong>用很少的信息驱动很大的能量；</strong>==</li>
+</ul>
+</li>
+<li>总结
+<ul>
+<li>1、信息很重要，甚至比钱更重要，它能四两拨千斤。而信息作用的大小和信息量有关。</li>
+<li>2、信息量和不确定性有关，大家都知道的事，就没有什么信息量了。</li>
+<li>3、对一个未知系统（黑盒子）所作出的估计和真实情况的偏离，就是信息的损失，偏离越多损失越大。</li>
+<li>4、信息论原则之一：不要把鸡蛋放在一个篮子里，可避免因信息缺失，导致灾难性结果。</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/07 15:10:18 39min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="02-解开世界之谜的三篇诺贝尔奖论文">02 解开世界之谜的三篇诺贝尔奖论文<a href="#02-解开世界之谜的三篇诺贝尔奖论文" class="hash-link" aria-label="02 解开世界之谜的三篇诺贝尔奖论文的直接链接" title="02 解开世界之谜的三篇诺贝尔奖论文的直接链接">​</a></h3>
+<ul>
+<li>格局：信息的简洁之美，传递效率的重要性。</li>
+<li>幸运的一代，搞清楚了三个非常本源的问题：
+<ul>
+<li>宇宙是如何产生的；</li>
+<li>地球生命的共性和起点；</li>
+<li>人类文明的起点。</li>
+</ul>
+</li>
+<li>信息和能量一样，都是==宇宙本身固有的特性==。</li>
+<li>两种方法推断出当时的场景：
+<ul>
+<li>1、寻找宇宙大爆炸存留至今的信息，3K背景辐射；</li>
+<li>2、==用空间换时间。（信息等价性）==</li>
+<li>有些推断可信度高一些，有些低一些，世界上没有绝对的可靠，<strong>==只有可靠性的高和低，信号和噪音比率的高低==</strong>。（置信度）</li>
+<li>在一个==领域的贡献大小==，不在于提供了多少材料，而在于提供了多少信息量。</li>
+</ul>
+</li>
+<li>一篇好的论文，一方面要==信息量高==，另一方面要在信息==传播上效率高==。
+<ul>
+<li>==要精简，要保证对方听懂自己最核心的想法，这就够了。==</li>
+<li>控制生命活动的信息，其实并不被我们主观控制，但是我们可以发现它们。</li>
+</ul>
+</li>
+<li>总结
+<ul>
+<li>那些影响世界的重大科学发现，其实都是在极短的论文中发表出来的，因为世界上最关键的信息（知识），其实是非常简洁的，也就是说一条信息的信息量可能和信息的长度无关。</li>
+<li>三个例子，都说明信息是我们世界固有的属性。
+<ul>
+<li>eg：彭齐亚斯、威尔逊；</li>
+<li>eg：沃森、克里克；</li>
+<li>eg：克比尔卡。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/07 15:29:28 19min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="03-大数据思维的科学基础">03 大数据思维的科学基础<a href="#03-大数据思维的科学基础" class="hash-link" aria-label="03 大数据思维的科学基础的直接链接" title="03 大数据思维的科学基础的直接链接">​</a></h3>
+<ul>
+<li>目的：透过大数据应该，看看信息如何改变商业模式，以及我们思维方式。</li>
+<li>大数据四类最成功应用：
+<ul>
+<li>解决人工智能问题，把那些过去看似需要==人脑推理==的问题，变成今天基于大数据的==计算问题==。——<strong>利用数据（信息）==消除不确定性==，香农信息论的==本质==，大数据思维的科学==基础==。</strong></li>
+<li>利用大数据，进行==精准==的==服务==。——<strong>从重研究方法到==重数据收集==的转变。</strong></li>
+<li>==动态==调整我们做事情的==策略==。——<strong>足够多的数据可帮助==动态匹配最==佳结果。</strong></li>
+<li>发现原来不知道的==规律==。——<strong>==互信息理论==。</strong></li>
+</ul>
+</li>
+<li>eg：贾里尼克；
+<ul>
+<li>由于不受到传统的人工智能思想的约束，他得以用信息论的思维方式来看待语音识别问题。他认为语音识别是一个通信问题。</li>
+<li>通信的编解码模型、有噪音的信道传输模型，构建了语音识别的模型——参数计算需大量数据，变成了数据处理的问题。</li>
+</ul>
+</li>
+<li>eg：Google 理解用户意图，进行个性化服务；尽可能多收集数据，对行为习惯和偏好类似的人进行聚类；——从重视方法研究，转为重视信息收集和处理。</li>
+<li>eg：滴滴
+<ul>
+<li>如果有了足够多数据，在理论上有保障，只要调整的次数足够多，就能收到最佳匹配。</li>
+<li>==机械论的思维方式：通过找到通用规律，试图一劳永逸地解决问题。==</li>
+</ul>
+</li>
+<li>eg：找到药和病的配对，缩短药物研发周期（互信息理论）。</li>
+</ul>
+<p>2022/01/07 15:47:02 18min</p>
+<hr></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/Notes/docs/category/读吴军信息论-40-讲"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">读吴军《信息论 40 讲》</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/Notes/docs/information_theory/信息产生_04-18"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">信息产生_04-18</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_G4nv thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#00-导论" class="table-of-contents__link toc-highlight">00 导论</a><ul><li><a href="#00-目的" class="table-of-contents__link toc-highlight">00 目的</a></li><li><a href="#00-信息时代每个人的必修课" class="table-of-contents__link toc-highlight">00 信息时代每个人的必修课</a></li><li><a href="#01-影响世界的三比特信息" class="table-of-contents__link toc-highlight">01 影响世界的三比特信息</a></li><li><a href="#02-解开世界之谜的三篇诺贝尔奖论文" class="table-of-contents__link toc-highlight">02 解开世界之谜的三篇诺贝尔奖论文</a></li><li><a href="#03-大数据思维的科学基础" class="table-of-contents__link toc-highlight">03 大数据思维的科学基础</a></li></ul></li></ul></div></div></div></div></main></div></div></div></div>
+</body>
+</html>

@@ -113,6 +113,11 @@ const config: Config = {
       respectPrefersColorScheme: false,
     },
     image: 'img/logo.png',
+    docs: {
+      sidebar: {
+        hideable: true,
+      },
+    },
     navbar: {
       title: '编程内外',
       logo: {

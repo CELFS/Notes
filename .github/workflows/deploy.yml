@@ -4,6 +4,10 @@
      push:
        branches: [main]
 
+   # 添加权限配置
+   permissions:
+     contents: write
+
    jobs:
      deploy:
        runs-on: ubuntu-latest

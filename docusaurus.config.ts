@@ -23,7 +23,7 @@ const config: Config = {
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'CELFS', // Usually your GitHub org/user name.
   projectName: 'Notes', // Usually your repo name.
-  trailingSlash: false,
+  trailingSlash: true,
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',

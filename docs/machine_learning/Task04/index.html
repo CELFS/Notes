@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-machine_learning/Task04" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">Task04 | 编程内外</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" name="twitter:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" property="og:url" content="https://CELFS.github.io/Notes/docs/machine_learning/Task04/"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Task04 | 编程内外"><meta data-rh="true" name="description" content="4.0 决策树"><meta data-rh="true" property="og:description" content="4.0 决策树"><link data-rh="true" rel="icon" href="/Notes/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://CELFS.github.io/Notes/docs/machine_learning/Task04/"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/machine_learning/Task04/" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/machine_learning/Task04/" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous"><link rel="stylesheet" href="/Notes/assets/css/styles.67339a6f.css">
+<script src="/Notes/assets/js/runtime~main.fdf5edbd.js" defer="defer"></script>
+<script src="/Notes/assets/js/main.886a3333.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"dark")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/Notes/img/logo.png"><div role="region" aria-label="跳到主要内容"><a class="skipToContent__HuA" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Notes/"><div class="navbar__logo"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--light_c3lc"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--dark_Ji9V"></div><b class="navbar__title text--truncate">编程内外</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Notes/docs/category/linux-os/">Notes</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/CELFS/Notes" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link" icon="github">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_OqSl"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_OAgU colorModeToggle_zRe0"><button class="clean-btn toggleButton_aClM toggleButtonDisabled_GkIb" type="button" disabled="" title="切换浅色/暗黑模式（当前为暗黑模式）" aria-label="切换浅色/暗黑模式（当前为暗黑模式）" aria-live="polite" aria-pressed="true"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_zzlY"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_Z832"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Cx4E"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_liLQ"><div class="docsWrapper_evXH"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_nZiY" type="button"></button><div class="docRoot_jKp6"><aside class="theme-doc-sidebar-container docSidebarContainer_wXyP"><div class="sidebarViewport_LQZ0"><div class="sidebar_T0dy"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_WBBB"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/linux-os/">Linux OS</a><button aria-label="展开侧边栏分类 &#x27;Linux OS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/ajax/">Ajax</a><button aria-label="展开侧边栏分类 &#x27;Ajax&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/css/">CSS</a><button aria-label="展开侧边栏分类 &#x27;CSS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript-es6/">JavaScript ES6</a><button aria-label="展开侧边栏分类 &#x27;JavaScript ES6&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript/">JavaScript</a><button aria-label="展开侧边栏分类 &#x27;JavaScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/nodejs/">Node.js</a><button aria-label="展开侧边栏分类 &#x27;Node.js&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/typescript/">TypeScript</a><button aria-label="展开侧边栏分类 &#x27;TypeScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/vue/">Vue</a><button aria-label="展开侧边栏分类 &#x27;Vue&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/轻量级服务器开发tinywebserver/">轻量级服务器开发（TinyWebServer）</a><button aria-label="展开侧边栏分类 &#x27;轻量级服务器开发（TinyWebServer）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/c-后台服务器开发/">C++ 后台服务器开发</a><button aria-label="展开侧边栏分类 &#x27;C++ 后台服务器开发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/mysql-必知必会/">MySQL 必知必会</a><button aria-label="展开侧边栏分类 &#x27;MySQL 必知必会&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/操作系统导论/">操作系统导论</a><button aria-label="展开侧边栏分类 &#x27;操作系统导论&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/qt/">QT</a><button aria-label="展开侧边栏分类 &#x27;QT&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军信息论-40-讲/">读吴军《信息论 40 讲》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《信息论 40 讲》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军富足/">读吴军《富足》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《富足》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/machine-learning-andrew-ng/">Machine Learning (Andrew Ng)</a><button aria-label="展开侧边栏分类 &#x27;Machine Learning (Andrew Ng)&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/Notes/docs/category/机器学习初步周志华/">机器学习初步（周志华）</a><button aria-label="折叠侧边栏分类 &#x27;机器学习初步（周志华）&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task00/">Task00</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task01/">Task01</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task02/">Task02</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task03/">Task03</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/Notes/docs/machine_learning/Task04/">Task04</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task05/">Task05</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task06/">Task06</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task07/">Task07</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task08/">Task08</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/paddle-零基础深度学习第二版/">Paddle 零基础深度学习（第二版）</a><button aria-label="展开侧边栏分类 &#x27;Paddle 零基础深度学习（第二版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/动手学深度学习pytorch-版/">动手学深度学习（Pytorch 版）</a><button aria-label="展开侧边栏分类 &#x27;动手学深度学习（Pytorch 版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Notes/docs/intro/">学而时习之</a></li></ul></nav></div></div></aside><main class="docMainContainer_dhcR"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_hWfg"><div class="docItemContainer_UIwD"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_ViMa" aria-label="页面路径"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/Notes/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_xAfz"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/Notes/docs/category/机器学习初步周志华/"><span itemprop="name">机器学习初步（周志华）</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Task04</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_xgD3 theme-doc-toc-mobile tocMobile_UvqM"><button type="button" class="clean-btn tocCollapsibleButton_ldZF">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>Task04</h1></header><h3 class="anchor anchorWithStickyNavbar_QJwc" id="40-决策树">4.0 决策树<a href="#40-决策树" class="hash-link" aria-label="4.0 决策树的直接链接" title="4.0 决策树的直接链接">​</a></h3>
+<p>Date：2022/10/20</p>
+<hr>
+<p>[TOC]</p>
+<hr>
+<p>​		决策树是 ML 里最早变得非常重要的模型，可以说它是最开始导致 ML 成为独立学科的一个模型。由于决策树较简单，以此开头较合理。</p>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="41-决策树基本流程">4.1 决策树基本流程<a href="#41-决策树基本流程" class="hash-link" aria-label="4.1 决策树基本流程的直接链接" title="4.1 决策树基本流程的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20221020123555500" src="/Notes/assets/images/image-20221020123555500-dfcacbbd0b0e66a00f667f327bbc78f0.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020123617607" src="/Notes/assets/images/image-20221020123617607-220b5b0a2e1b3fb2a32c570646747541.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020123913315" src="/Notes/assets/images/image-20221020123913315-f1f8244406a4bd82fec7104200dba38a.png" width="1348" height="870" class="img_O9Fa"></p>
+<ul>
+<li>对上述三种情况进行了说明；对于三种情况下，如何选择、如何确定输出正负进行了说明。
+<ul>
+<li>（1）叶子节点为同一类，直接输出；后验概率；</li>
+<li>（2）属性不足以继续划分，停止——叶子节点中谁多，就用谁输出；后验概率；</li>
+<li>（3）如果当前结点包含空样本（例如瓜色有三种，但拿到的数据集很不幸有一种颜色没有数据，那么也停止），这种情况下，回退到父节点，把父节点当作先验概率。</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020124357981" src="/Notes/assets/images/image-20221020124357981-3b147aaeb8b64c93519555ca573eb0dc.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>此类伪代码，需要掌握（论文、材料当作常用）</li>
+<li>另外，虽然知道有三种分类，代码也是对三种情况进行的编码，但我也想知道如何获得这三种分类，是否科学家在实验当作总结的吗？或者经过观察，验证得到的吗？如果推广到各种问题，例如《计算之魂》里经常出现许多分类情况，是如何获得的？这里的思考是否具有一般性？或者分类是从树模型的抽象意义推导得到的？这时候体现了图论的意义，也要补充知识。
+<ul>
+<li>阅读书籍（P73，下）讲到，每个测试的结果<strong>或是导出最终结论</strong>，<strong>或是导出进一步的判定问题</strong>，其<strong>考虑的范围是上次决策结果的限定范围</strong>内——这算得上是得出三种分类的依据之一了，同时也是自然的结果。</li>
+<li>这段话对我很有启发性，如果在一般性地思考不同问题的分类情况，也可以参考 <strong>“状态的可能性”</strong>，此处则是先认识到决策的过程是从根节点下行到叶子节点的，即<strong>先认识到判定生成的顺序</strong>，而<strong>结果将位于叶子节点</strong>，由此，<strong>进一步需判定该叶子结果是否可用</strong>——于是，可直接用的，自成一类；数值为空，自成一类；不可直接用的，先自成一类，再考虑进一步的判定方法——当然，最后一类或许涉及进一步的分类，但由于属性集不足以支持再次细分，所以只能从决策树的相关性上考虑，最自然的就是回到问题的边界——即该叶子节点的判断范围受其父节点的影响——由此作为一种先验概率是自然而合理的。</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020125600031" src="/Notes/assets/images/image-20221020125600031-c2d4f08b5acd4f4fb44cba3f2fbdd3f8.png" width="803" height="448" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020125746290" src="/Notes/assets/images/image-20221020125746290-a4b4134d0898754017e0485adc7d0bd1.png" width="806" height="164" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="42-信息增益划分">4.2 信息增益划分<a href="#42-信息增益划分" class="hash-link" aria-label="4.2 信息增益划分的直接链接" title="4.2 信息增益划分的直接链接">​</a></h3>
+<ul>
+<li>决策树很大程度上受到了信息论的启发，所以很多东西是根据信息论里的准则作为判断。</li>
+<li>信息论中非常重要的：熵</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020130445458" src="/Notes/assets/images/image-20221020130445458-a9b81fcfa3cd7c06a464a1cc0c8a0a76.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020130611908" src="/Notes/assets/images/image-20221020130611908-fa9fe51e5217aecd36bd8e15bbee56ed.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>[05:00] 有一段黑板解释，但未理解</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020130635661" src="/Notes/assets/images/image-20221020130635661-9cf8f1c217718c2455b48ae85a29b3e7.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020130657274" src="/Notes/assets/images/image-20221020130657274-a9dc80adb4404a34542f6a5ed0e1329c.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020130717261" src="/Notes/assets/images/image-20221020130717261-72450005ec03bc3640bda60effcd7454.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020130739858" src="/Notes/assets/images/image-20221020130739858-56e9667ef496b0a30af12a048301d001.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020130748636" src="/Notes/assets/images/image-20221020130748636-e23db9990e2ce479ff7f86b8f4649c3c.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>【感悟】
+<ul>
+<li>这一节似懂非懂，要补充信息论的知识，或许也该读读 Shannon 的文字。</li>
+<li>在这之前，懂得代入公式，计算结果即可。</li>
+<li>主要问题是，没搞清楚什么时候计算纯度，每生成一层节点之前算？谁算，交给算法自己算？公式为什么前面是负号？（P75）
+<ul>
+<li>负号：由于 log 里面的是小于 1 的数，因此对数运算会拿出来一个负号——或许等式前面的负号，类似最小二乘法 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac{1}{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em"><span style="top:-2.655em"><span class="pstrut" style="height:3em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em"><span class="pstrut" style="height:3em"></span><span class="frac-line" style="border-bottom-width:0.04em"></span></span><span style="top:-3.394em"><span class="pstrut" style="height:3em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> 系数的作用，便于计算。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020131953454" src="/Notes/assets/images/image-20221020131953454-8276fad1fa251e9fd822b91b22f1303a.png" width="1379" height="326" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020131704801" src="/Notes/assets/images/image-20221020131704801-a4f172590f89e9a157604efc6a0e533d.png" width="799" height="363" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020132046931" src="/Notes/assets/images/image-20221020132046931-3886a589f0f2d29267ad3345e89f33fb.png" width="820" height="377" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020132545232" src="/Notes/assets/images/image-20221020132545232-22edeed65e2ff68cbc0180aebb46a086.png" width="812" height="175" class="img_O9Fa"></p>
+<ul>
+<li>想当然了，没有再次确认，以为还是三位小数</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="43-其他属性划分准则">4.3 其他属性划分准则<a href="#43-其他属性划分准则" class="hash-link" aria-label="4.3 其他属性划分准则的直接链接" title="4.3 其他属性划分准则的直接链接">​</a></h3>
+<ul>
+<li>如何识别偏好？</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020132908249" src="/Notes/assets/images/image-20221020132908249-a89a41bc54baff194b66f19e90bdeb16.png" width="1060" height="784" class="img_O9Fa"></p>
+<ul>
+<li>视频断层，书中没找到对应的名词</li>
+<li>信息增益（ID3的划分准则），如果只考虑信息获得，其实是一定程度上偏好了分支多的属性，因为取值越多、分支越多，分到的每个分支上的样本就会越少，自然地，相对于那些分支少的树就更干净了。</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020133637918" src="/Notes/assets/images/image-20221020133637918-fbf4bfb78583919b60e38febd2ae1b0f.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>分母 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mi>V</mi><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">IV(a)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.07847em">I</span><span class="mord mathnormal" style="margin-right:0.22222em">V</span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mclose">)</span></span></span></span> 称为<strong>规范化</strong>，以后会在很多地方看到这个东西的变形。当我光考虑你的分数不太够了，我还要考虑你的成分的时候，我们把这个东西放到分母上，这起到了规范化的作用，<strong>把原来不可比的东西变得可比</strong>。
+<ul>
+<li>规范化把数值变为 [0, 1] 范围，称为归一化。</li>
+<li>ML 和数据分析里面的基本操作，例如量纲的不同，取值范围相差很大的情况</li>
+</ul>
+</li>
+<li>这种算法将 ID3 分支多的问题抵消掉了。</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020134317083" src="/Notes/assets/images/image-20221020134317083-07bcf5eb08ba4c9e7350b04f66344125.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>抓球、袋子例子。</li>
+<li>==这里没太理解公式的解释==
+<ul>
+<li>两个求和符号，又忘记了其中的意义了；</li>
+<li>为什么把求和与其中一个式子分开解释？</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020134430662" src="/Notes/assets/images/image-20221020134430662-e9f871580eeae868d92e5c4e167f85d9.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>
+<p>可以设计出非常多的划分准则，最关键的是如何衡量经过一个操作后，后面的东西变得比原来更纯净了。信息增益通过信息熵的计算来表达什么是更纯净了，而基尼是用一个概率，一次抓两个球，概率小了就更纯净了。可用类似的方法定义很多，就可得到不同的决策树算法。那么，自然地考虑到，这些东西的差别有多大呢？终于在决策树发展了很多年后，提出了很多变体之后，大家开始研究这件事——划分属性造成的影响有多大。</p>
+</li>
+<li>
+<p>【感悟】</p>
+<ul>
+<li>一门课，一位好老师，对比只看课本，差别非常大。能学到很多 “联系” 知识——串讲。为后面自学提供了指引。</li>
+<li>双重求和符号</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020135441837" src="/Notes/assets/images/image-20221020135441837-10e31fc9e42c8c89e69d808aa88bdde0.png" width="809" height="412" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020135520825" src="/Notes/assets/images/image-20221020135520825-d45669f305602ee247fe80f9ee2b9404.png" width="796" height="371" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020140313115" src="/Notes/assets/images/image-20221020140313115-8d7d2971acadac7839fe8ffa37c6f62b.png" width="812" height="177" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020140443991" src="data:image/png;base64,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" width="671" height="84" class="img_O9Fa"></p>
+<ul>
+<li>这里套公式也比较疑惑，答案很别扭</li>
+<li>迷惑，虽然知道这次划分是一次错误的划分，相应的信息增益应当是 0，噢，可能正是因为信息增益为 0，0.998 + 0 = 0.998</li>
+<li>但如何说明、如何计算信息增益为 0 呢？这里有许多概念要学习。</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="44-决策树的剪枝">4.4 决策树的剪枝<a href="#44-决策树的剪枝" class="hash-link" aria-label="4.4 决策树的剪枝的直接链接" title="4.4 决策树的剪枝的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20221020141016225" src="/Notes/assets/images/image-20221020141016225-af1a4a915f1f790ff08b2f73b578cb1d.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020141426110" src="/Notes/assets/images/image-20221020141426110-93210a200b4f320a5da6f11121c0da09.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>由于决策树倾向于叶子节点尽量的纯净，可能会在叶子产生许多<strong>不具有一般性的特征</strong>，因此剪去这些叶子，尽管模型的准确率下降，但泛化能力反而上升了。</li>
+<li>通常，<strong>如果使用单一决策树，要剪枝</strong>；而后面学习的集成学习则不需要剪枝。</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020141723504" src="/Notes/assets/images/image-20221020141723504-f98d55db7d2138c211e1c27d7f6488d9.png" width="800" height="348" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020141734830" src="/Notes/assets/images/image-20221020141734830-98de24b16efdbbbd836f4d4721a8945c.png" width="810" height="162" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="45-缺失值的处理">4.5 缺失值的处理<a href="#45-缺失值的处理" class="hash-link" aria-label="4.5 缺失值的处理的直接链接" title="4.5 缺失值的处理的直接链接">​</a></h3>
+<ul>
+<li>这节非常重要，缺失值的处理是 C4.5 决策树算法的重要贡献，影响了近几十年对缺失值的处理思想。</li>
+<li>以前是把缺失的扔掉，但实践发现不可行。如果数据缺失的是非常集中，那么丢掉影响不大；若面对维数变高，如几千维的数据，会发现有大量样本缺失，通常每一维都有数据是很难的，可能一个样本只有几维没有数据，如果扔掉，可能导致90%的数据都用不上</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020142139868" src="/Notes/assets/images/image-20221020142139868-39d1cc9dd2c4cfb29fd7c161387c8ef8.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li><strong>==非常关键的思想：样本赋权，权重划分==</strong></li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020142238011" src="/Notes/assets/images/image-20221020142238011-77cb3ff77724f7b63081eaf73464efab.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p>（1）先算有值的信息熵</p>
+<p><img decoding="async" loading="lazy" alt="image-20221020142332340" src="/Notes/assets/images/image-20221020142332340-9f000cf7ed1991f96047ec00dd69da1e.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p>（2）这步关键。</p>
+<p><img decoding="async" loading="lazy" alt="image-20221020142502991" src="/Notes/assets/images/image-20221020142502991-8db000c11e0e8c95297b832f618207d6.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>缺失的值，按照已有数据的类别比例，当作缺失数据补充的先验概率。</li>
+<li>把有值的样本进入各个属性的划分结果这个后验，当作了没有值的样本应该进入它的先验。</li>
+<li>样本8、10缺失值，都要同时进入三个分支，按照已有样本的比例值分别设置权重——如何理解把一个样本拆分成权重不同的三部分？添加权重后，直接参与信息熵和信息增益的计算吗？</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020144215604" src="/Notes/assets/images/image-20221020144215604-d95c288a117c8e29e562e9e50bd2d06d.png" width="793" height="369" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020144238399" src="/Notes/assets/images/image-20221020144238399-288f01b7426f5a09238a2215079c7056.png" width="797" height="472" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020144254834" src="/Notes/assets/images/image-20221020144254834-b54317bf9ce564cce33eab1fd1630c14.png" width="809" height="169" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="04-exam">【04 EXAM】<a href="#04-exam" class="hash-link" aria-label="【04 EXAM】的直接链接" title="【04 EXAM】的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20221020144757936" src="/Notes/assets/images/image-20221020144757936-f15e9ca23fe19ed1f6a57d1de78fa648.png" width="806" height="461" class="img_O9Fa"></p>
+<ul>
+<li>这题是否关于增益率（P79，上）的内容？我考虑的时候跟权重方法对比了
+<ul>
+<li>否，而是（P74，下）</li>
+<li>对应第 11 行。</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020145111990" src="/Notes/assets/images/image-20221020145111990-580cf107f8fc4df8101efb6eb24825f2.png" width="912" height="331" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020145351525" src="/Notes/assets/images/image-20221020145351525-f6da39cc41d2ed15fa35e30323eab84a.png" width="802" height="411" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020145409734" src="/Notes/assets/images/image-20221020145409734-d985b24c82615304e8a109a33647e18b.png" width="916" height="507" class="img_O9Fa"></p>
+<ul>
+<li>错着错着，突然懂了这题问什么。对应第 5 行。</li>
+<li>==<strong>找到题目与书本的出处，非常重要</strong>==</li>
+<li>==<strong>更重要的是，知道为什么这样做</strong>==</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020145601688" src="/Notes/assets/images/image-20221020145601688-b25e2c0d68bfaee7830e2f277aeb1d36.png" width="799" height="166" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020145938567" src="/Notes/assets/images/image-20221020145938567-96e478547a7743e0f49332d42f0caa14.png" width="803" height="173" class="img_O9Fa"></p>
+<ul>
+<li>为什么不可以？书本出处？跟采用编号进行划分的误区思想对应吗？</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020150303683" src="/Notes/assets/images/image-20221020150303683-2a0ae58af4d2866182a2c4617b93942e.png" width="807" height="462" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020150329612" src="/Notes/assets/images/image-20221020150329612-de30631a7d1017a799cd86c9ad09aaab.png" width="768" height="527" class="img_O9Fa"></p>
+<ul>
+<li>（P78）注意是两个概念</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020150616866" src="/Notes/assets/images/image-20221020150616866-00b5c5a04585ff59e95ed556dcfaefe6.png" width="787" height="306" class="img_O9Fa"></p>
+<ul>
+<li>我考虑的是（P80，下）的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mi>V</mi><mo stretchy="false">(</mo><mo separator="true">⋅</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">IV(·)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.07847em">I</span><span class="mord mathnormal" style="margin-right:0.22222em">V</span><span class="mopen">(</span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.1667em"></span><span class="mclose">)</span></span></span></span> 值，搞反了——理解大致是对的，因为增益率是信息增益与规范化分母的比值，计算可得
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>G</mi><mi>a</mi><mi>i</mi><mi>n</mi><mo stretchy="false">(</mo><mi>D</mi><mo separator="true">,</mo><mtext>色泽</mtext><mo stretchy="false">)</mo></mrow><mrow><mi>I</mi><mi>V</mi><mo stretchy="false">(</mo><mtext>色泽</mtext><mo stretchy="false">)</mo></mrow></mfrac><mo>=</mo><mfrac><mn>0.109</mn><mn>1.580</mn></mfrac><mo>≈</mo><mn>0.069</mn></mrow><annotation encoding="application/x-tex">\frac{Gain(D,色泽)}{IV(色泽)} = \frac{0.109}{1.580} \approx 0.069</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.53em;vertical-align:-0.52em"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em"><span style="top:-2.655em"><span class="pstrut" style="height:3em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07847em">I</span><span class="mord mathnormal mtight" style="margin-right:0.22222em">V</span><span class="mopen mtight">(</span><span class="mord cjk_fallback mtight">色泽</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.23em"><span class="pstrut" style="height:3em"></span><span class="frac-line" style="border-bottom-width:0.04em"></span></span><span style="top:-3.485em"><span class="pstrut" style="height:3em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">G</span><span class="mord mathnormal mtight">ain</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight" style="margin-right:0.02778em">D</span><span class="mpunct mtight">,</span><span class="mord cjk_fallback mtight">色泽</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em"><span style="top:-2.655em"><span class="pstrut" style="height:3em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1.580</span></span></span></span><span style="top:-3.23em"><span class="pstrut" style="height:3em"></span><span class="frac-line" style="border-bottom-width:0.04em"></span></span><span style="top:-3.394em"><span class="pstrut" style="height:3em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0.109</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:0.6444em"></span><span class="mord">0.069</span></span></span></span></li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>G</mi><mi>a</mi><mi>i</mi><mi>n</mi><mo stretchy="false">(</mo><mi>D</mi><mo separator="true">,</mo><mtext>触感</mtext><mo stretchy="false">)</mo></mrow><mrow><mi>I</mi><mi>V</mi><mo stretchy="false">(</mo><mtext>触感</mtext><mo stretchy="false">)</mo></mrow></mfrac><mo>=</mo><mfrac><mn>0.006</mn><mn>0.874</mn></mfrac><mo>≈</mo><mn>0.0069</mn></mrow><annotation encoding="application/x-tex">\frac{Gain(D,触感)}{IV(触感)} = \frac{0.006}{0.874} \approx 0.0069</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.53em;vertical-align:-0.52em"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em"><span style="top:-2.655em"><span class="pstrut" style="height:3em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07847em">I</span><span class="mord mathnormal mtight" style="margin-right:0.22222em">V</span><span class="mopen mtight">(</span><span class="mord cjk_fallback mtight">触感</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.23em"><span class="pstrut" style="height:3em"></span><span class="frac-line" style="border-bottom-width:0.04em"></span></span><span style="top:-3.485em"><span class="pstrut" style="height:3em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">G</span><span class="mord mathnormal mtight">ain</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight" style="margin-right:0.02778em">D</span><span class="mpunct mtight">,</span><span class="mord cjk_fallback mtight">触感</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em"><span style="top:-2.655em"><span class="pstrut" style="height:3em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0.874</span></span></span></span><span style="top:-3.23em"><span class="pstrut" style="height:3em"></span><span class="frac-line" style="border-bottom-width:0.04em"></span></span><span style="top:-3.394em"><span class="pstrut" style="height:3em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0.006</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:0.6444em"></span><span class="mord">0.0069</span></span></span></span></li>
+<li>结果上整整查了一个数量级，因此色泽的增益率更大</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020151122197" src="/Notes/assets/images/image-20221020151122197-d3b7d5b070f072559d366a55f6aab23d.png" width="817" height="337" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020151138225" src="/Notes/assets/images/image-20221020151138225-6751408dfa092ef4fca2f96e3312e712.png" width="793" height="98" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020154249453" src="/Notes/assets/images/image-20221020154249453-06bea4222f13eaa77ae8a38856268167.png" width="804" height="333" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020152930335" src="/Notes/assets/images/image-20221020152930335-ffdb56ebd228edee606b6f984c36a668.png" width="897" height="597" class="img_O9Fa"></p>
+<ul>
+<li>尝试了计算，尽管错了；这里结合公式进一步理解。</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221030140402999" src="/Notes/assets/images/image-20221030140402999-18f59dee7c0d42f04921c4fe4bf3db63.png" width="838" height="292" class="img_O9Fa"></p>
+<ul>
+<li>【勘误】</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020151823656" src="/Notes/assets/images/image-20221020151823656-81a2f86f5d81173f4468f50519c22c73.png" width="802" height="474" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020151840548" src="/Notes/assets/images/image-20221020151840548-695ba04a93127ba34408c49340904d5c.png" width="808" height="287" class="img_O9Fa"></p>
+<ul>
+<li>经过老师的讲解，以及这两题的提醒，我理解了为什么不简直容易造成过拟合了。</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020154924752" src="/Notes/assets/images/image-20221020154924752-26c6d8f23a33e4c38e1e9f2e2806fa9a.png" width="808" height="651" class="img_O9Fa"></p>
+<ul>
+<li>第一反应是看了书本的图，思考训练集与剪枝前后有关系吗？虽然蒙对了，但结合解析稍有理解了。
+<ul>
+<li>不一定要画出决策树。根据分支，一步一步、一层层判断即可。</li>
+<li>性别女都 “是”——所以后面不必判断是否喜欢ML作业，剪枝了。</li>
+<li>验证集精度的计算，用来衡量剪枝前后的泛化性能。</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020161251751" src="/Notes/assets/images/image-20221020161251751-8bcea2268339c293f4e3a6e86683eda1.png" width="799" height="443" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020161300439" src="/Notes/assets/images/image-20221020161300439-1e1c0088707372fe0c86af4cefd15777.png" width="819" height="329" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020161312991" src="/Notes/assets/images/image-20221020161312991-44aef269385f5dca7c3ca48c8619dc05.png" width="810" height="378" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020162751493" src="/Notes/assets/images/image-20221020162751493-51b232ffaabc723adca70c6781985002.png" width="796" height="668" class="img_O9Fa"></p>
+<ul>
+<li>不剪枝，还是原来的决策树。
+<ul>
+<li>我目前的理解是，对照了书本 P79-83，认为验证集的精度是对正例的占比计算的——算出来剪枝后是 75%，因为所有女生都算作正例，验证集 4 个当中共 3 个正例。</li>
+<li>那么剪枝前为什么是 50% ？</li>
+<li>==似乎要再次学习 “精度” 的概念。==
+<ul>
+<li>P29，精度：分类正确的样本数占样本总数的比例。可见我的理解是片面的。</li>
+<li>但如果按照书本 P79-83 的精度计算，我的理解是依据的，但这个矛盾认知出现在什么地方？</li>
+<li>应该围绕（P81）的分类正确、分类错误来衡量验证集。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>==疑问==
+<ul>
+<li>上述生成的决策树，是剪枝后还是剪枝前的？如果是剪枝前，那么为什么女生的叶子节点已经被替代了？</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221020152140429" src="/Notes/assets/images/image-20221020152140429-957d615ac8e634a91eb375a79cc311be.png" width="796" height="489" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020152227693" src="/Notes/assets/images/image-20221020152227693-0b18d40dcb1e3805f655efd4c61a8c1e.png" width="797" height="171" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020152359028" src="/Notes/assets/images/image-20221020152359028-4d9cb2abbfa114f8dff555ae60d4c98d.png" width="801" height="447" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221020152422779" src="/Notes/assets/images/image-20221020152422779-488bdd69cd3ca62dc9365bc4d6761895.png" width="788" height="376" class="img_O9Fa"></p>
+<ul>
+<li>心急了。这里是理解的【开始做题前，停5秒】</li>
+</ul>
+<p>2022/10/20 16:33:22 3h58min</p>
+<hr></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/Notes/docs/machine_learning/Task03/"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">Task03</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/Notes/docs/machine_learning/Task05/"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">Task05</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_G4nv thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#40-决策树" class="table-of-contents__link toc-highlight">4.0 决策树</a></li><li><a href="#41-决策树基本流程" class="table-of-contents__link toc-highlight">4.1 决策树基本流程</a></li><li><a href="#42-信息增益划分" class="table-of-contents__link toc-highlight">4.2 信息增益划分</a></li><li><a href="#43-其他属性划分准则" class="table-of-contents__link toc-highlight">4.3 其他属性划分准则</a></li><li><a href="#44-决策树的剪枝" class="table-of-contents__link toc-highlight">4.4 决策树的剪枝</a></li><li><a href="#45-缺失值的处理" class="table-of-contents__link toc-highlight">4.5 缺失值的处理</a></li><li><a href="#04-exam" class="table-of-contents__link toc-highlight">【04 EXAM】</a></li></ul></div></div></div></div></main></div></div></div></div>
+</body>
+</html>

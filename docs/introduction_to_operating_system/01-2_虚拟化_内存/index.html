@@ -1,0 +1,1442 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-introduction_to_operating_system/01-2_虚拟化_内存" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">01-2_虚拟化_内存 | 编程内外</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" name="twitter:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" property="og:url" content="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/01-2_虚拟化_内存/"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="01-2_虚拟化_内存 | 编程内外"><meta data-rh="true" name="description" content="01-2 虚拟化（内存虚拟化）"><meta data-rh="true" property="og:description" content="01-2 虚拟化（内存虚拟化）"><link data-rh="true" rel="icon" href="/Notes/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/01-2_虚拟化_内存/"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/01-2_虚拟化_内存/" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/01-2_虚拟化_内存/" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous"><link rel="stylesheet" href="/Notes/assets/css/styles.67339a6f.css">
+<script src="/Notes/assets/js/runtime~main.fdf5edbd.js" defer="defer"></script>
+<script src="/Notes/assets/js/main.886a3333.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"dark")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/Notes/img/logo.png"><div role="region" aria-label="跳到主要内容"><a class="skipToContent__HuA" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Notes/"><div class="navbar__logo"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--light_c3lc"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--dark_Ji9V"></div><b class="navbar__title text--truncate">编程内外</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Notes/docs/category/linux-os/">Notes</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/CELFS/Notes" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link" icon="github">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_OqSl"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_OAgU colorModeToggle_zRe0"><button class="clean-btn toggleButton_aClM toggleButtonDisabled_GkIb" type="button" disabled="" title="切换浅色/暗黑模式（当前为暗黑模式）" aria-label="切换浅色/暗黑模式（当前为暗黑模式）" aria-live="polite" aria-pressed="true"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_zzlY"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_Z832"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Cx4E"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_liLQ"><div class="docsWrapper_evXH"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_nZiY" type="button"></button><div class="docRoot_jKp6"><aside class="theme-doc-sidebar-container docSidebarContainer_wXyP"><div class="sidebarViewport_LQZ0"><div class="sidebar_T0dy"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_WBBB"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/linux-os/">Linux OS</a><button aria-label="展开侧边栏分类 &#x27;Linux OS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/ajax/">Ajax</a><button aria-label="展开侧边栏分类 &#x27;Ajax&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/css/">CSS</a><button aria-label="展开侧边栏分类 &#x27;CSS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript-es6/">JavaScript ES6</a><button aria-label="展开侧边栏分类 &#x27;JavaScript ES6&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript/">JavaScript</a><button aria-label="展开侧边栏分类 &#x27;JavaScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/nodejs/">Node.js</a><button aria-label="展开侧边栏分类 &#x27;Node.js&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/typescript/">TypeScript</a><button aria-label="展开侧边栏分类 &#x27;TypeScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/vue/">Vue</a><button aria-label="展开侧边栏分类 &#x27;Vue&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/轻量级服务器开发tinywebserver/">轻量级服务器开发（TinyWebServer）</a><button aria-label="展开侧边栏分类 &#x27;轻量级服务器开发（TinyWebServer）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/c-后台服务器开发/">C++ 后台服务器开发</a><button aria-label="展开侧边栏分类 &#x27;C++ 后台服务器开发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/mysql-必知必会/">MySQL 必知必会</a><button aria-label="展开侧边栏分类 &#x27;MySQL 必知必会&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/Notes/docs/category/操作系统导论/">操作系统导论</a><button aria-label="折叠侧边栏分类 &#x27;操作系统导论&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/概述/">概述</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/附录/">附录</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/作业/">作业</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/Linux补充/">Linux补充</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/OS概念类比/">OS概念类比</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/01-1_虚拟化_CPU/">01-1_虚拟化_CPU</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/Notes/docs/introduction_to_operating_system/01-2_虚拟化_内存/">01-2_虚拟化_内存</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/01-3_code/">01-3_code</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/02-1_并发/">02-1_并发</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/02-2_code/">02-2_code</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/03-1_持久化/">03-1_持久化</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/03-2_code/">03-2_code</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/qt/">QT</a><button aria-label="展开侧边栏分类 &#x27;QT&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军信息论-40-讲/">读吴军《信息论 40 讲》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《信息论 40 讲》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军富足/">读吴军《富足》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《富足》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/machine-learning-andrew-ng/">Machine Learning (Andrew Ng)</a><button aria-label="展开侧边栏分类 &#x27;Machine Learning (Andrew Ng)&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/机器学习初步周志华/">机器学习初步（周志华）</a><button aria-label="展开侧边栏分类 &#x27;机器学习初步（周志华）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/paddle-零基础深度学习第二版/">Paddle 零基础深度学习（第二版）</a><button aria-label="展开侧边栏分类 &#x27;Paddle 零基础深度学习（第二版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/动手学深度学习pytorch-版/">动手学深度学习（Pytorch 版）</a><button aria-label="展开侧边栏分类 &#x27;动手学深度学习（Pytorch 版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Notes/docs/intro/">学而时习之</a></li></ul></nav></div></div></aside><main class="docMainContainer_dhcR"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_hWfg"><div class="docItemContainer_UIwD"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_ViMa" aria-label="页面路径"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/Notes/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_xAfz"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/Notes/docs/category/操作系统导论/"><span itemprop="name">操作系统导论</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">01-2_虚拟化_内存</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_xgD3 theme-doc-toc-mobile tocMobile_UvqM"><button type="button" class="clean-btn tocCollapsibleButton_ldZF">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>01-2_虚拟化_内存</h1></header><h3 class="anchor anchorWithStickyNavbar_QJwc" id="01-2-虚拟化内存虚拟化">01-2 虚拟化（内存虚拟化）<a href="#01-2-虚拟化内存虚拟化" class="hash-link" aria-label="01-2 虚拟化（内存虚拟化）的直接链接" title="01-2 虚拟化（内存虚拟化）的直接链接">​</a></h3>
+<p>Date：2023/04/12</p>
+<hr>
+<p>[TOC]</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第12章-关于内存虚拟化的对话">第12章 关于内存虚拟化的对话<a href="#第12章-关于内存虚拟化的对话" class="hash-link" aria-label="第12章 关于内存虚拟化的对话的直接链接" title="第12章 关于内存虚拟化的对话的直接链接">​</a></h3>
+<ul>
+<li>摘录
+<ul>
+<li>学生就应该问问题，对吧？实际上教授们的意思：提出问题，仅当它们是<strong>好问题</strong>，而且你实际上已经对这些问题<strong>进行了一些思考</strong>。</li>
+<li>虚拟内存很复杂，需要我们理解关于硬件和操作系统<strong>交互方式</strong>的更多复杂细节。</li>
+<li>有很多细节，你必须牢记它们，才能真正对发生的事情建立一个思维模型。将从简单的开始，如基址/界限，慢慢增加复杂性以应对新的挑战，如TLB和多级页表。最终，我们将能够描述一个全功能的现代虚拟内存管理程序的工作原理。（学习策略 + 最终目的）</li>
+<li>虚拟地址（every address generated by a user program is a virtual address）（对于用户程序）、易于使用（ease of use）、地址空间（address space）、隔离（isolation）、保护（protection）</li>
+</ul>
+</li>
+</ul>
+<p>2023/04/12 18:57:45</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第13章-抽象地址空间">第13章 抽象：地址空间<a href="#第13章-抽象地址空间" class="hash-link" aria-label="第13章 抽象：地址空间的直接链接" title="第13章 抽象：地址空间的直接链接">​</a></h3>
+<ul>
+<li>早期系统（几乎没有抽象）</li>
+<li>多道程序和时分共享
+<ul>
+<li>多道程序（multiprogramming）、有效利用率（utilization）、效率（efficiency）、分时系统的时代、交互性（interactivity）</li>
+</ul>
+</li>
+<li>地址空间
+<ul>
+<li><strong>关键问题：如何虚拟化内存</strong>
+<ul>
+<li>虚拟化内存：OS 在单一的物理内存上为多个运行的进程（所有进程共享内存）构建一个私有的、可能很大的地址空间的抽象？</li>
+<li>内存虚拟化的关键：出于某种原因，<strong>必须确保不是加载到物理地址</strong> 0，而是物理地址320KB（这是 A 载入内存的地址）</li>
+<li>提示：隔离原则</li>
+</ul>
+</li>
+<li>地址空间是运行的程序看到的系统中的内存（易用的<strong>物理内存抽象</strong>，也是了解虚拟化内存的关键）</li>
+<li>一个进程的地址空间包含运行的程序的<strong>所有内存状态</strong>
+<ul>
+<li>代码</li>
+<li>栈：保存当前的函数调用信息，分配空间给局部变量，传递参数和函数返回值</li>
+<li>堆：管理动态分配的、用户管理的内存</li>
+<li>其他东西（如，静态初始化的变量）</li>
+</ul>
+</li>
+<li>抽象（abstract）、多个线程（threads）、虚拟化内存（virtualizing memory）、虚拟地址（virtual address）、微内核（microkernel）、内存隔离</li>
+<li><strong>分析方法：</strong>
+<ul>
+<li>先把静态内容固定（静态代码），再考虑可能变化的区域（栈堆）</li>
+<li>它们只需要在相反的方向增长（因此未分配区域在栈堆之间，<strong>多线程无效</strong>）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="Snipaste_2023-04-12_19-53-50" src="/Notes/assets/images/Snipaste_2023-04-12_19-53-50-5c93bfdd353d1af47f81e79c357d6794.png" width="1021" height="482" class="img_O9Fa"></p>
+<ul>
+<li>目标（为了实现操作系统的工作，需要目标的指导）
+<ul>
+<li>透明（transparency）、效率（efficiency）、保护（protection）</li>
+<li><strong>程序不应该感知到内存被虚拟化的事实</strong>，时空效率，隔离保护</li>
+<li>补充：你看到的所有地址都不是真的（**打印均为虚拟地址，**只有 OS 和硬件知道物理地址）</li>
+<li>重要<strong>子系统</strong>：虚拟内存。
+<ul>
+<li>虚拟内存系统负责为程序提供一个巨大的、稀疏的、私有的地址空间的假象，其中保存了程序的所有指令和数据。</li>
+<li>OS 在专门硬件的帮助下，通过每一个虚拟内存的索引，将其转换为物理地址，物理内存根据获得的物理地址去获取所需的信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>2023/04/12 20:44:49</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第14章-插叙内存操作api">第14章 插叙：内存操作API<a href="#第14章-插叙内存操作api" class="hash-link" aria-label="第14章 插叙：内存操作API的直接链接" title="第14章 插叙：内存操作API的直接链接">​</a></h3>
+<ul>
+<li>
+<p>关键问题：如何分配和管理内存</p>
+</li>
+<li>
+<p>内存类型</p>
+<ul>
+<li>**栈（stack）**内存（自动（automatic）内存，<strong>隐式</strong>）
+<ul>
+<li>若希望某些信息存在于函数调用之外，建议不要将它们放在栈上</li>
+</ul>
+</li>
+<li>**堆（heap）**内存（于是有了 heap，满足对长期内存的需求，<strong>显式</strong>）
+<ul>
+<li>显式+变化用法，堆内存对用户和系统提出了更大的挑战</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>malloc()</code> 调用（库调用）</p>
+<ul>
+<li>不直接传入 <code>size_t</code> 类型参数（数值），而是使用各种函数和宏（如 int 乘法）</li>
+<li><code>double *d = (double *) malloc(10 * sizeof(double));</code></li>
+<li><code>sizeof()</code> 返回的注意事项（默认返回类型指针大小，除非使用初始化数组）</li>
+<li>字符串声明 <code>malloc(strlen(s) + 1)</code> （+1 为字符串结束符预留）</li>
+<li>强制类型转换（cast）（实际没有做什么）</li>
+</ul>
+</li>
+<li>
+<p><code>free()</code> 调用（库调用）</p>
+<ul>
+<li>分配内存是等式的简单部分，知道<strong>何时、如何</strong>以及<strong>是否释放内存</strong>是困难的部分</li>
+<li>介绍一个由 <code>malloc()</code> 返回的指针（参数）</li>
+</ul>
+</li>
+<li>
+<p><strong>常见错误</strong></p>
+<ul>
+<li>
+<p>概念</p>
+<ul>
+<li>自动内存管理（automatic memory management）、垃圾收集器（garbage collector）、滥用内存</li>
+</ul>
+</li>
+<li>
+<p>忘记分配内存</p>
+<ul>
+<li>
+<p>段错误（segmentation fault）</p>
+</li>
+<li>
+<p>提示：它编译过了或它运行了!=它对了（或 <code>strdup()</code> ）</p>
+<div class="language-C language-c codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-c codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">char</span><span class="token plain"> </span><span class="token operator">*</span><span class="token plain">src </span><span class="token operator">=</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;hello&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">char</span><span class="token plain"> </span><span class="token operator">*</span><span class="token plain">dst </span><span class="token operator">=</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">char</span><span class="token plain"> </span><span class="token operator">*</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token function" style="color:rgb(80, 250, 123)">malloc</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token function" style="color:rgb(80, 250, 123)">strlen</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain">src</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token operator">+</span><span class="token plain"> </span><span class="token number">1</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token function" style="color:rgb(80, 250, 123)">strcpy</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain">dst</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> src</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"> </span><span class="token comment" style="color:rgb(98, 114, 164)">// work properly</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+</li>
+</ul>
+</li>
+<li>
+<p>没有分配足够的内存（“几乎” 足够是不够的，许多系统漏洞的来源）</p>
+<ul>
+<li>缓冲区溢出（buffer overflow）</li>
+<li>经验：即使它正确运行过一次，也不意味着它是正确的。</li>
+</ul>
+</li>
+<li>
+<p>忘记初始化分配的内存</p>
+<ul>
+<li>未初始化的读取（uninitialized read）：可能会在堆中读到乱七八糟的数据，不排除读到随机和有害的东西。</li>
+</ul>
+</li>
+<li>
+<p>忘记释放内存</p>
+<ul>
+<li>内存泄露（memory leak）：尤其注意在<strong>长时间</strong>运行的应用程序或系统中</li>
+<li>习惯：释放显式分配的每个字节</li>
+</ul>
+</li>
+<li>
+<p>在用完之前释放内存</p>
+<ul>
+<li>悬挂指针（dangling pointer）：提前，导致重新利用了错误释放的内存。</li>
+</ul>
+</li>
+<li>
+<p>重复释放内存</p>
+<ul>
+<li>重复释放（double free）：未定义。</li>
+</ul>
+</li>
+<li>
+<p>错误地调用 <code>free()</code></p>
+<ul>
+<li>无效的释放（invalid free）：传入了非 <code>malloc()</code> 申请的指针/值</li>
+<li>补充：为什么在你的进程退出时没有内存泄露（<strong>短时间</strong>运行的程序）
+<ul>
+<li>没有任何内存会丢失，原因：系统中实际存在两级内存管理
+<ul>
+<li>第一级是由操作系统执行的内存管理</li>
+<li>第二级管理在每个进程中</li>
+</ul>
+</li>
+<li>purify、valgrind 内存定位工具</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>底层操作系统支持</p>
+<ul>
+<li><code>brk</code> 、分断（break）位置（即堆结束的位置）、<code>sbrk</code> 、<code>mmap()</code> 、匿名（anonymous）内存区域、交换空间（swap space）</li>
+<li>不应该直接调用 <code>brk</code> 或 <code>sbrk</code>，它们被内存分配库使用。建议坚持使用 <code>malloc()</code> 和 <code>free()</code> 。</li>
+</ul>
+</li>
+<li>
+<p>其他调用</p>
+<ul>
+<li><code>calloc()</code> （置零）、<code>realloc()</code> （更大，赋值）</li>
+</ul>
+</li>
+<li>
+<p>疑问</p>
+<ul>
+<li>内存泄漏与 temp 重启系统未清理是否有关？</li>
+<li>“Advanced Programming in the UNIX Environment”W. Richard Stevens and Stephen A. Rago Addison-Wesley, 2005 这本书建议读很多遍</li>
+</ul>
+</li>
+</ul>
+<p>2023/04/12 23:11:53，2023/04/14 17:29:31</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第15章-机制地址转换">第15章 机制：地址转换<a href="#第15章-机制地址转换" class="hash-link" aria-label="第15章 机制：地址转换的直接链接" title="第15章 机制：地址转换的直接链接">​</a></h3>
+<ul>
+<li>关键问题：如何高效、灵活地虚拟化内存</li>
+<li>概念
+<ul>
+<li>介入（interposing）、TLB、页表、<strong>基于硬件</strong>的地址转换（hardware-based address translation）/ <strong>地址转换（address translation）</strong>、虚拟（virtual）地址、物理（physical）地址、管理内存（manage memory）</li>
+</ul>
+</li>
+<li>假设
+<ul>
+<li>假设1：用户的地址空间必须<strong>连续</strong>地放在物理内存中</li>
+<li>假设2：用户的地址空间<strong>小于</strong>物理内存的大小</li>
+<li>假设3：<strong>每个</strong>地址空间的大小完全一样</li>
+</ul>
+</li>
+<li>一个例子
+<ul>
+<li>x86汇编（ <code>movl</code>、<code>addl</code>、长字移动）、一般化的介入技术、介入（Interposition）、透明（transparency）、地址空间（address space）</li>
+<li>地址空间的相对性
+<ul>
+<li>从程序的角度，地址空间是从 0 开始到某个位置结束，它包含的所有内存引用都应当在这个范围内；</li>
+<li>从虚拟内存的角度，操作系统希望将这个进程地址空间放在物理内存的其他位置，不一定从 0 开始</li>
+</ul>
+</li>
+<li>进程的地址空间放入物理内存示意
+<ul>
+<li>base 寄存器设为 32KB 对应的值</li>
+<li>进程所有内存引用被处理器如下转换为物理地址：
+<ul>
+<li><code>physical address = virtual address + base</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_49-ee3aae1c0338ee5e1276d0f5162ca6eb.jpg" width="529" height="625" class="img_O9Fa"></p>
+<ul>
+<li>动态（基于硬件）重定位
+<ul>
+<li>基址加界限机制（base and bound）/ 动态重定位（dynamic relocation）、限制寄存器（基址（base）寄存器、界限（bound）寄存器）、虚拟内存机制</li>
+<li>补充：基于软件的重定位
+<ul>
+<li>静态重定位（static relocation）、加载程序（loader）（早期使用）
+<ul>
+<li>不提供访问保护，通常需硬件支持来实现真正的访问保护</li>
+<li>一旦完成，稍后很难将内存空间重定位到其他位置</li>
+</ul>
+</li>
+<li>地址转换（address translation）</li>
+</ul>
+</li>
+<li>提示：基于硬件的动态重定位
+<ul>
+<li><strong>动态重定位</strong>
+<ul>
+<li>在运行时发生，而且甚至可以在进程开始运行后改变其地址空间</li>
+</ul>
+</li>
+<li>界限寄存器两种使用方式（逻辑等价）
+<ul>
+<li>1）记录地址空间的大小，供硬件对地址转换求和之前检查</li>
+<li>2）记录地址空间结束的物理地址，供硬件对地址转换求和之后检查</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>转换示例（方式 1 示例）
+<ul>
+<li>基址加虚拟地址（偏移量）</li>
+<li>补充：数据结构——空闲列表（free list，记录未用的空闲内存）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>硬件支持：总结（动态重定位：硬件要求）
+<ul>
+<li>特权模式（privileged mode，或内核模式，kernel mode）、用户模式（user mode）、处理器状态字（processor status word）、基址和界限寄存器（base and bounds register）、异常（exception）、异常处理程序（exception handler）</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_51-cbb2265681837d7fd21a60e1bfd17a13.jpg" width="647" height="337" class="img_O9Fa"></p>
+<ul>
+<li>操作系统的问题
+<ul>
+<li>动态重定位：操作系统的职责
+<ul>
+<li>在进程创建时（为进程的地址空间找到内存空间）</li>
+<li>在进程终止时（回收进程的所有内存）</li>
+<li>在上下文切换时（保存和恢复基础和界限寄存器）
+<ul>
+<li>进程结构（process structure）、进程控制块（Process Control Block，PCB）</li>
+</ul>
+</li>
+<li>提供异常处理程序（exception handler），或要一些调用的函数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_52-a394558c5679740eda664abe4f714814.jpg" width="648" height="228" class="img_O9Fa"></p>
+<ul>
+<li>感悟/疑问
+<ul>
+<li>指令的内存大小是多少？</li>
+<li>底层指令与数据均由二进制表示，两者混合存储，那么是如何区分两者的边界？
+<ul>
+<li>示例 128 movl、132 addl、135 movl</li>
+</ul>
+</li>
+<li>进程的地址空间放入物理内存后，16KB~64KB 这个值是如何给定的？
+<ul>
+<li>由<strong>限制寄存器</strong>实现的：
+<ul>
+<li>在编写、编译程序时假设地址空间从 0 开始，而当程序真正执行，操作系统会决定其在物理内存中的实际加载地址</li>
+<li>基址寄存器：记录起始地址</li>
+<li>界限寄存器：确保地址在进程地址空间的范围内</li>
+</ul>
+</li>
+<li>这种基址寄存器配合界限寄存器的硬件结构是芯片中的（每个CPU一对），即通常说的<strong>内存管理单元（Memory Management Unit，MMU）</strong></li>
+</ul>
+</li>
+<li>地址转换<strong>完全由硬件处理</strong>，没有 OS 介入；但效率较低
+<ul>
+<li>内部碎片（internal fragmentation）</li>
+</ul>
+</li>
+<li>说白了，这些工程问题都是资源利用率的问题，每当解决一个问题，就会继续思考可否优化，那将进入更深一层的认知</li>
+<li>MS-DOS重定位加载器、Stretch（7030）计算机系统、硬件解释描述符、系统调用支持、编译器支持限定、分离内存引用的软件技术</li>
+</ul>
+</li>
+</ul>
+<p>2023/04/26 21:14:44</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第16章-分段">第16章 分段<a href="#第16章-分段" class="hash-link" aria-label="第16章 分段的直接链接" title="第16章 分段的直接链接">​</a></h3>
+<ul>
+<li>关键问题：怎样支持大地址空间
+<ul>
+<li>资源浪费：栈和堆之间，有一大块 “空闲” 空间</li>
+</ul>
+</li>
+<li>分段：泛化的基址/界限
+<ul>
+<li>分段（segmentation）、逻辑段（segment）、段寄存器、未使用的地址空间 / 稀疏地址空间（sparse address spaces）、段异常（segmentation violation）/ 段错误（segmentation fault）</li>
+<li>摘录
+<ul>
+<li>给地址空间内的每个逻辑段一个基址和界限寄存器对。</li>
+<li>一个段只是地址空间里的一个<strong>连续定长</strong>的区域，在典型的地址空间里有 3 个逻辑不同的段：<strong>代码、栈和堆</strong>。</li>
+<li>段错误指的是在支持分段的机器上发生了非法的内存访问（术语保留）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230427224225056" src="/Notes/assets/images/image-20230427224225056-f67e1e0a9c4361bc074cc0ed26bddab2.png" width="522" height="609" class="img_O9Fa"></p>
+<ul>
+<li>我们引用哪个段
+<ul>
+<li>段寄存器（硬件使用，在地址转换时）
+<ul>
+<li>显式（explicit）：用虚拟地址的<strong>头几位标识</strong>不同段
+<ul>
+<li>硬件用<strong>前两位</strong>来决定使用哪个段寄存器，然后用后 12 位作为段内偏移。偏移量与基址寄存器相加，硬件就得到了最终的物理地址。（实际只有3个段，两位可表示4个段，因此浪费了一个段地址空间，有些系统将堆和栈当作同一个段，可只用一位来标识）</li>
+</ul>
+</li>
+<li>隐式（implicit）：硬件通过<strong>地址产生的方式</strong>来确定段
+<ul>
+<li>如果地址由程序计数器产生（即它是指令获取），那么地址在代码段。</li>
+<li>如果基于栈或基址指针，它一定在栈段。</li>
+<li>其他地址则在堆段。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>VAX/VMS系统、段内偏移</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="data:image/jpeg;base64,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" width="387" height="103" class="img_O9Fa"></p>
+<ul>
+<li>栈怎么办
+<ul>
+<li>支持反向增长（硬件）、段的增长方向</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_60-29b77451b295571a2a472b82108ffc9b.jpg" width="650" height="196" class="img_O9Fa"></p>
+<ul>
+<li>支持共享
+<ul>
+<li>共享（share）内存段、保护位（protection bit）</li>
+<li>通过额外的硬件支持，每个段增加几位，其中包括只读位，实现了一个段可映射到多个虚拟地址空间；硬件算法也同步改变</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_61-3b36ddae19a24ede272e7480c98eda31.jpg" width="644" height="199" class="img_O9Fa"></p>
+<ul>
+<li>细粒度与粗粒度的分段
+<ul>
+<li>粗粒度（coarse-grained）分段：只有很少的几个段的系统（即代码、栈、堆）</li>
+<li>细粒度（fine-grained）分段：进一步硬件支持，段表（segment table）、Burroughs B5000、Multics</li>
+</ul>
+</li>
+<li>操作系统支持
+<ul>
+<li>分段优点：
+<ul>
+<li>大量节省物理内存（动态重定位、更好支持稀疏地址空间）</li>
+<li>适合硬件完成，地址转换开销极小</li>
+<li>支持代码共享</li>
+</ul>
+</li>
+<li>新的问题
+<ul>
+<li>操作系统在上下文切换时应该做什么？</li>
+<li>管理物理内存的空闲空间（不同进程不同段，段大小不再固定）</li>
+</ul>
+</li>
+<li>外部碎片（external fragmentation）：物理内存充满了许多小洞</li>
+<li>紧凑（compact）物理内存：重新安排原有的段，避免了空闲空间总和足够，但单块空间不足的情况（但是，内存紧凑成本很高，因为拷贝段是内存密集型的，一般会占用大量的处理器时间）</li>
+<li>空闲列表管理算法
+<ul>
+<li>最优匹配（best-fit）</li>
+<li>最坏匹配（worst-fit）</li>
+<li>首次匹配（first-fit）</li>
+<li>伙伴算法（buddy algorithm）（更复杂）</li>
+</ul>
+</li>
+<li>摘录
+<ul>
+<li>遗憾的是，无论算法多么精妙，都无法完全消除外部碎片，因此，好的算法只是试图减小它。</li>
+<li>提示：如果有一千个解决方案，就没有特别好的。</li>
+<li>首先，是我们上面讨论的外部碎片。由于段的大小不同，空闲内存被割裂成各种奇怪的大小，因此满足内存分配请求可能会很难。用户可以尝试采用聪明的算法[W+95]，或定期紧凑内存，<strong>但问题很根本，难以避免</strong>。</li>
+<li>第二个问题也许更重要，分段还是<strong>不足以支持更一般化的</strong>稀疏地址空间。</li>
+<li>关于如何构建系统的宝贵建议。一下子读完这篇文章很难，每次读几页，就像品一杯美酒，或把它当作一本参考手册。</li>
+<li>一个经典的内存管理系统，在设计上有很多常识。</li>
+<li>动态链接、分页、分段、碎片问题、内存分配程序</li>
+</ul>
+</li>
+<li>外部碎片（external fragmentation）</li>
+</ul>
+</li>
+<li>疑问
+<ul>
+<li>假设现在要引用虚拟地址100（在代码段中），MMU将基址值加上偏移量（100）得到实际的物理地址：100 + 32KB = 32868
+<ul>
+<li>这里需要注意的是：单位 100 偏移值是相对于 “位（bit）” 而言，还是 “字节” 而言？32KB相当于多少字节？【已解决】</li>
+<li>32KB = 32 × 1024 b = 32768 b</li>
+<li>b、B 大小写区分？</li>
+</ul>
+</li>
+<li>首先应该<strong>先减去堆的偏移量</strong>，即该地址指的是这个段中的哪个字节。
+<ul>
+<li><strong>这里理解不清晰：为什么 “堆从虚拟地址 4K 开始” ？堆的基址与堆的虚拟地址有和关系？</strong></li>
+<li>例如堆中的虚拟地址 4200，若用这个地址加上<strong>堆的基址（34KB）</strong>，得到物理地址 39016，是错的</li>
+<li><strong>堆从虚拟地址 4K 开始</strong>，则 4200 的偏移量实际为 4200 - 2096 = 104，于是，真正的物理地址为 34KB + 104 b = 34920 b</li>
+</ul>
+</li>
+<li>这里的单位怪怪的，要不要保留 b ？是否在讨论地址的时候，并不需要单位？</li>
+<li>例子：假设要访问虚拟地址15KB，它应该映射到物理地址27KB。该虚拟地址的二进制形式是：11 1100 0000 0000（十六进制0x3C00）。硬件利用前两位（11）来指定段，但然后我们要处理偏移量3KB。为了得到正确的反向偏移，我们必须从3KB中减去最大的段地址：在这个例子中，段可以是4KB，因此正确的偏移量是3KB减去4KB，即−1KB。只要用这个反向偏移量（−1KB）加上基址（28KB），就得到了正确的物理地址27KB。用户可以进行界限检查，确保反向偏移量的绝对值小于段的大小。
+<ul>
+<li>如何理解 “应该映射到物理地址 27KB”？
+<ul>
+<li>前两位：11</li>
+<li>偏移量：1100 0000 0000 b = 2048 b + 1024 b = 3 * 1024 b = 3 KB</li>
+<li>反向偏移（由 11 确定，但具体是如何确定的？）</li>
+<li>从 3KB 中减去最大的段地址，4KB &gt; 3KB，3KB - 4KB = -1KB</li>
+<li>反向偏移量（−1KB）+ 基地址（28KB）= 物理地址（27KB）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>2023/04/28 21:42:24</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第17章-空闲空间管理">第17章 空闲空间管理<a href="#第17章-空闲空间管理" class="hash-link" aria-label="第17章 空闲空间管理的直接链接" title="第17章 空闲空间管理的直接链接">​</a></h3>
+<ul>
+<li>
+<p>关键问题：如何管理空闲空间</p>
+</li>
+<li>
+<p>概念</p>
+<ul>
+<li>空闲空间管理（free-space management）、内存分配库、分段（segmentation）、外部碎片（external fragmentation）、用户级内存分配库、内部碎片（internal fragmentation）、分配程序</li>
+</ul>
+</li>
+<li>
+<p>假设</p>
+<ul>
+<li>假定基本的接口就像 <code>malloc()</code> 和 <code>free()</code> 提供的那样</li>
+<li>假设我们主要关心的是外部碎片</li>
+<li>假设内存一旦被分配给客户，就不可以被重定位到其他位置</li>
+<li>假设分配程序所管理的是连续的一块字节区域（ <code>sbrk</code> 申请增加堆空间）</li>
+</ul>
+</li>
+<li>
+<p>底层机制</p>
+<ul>
+<li>
+<p>（通用机制）</p>
+<ul>
+<li>首先，探讨空间<strong>分割与合并</strong>的基本知识；</li>
+<li>其次，看看如何快速并相对轻松地<strong>追踪</strong>已分配的空间；</li>
+<li>最后，讨论如何利用<strong>空闲</strong>区域的内部空间<strong>维护</strong>一个简单的列表，来<strong>追踪</strong>空闲和已分配的空间。</li>
+</ul>
+</li>
+<li>
+<p>分割与合并</p>
+<ul>
+<li>分割（splitting）：当申请空间小于空闲块的空间，通常执行分割操作，空闲列表基本不变。</li>
+<li>合并（coalescing）：如果仅仅 <code>free(10)</code>，整个堆只是被分割成了若干块，依然不满足较大的申请需求，因此需合并可用空间。（归还 + 相邻）</li>
+</ul>
+</li>
+<li>
+<p>追踪已分配空间的大小</p>
+<ul>
+<li>
+<p>头块（header）、幻数（完整性检查）、正常性检查（ <code>assert(hptr-&gt;magic == 1234567)</code> ）</p>
+</li>
+<li>
+<p><strong>实际释放</strong>的是头块大小加上分配给用户的空间的大小（N + 头块）</p>
+</li>
+<li>
+<p><code>ptr</code> 指向申请的空间起始位置，而头块是在 <code>ptr</code> “前面” 的，因此借用 <code>ptr</code> 当前的指针位置，对 <code>hptr</code> 使用减法，“反向” 求得头块的位置，相当于有一个新的指针，指向了 <code>ptr</code> 的头块</p>
+</li>
+<li>
+<div class="language-c codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-c codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">void</span><span class="token plain"> </span><span class="token function" style="color:rgb(80, 250, 123)">free</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">void</span><span class="token plain"> </span><span class="token operator">*</span><span class="token plain">ptr</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token class-name">header_t</span><span class="token plain"> </span><span class="token operator">*</span><span class="token plain">hptr </span><span class="token operator">=</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">void</span><span class="token plain"> </span><span class="token operator">*</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain">ptr </span><span class="token operator">-</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">sizeof</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token class-name">header_t</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="data:image/jpeg;base64,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" width="591" height="275" class="img_O9Fa"></p>
+</li>
+</ul>
+</li>
+<li>
+<p>嵌入空闲列表</p>
+<ul>
+<li><code>mmap()</code> 、分割（split）、合并（coalesce）</li>
+</ul>
+</li>
+<li>
+<p>让堆增长</p>
+<ul>
+<li>传统做法类似某种优化算法的思想，先小后大</li>
+<li><code>sbrk</code> 、空闲物理内存页</li>
+</ul>
+</li>
+<li>
+<p>内存分配的基本策略</p>
+<ul>
+<li>最优匹配（best fit）/ 最小匹配
+<ul>
+<li>遍历一次，返回最小的一块候选者</li>
+<li>性能代价。</li>
+</ul>
+</li>
+<li>最差匹配（worst fit）
+<ul>
+<li>遍历一次，返回最大候选，分割返还空闲列表</li>
+<li>过量碎片、很高开销</li>
+</ul>
+</li>
+<li>首次匹配（first fit）
+<ul>
+<li>避免遍历，返回第一个足够大的块</li>
+<li>速度优势。空闲列表开头很多小块，因此顺序重要（基于地址排序，address-based ordering）</li>
+</ul>
+</li>
+<li>下次匹配（next fit）
+<ul>
+<li>避免遍历，多维护一个指针，指向上一次查找结束的位置</li>
+<li>性能 ≈ first fit</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>其他方式</p>
+<ul>
+<li>分离空闲列表（segregated list）
+<ul>
+<li>对频繁申请的，用独立列表管理，其余请求交由更通用的内存分配程序</li>
+<li>碎片不是问题，不需复杂列表查找，分配与释放速度快</li>
+<li>厚块分配程序（slab allocator）：对象缓存（object cache）、锁、文件系统 inode 、内存厚块（slab，页大小与对象大小的公倍数）、预初始化状态（避免了频繁的初始化与销毁）</li>
+</ul>
+</li>
+<li>伙伴系统
+<ul>
+<li>二分伙伴分配程序（binary buddy allocator）：空闲空间首先从<strong>概念上</strong>被看成大小为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>N</mi></msup></mrow><annotation encoding="application/x-tex">2^N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8413em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em">N</span></span></span></span></span></span></span></span></span></span></span> 的大空间，基于请求将空闲空间<strong>递归地</strong>一分为二</li>
+<li>便于块释放，递归上溯，很容易确定某块的伙伴（一位差异，决定它们在伙伴树中的层次）</li>
+<li>但只允许分配 2 的整数次幂空闲块，因此有内部碎片麻烦</li>
+</ul>
+</li>
+<li>其他想法
+<ul>
+<li>上述所有方法：缺乏可扩展性（scaling），指查找列表可能很慢</li>
+<li>更复杂的数据结构来优化这个开销，<strong>牺牲简单性来换取性能</strong>：平衡二叉树、伸展树、偏序树</li>
+<li>多核系统、glibc malloc、jemalloc</li>
+<li>分配程序优化方向：工作负载、快速、空间高效、可扩展</li>
+</ul>
+</li>
+<li>摘录
+<ul>
+<li>Jeff Bonwick。努力工作，你也可能成为这种 “以一当百” 的人。做不到的话，就和这样的人一起工作，你会明白什么是 “听君一席话，胜读十年书”。如果都做不到，那就太难过了。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>疑问/感悟</p>
+<ul>
+<li>
+<p>内部碎片：给一个大袋子，装一丁点东西</p>
+</li>
+<li>
+<p>幻数为什么可以完整性检查？以前在哪听到幻数这个概念？</p>
+</li>
+<li>
+<p>当中间 108 字节的块释放时，后面的已分配空间块是如何标识的？会不会受到 head 指向当前被释放的块而干扰？</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>2023/05/09 21:52:42 1h24min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第18章-分页介绍">第18章 分页：介绍<a href="#第18章-分页介绍" class="hash-link" aria-label="第18章 分页：介绍的直接链接" title="第18章 分页：介绍的直接链接">​</a></h3>
+<ul>
+<li>
+<p>关键问题：如何通过页来实现虚拟内存</p>
+</li>
+<li>
+<p>概念</p>
+<ul>
+<li>碎片化（fragmented）、将空间分割为不同长度的分片 vs 分页（将空间分割为固定长度的分片）、Atlas、页帧（page frame，物理内存定长槽块的阵列，每个页帧包含一个虚拟内存页）</li>
+<li>分页（paging）：将内存分割（划分）成固定大小的单元（页面），每个单元称为一页。</li>
+</ul>
+</li>
+<li>
+<p>一个简单例子</p>
+<ul>
+<li>虚拟页、空闲页、页表（page table，每个进程维护一个，为地址空间的每个虚拟页面保存地址转换）、地址转换（address translation）、每个进程一个（per-process）、倒排页表（inverted page table，例外）</li>
+<li>优势
+<ul>
+<li>最大的改进为<strong>灵活性</strong>：通过完善的分页方法，操作系统能够高效地提供地址空间的抽象，不管进程如何使用地址空间，支持稀疏虚拟地址空间</li>
+<li>分页提供的空闲空间管理的<strong>简单性</strong></li>
+<li>不会导致外部碎片</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230510170312360" src="/Notes/assets/images/image-20230510170312360-127990ebdc9bf1fdafc008b9f028b618.png" width="722" height="283" class="img_O9Fa"></p>
+<ul>
+<li>数据显式加载、转换（translate）、虚拟页面号（virtual page number，VPN）、偏移量（offset）、物理帧号（PFN）（物理页号，physical page number 或 PPN）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_85-d163815e807b5461c85ec00773972f8d.jfif" width="472" height="419" class="img_O9Fa"></p>
+</li>
+<li>
+<p>页表存在哪里</p>
+<ul>
+<li>页表格条目（PTE）</li>
+</ul>
+</li>
+<li>
+<p>页表中究竟有什么</p>
+<ul>
+<li>线性页表（linear page table）、有效位（valid bit）、无效（invalid）、保护位（protection bit）</li>
+<li>存在位（present bit）、已被换出（swapped out）、交换（swap）</li>
+<li>脏位（dirty bit）</li>
+<li>参考位（reference bit / 访问位 accessed bit）、页面替换（page replacement）</li>
+<li>x86 架构示例页表项
+<ul>
+<li>存在位（P）、读 / 写位（R / W） 、用户 / 超级用户位（U / S）</li>
+<li>（PWT、PCD、PAT 和 G）确定硬件缓存如何为这些页面工作</li>
+<li>访问位（A）、脏位（D）</li>
+<li>页帧号（PFN）</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="data:;base64,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" width="1041" height="92" class="img_O9Fa"></p>
+</li>
+<li>
+<p>分页：也很慢</p>
+<ul>
+<li>页表基址寄存器（page-table base register）</li>
+<li>描述了在每个内存引用上发生的情况的初始协议。</li>
+<li>无论如何，分页都需要我们执行一个额外的内存引用，以便首先从页表中获取地址转换，因此开销很大（ <code>VPN</code>与 <code>PTEAddr</code> 的获取 ）</li>
+</ul>
+</li>
+<li>
+<p>内存追踪</p>
+<ul>
+<li>页表存储虚拟—物理地址转换（virtual-to-physical address translation）、反汇编结果二进制文件（objdump / otool）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_88-19c1f17deac913528be9c7fe49a86fd1.jfif" width="795" height="647" class="img_O9Fa"></p>
+</li>
+<li>
+<p>疑问</p>
+<ul>
+<li>如何理解 “例如，如果操作系统希望将 64 字节的小地址空间放到 8 页的物理地址空间中，它只要找到 4 个空闲页。” 当中，物理 “8页” 与空闲 “4 页” ？后者可以理解，但物理层面如同也是 16 字节一个页帧，怎么说成 8 页呢？
+<ul>
+<li>答：“8 页” 指的是物理地址空间的总容量，4 空闲页则是内存请求。多读两遍就知道自己前面理解的方向错了。</li>
+</ul>
+</li>
+<li>如何理解 “对于我们的简单示例，页表因此具有以下4个条目：（虚拟页0→物理帧3）、（VP 1→PF 7）、（VP 2→PF 5）和（VP 3→PF 2）” 后面的条目记号？
+<ul>
+<li>答：表示虚拟到物理的映射关系（VPN→PFN）</li>
+</ul>
+</li>
+<li>如何理解 “例如，想象一个典型的 32 位地址空间，带有 4KB 的页。这个虚拟地址分成 20 位的 VPN 和 12 位的偏移量（回想一下，1KB 的页面大小需要 10 位，只需增加两位即可达到 4KB）。” 中的 “1KB 页面需要 10 位” ？以及，如何理解 VPN 占用的位比偏移量更大？32 位地址空间，相当于一个 32 位的页表？
+<ul>
+<li>答： 4KB 的页，需要 12 位的偏移量，即 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mi>K</mi><mi>B</mi><mo>=</mo><msup><mn>2</mn><mn>12</mn></msup></mrow><annotation encoding="application/x-tex">4KB = 2^{12}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em"></span><span class="mord">4</span><span class="mord mathnormal" style="margin-right:0.07153em">K</span><span class="mord mathnormal" style="margin-right:0.05017em">B</span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">12</span></span></span></span></span></span></span></span></span></span></span></span> 的大小</li>
+<li>一个 20 位的VPN意味着，操作系统必须为每个进程管理 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>20</mn></msup></mrow><annotation encoding="application/x-tex">2^{20}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">20</span></span></span></span></span></span></span></span></span></span></span></span> 个地址转换（大约一百万）</li>
+</ul>
+</li>
+<li>如何理解 “一个 20 位的VPN意味着，操作系统必须为每个进程管理 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>20</mn></msup></mrow><annotation encoding="application/x-tex">2^{20}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">20</span></span></span></span></span></span></span></span></span></span></span></span> 个地址转换（大约一百万）。假设每个页表格条目（PTE）需要 4 个字节，来保存物理地址转换和任何其他有用的东西，每个页表就需要巨大的 4MB 内存！” 中的 4MB ？</li>
+<li>如何理解 “例如，使用虚拟地址 21（010101），掩码将此值转换为 010000，移位将它变成 01，或虚拟页 1，正是我们期望的值。然后，我们使用该值作为页表基址寄存器指向的PTE数组的索引” 中的期望值？是由什么确定这个目标的？这个思想类似 hash，是否也会存在值冲突？</li>
+<li>关于跟踪程序的内存引用（确实复杂，而且理解不清晰）
+<ul>
+<li>当它运行时，每个获取指令将产生两个内存引用：一个访问页表以查找指令所在的物理页帧，另一个访问指令本身将其提取到 CPU 进行处理。另外，在 mov 指令的形式中，有一个显式的内存引用，这会首先增加另一个页表访问（将数组虚拟地址转换为正确的物理地址），然后时数组访问本身。</li>
+<li>每个循环有 10 次内存访问，其中包括 4 次取指令，一次显式更新内存，以及 5 次页表访问，为这 4 次获取和一次显式更新进行地址转换。</li>
+<li>这只是最简单的例子（只有几行 C 代码），但你可能已经能够感觉到理解实际应用程序的实际内存行为的复杂性。别担心：它肯定会变得更糟，因为我们即将引入的机制只会使这个已经很复杂的机器更复杂。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>2023/05/10 17:28:53-22:58:50，2023/05/11 17:04:34</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第19章-分页快速地址转换tlb">第19章 分页：快速地址转换（TLB）<a href="#第19章-分页快速地址转换tlb" class="hash-link" aria-label="第19章 分页：快速地址转换（TLB）的直接链接" title="第19章 分页：快速地址转换（TLB）的直接链接">​</a></h3>
+<ul>
+<li>
+<p>关键问题：如何加速地址转换</p>
+<ul>
+<li><strong>地址转换旁路缓冲存储器（translation-lookaside buffer，TLB）</strong>、硬件缓存（cache）：地址转换缓存（address-translation cache）</li>
+</ul>
+</li>
+<li>
+<p>TLB的基本算法【过程描述还没看懂】</p>
+<ul>
+<li>线性页表（linear page table）、硬件管理的TLB（hardware-managed TLB）</li>
+</ul>
+</li>
+<li>
+<p>示例：访问数组</p>
+<ul>
+<li>TLB命中率（hit rate）、空间局部性（spatial locality，即访问地址x可能很快访问临近x的内存）、时间局部性（temporal locality，即最近访问的可能很快再次访问）、缓存（最基本的性能改进技术之一）、指令和数据引用的局部性（locality）</li>
+</ul>
+</li>
+<li>
+<p>谁来处理TLB未命中</p>
+<ul>
+<li>页表基址寄存器（page-table base register，PTBR）、多级页表（multi-level page table、软件管理TLB（software- managed TLB）、没有映射过（unmapped）、陷阱处理程序（trap handler）、被监听的（wired）、复杂指令集计算（Complex Instruction Set Computing）、精简指令集计算（Reduced Instruction Set Computing）、微指令
+<ul>
+<li>CISC背后的思想是，指令应该是高级原语，这让汇编语言本身更易于使用，代码更紧凑。</li>
+<li>RISC 背后的关键观点是，指令集实际上是编译器的最终目标，所有编译器实际上需要少量简单的原语，可以用于生成高性能的代码。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>TLB的内容</p>
+<ul>
+<li>全相联的（fully associative）、全相联缓存、并行查找</li>
+<li><strong>一条TLB项：<code>VPN ｜ PFN ｜ 其他位</code> （32项、64项、128项）</strong></li>
+<li>TLB的有效位 != 页表的有效位
+<ul>
+<li>一个页表项（PTE）被标记为无效，就意味着该页并没有被进程申请使用，正常运行的程序不应该访问该地址 =&gt; 陷入 =&gt; killed</li>
+<li>TLB的有效位不同，只是指出TLB项是不是有效的地址映射。</li>
+</ul>
+</li>
+<li>其他位
+<ul>
+<li>有效位、保护位、地址空间标识符、脏位</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>上下文切换时对TLB的处理</p>
+<ul>
+<li>关键问题：进程切换时如何管理TLB的内容</li>
+<li>清空（flush）、跨上下文切换的TLB共享、地址空间标识符（Address Space Identifier，ASID，8 位）、进程标识符（Process Identifier，PID，32 位）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_91-d2b3dedd798e6a6c1a4df2780e1e2ad3.jfif" width="652" height="249" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_92-b0e293f74a735a70214507660e842cd8.jfif" width="649" height="244" class="img_O9Fa"></p>
+</li>
+<li>
+<p>TLB替换策略</p>
+<ul>
+<li>关键问题：如何设计TLB替换策略</li>
+<li>缓存替换（cache replacement）、替换（replace）、最近最少使用（least-recently-used，LRU）、随机（random）</li>
+</ul>
+</li>
+<li>
+<p>实际系统的TLB表项</p>
+<ul>
+<li>
+<p>MIPS R4000 的 TLB 项</p>
+<ul>
+<li>标识位：全局位（Global，G）、一致性位（Coherence，C）、脏位、有效位、页掩码（page mask，图中未标出）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="data:;base64,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" width="869" height="83" class="img_O9Fa"></p>
+</li>
+<li>
+<p>更新 TLB 的指令</p>
+<ul>
+<li>TLBP，用来查找指定的转换映射是否在TLB中；</li>
+<li>TLBR，用来将TLB中的内容读取到指定寄存器中；</li>
+<li>TLBWI，用来替换指定的TLB项；</li>
+<li>TLBWR，用来随机替换一个TLB项</li>
+</ul>
+</li>
+<li>
+<p>RAM 不总是 RAM（Culler 定律）、随机存取存储器（Random-Access Memory，RAM）</p>
+</li>
+<li>
+<p>超出TLB覆盖范围（TLB coverage）、数据库管理系统（Database Management System，DBMS）、物理地址索引缓存（physically-indexed cache）、虚拟地址索引缓存（virtually-indexed cache）</p>
+</li>
+</ul>
+</li>
+<li>
+<p>疑问</p>
+<ul>
+<li>如何理解 “分页逻辑上需要一次额外的内存访问”，“每次指令获取、显式加载或保存，都要额外读一次内存以得到转换信息” ？
+<ul>
+<li>读了几次，都没有直观的认知</li>
+</ul>
+</li>
+<li>TLB 控制流算法的解释，没看懂。</li>
+<li><del>寻找有效的转换映射，命中意味着出现曾经转换过的内容，未命中则意味着该映射关系第一次被访问？如何理解同一页的也能命中？</del>
+<ul>
+<li>答：因为 TLB 缓存整页的转换映射，只要访问过该页的元素一次，即建立了完整的缓存。而由于沿内存顺序访问，因此只有对页中第一个元素的访问才会导致TLB未命中。即检查缓存中是否存在就近的副本，存在则可加速访问。</li>
+<li>这里我们遇到了更基本的定律，就像物理定律那样。如果想要快速地缓存，它就必须小，因为光速和其他物理限制会起作用。大的缓存注定慢，因此无法实现目的（缓存必须小而快）。</li>
+</ul>
+</li>
+<li>如何查看电脑的内存页大小？</li>
+</ul>
+</li>
+</ul>
+<p>2023/05/16 22:53:37</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第20章-分页较小的表">第20章 分页：较小的表<a href="#第20章-分页较小的表" class="hash-link" aria-label="第20章 分页：较小的表的直接链接" title="第20章 分页：较小的表的直接链接">​</a></h3>
+<ul>
+<li>
+<p>关键问题：如何让页表更小？</p>
+</li>
+<li>
+<p>简单的解决方案：更大的页</p>
+<ul>
+<li>多种页大小、大型页（数据库管理系统、其他高端商业应用程序）、</li>
+<li>目的：<strong>减少 TLB 的压力</strong>，让程序能够访问更多的地址空间而不会遭受太多的 TLB 未命中之苦。</li>
+<li>主要问题：大内存页会导致每页内的浪费（即内部碎片，浪费在分配单元内部）</li>
+<li>常用页大小：4KB（如 x86）或8KB（如 SPARCv9）</li>
+</ul>
+</li>
+<li>
+<p>混合方法：分页和分段</p>
+<ul>
+<li>主要问题：潜在的浪费空间巨大</li>
+<li>杂合（hybrid）、代码页、物理页、堆页、栈页、无效的（invalid）项、分段位（SN）、页表项（PTE）、杂合体（hybrid）</li>
+<li>摘录
+<ul>
+<li>杂合方案的关键区别在于，每个分段都有界限寄存器，每个界限寄存器保存了段中最大有效页的值。</li>
+<li>以这种方式，与线性页表相比，杂合方法实现了显著的内存节省。栈和堆之间未分配的页不再占用页表中的空间（仅将其标记为无效）。</li>
+</ul>
+</li>
+<li>杂合的存在问题
+<ul>
+<li>仍然要求使用分段（灵活性 ↓）</li>
+<li>这种杂合导致外部碎片再次出现</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>多级页表</strong></p>
+<ul>
+<li>
+<p>概览</p>
+<ul>
+<li>目标：不依赖于分段，如何去掉页表中的所有无效区域，而不是将它们全部保留在内存中？</li>
+<li>多级页表（multi-level page table）：将线性页表变成了类似树的东西</li>
+<li><strong>页目录（page directory）</strong>：追踪页表的有效性，及有效时的内存位置</li>
+<li>页目录项（Page Directory Entries，PDE）、有效位（valid bit）、页帧号（page frame number，PFN）、间接层（level of indirection）、时间—空间折中（time-space trade-off）</li>
+<li>成本：
+<ul>
+<li>若 TLB 未命中，需从内存加载两次（一次用于页目录，另一次用于 PTE 本身）</li>
+<li>复杂性：查找成本</li>
+</ul>
+</li>
+<li>基本思想：
+<ul>
+<li>（1）将页表分成页大小的单元。</li>
+<li>（2）如果整页的页表项无效，就完全不分配该页的页表</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_98-eaab53b44e7ad659e84798d5816f3f0b.jfif" width="1128" height="562" class="img_O9Fa"></p>
+</li>
+<li>
+<p>详细的多级示例</p>
+<ul>
+<li>页目录索引（ PDIndex ）、页表索引（Page-Table Index，PTIndex）</li>
+<li>摘录
+<ul>
+<li>注意过早优化的代码或其他形式的不必要的复杂性。</li>
+<li>“完美非无可增，乃不可减。”，“谈论完美易，真正实现难。”——Antoine de Saint-Exupery</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="data:;base64,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" width="578" height="135" class="img_O9Fa"></p>
+<ul>
+<li>页目录和页表</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_102-505fd21a1e2c8981e5b00f23f1213ac7.jfif" width="647" height="842" class="img_O9Fa"></p>
+</li>
+<li>
+<p>超过两级</p>
+<ul>
+<li>构建多级页表的目标：使页表的每一部分都能放入一个页。</li>
+<li>先从顶级页目录获取页目录项，该索引用于从顶级页目录中获取页目录项。如果有效，则通过组合来自顶级PDE的物理帧号和VPN的下一部分（PD索引1）来查阅页目录的第二级。（即利用层次结构，组合使用）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_104-b4ba1844fde655fa35c4e149521234c8.jfif" width="1041" height="185" class="img_O9Fa"></p>
+</li>
+<li>
+<p>地址转换过程：记住 TLB</p>
+</li>
+</ul>
+</li>
+<li>
+<p>反向页表（inverted page table）</p>
+<ul>
+<li>保留了一个页表，其中的项代表系统的每个物理页，而不是有许多页表（系统的每个进程一个）。页表项告诉我们哪个进程正在使用此页，以及该进程的哪个虚拟页映射到此物理页。（这个有图才好理解）</li>
+</ul>
+</li>
+<li>
+<p>将页表交换到磁盘</p>
+<ul>
+<li>内核虚拟内存（kernel virtual memory）、交换（swap）</li>
+</ul>
+</li>
+<li>
+<p>疑问 / 摘录 / 感悟</p>
+<ul>
+<li>如何理解 “假设一个 32 位地址空间（ <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>32</mn></msup></mrow><annotation encoding="application/x-tex">2^{32}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">32</span></span></span></span></span></span></span></span></span></span></span></span> 字节），4KB（ <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>12</mn></msup></mrow><annotation encoding="application/x-tex">2^{12}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">12</span></span></span></span></span></span></span></span></span></span></span></span> 字节）的页和一个 4 字节的页表项。一个地址空间中大约有一百万个虚拟页面（ <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>32</mn></msup><mi mathvariant="normal">/</mi><msup><mn>2</mn><mn>12</mn></msup></mrow><annotation encoding="application/x-tex">2^{32}/2^{12}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">32</span></span></span></span></span></span></span></span></span><span class="mord">/</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">12</span></span></span></span></span></span></span></span></span></span></span></span> ）。乘以页表项的大小，你会发现页表大小为 4MB。” ？
+<ul>
+<li>脑中没有形成一个直观图像，各项的大小也说不清</li>
+<li>原来是显示问题，是次方！</li>
+<li>勘误：此处显示有误，应为指数形式 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>32</mn></msup></mrow><annotation encoding="application/x-tex">2^{32}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">32</span></span></span></span></span></span></span></span></span></span></span></span> 及 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>12</mn></msup></mrow><annotation encoding="application/x-tex">2^{12}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">12</span></span></span></span></span></span></span></span></span></span></span></span>，则有 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>32</mn></msup><mi mathvariant="normal">/</mi><msup><mn>2</mn><mn>12</mn></msup></mrow><annotation encoding="application/x-tex">2^{32} / 2^{12}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">32</span></span></span></span></span></span></span></span></span><span class="mord">/</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">12</span></span></span></span></span></span></span></span></span></span></span></span> = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>20</mn></msup></mrow><annotation encoding="application/x-tex">2^{20}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">20</span></span></span></span></span></span></span></span></span></span></span></span> = 1048576 ≈ 100 万个虚拟页面号（VPN），每个虚拟页面包含 1 个 4 字节的页表项，则页表大小为 1048576 × 4 = 4194304 字节。其实也不必近似计算，直接用幂运算可得：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>20</mn></msup></mrow><annotation encoding="application/x-tex">2^{20}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">20</span></span></span></span></span></span></span></span></span></span></span></span> × 4 = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>22</mn></msup></mrow><annotation encoding="application/x-tex">2^{22}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">22</span></span></span></span></span></span></span></span></span></span></span></span> Byte = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>12</mn></msup></mrow><annotation encoding="application/x-tex">2^{12} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">12</span></span></span></span></span></span></span></span></span></span></span></span>KB = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">2^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span> MB = 4 MB</li>
+<li><strong>理解：地址空间大小，相当于面积，页大小，相当于宽度，地址空间除以页大小，则得到长度，这个长度用 VPN 来标记</strong></li>
+</ul>
+</li>
+<li>通常系统中的每个进程都有一个页表！有一百个活动进程（在现代系统中并不罕见），就要为页表分配数百兆的内存！</li>
+<li>减小页表大小：使用更大的页。再以 32 位地址空间为例，但这次假设用 16KB 的页。因此，会有 18 位的 VPN <strong>加上 14 位的偏移量</strong>。假设每个页表项（4 字节）的大小相同，现在线性页表中有 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>18</mn></msup></mrow><annotation encoding="application/x-tex">2^{18}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">18</span></span></span></span></span></span></span></span></span></span></span></span> 个项，因此每个页表的总大小为 1MB，页表缩到四分之一。
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>32</mn></msup></mrow><annotation encoding="application/x-tex">2^{32}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">32</span></span></span></span></span></span></span></span></span></span></span></span> Byte = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>22</mn></msup></mrow><annotation encoding="application/x-tex">2^{22}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">22</span></span></span></span></span></span></span></span></span></span></span></span> KB，即：地址空间大小 / 页大小 = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>22</mn></msup></mrow><annotation encoding="application/x-tex">2^{22}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">22</span></span></span></span></span></span></span></span></span></span></span></span> KB / <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>4</mn></msup></mrow><annotation encoding="application/x-tex">2^4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span></span></span></span> KB = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>18</mn></msup></mrow><annotation encoding="application/x-tex">2^{18}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">18</span></span></span></span></span></span></span></span></span></span></span></span>  个 VPN</li>
+<li>如何理解 14 位的偏移量？
+<ul>
+<li>此处是将 32 位地址空间按照 18 + 14 进行划分了</li>
+</ul>
+</li>
+<li>这样理解的话，是否能与前面的 “面积” 例子对应起来？假设 VPN 表示为长度，那么 14 位偏移量不就相当于宽度吗？但举例当中页大小才是宽度？
+<ul>
+<li>其实<strong>对于这种二分割的情况，页大小等价于偏移量大小</strong></li>
+<li>如果利用<strong>其他分割地址空间的策略</strong>，则不然</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>梳理 VPN 与 TLB 的结构关系</strong>
+<ul>
+<li>一条 TLB 项：<code>VPN ｜ PFN ｜ 其他位</code> （ 32 项、64 项、128 项）</li>
+</ul>
+</li>
+<li>要确定地址引用哪个段，我们会用地址空间的前两位。
+<ul>
+<li>标记位只需要大于等于所使用的分段数即可（大于则有冗余）</li>
+</ul>
+</li>
+<li>如何理解 “在硬件中，假设有3个基本/界限对，代码、堆和栈各一个。当进程正在运行时，每个段的基址寄存器都包含该段的线性页表的物理地址。因此，系统中的每个进程现在都有3个与其关联的页表。” 分段数目与页表数目的关系？是一一对应的吗？</li>
+<li>如何理解 “栈和堆之间未分配的页不再占用页表中的空间（仅将其标记为无效）。” ？为什么标记为无效就不再占用页表空间，与前一种（16KB 地址空间的例子）有和区别？</li>
+<li>树结构在何种情况下具有压倒性的有效性？对比线性结构</li>
+<li>页目录这种新结构的引入，让我想到了数学当中的代数结构，当一个 “领域” 的工具不足以解决系统内部出现的新问题，则可通过一种更高的抽象视野，获取一种 “可监视” 的可操作性。</li>
+<li>如何理解 “在一个简单的两级页表中，页目录为每页页表包含了一项。它由多个页目录项（Page Directory Entries，PDE）组成。PDE（至少）拥有有效位（valid bit）和页帧号（page frame number，PFN），类似于PTE。但是，正如上面所暗示的，这个有效位的含义稍有不同：如果PDE项是有效的，则意味着该项指向的页表（通过PFN）中至少有一页是有效的，即在该PDE所指向的页中，至少一个PTE，其有效位被设置为1。如果PDE项无效（即等于零），则PDE的其余部分没有定义。” 中的有效位区别？看描述读不出来差异？对比示意图，则线性的必须连在一起，多级的则像链表？
+<ul>
+<li>一个是数组，一个是树，数组必须连续，而多级结构增加了一个间接层。“这种间接方式，让我们能够将页表页放在物理内存的任何地方。”</li>
+<li>思考：如何把这个 “间接方式” 带来的资源利用效率提升，用在学习与巩固上？</li>
+</ul>
+</li>
+<li>VPN 与偏移量的分割原则是怎样的？例如 18 + 14、8 + 6</li>
+<li>如何理解图 20.2 页表目录和页表有 3 列 valid？
+<ul>
+<li>这个图实际为 3 列表内容，分别表示 Page Directory、PFN 100、PFN 101，放在一起看，如果不结合文字说明难免产生歧义</li>
+</ul>
+</li>
+<li>如何理解 “在这个例子中，VPN 254和255（栈）包含有效的映射” 其中的栈、堆、代码的对应关系？
+<ul>
+<li>就是利用 VPN 分段进行索引，是一一对应的，所以不会重复</li>
+</ul>
+</li>
+<li>获取物理地址的过程，即地址转换的过程，左移右移理解不清晰</li>
+<li>如何理解 “鉴于页大小为512字节，并且假设PTE大小为4字节，你应该看到，可以在单个页上放入128个PTE” ？
+<ul>
+<li>页大小</li>
+<li>PTE 大小</li>
+<li>PTE 数目 = 页大小 / PTE 大小 = 512 字节 / 4 字节 = 128 个</li>
+</ul>
+</li>
+<li>如何理解 “这样的页表体现了时间和空间上的折中（表格越大，TLB未命中可以处理得更快，反之亦然），因此结构的正确选择强烈依赖于给定环境的约束。” ？</li>
+</ul>
+</li>
+</ul>
+<p>2023/05/17，2023/05/19，2023/05/20 19:22:15</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第21章-超越物理内存机制">第21章 超越物理内存：机制<a href="#第21章-超越物理内存机制" class="hash-link" aria-label="第21章 超越物理内存：机制的直接链接" title="第21章 超越物理内存：机制的直接链接">​</a></h3>
+<ul>
+<li>
+<p>关键问题：如何超越物理内存</p>
+</li>
+<li>
+<p>内存层级（memory hierarchy）、硬盘（hard disk drive）、内存覆盖（memory overlays，早期系统反例）</p>
+</li>
+<li>
+<p>交换空间</p>
+<ul>
+<li>硬盘地址（disk address）、物理内存与交换空间（一页页加载）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_105-eb2abadf2b15efdd8898cf72ca9c3686.jfif" width="807" height="268" class="img_O9Fa"></p>
+</li>
+<li>
+<p>存在位（present bit）</p>
+<ul>
+<li>页表项的一条新信息，供判断页是否在内存中（区分物理内存与硬盘位置）。</li>
+<li>页错误（page fault）、页未命中（page miss）、页错误处理程序（page-fault handler）</li>
+</ul>
+</li>
+<li>
+<p>页错误</p>
+<ul>
+<li>阻塞（blocked）、交叠（overlap）</li>
+</ul>
+</li>
+<li>
+<p>内存满了怎么办</p>
+<ul>
+<li>换入（page in）、交换出（page out）、替换（replace）、页交换策略（page-replacement policy）</li>
+<li>因为换出不合适的页会导致程序性能上的巨大损失，也会导致程序以类似硬盘的速度运行而不是以类似内存的速度。</li>
+</ul>
+</li>
+<li>
+<p>页错误处理流程</p>
+<ul>
+<li>“当程序从内存中读取数据会发生什么？” 参考两段代码</li>
+<li>页存在（present）、有效</li>
+</ul>
+</li>
+<li>
+<p>交换何时真正发生</p>
+<ul>
+<li>前期假设内存满了才执行交换，实际上这时候已经太晚了，因此设置了控制线</li>
+<li>高水位线（High Watermark，HW）、低水位线（Low Watermark，LW）、交换守护进程（swap daemon）/ 页守护进程（page daemon）、页聚集（cluster）/ 分组（group）、寻道、旋转、分页线程、后台（background）、系统空闲时间（idle time）、守护进程（daemon）</li>
+</ul>
+</li>
+<li>
+<p>疑问</p>
+<ul>
+<li>如何理解 “主动共享物理内存” ？连在一起相当于共享？究竟体现在哪？</li>
+<li>如何理解 “如果在TLB中找不到VPN（即TLB未命中），则硬件在内存中查找页表（使用页表基址寄存器），并使用VPN查找该页的页表项（PTE）作为索引。如果页有效且存在于物理内存中，则硬件从PTE中获得PFN，将其插入TLB，并重试该指令，这次产生TLB命中。到现在为止还挺好。” ？
+<ul>
+<li>TLB 未命中，说明没有被缓存，那么要到内存中查找对应的页表，如何查找？用 VPN 找到 PTE，并检查有效性，若有效，则获得 PFN，并插入 TLB，重试则产生 TLB 命中。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>2023/05/23 22:57:34</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第22章-超越物理内存策略">第22章 超越物理内存：策略<a href="#第22章-超越物理内存策略" class="hash-link" aria-label="第22章 超越物理内存：策略的直接链接" title="第22章 超越物理内存：策略的直接链接">​</a></h3>
+<ul>
+<li>
+<p>精简版总结（2023/12/30 15:44:52）</p>
+<ul>
+<li>本章介绍的策略，是指当内存有压力时，确定具体替换哪些页的方法。</li>
+<li>详细描述待解决的问题：将内存视为系统虚拟内存页的缓存，替换策略的目标是让缓存未命中最小化，即使得从磁盘获取页的次数最少（或者让缓存命中最多，即内存中找到待访问页的次数最多）。
+<ul>
+<li>通俗地讲，假设有1cm宽的三张纸带，一张长100cm的实体纸带，一张10cm长的实体纸带，一张20cm长的电子纸带，沿纸带长边画1cm边长的方格（磁盘的宽度类比可能不太准确，但鉴于磁盘可假想为展开的一维逻辑，也问题不大。另外，考虑到虚拟内存并不能比喻为实体纸带，用数字化的纸带更合适，具体可借用 PS 画布的实际尺寸功能）。</li>
+<li>那么，目标就是通过20cm电子纸带中的某个方格，从10cm纸带中找对应的实体方格。因此，就会出现是否能够找到对应方格的问题。</li>
+<li>疑问：
+<ul>
+<li>虚拟是否可能都满了？如果满了，意味着什么？这里涉及硬件的集合关联性与软件的完全关联性。</li>
+<li>磁盘、内存、虚拟内存的映射关系是怎样的？</li>
+<li>内存引用是否等价于虚拟内存地址？</li>
+<li>内存引用序列，是对虚拟页而言的，并非具体的某个内存最小存储单元？</li>
+</ul>
+</li>
+<li>机制理解：
+<ul>
+<li>替换策略是以页为单位进行的。缓存也是按照页，缓存大小为页的数目（因此把前面类比的方格换为页即可）。未命中的，需要进行缓存，因此会更新内存中的页缓存状态。更新页缓存，会遇到缓存是否已满的问题（对应10cm纸带方格是否填满了）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>替换策略
+<ul>
+<li>最优替换策略：替换内存中最优将来才会被访问的页。理论值，难以实现，但可用于研究策略，使得在边界内做事，便于对比标准，便于终止优化。</li>
+<li>FIFO 策略：简单粗暴，但无法确定页的重要性。</li>
+</ul>
+</li>
+<li>通用的逻辑
+<ul>
+<li>访问顺序——冷启动未命中——</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>关键问题：如何决定踢出哪个页</p>
+<ul>
+<li>内存压力（memory pressure）、换出（paging out）、踢出（evict）、替换策略（replacement policy）</li>
+</ul>
+</li>
+<li>
+<p>缓存管理</p>
+<ul>
+<li>缓存未命中（cache miss）、缓存命中（cache hit）、平均内存访问时间（Average Memory Access Time，AMAT）</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>M</mi><mi>A</mi><mi>T</mi><mo>=</mo><mo stretchy="false">(</mo><msub><mi>P</mi><mrow><mi>H</mi><mi>i</mi><mi>t</mi></mrow></msub><mo separator="true">⋅</mo><msub><mi>T</mi><mi>M</mi></msub><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><msub><mi>P</mi><mrow><mi>M</mi><mi>i</mi><mi>s</mi><mi>s</mi></mrow></msub><mo separator="true">⋅</mo><msub><mi>T</mi><mi>D</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">AMAT = (P_{Hit}·T_M) + (P_{Miss}·T_D)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em"></span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.10903em">M</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.13889em">T</span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.08125em">H</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.1667em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em">M</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em">M</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">ss</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.1667em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em">D</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>M</mi></msub></mrow><annotation encoding="application/x-tex">T_M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em">M</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span></span></span></span> 表示访问内存的成本</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>D</mi></msub></mrow><annotation encoding="application/x-tex">T_D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em">D</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span></span></span></span> 表示访问磁盘的成本</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>H</mi><mi>i</mi><mi>t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">P_{Hit}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.08125em">H</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span></span></span></span> 表示在缓存中找到数据的概率（命中）</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>M</mi><mi>i</mi><mi>s</mi><mi>s</mi></mrow></msub></mrow><annotation encoding="application/x-tex">P_{Miss}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em">M</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">ss</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span></span></span></span> 表示在缓存中找不到数据的概率（未命中）</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>H</mi><mi>i</mi><mi>t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">P_{Hit}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.08125em">H</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>M</mi><mi>i</mi><mi>s</mi><mi>s</mi></mrow></msub></mrow><annotation encoding="application/x-tex">P_{Miss}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em">M</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">ss</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span></span></span></span> 从 0.0 变化到 1.0，并且 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>M</mi><mi>i</mi><mi>s</mi><mi>s</mi></mrow></msub><mo>+</mo><msub><mi>P</mi><mrow><mi>H</mi><mi>i</mi><mi>t</mi></mrow></msub><mo>=</mo><mn>1.0</mn></mrow><annotation encoding="application/x-tex">P_{Miss} +P_{Hit} = 1.0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em">M</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">ss</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.08125em">H</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:0.6444em"></span><span class="mord">1.0</span></span></span></span></li>
+</ul>
+</li>
+<li>命中率（hit rate，内存中找到引用的百分比）、未命中率（miss rate）</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>3</mn></mrow></msup><mi>s</mi><mo>=</mo><mn>1</mn><mi>m</mi><mi>s</mi><mo>=</mo><msup><mn>10</mn><mn>6</mn></msup><mi>u</mi><mi>s</mi><mo>=</mo><msup><mn>10</mn><mn>9</mn></msup><mi>n</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">10^{-3}s = 1ms = 10^{6}us = 10^{9}ns</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:0.6444em"></span><span class="mord">1</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span><span class="mord mathnormal">u</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:0.8141em"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span><span class="mord mathnormal">n</span><span class="mord mathnormal">s</span></span></span></span> （待检验）</li>
+</ul>
+</li>
+<li>
+<p>最优替换策略（optimal / MIN）</p>
+<ul>
+<li>定位：虽然最优策略不切实际，但作为仿真或其他研究的比较者还是非常有用的。
+<ul>
+<li>因此，在你进行的<strong>任何研究中，知道最优策略可以方便进行对比，知道你的策略有多大的改进空间，也用于决定当策略已经非常接近最优策略时，停止做无谓的优化。</strong></li>
+</ul>
+</li>
+<li>理解：最优策略提供了一种理想的可比较对象，从而使得研究过程引入了优化与度量的概念。</li>
+<li>三类未命中 3C
+<ul>
+<li>冷启动未命中（cold-start miss，强制未命中 compulsory miss）：启动时缓存为空，表现为强制的未命中，直到缓存中存在可被命中的内容。</li>
+<li>容量未命中（capacity miss）：缓存空间不足时发生，需踢出。</li>
+<li>冲突未命中（conflict miss）：硬件的有限性，即集合关联性（set-associativity）。不会出现在OS的页面缓存中，因为后者的缓存总是完全关联的（fully-associative）</li>
+</ul>
+</li>
+<li>根据未来访问情况，决定缓存已满时，踢出哪个页：
+<ul>
+<li>我们同时计算缓存命中率：有6次命中和5次未命中，那么缓存命中率，或54.5%。也可以计算命中率中除去强制未命中（即忽略页的第一次未命中），那么命中率为81.8%。</li>
+<li>对的，后者(6+3) / 11 ≈ 81.8%，但我有个新的疑问：为什么冷启动未命中，可以算作命中？缓存未满，直接进行缓存的行为，等价于命中？如果连续访问前三次访问有重复对象呢？例如 (0, 1, 1, 2, 3) 那么将使得第二个1命中，后面的2继续判定为冷启动未命中，直到第一次缓存填满？
+<ul>
+<li>我的理解是（1）冷启动未命中之所以可算作命中，是因为这个值是固定的，即缓存页数目的大小（具体即内存的大小），那么由于冷启动未命中造成的影响，也是固定的。尤其当随着访问基数增大，甚至远远大于缓存页数目的大小（这应该更符合实际情况，例如100000次访问，1024个页？需要补充实际情况的量级知识），因此这个常数的影响可以随趋势变化而忽略不计。</li>
+<li>（2）而这里例子讨论的数目比较小，可能体现不出来，并且使得常数的影响被放大了。</li>
+<li>（3）另外，还有一个视角，就是同为未命中状态，无论是冷启动未命中还是容量未命中，虽然两者的直接行为都是将未命中值的写入缓存中，但前者是有限性，后者每次访问虽然也有限，但从未来访问的角度是无限的，所以后者的影响不可忽略，因此冷启动未命中可算作命中，容量未命中只能算作未命中。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_106-94129161740f0ae7f93981ada0812670.jfif" width="647" height="564" class="img_O9Fa"></p>
+</li>
+<li>
+<p>简单策略：FIFO</p>
+<ul>
+<li>一种简单的队列实现策略，但命中率通常较低，因为无法确定页的重要性</li>
+<li>例子（Belady’s Anomaly）：
+<ul>
+<li>引用序列 1，2，3，4，1，2，5，1，2，3，4，5</li>
+<li>原文 “当缓存大小从 3 变为 4，若 FIFO，命中率反而下降” ？</li>
+<li>分析（这里的分析是错的，纠正见下方）
+<ul>
+<li>缓存为 3：123（miss*3），234（miss），341（miss），412（miss），125（miss），251（hit），512（hit），123（miss），234（miss），345（miss）（hit rate = 2/12）</li>
+<li>缓存为 4：1234（miss*4），2341（hit），3412（hit），4125（miss），1251（hit），2512（hit），5123（miss），1234（miss），2345（miss）（hit rate = 4/12 = 1/3）</li>
+<li>但我算出来命中率是上升的？</li>
+<li>经 ChatGPT 检查，<del>原文这个例子有误，我的计算是正确的，因此</del>，这个例子并未出现 Belady’s Anomaly 的情况。（2023/12/30 15:30:41，有读者看到我的提问留言，进行了回复。现在回想，虽然留言中依然表达存疑与期望回复，但笔记中就这么下定论，显然是不妥当的）</li>
+</ul>
+</li>
+<li>【正确过程】为了便于阅读，对引用序列进行了分段 (1234)(125)(12345)
+<ul>
+<li>缓存为 3：
+<ul>
+<li>【1】 (1)1×，(2)12×，(3)123×，(4)234×</li>
+<li>【2】 (1)341×，(2)412×，(5)125×</li>
+<li>【3】 (1)125√，(2)125√，(3)253×，(4)534×，(5)534√</li>
+<li>命中率为 3/12 = 25%（除去强制未命中为 6/12 = 50%）</li>
+</ul>
+</li>
+<li>缓存为 4：
+<ul>
+<li>【1】 (1)1×，(2)12×，(3)123×，(4)1234×</li>
+<li>【2】 (1)1234√，(2)1234√，(5)2345×</li>
+<li>【3】 (1)3451×，(2)4512×，(3)5123×，(4)1234×，(5)2345×</li>
+<li>命中率为 2/12 ≈ 16.7%（除去强制未命中为 5/12 ≈  41.7%）</li>
+<li>可见命中率下降了，因此发生了 Belady’s Anomaly</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_109-39af4709b0a465308f2c5d6182ff044a.jfif" width="649" height="566" class="img_O9Fa"></p>
+</li>
+<li>
+<p>另一简单策略：随机</p>
+</li>
+<li>
+<p>利用历史数据：LRU</p>
+<ul>
+<li>栈特性（stack property）、频率（frequency）、近期性（recency）、<strong>局部性原则（principle of locality）</strong></li>
+<li>“最不经常使用”（Least-Frequently-Used，LFU）策略、“最少最近使用”（Least-Recently-Used，LRU）策略</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_112-c1b3ffab4cd730bf0789e2b318163f5b.jfif" width="650" height="568" class="img_O9Fa"></p>
+<ul>
+<li>其他（反例）：最经常使用策略（Most- Frequently-Used，MFU）、最近使用策略（Most-Recently-Used，MRU）</li>
+</ul>
+</li>
+<li>
+<p>工作负载示例（workload）</p>
+<ul>
+<li>无局部性工作负载</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_113-1684941929830-304660220b75b1beb14ca20a1fa10968.jfif" width="632" height="621" class="img_O9Fa"></p>
+<ul>
+<li>**80—20工作负载 **
+<ul>
+<li>表现出局部性：80% 的引用是访问 20% 的页（“热门”页）。剩下的 20% 是对剩余的 80% 的页（“冷门”页）访问</li>
+<li>视情况选用 LRU（若每次未命中代价非常大）</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_114-cea1024e7c972a86d448b9dbd5d9906f.jfif" width="632" height="621" class="img_O9Fa"></p>
+<ul>
+<li>“循环顺序”工作负载
+<ul>
+<li>原文 “有趣的是，随机策略明显更好，虽然距离最优策略还有距离，但至少达到了非零的命中率”，我的理解是 “循环” 意味着某种有序状态，而随机性的引入，似乎能够对抗有序，这类似一种熵减与熵增的对抗。</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_115-64688a03bc2be1a0c55bb76ba8594c69.jfif" width="633" height="626" class="img_O9Fa"></p>
+</li>
+<li>
+<p>实现基于历史信息的算法</p>
+<ul>
+<li>LRU、MRU、时间字段（当前时间）、访问记录（影响性能）</li>
+<li>关键问题：如何实现LRU替换策略</li>
+<li>“我们**是否真的需要找到绝对最旧的页来替换？**找到差不多最旧的页可以吗?”</li>
+</ul>
+</li>
+<li>
+<p><strong>近似 LRU</strong></p>
+<ul>
+<li>使用位（use bit / 引用位 reference bit）、时钟算法（clock algorithm，最坏 O(n)）、时钟指针（clock hand）</li>
+<li>比不考虑历史访问的方法表现更好</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_116-381c333a5448663403e523f7169ce66a.jfif" width="614" height="607" class="img_O9Fa"></p>
+</li>
+<li>
+<p>考虑脏页</p>
+<ul>
+<li>优化：额外考虑内存中的页是否被修改</li>
+<li>变脏的页，踢出须写回硬盘，昂贵；若干净，则踢出无成本</li>
+<li>修改位（modified bit / 脏位 dirty bit）</li>
+</ul>
+</li>
+<li>
+<p>其他虚拟内存策略</p>
+<ul>
+<li>页选择（page selection）策略、按需分页（demand paging）、预取（prefetching）、聚集（clustering）写入 / 分组写入（grouping）</li>
+<li>分组写入的有效性：结合硬盘驱动器的性质，执行单次大的写操作，比许多小的写操作更有效。</li>
+</ul>
+</li>
+<li>
+<p>抖动（thrashing）：内存被超额情况，系统将不断换页。</p>
+<ul>
+<li>准入控制（admission control）、内存不足的杀手程序（out-of-memory killer，一种杀后台的守护进程）</li>
+</ul>
+</li>
+<li>
+<p>疑问 / 感悟</p>
+<ul>
+<li>如何理解 “在为这个缓存选择替换策略时，我们的目标是让缓存未命中（cache miss）最少，即使得从磁盘获取页的次数最少。或者，可以将目标看成让缓存命中（cache hit）最多，即在内存中找到待访问页的次数最多。” ？如何对应公式进行理解？</li>
+<li><del>如何理解 “未来访问情况” ？“未来的访问” 是如何知道的？</del>
+<ul>
+<li>“未来的访问是无法知道的，你无法为通用操作系统实现最优策略”</li>
+</ul>
+</li>
+<li>如何理解 “集合关联性、完全关联的” ？</li>
+<li>如何切实地使用 82 原则？可参加曲线分配各种任务</li>
+<li>什么是 MRU？在哪里出现过？为什么没有印象？</li>
+<li>这是一门折中的艺术。</li>
+<li>如何理解 “<strong>当必须进行页替换时</strong>，操作系统检查当前指向的页P的使用位是1还是0。如果是1，则意味着页面P最近被使用，因此不适合被替换。然后，P的使用位设置为0，时钟指针递增到下一页（P + 1）。该算法一直持续到找到一个使用位为0的页，使用位为0意味着这个页最近没有被使用过（在最坏的情况下，所有的页都已经被使用了，那么就将所有页的使用位都设置为0）。” 中的 “然后，P 的使用位设置为 0” 为什么指向 P 的使用位被标记为1之后，还要设置为0？是我理解错了这个先后关系吗（意思是原文描述两种情况，而非先后）？或许紧扣页替换的前提</li>
+<li>如何理解 “干净页踢出不需成本” ？被修改的页，需要写回硬盘，是否因为内存是临时性数据，而脏数据需要转换为永久数据？但有时候会不会被修改的数据只是临时修改的呢？或者我这里理解错 “修改” 的定义，并非只是改变了，而是需要修改位标识，并且执行页替换的操作？这样分析，是否意味着，对于剔除脏页的页替换必然伴随着 I/O？</li>
+<li>如何理解 “脏的未使用页面” ？</li>
+</ul>
+</li>
+<li>
+<p>摘录</p>
+<ul>
+<li>扫描抗性（scan resistance）、ARC、工作负载、数据库访问模式、River系统、冷启动未命中、热启动未命中、缓存层次结构、未命中三划分</li>
+<li>准入控制表明，少做工作有时比尝试一下子做好所有事情更好，这是我们在现实生活中以及在现代计算机系统中经常遇到的情况（令人遗憾）（高效的办法往往是少做事）</li>
+<li>与理想情况做比较是系统设计人员的一项重要技术（懂边界，且在边界内做事）</li>
+<li>你能弄清楚为什么栈属性可能对同时模拟很多不同大小的缓存有用吗？</li>
+<li>LRU 是一种全局策略</li>
+</ul>
+</li>
+</ul>
+<p>2023/05/23 23:51:20，2023/05/24 23:40:30，2023/05/26 14:50:38</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第23章-vaxvms虚拟内存系统">第23章 VAX/VMS虚拟内存系统<a href="#第23章-vaxvms虚拟内存系统" class="hash-link" aria-label="第23章 VAX/VMS虚拟内存系统的直接链接" title="第23章 VAX/VMS虚拟内存系统的直接链接">​</a></h3>
+<ul>
+<li>背景
+<ul>
+<li>关键问题：如何避免通用性“魔咒”</li>
+<li>VAX / VMS（VMS）、“通用性魔咒”（提供一般支持）、VAX-11 体系结构（780、750）</li>
+</ul>
+</li>
+<li>内存管理硬件
+<ul>
+<li>分页分段混合体、跨进程共享</li>
+<li>地址空间
+<ul>
+<li>上半：系统空间（S）</li>
+<li>下半：进程空间（前半 P0 用户程序+下增堆、后半 P1 上增栈）</li>
+</ul>
+</li>
+<li>减少页表对内存的压力
+<ul>
+<li>通过将用户地址空间分成两部分，为每个进程的每个区域（P0和P1）一个页表（未使用空间、基址和界限寄存器）</li>
+<li>在内核虚拟内存中放置用户页表（P0和P1，因此每个进程两个），内存压力大，则内核可将这些页表交换到磁盘</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>一个真实的地址空间
+<ul>
+<li>为什么空指针访问会导致段错误？（VPN 0、条目无效，陷入系统）</li>
+<li>空指针（null-pointer）、零页（对调试的支持）、保护位</li>
+<li>内核虚拟地址空间（即其数据结构和代码）是每个用户地址空间的一部分</li>
+</ul>
+</li>
+<li>页替换
+<ul>
+<li>VAX 的 PTE：
+<ul>
+<li>1 有效位 | 4 位保护字段 | 1 修改位（脏位）| 5 位保留字段 | 1 PFN</li>
+<li>无引用位（no reference bit）（无法依赖硬件）</li>
+</ul>
+</li>
+<li>分段的 FIFO（segmented FIFO）
+<ul>
+<li>驻留集大小（Resident Set Size，RSS）、二次机会列表（second-chance list）（共2个，全局干净页空闲列表、全局脏页列表）</li>
+<li>算法处理
+<ul>
+<li>如果另一个进程 Q 需要一个空闲页，它会从全局干净列表中取出第一个空闲页。</li>
+<li>但是，如果原来的进程 P 在回收之前在该页上出现页错误，<strong>则P会从空闲（或脏）列表中回收</strong>，从而避免昂贵的磁盘访问。</li>
+<li>这些全局二次机会列表越大，分段的 FIFO 算法越接近 LRU。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>页聚集
+<ul>
+<li>背景：小页面问题</li>
+<li>聚集（clustering）：VMS将大批量的页从全局脏列表中分组到一起，并将它们一举写入磁盘（从而使它们变干净）</li>
+<li><strong>模拟引用位</strong>（用保护位）：系统活跃使用，页标记设为不可访问（需注意区分进程的可访问信息）。进程访问页，则产生一个陷阱。OS 将检查页是否可访问，是则恢复为正常保护。替换时，OS 检查不可用的页，得知哪些页最近未被使用。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>其他漂亮的虚拟内存技巧
+<ul>
+<li><strong>惰性（lazy）优化</strong>、按需置零（demand zeroing，安全，置零、映射）、<strong>写时复制（copy-on-write，COW）</strong>、TENEX 操作系统、虚拟存储系统</li>
+<li>惰性（绝了，像不像？）
+<ul>
+<li>推迟工作可能会减少当前操作的延迟，从而提高响应能力</li>
+<li>延迟写入直到文件被删除，根本不需要写入</li>
+</ul>
+</li>
+<li>写时复制（只读，实现快速 “复制”）
+<ul>
+<li>如果操作系统需要将一个页面从一个地址空间复制到另一个地址空间，不是实际复制它，而是将其映射到目标地址空间，并在两个地址空间中将其标记为只读。</li>
+<li>若有写入行为，则陷入系统，检测为 COW 页面，则惰性分配一个新页，填充数据，并依据错误处理建立映射，于是创建了该页的私有副本。</li>
+<li><code>fork()</code> 创建调用者地址空间的精确副本（复制慢、数据密集），因此改为写时复制。</li>
+<li><code>exec()</code> 用即将执行的程序覆盖调用进程的地址空间。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>疑问
+<ul>
+<li>内核将这些页表交换到磁盘，开销对比从内存交换到磁盘有和区别？我能想到的是内存的速度非常快，磁盘速度对比则满很多，而内核部分的虚拟内存，好像是直接作用的 CPU 上的，应当是最快的？但 CPU 中的虚拟内存，通常不大吧？回顾前面的笔记，以及询问。</li>
+<li>分时操作系统、进程管理、虚拟内存、文件系统、BSD、网络</li>
+</ul>
+</li>
+</ul>
+<p>2023/05/26 22:13:19</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第24章-内存虚拟化总结对话">第24章 内存虚拟化总结对话<a href="#第24章-内存虚拟化总结对话" class="hash-link" aria-label="第24章 内存虚拟化总结对话的直接链接" title="第24章 内存虚拟化总结对话的直接链接">​</a></h3>
+<ul>
+<li>摘录
+<ul>
+<li>“为了考试”，希望这不是你试图<strong>记住它的原因</strong>。</li>
+<li>实在搞不清楚，问一位教授。</li>
+<li>有一个好的虚拟内存<strong>模型</strong>可以帮助<strong>诊断</strong>各种有趣的性能问题。</li>
+<li>要尝试建立这些<strong>关于事情如何工作的心智模型</strong>，以便我在那里独立工作，当系统不像预期的那样行事时，不会感到惊讶。我甚至应该能够预测系统将如何工作，只要想想它就行。</li>
+<li>程序中看到的所有地址，都是<strong>虚拟</strong>地址。</li>
+<li>TLB 是关键技术，为系统提供了而地址转换的<strong>小硬件缓存</strong>。</li>
+<li><strong>页表</strong>是需要了解的数据结构之一。它只是一个数据结构，这意味着几乎可以使用任何结构。我们从简单的结构（如数组，即线性页表）开始，一直到<strong>多级表</strong>（它们看起来像树），甚至像内核虚拟内存中的<strong>可分页页表</strong>一样疯狂。全是为了在内存中节省一点空间！</li>
+<li>地址转换结构需要足够<strong>灵活</strong>，以支持程序员想要处理的地址空间。在这个意义上，像多级表这样的结构是完美的。</li>
+<li>关于交换到磁盘的所有内容、页替换的工作原理、基本策略</li>
+<li>购买更多的内存</li>
+</ul>
+</li>
+</ul>
+<p>2023/05/26 23:15:39</p>
+<hr></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/Notes/docs/introduction_to_operating_system/01-1_虚拟化_CPU/"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">01-1_虚拟化_CPU</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/Notes/docs/introduction_to_operating_system/01-3_code/"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">01-3_code</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_G4nv thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#01-2-虚拟化内存虚拟化" class="table-of-contents__link toc-highlight">01-2 虚拟化（内存虚拟化）</a></li><li><a href="#第12章-关于内存虚拟化的对话" class="table-of-contents__link toc-highlight">第12章 关于内存虚拟化的对话</a></li><li><a href="#第13章-抽象地址空间" class="table-of-contents__link toc-highlight">第13章 抽象：地址空间</a></li><li><a href="#第14章-插叙内存操作api" class="table-of-contents__link toc-highlight">第14章 插叙：内存操作API</a></li><li><a href="#第15章-机制地址转换" class="table-of-contents__link toc-highlight">第15章 机制：地址转换</a></li><li><a href="#第16章-分段" class="table-of-contents__link toc-highlight">第16章 分段</a></li><li><a href="#第17章-空闲空间管理" class="table-of-contents__link toc-highlight">第17章 空闲空间管理</a></li><li><a href="#第18章-分页介绍" class="table-of-contents__link toc-highlight">第18章 分页：介绍</a></li><li><a href="#第19章-分页快速地址转换tlb" class="table-of-contents__link toc-highlight">第19章 分页：快速地址转换（TLB）</a></li><li><a href="#第20章-分页较小的表" class="table-of-contents__link toc-highlight">第20章 分页：较小的表</a></li><li><a href="#第21章-超越物理内存机制" class="table-of-contents__link toc-highlight">第21章 超越物理内存：机制</a></li><li><a href="#第22章-超越物理内存策略" class="table-of-contents__link toc-highlight">第22章 超越物理内存：策略</a></li><li><a href="#第23章-vaxvms虚拟内存系统" class="table-of-contents__link toc-highlight">第23章 VAX/VMS虚拟内存系统</a></li><li><a href="#第24章-内存虚拟化总结对话" class="table-of-contents__link toc-highlight">第24章 内存虚拟化总结对话</a></li></ul></div></div></div></div></main></div></div></div></div>
+</body>
+</html>

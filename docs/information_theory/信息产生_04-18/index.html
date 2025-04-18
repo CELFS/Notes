@@ -1,0 +1,1249 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-information_theory/信息产生_04-18" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">信息产生_04-18 | 编程内外</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" name="twitter:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" property="og:url" content="https://CELFS.github.io/Notes/docs/information_theory/信息产生_04-18/"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="信息产生_04-18 | 编程内外"><meta data-rh="true" name="description" content="01 模块一：信息产生 04-18"><meta data-rh="true" property="og:description" content="01 模块一：信息产生 04-18"><link data-rh="true" rel="icon" href="/Notes/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://CELFS.github.io/Notes/docs/information_theory/信息产生_04-18/"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/information_theory/信息产生_04-18/" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/information_theory/信息产生_04-18/" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous"><link rel="stylesheet" href="/Notes/assets/css/styles.67339a6f.css">
+<script src="/Notes/assets/js/runtime~main.fdf5edbd.js" defer="defer"></script>
+<script src="/Notes/assets/js/main.886a3333.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"dark")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/Notes/img/logo.png"><div role="region" aria-label="跳到主要内容"><a class="skipToContent__HuA" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Notes/"><div class="navbar__logo"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--light_c3lc"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--dark_Ji9V"></div><b class="navbar__title text--truncate">编程内外</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Notes/docs/category/linux-os/">Notes</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/CELFS/Notes" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link" icon="github">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_OqSl"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_OAgU colorModeToggle_zRe0"><button class="clean-btn toggleButton_aClM toggleButtonDisabled_GkIb" type="button" disabled="" title="切换浅色/暗黑模式（当前为暗黑模式）" aria-label="切换浅色/暗黑模式（当前为暗黑模式）" aria-live="polite" aria-pressed="true"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_zzlY"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_Z832"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Cx4E"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_liLQ"><div class="docsWrapper_evXH"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_nZiY" type="button"></button><div class="docRoot_jKp6"><aside class="theme-doc-sidebar-container docSidebarContainer_wXyP"><div class="sidebarViewport_LQZ0"><div class="sidebar_T0dy"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_WBBB"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/linux-os/">Linux OS</a><button aria-label="展开侧边栏分类 &#x27;Linux OS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/ajax/">Ajax</a><button aria-label="展开侧边栏分类 &#x27;Ajax&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/css/">CSS</a><button aria-label="展开侧边栏分类 &#x27;CSS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript-es6/">JavaScript ES6</a><button aria-label="展开侧边栏分类 &#x27;JavaScript ES6&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript/">JavaScript</a><button aria-label="展开侧边栏分类 &#x27;JavaScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/nodejs/">Node.js</a><button aria-label="展开侧边栏分类 &#x27;Node.js&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/typescript/">TypeScript</a><button aria-label="展开侧边栏分类 &#x27;TypeScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/vue/">Vue</a><button aria-label="展开侧边栏分类 &#x27;Vue&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/轻量级服务器开发tinywebserver/">轻量级服务器开发（TinyWebServer）</a><button aria-label="展开侧边栏分类 &#x27;轻量级服务器开发（TinyWebServer）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/c-后台服务器开发/">C++ 后台服务器开发</a><button aria-label="展开侧边栏分类 &#x27;C++ 后台服务器开发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/mysql-必知必会/">MySQL 必知必会</a><button aria-label="展开侧边栏分类 &#x27;MySQL 必知必会&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/操作系统导论/">操作系统导论</a><button aria-label="展开侧边栏分类 &#x27;操作系统导论&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/qt/">QT</a><button aria-label="展开侧边栏分类 &#x27;QT&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/Notes/docs/category/读吴军信息论-40-讲/">读吴军《信息论 40 讲》</a><button aria-label="折叠侧边栏分类 &#x27;读吴军《信息论 40 讲》&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/information_theory/导论_01-03/">导论_01-03</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/Notes/docs/information_theory/信息产生_04-18/">信息产生_04-18</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/information_theory/信息传播_19-28/">信息传播_19-28</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/information_theory/信息应用_29-40/">信息应用_29-40</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/information_theory/复盘/">复盘</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军富足/">读吴军《富足》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《富足》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/machine-learning-andrew-ng/">Machine Learning (Andrew Ng)</a><button aria-label="展开侧边栏分类 &#x27;Machine Learning (Andrew Ng)&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/机器学习初步周志华/">机器学习初步（周志华）</a><button aria-label="展开侧边栏分类 &#x27;机器学习初步（周志华）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/paddle-零基础深度学习第二版/">Paddle 零基础深度学习（第二版）</a><button aria-label="展开侧边栏分类 &#x27;Paddle 零基础深度学习（第二版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/动手学深度学习pytorch-版/">动手学深度学习（Pytorch 版）</a><button aria-label="展开侧边栏分类 &#x27;动手学深度学习（Pytorch 版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Notes/docs/intro/">学而时习之</a></li></ul></nav></div></div></aside><main class="docMainContainer_dhcR"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_hWfg"><div class="docItemContainer_UIwD"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_ViMa" aria-label="页面路径"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/Notes/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_xAfz"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/Notes/docs/category/读吴军信息论-40-讲/"><span itemprop="name">读吴军《信息论 40 讲》</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">信息产生_04-18</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_xgD3 theme-doc-toc-mobile tocMobile_UvqM"><button type="button" class="clean-btn tocCollapsibleButton_ldZF">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>信息产生_04-18</h1></header><h2 class="anchor anchorWithStickyNavbar_QJwc" id="01-模块一信息产生-04-18">01 模块一：信息产生 04-18<a href="#01-模块一信息产生-04-18" class="hash-link" aria-label="01 模块一：信息产生 04-18的直接链接" title="01 模块一：信息产生 04-18的直接链接">​</a></h2>
+<p>Date：2021/12/31 13:53:52</p>
+<hr>
+<p>[TOC]</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="04-信息的量化度量世界上有稳赚不赔的生意吗">04 信息的量化度量：世界上有稳赚不赔的生意吗<a href="#04-信息的量化度量世界上有稳赚不赔的生意吗" class="hash-link" aria-label="04 信息的量化度量：世界上有稳赚不赔的生意吗的直接链接" title="04 信息的量化度量：世界上有稳赚不赔的生意吗的直接链接">​</a></h3>
+<ul>
+<li>信息源，information sources</li>
+<li>对于一条信息，重要的是找出其中有多少信息量，要搞清楚“信息量”，就要对信息进行量化的度量。
+<ul>
+<li>香农找到了这个“砝码”——==“比特”==
+<ul>
+<li>如果一个黑盒子中有 A 和 B ==两种==可能性，它们==出现的概率相同==，那么要搞清楚到底是 A 还是 B，==所需要的信息量就是一比特==。</li>
+<li>如果多于 A、B 两种可能性，更复杂的黑盒子，要消除它的不确定性需要多少信息？
+<ul>
+<li>eg：32个球队，知道答案的预言家——”是否答案在 A、B 中“——圈定范围；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>概念的本质
+<ul>
+<li>充满不确定性的黑盒子——==信息源==</li>
+<li>里面的不确定性——==信息熵==</li>
+<li>消除不确定性的——==信息==</li>
+<li>要搞清楚黑盒子，需要——==信息量 = 信息熵==</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>①一个系统中的状态数量，也就是可能性，越多，不确定性越大；②在状态数量保持不变时，如果各个状态的可能性相同，不确定性就很大；③相反，如果个别状态容易发生，大部分状态都不可能发生，不确定性就小。
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>=</mo><mo>−</mo><msub><mi>P</mi><mn>1</mn></msub><mi>l</mi><mi>o</mi><mi>g</mi><msub><mi>P</mi><mn>1</mn></msub><mo>−</mo><msub><mi>P</mi><mn>2</mn></msub><mi>l</mi><mi>o</mi><mi>g</mi><msub><mi>P</mi><mn>2</mn></msub><mo>−</mo><msub><mi>P</mi><mn>3</mn></msub><mi>l</mi><mi>o</mi><mi>g</mi><msub><mi>P</mi><mn>3</mn></msub><mo>−</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo>−</mo><msub><mi>P</mi><mi>n</mi></msub><mi>l</mi><mi>o</mi><mi>g</mi><msub><mi>P</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">H=-P_1logP_1-P_2logP_2-P_3logP_3-...-P_nlogP_n </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em"></span><span class="mord mathnormal" style="margin-right:0.08125em">H</span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em"></span><span class="mord">−</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.01968em">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em">g</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.01968em">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em">g</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.01968em">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em">g</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em"></span><span class="mord">...</span><span class="mspace" style="margin-right:0.2222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.01968em">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em">g</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span></span></span></span></li>
+</ul>
+</li>
+<li>==<strong>永远不要听那些正确率总是 50% 的专家的建议，因为那相当于什么都没说，没有提供能够减少“信息熵”的“信息量”。</strong>==</li>
+<li>你知道了信息有单位，还可以通过公式计算，那又有什么用呢？
+<ul>
+<li>eg：赌球，下注的人告诉设赌局的人；</li>
+<li>开赌局的，只要收费比信息实际的价值高，都是稳赚不赔的；</li>
+<li>这类赌局在金融市场更多，结构化的投资证券（Structured Notes）；</li>
+<li>金融数学专业；</li>
+</ul>
+</li>
+<li>==<strong>多了解信息论和基本的数学常识，可以在生活中省下不少冤枉钱。</strong>==
+<ul>
+<li>要知道，很多交易和产品都是利用了信息的可度量性；</li>
+<li>“信息过载”，判断一篇报道信息量多少；</li>
+<li>鸡汤文，没有信息量；</li>
+<li>相反的是大部分的诺奖论文。</li>
+</ul>
+</li>
+<li>总结
+<ul>
+<li>香农，信息可以衡量，但不是用重要性，而是用信息量，单位是“比特”；</li>
+<li>可以把一个充满可能性的系统视为一个“信息源”，里面的不确定性叫“信息熵”，而“信息”就是用来消除这些不确定性的，所以搞清楚黑盒子里是怎么回事，需要的“信息量”就等于黑盒子里的“信息熵”。</li>
+<li>很多复杂交易背后其实都用到了信息的可度量性；</li>
+<li>信息量的大小不在于长短，而在于开创多少新知。</li>
+</ul>
+</li>
+<li>思考题
+<ul>
+<li>如果你和一个特别会玩锤子、剪刀、布游戏的人玩这个游戏，你最好的策略是什么呢？</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/09 18:30:31 23min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="05-信息编码数字和文字是如何诞生的">05 信息编码：数字和文字是如何诞生的<a href="#05-信息编码数字和文字是如何诞生的" class="hash-link" aria-label="05 信息编码：数字和文字是如何诞生的的直接链接" title="05 信息编码：数字和文字是如何诞生的的直接链接">​</a></h3>
+<ul>
+<li>当数字多到划道道也无法表达时，就有了对数字的编码，也就是各种文明的数字——用有限数字的组合可以表示更多的数。</li>
+<li>假设 100 个数，从中挑出一个，不确定性是 100 选 1，代表的信息熵为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mn>100</mn><mo>=</mo><mn>6.65</mn></mrow><annotation encoding="application/x-tex">log100=6.65</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em"></span><span class="mord mathnormal" style="margin-right:0.01968em">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em">g</span><span class="mord">100</span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:0.6444em"></span><span class="mord">6.65</span></span></span></span> 比特。
+<ul>
+<li>第一种编码，一一对应，即用 100 种符号；
+<ul>
+<li>编码长度为一；</li>
+</ul>
+</li>
+<li>第二种编码，采用十进制编码，也就是用 10 种符号。
+<ul>
+<li>每个符号代表的信息量只有 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mn>10</mn><mo>=</mo><mn>3.325</mn></mrow><annotation encoding="application/x-tex">log10=3.325</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em"></span><span class="mord mathnormal" style="margin-right:0.01968em">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em">g</span><span class="mord">10</span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:0.6444em"></span><span class="mord">3.325</span></span></span></span> 比特，因此需要两两组合。</li>
+<li>两个符号的信息量加起来还是 6.65 比特。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>==<strong>对数字的各种编码其实是等价的，无非是平衡编码复杂性和编码长度之间的关系。</strong>==
+<ul>
+<li>==编码长度短，系统就复杂；==</li>
+<li>eg：玛雅文明发展不快的一个原因，就和它的计数和书写系统太复杂有关。</li>
+<li>eg：量子计算机；</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>==香农第一定律：==</p>
+<p>​		编码长度   ≥   信息熵（信息量）/  每一个码的信息量</p>
+</blockquote>
+<ul>
+<li>严格的数学证明，同时证明，只要编码设计得足够巧妙，上面的等号是成立的（07 最短编码）。</li>
+<li>文字的诞生过程
+<ul>
+<li>象形文字；</li>
+<li>出现用几个字表达一个复杂的含义；</li>
+<li>动词；</li>
+<li>书写系统；</li>
+<li>不平等加剧，能够认识编码的人，就掌握了其他人所没有的信息；</li>
+<li>能够读写的人，成了精英，甚至统治阶级；任何历史时期，==谁控制了信息，谁就是世界的主人。==
+<ul>
+<li>马丁·路德之前，关于上帝的信息是由教士、主教控制的，农民只好受人摆布；</li>
+<li>中国情况也类似，不识字不过是土财主；</li>
+</ul>
+</li>
+<li>简化的道路发展；</li>
+</ul>
+</li>
+<li>总结
+<ul>
+<li>通过人类创造数字和文字语言的过程，告诉大家，其实它们都是人类用来==消除信息不确定性的编码手段==。各种编码系统，其实都是在编码==<strong>复杂性</strong>==和编码==<strong>长度</strong>==之间作平衡，它们在==数学上是等价的==；</li>
+<li>由于它们是==等价的==，所以，在一个编码系统中解决不了的问题，换一个系统统一解决不了；</li>
+<li>香农第一定律告诉我们，只要编码设计得足够巧妙，就可以找到==最短编码==。</li>
+<li>个体而言，==改变自己获取信息的能力，要比改变整个社会的不平等容易得多==。</li>
+</ul>
+</li>
+<li>思考题
+<ul>
+<li>除了编码平衡，其实很多工作都是在作平衡，你的行业示范也有类似的平衡之道？
+<ul>
+<li>规划行业，平衡政策、利益、设计之间的关系；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/09 18:54:47 24min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="06-有效编码10-个手指能表示多少个数字">06 有效编码：10 个手指能表示多少个数字<a href="#06-有效编码10-个手指能表示多少个数字" class="hash-link" aria-label="06 有效编码：10 个手指能表示多少个数字的直接链接" title="06 有效编码：10 个手指能表示多少个数字的直接链接">​</a></h3>
+<ul>
+<li>信息编码的基本原理：
+<ul>
+<li>==<strong>“易识别”</strong>==；</li>
+<li><strong>==“有效性”==</strong>；</li>
+</ul>
+</li>
+<li>多米尼克·穆特勒，清晰表达的五个原则：
+<ul>
+<li>明确、诚实、勇气、责任、同理心。
+<ul>
+<li>明确：沟通的核心，专业文件像八股文；</li>
+<li>诚实：明确表达的基础，否则口是心非；</li>
+<li>勇气：对一件事的态度确定，才能表达明确；</li>
+<li>责任：对一件事要有所谓，否则一天一个样。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>十根手指，能表达多少个数字？
+<ul>
+<li>伸开、收缩——1024；</li>
+<li>伸开、半伸开、收缩——59049；</li>
+<li>==<strong>过分强调有效性，忽视了易辨识的原则，凡事过犹不及。</strong>==</li>
+</ul>
+</li>
+<li>如何组合信息，保证它高效传递，还能不违背第一条“易辨识”的原则，就需要我们主动思考了。
+<ul>
+<li>eg：64瓶药，其中1瓶有毒，3天时间，最少需多少只小白鼠？（硅谷面试题）
+<ul>
+<li>64 选 1的问题，6比特。【这种排列组合的有效编码，绝了】</li>
+</ul>
+</li>
+<li>==<strong>有效的编码，就是完成从理论上的上限到现实中解决方案的桥梁。</strong>==
+<ul>
+<li>很多 IT 问题，就是编码问题【因此好好学习《深入理解计算机系统》《信息量基础》涉及的编码问题】</li>
+<li>==让理论最佳值在应用中落地。==</li>
+<li>采用大量用户信息决定产品的设计和技术方案（用户大数据，二进制编码，同时进行几十个不同的不冲突的实验）</li>
+<li>一个公司将自己的商业成功寄托在“眼光好”上早晚要失败。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>总结
+<ul>
+<li>介绍了信息编码的两个基本原理：易辨识、有效性；</li>
+<li>用实例说明了信息论原理和工作的关系。</li>
+<li>听了一年课程没有提高？
+<ul>
+<li>知识学习之后==只有真正使用了，才能变成自己的东西。==【要刻意使用】</li>
+<li>==学以致用比多学习更重要。==</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/09 19:16:59 22min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="07-最短编码如何利用哈夫曼编码原理投资">07 最短编码：如何利用哈夫曼编码原理投资<a href="#07-最短编码如何利用哈夫曼编码原理投资" class="hash-link" aria-label="07 最短编码：如何利用哈夫曼编码原理投资的直接链接" title="07 最短编码：如何利用哈夫曼编码原理投资的直接链接">​</a></h3>
+<ul>
+<li>如何对信息进行编码才最有效？
+<ul>
+<li>eg，摩尔斯电码：根据常识对经常出现的字母采用较短的编码，对不常见的字母用较长的编码，这样可以降低编码的整体长度。</li>
+</ul>
+</li>
+</ul>
+<img decoding="async" loading="lazy" src="images/01_信息产生_04-18/image-20211231135601344.png" alt="image-20211231135601344" style="zoom:67%" class="img_O9Fa">
+<ul>
+<li>log26 大约 5 bit信息。莫尔斯的编码方法，平均只需 3 bit，省约 1/3 时间。
+<ul>
+<li>eg：谍战片报务员，敌方特工，二战欧洲德占区，省一点时间意味着自身的安全；【沟通表达也如此，少说额外的话，同样可以降低不必要的风险】</li>
+<li>eg：各国长途电话区位码，重要的城市用更短的位数。</li>
+</ul>
+</li>
+<li><strong>可以证明，越常出现的信息采用较短的编码，不常出现的信息采用较长的编码，就能比采用同样码长的信息总体上更合算。</strong>
+<ul>
+<li>【这种思维可以运用在许多地方，比如笔记的编号长度，就可以缩短、分类，以后复盘经常看的内容，就置顶；】</li>
+<li>【投资也一样】</li>
+<li>这种最短编码方法——等于香农第一定律的继续，最早由 MIT 哈夫曼教授发明；</li>
+</ul>
+</li>
+<li>==哈夫曼编码，三个要点：==
+<ul>
+<li>1、香农第一定律——==编码长度有个理论最小值==，数学可以证明哈夫曼的编码方法是最优化的。</li>
+<li>2、本质上，是将最宝贵的资源==（最短的编码）给出现概率最大的信息==。至于资源如何分配，哈夫曼给出了一个原则，也就是一条信息编码的长度和出现概率的对数成正比。
+<ul>
+<li>概率 1/2，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mn>2</mn></mrow><mo>=</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">log_2{1/2} = -1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.01968em">l</span><span class="mord mathnormal">o</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mord"><span class="mord">1/2</span></span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em"></span><span class="mord">−</span><span class="mord">1</span></span></span></span> 因此，编码长度为 1，即码 0，最后两条出现概率 1/2^31次方，对数后等于 -31，因此编码长度 31。【这样具体说明才理解了哈夫曼编码的一些核心思想，之前 KKB 课程讲得就挺抽象难懂的】</li>
+<li>莫尔斯码是无意中用了哈夫曼编码的原理，但没有严格统计，因此非最优化。</li>
+</ul>
+</li>
+<li>3、==现实生活中，很多信息的组合==，比如单独一条信息，==其概率分布差异更大，==因此对它们使用哈夫曼编码进行信息压缩，==压缩比==会更高。
+<ul>
+<li>eg：汉语，汉字频率统计，压缩，一篇文章通常可压缩 50% 以上，若按词频统计，再用哈夫曼编码，可压缩 70% 以上。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>生活中的哈夫曼编码原则：
+<ul>
+<li>凯鹏华盈；它不是靠一两个人天才的眼光，而是有一整套系统的方法，保证投资的成功率。
+<ul>
+<li>通过每一次双倍砸钱（double down），把最多的钱投入到最容易成功的项目上。</li>
+<li>示例
+<ul>
+<li>平均地投入到 100 个初创公司；（市场平均回报，2 ~ 5年 / 7 ~ 10年，最终 20% ~ 50%，年化 5% ~ 20%）</li>
+<li>利用我们的眼光投入到一家最可能的公司中；（赌博，145-148封信）</li>
+<li>利用哈夫曼编码原理投资。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img decoding="async" loading="lazy" src="images/01_信息产生_04-18/image-20211231151238900.png" alt="image-20211231151238900" style="zoom:67%" class="img_O9Fa">
+<ul>
+<li>最后能变成产品上市的，是少数项目，但是大量的资源投入在其中了。</li>
+<li>将教育比作用圆规画圆，一方面有一个扎得很深的中心，另一方面又足够广的很浅的覆盖面。</li>
+<li>==吴军老师的经验：==
+<ul>
+<li>我**==从来不排斥尝试新东西，这样不会失去机会==**，我尝试过的各种事情远比外界知道的多，只是绝大部分失败了，我没有继续罢了，大家也就无从知晓了。</li>
+<li>对于花了一些精力，看样子做不成的事情，我是**==坚决做减法止损==**的。【服务器编程、算法深入等，觉得学不好的，可以先放一放，核心的还是要学，只不过是在需要的时候结合起来，更高效地学】</li>
+<li>可以把**==最多的资源投入到我擅长的，有兴趣的，可能也是成功率最高的==**事情上。</li>
+</ul>
+</li>
+</ul>
+<p>2021/12/31 15:20:42 1h31min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="08-矢量化象形文字和拼音文字是如何演化的">08 矢量化：象形文字和拼音文字是如何演化的<a href="#08-矢量化象形文字和拼音文字是如何演化的" class="hash-link" aria-label="08 矢量化：象形文字和拼音文字是如何演化的的直接链接" title="08 矢量化：象形文字和拼音文字是如何演化的的直接链接">​</a></h3>
+<ul>
+<li>
+<p>语言和文字是<strong>慢慢演化过来的</strong>，而不是人为利用信息论的编码原理刻意构造的，因此不可能只照顾易辨识和有效性，<strong>而不考虑人类接受它们的难度</strong>，以及演化的过程。</p>
+</li>
+<li>
+<p>相反，人类给计算机识别的单词，比如汇编语言的指令代号，基本上就很短的、等长的字母组合，因为<strong>那是完全利用编码原理人工设计的</strong>。</p>
+</li>
+<li>
+<p>信息的矢量数字化（矢量化，VQ | 简化的自然过程）</p>
+<ul>
+<li>信息越多，需要的编码越多，这是<strong>文明自然演变不可避免的过程</strong>。</li>
+<li>太多不同的编码（文字）出现后，就要对编码进行简化，否则没法学习。【顶层】</li>
+<li>bitmap、VQ</li>
+<li>eg：图形彼此有些相似性，但有不完全一样——<strong>==特征分类，投射到两个或更多的维度，维度的组合可以决定面上的一个矢量；==</strong></li>
+<li>eg：人类象形文字的演化过程同理；</li>
+<li>eg：汉字为例，绝大多数映射到两个维度
+<ul>
+<li>一个表意的偏旁维度；</li>
+<li>一个提示读音的发音维度（有时也表意）；</li>
+<li>eg：《康熙字典》47000个汉字，但3000多个一级国标汉字已能覆盖98%以上的文本；</li>
+<li>eg：《牛津词典》约1/4词今天已不用了；</li>
+<li>更习惯于用现有的字发明新词，而不是造字；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>==<strong>拼音文字的矢量化过程</strong>==【这样表述很好理解，因为逻辑完整、闭合，有关键事件抓手】</p>
+<ul>
+<li>美索不达米亚人——楔形文字（象形文字 -&gt; 拼音文字 “箭头”）</li>
+<li>闪米特人 . 腓尼基人——地中海——商人——简化——剩几十个字母</li>
+<li>腓尼基字母——希腊人——总结24个希腊字母——罗马人——22拉丁字母</li>
+<li>罗马扩张——外国人 . 人名、地名无法表示——加入x（无法表示的音、词 | 包含x的单词特别少的原因，未知数x同理）</li>
+<li>拉丁文
+<ul>
+<li>i——i、j</li>
+<li>v——u、v、w</li>
+</ul>
+</li>
+<li>最终形成 26 字母；</li>
+<li>词根、前缀、后缀——三维矢量表示；【<strong>大部分词都可以根据这样的映射来学</strong>】</li>
+</ul>
+</li>
+<li>
+<p>虽然象形文字和拼音文字的形成和进化代表了两种不同的信息编码方式，<strong>==但都利用了信息论中矢量化的原理。==</strong></p>
+<ul>
+<li>矢量字体；
+<ul>
+<li>将字体轮廓映射到一组曲线上，显示/打印时，数学运算，恢复形状；</li>
+</ul>
+</li>
+<li>高考成绩录取，身高选拔球员——<strong>映射到一维的空间</strong>；
+<ul>
+<li><strong>==这种做法给工作带来极大的便利性，但显然没有全面地考察每一个人，或者说有信息的缺失。==</strong></li>
+<li>更普遍意义的问题——矢量化会带来多大的信息缺失（信息论可计算）；</li>
+</ul>
+</li>
+<li>工程
+<ul>
+<li><strong>如何平衡便利性和信息上的缺失；</strong></li>
+<li><strong>理论上办不到的；</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>总结</p>
+<ul>
+<li>我们从文字的演变，介绍了信息的矢量化的概念，以及它的应用；</li>
+<li>进而讲述了，无论是象形文字还是天然形成的拼音文字，都通过两到三个维度的矢量化兼顾了读音和达意的关系。但是，如果强制将中文拼音化，它将失去达意的功能，这不符合信息论的原则，因此做不下去。==<strong>世界上人为想做的，但违背规律的事情，做起来总是困难重重。</strong>==</li>
+<li>生活很多矢量化例子，<strong>==它们让问题变得简单，但会丢失信息，而平衡便利性和信息的完整性，就成为了艺术。==</strong></li>
+</ul>
+</li>
+</ul>
+<p>2022/01/10 23:19:26 34min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="09-冗余度史记和圣经哪个信息量大">09 冗余度：《史记》和《圣经》哪个信息量大<a href="#09-冗余度史记和圣经哪个信息量大" class="hash-link" aria-label="09 冗余度：《史记》和《圣经》哪个信息量大的直接链接" title="09 冗余度：《史记》和《圣经》哪个信息量大的直接链接">​</a></h3>
+<ul>
+<li>量化度量《史记》和《圣经》的信息量——<strong>==信息压缩实验==</strong>
+<ul>
+<li>选择原因：这样经典的典籍==语言相当精炼==，比较有==代表性==，而且在==翻译成不同语言的版本==时，都==极为仔细准确==。相比，文学作品的翻译随意性就较大。</li>
+<li>《圣经》
+<ul>
+<li>80万单词，扣除空格、标点，存储约 4MB；</li>
+<li>ASCII 编码，长度四百万字节；</li>
+<li>“和合本” 中译本，93 万字；国标汉字存储，约 2MB；</li>
+<li>挤掉 ASCII 编码的水分，中英编码长度差约 30%；</li>
+<li>对比 2 : 3，1.6MB VS 2.5MB；</li>
+<li>哈夫曼编码，中英均可压缩到约 750KB；</li>
+<li>进一步利用上下文，可进一步压缩（不考虑）；</li>
+<li>——证实了一本经典的信息量不会因为使用不同语言书写而不同，也证实了编码的等价性——<strong>==同样的信息不同的编码，信息量不变==</strong>。
+<ul>
+<li>英语压缩比 3 : 1</li>
+<li>中文压缩比 2 : 1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>《史记》
+<ul>
+<li>目的：对照实验，考虑到 “和合本” 的句子和日常说话方式差异较大；</li>
+<li>53 万字，国标码存储 1.1MB；挤掉水分 编码长度约 900KB；</li>
+<li>哈夫曼编码，不到 500KB；</li>
+<li>压缩比 1.8 : 1</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20220111174539537" src="/Notes/assets/images/image-20220111174539537-c33fb030e757b765f8cdf36ce487f3c6.png" width="858" height="174" class="img_O9Fa"></p>
+<blockquote>
+<p>**冗余度：**对信息的 “密集” 和 “稀疏” 程度进行描述。</p>
+<p>​		（信息的编码长度 - 一条信息的信息量）/ 信息的编码长度</p>
+</blockquote>
+<ul>
+<li>
+<p>==<strong>冗余度太低，会严重影响接收信息的速度。</strong>==</p>
+<ul>
+<li>eg：小说冗余度高得多，才容易阅读；<strong>==同语言，不同题材，冗余度差很多；==</strong></li>
+<li>eg：沃森、克里克论文，每个单词都不能漏掉，理解反而花时间；</li>
+<li>【是否意味着，在理解比较专业的信息时，可以**==自行增加或者科学地增加冗余度，从而帮助提升学习效率呢？==**在教授给别人知识的时候，讲故事是一个好办法。】</li>
+</ul>
+</li>
+<li>
+<p><strong>冗余度的好处</strong></p>
+<ul>
+<li><strong>==便于理解；==</strong></li>
+<li>语言学上，<strong>==消除了很多歧义性==</strong>；
+<ul>
+<li>汉语：去掉动词的时态、性别、单复数、语气等信息，名词去掉了数量、阴阳信息，绝大部分名词去掉了正式和非正式的信息——这些都需要通过上下文来恢复——恢复得不好，理解略有差别，造成误解。</li>
+<li>拉丁语、法语（极为严谨）：英语，名词、动词数量一致性，语句的语气、写法一致性，保证了相应信息不容易漏掉——即归功于冗余度大。</li>
+</ul>
+</li>
+<li>==<strong>带来信息的容错性；</strong>==
+<ul>
+<li>文件丢失一段，仍然能得到大部分内容，甚至通过前后恢复出一部分丢失的内容；</li>
+<li>eg：罗塞塔石碑，拿破仑，商博良；尼罗河流域五千年文明的面纱揭开；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>冗余度的弊端</p>
+<ul>
+<li><strong>==存储和传递信息时的浪费；==</strong>
+<ul>
+<li>4K 冗余度极高，压缩几十倍也不会损失人任何信息；</li>
+</ul>
+</li>
+<li>如果信息中**==混有噪音==<strong>，过多没用的信息可能会</strong>==导致错误==**；
+<ul>
+<li>真实世界，很少有绝对干净的信息，总是混有噪音，可能彼此矛盾，产生糊涂；</li>
+<li>eg：《史记》秦王子婴，可能司马迁也拿不准，因此把常见的说法都列出来，让读者自己判断；——自相矛盾冗余信息多了，说话不靠谱；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>善用信息冗余，沟通高手</p>
+<ul>
+<li>1、讲东西加入一些**==看似废话==<strong>，实际上是</strong>==从侧面诠释==<strong>你的想法的例子，帮助对方理解你的意思。比如</strong>==“换句话说”，“比如说”，“从另一方面讲”==**，就是利用信息冗余便于大家理解。</li>
+<li>2、<strong>==讲东西要有一致性==</strong>，不要补充有可能和主要思想相矛盾的例子，或者和想法无关的冗余信息。</li>
+<li>3、脑子存储信息时，要进行压缩，这样脑子才记得住事情。很多人问题，你读那么多书，记那么多事情，怎么记得住？
+<ul>
+<li><strong>==无论读书、学习，都会做类似写卡片的工作，把厚厚一本书，变成薄薄的几页纸，那些冗余的信息，就删除掉了。==</strong></li>
+<li>**==读书要不求甚解——读出主线，将一些细节过滤掉。==**真需要寻找细节时，大不了回头再看看。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>总结</p>
+<ul>
+<li>冗余度的概念，并通过冗余度证明了汉语是最简洁的语言，但同时也说明了因为汉语**==冗余度太低理解起来比较困难==**，因此难以学习。【此处想起来《鸟哥的 Linux 私房菜》以“啰嗦”但有效著称】</li>
+<li>介绍了冗余度三个好处：<strong>==易理解、消歧义、容错性。==</strong></li>
+<li>冗余度的问题：造成信息**==存储和传输的浪费==<strong>；有</strong>==噪音==<strong>情况下，可导致</strong>==混淆==**。</li>
+<li>读书、学习
+<ul>
+<li>——想办法**==把书读薄==**，即去掉冗余的信息；【最好的办法就是随笔】</li>
+<li>不求甚解——<strong>==读出主线、过滤细节==</strong>，大不了需要时**==多看几遍==**。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>思考题</p>
+<ul>
+<li>怎样写文章才能让大家接受信息的效率最高呢？</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/11 18:38:39 1h22min 聊书 + 36min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="10-等价性信息是如何压缩的">10 等价性：信息是如何压缩的<a href="#10-等价性信息是如何压缩的" class="hash-link" aria-label="10 等价性：信息是如何压缩的的直接链接" title="10 等价性：信息是如何压缩的的直接链接">​</a></h3>
+<ul>
+<li>eg：《史记》秦王子婴到底是谁
+<ul>
+<li>演绎了，面对错综复杂的信息时，<strong>==如何利用其他信息的等价性为我们理清思路==</strong>。</li>
+</ul>
+</li>
+<li>倒手一次的操作需要一个==桥梁==，让<strong>原有和等价信息一一对应</strong>。
+<ul>
+<li>eg：傅里叶变换，十九世纪，法国；——<strong>==任何周期性的函数（信号）都等于一些三角函数的线性组合。==</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>傅里叶变换：<strong>所有的周期性信号都可以用</strong>频率和振幅不同的正弦函数叠加</strong>而成。</p>
+</blockquote>
+<ul>
+<li>
+<p>也就是说周期性信号里面所包含的信息和若干正弦函数的频率、振幅信息**==完全等价==**。</p>
+</li>
+<li>
+<p>可利用周期性来进行信息压缩，基本原理：</p>
+<ul>
+<li>找到周期性信号的**==等价信息==**；（关键）</li>
+<li>对等价信息进行压缩；</li>
+<li>如要使用原来的信号，通过压缩后的等价信息复原原来的信号。</li>
+</ul>
+</li>
+<li>
+<p>正弦波，振幅、频率；</p>
+</li>
+<li>
+<p>eg：100年温度变化信息，20根频率、振幅不同的正弦曲线叠加而成，压缩百倍。</p>
+</li>
+<li>
+<p>eg：音频信号；宏观看到一幅图，放大可以看到，相邻像素之间颜色和灰度的变化回事相对连续的。</p>
+<ul>
+<li>利用这个原理，发明了工具——<strong>==离散余弦变换，DCT==</strong>
+<ul>
+<li>64 个基本灰度模板；JPEG 算法、格式图片；</li>
+<li>RGB 三原色的彩色模板；</li>
+<li>信息损失；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>一种原始信息，高度冗余成分，很难直接压缩——将其转化为容易压缩的等价的信息，进而压缩、存储、传输。——接收端，解压、恢复原来信息。</p>
+<ul>
+<li>Google 搜索；</li>
+<li>核磁共振原理；</li>
+<li>LIGO 装置；</li>
+<li>ATLAS 装置；</li>
+<li>血项检查。</li>
+</ul>
+</li>
+<li>
+<p>总结</p>
+<ul>
+<li>信息压缩，说明**==等价信息的重要性==**，对于获取信息、处理信息同样重要。</li>
+</ul>
+</li>
+<li>
+<p>思考题</p>
+<ul>
+<li>你是如何通过等价性原则找出一些难题的答案的？【这是一个相当有趣的问题，关键在于对过往知识的复盘意义】</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/12 19:08:50 23min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="11-信息增量信息压缩中的保守主义原则">11 信息增量：信息压缩中的保守主义原则<a href="#11-信息增量信息压缩中的保守主义原则" class="hash-link" aria-label="11 信息增量：信息压缩中的保守主义原则的直接链接" title="11 信息增量：信息压缩中的保守主义原则的直接链接">​</a></h3>
+<ul>
+<li>
+<p>3210、3208、3206、3211、3220、3212……进行编码，需多少比特（或字节）？</p>
+<ul>
+<li>毫无规律，不存在频率大小问题，无法哈夫曼编码；只好一一编码。【特征】</li>
+<li>这组十字都是三千多，需 12 位 2 进制表示每一个数字；【信息量】
+<ul>
+<li>即每个数字编码长度 12 比特；【编码长度】——0~4095【4096 - 1】</li>
+<li>若 11 位二进制，2^11 = 2048，不能涵盖 3000 多的数字；【确定边界】</li>
+</ul>
+</li>
+<li>各数字变化不大，动态范围不超过 16——可按此特性压缩编码【变化特征，增量】
+<ul>
+<li>1、对第一个数字使用 12 比特的编码，没有办法更精简；</li>
+<li>2、对第二个以后的各个数字，将它和上一个数字相比较，发现比前一个数字，动态变化范围在正负 16 以内。因此只需要对差异（也叫增量）进行增量编码。
+<ul>
+<li>对于增量，若不考虑符合，用 4 比特就够（log16 = 4）</li>
+<li>正负，加 1 比特信息表示符号；</li>
+<li>因此，第二个字开始，<strong>==采用 5 个比特就可以表示和前一个数字的区别了。==</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>3120【-2】【-2】【5】【9】【-8】……</p>
+<ul>
+<li>【突然想起高中数学课上，加权平均的简便算法，就是在平均数的基础上，只计算每一个值相对的增减，即变化量；没想到这种变化的艺术居然可有大用】</li>
+<li>压缩比 12 : 5——2.4 : 1</li>
+<li>**==解码时，==**先解出第一个，再解出后面的增量，再根据上一个的数值和当前的增量，恢复出一个个原来的信息。
+<ul>
+<li>eg：今天对视频的压缩原理；
+<ul>
+<li>第一帧（主帧）——全画面编码；</li>
+<li>后面每一帧，针对和上一帧的差异进行编码即可。</li>
+</ul>
+</li>
+<li>eg：Google 搜索的索引——前后相关性压缩；
+<ul>
+<li>每一个单词在全部网页中出现的位置列出来；
+<ul>
+<li>否则，几百亿排序位置；</li>
+</ul>
+</li>
+<li>每一个网页只保存第一个单词的起始位置，剩下单词相对第一个单词的位置；
+<ul>
+<li>同时包含关键词，看是否有共同的网页起始位置即可；</li>
+<li>连起来的词，保证同起始，还保证位移量相差 1；</li>
+</ul>
+</li>
+<li>节省空间（约省 75%），无损压缩；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>==<strong>弊端——挤掉信息冗余，编码长度非常短，容错性能下降；</strong>==</p>
+<ul>
+<li>eg：光盘，划一道，跳盘，后面都看不了；
+<ul>
+<li>==策略：<strong>每过若干帧，重新产生一个主帧，以免错误传递太远。</strong>==【山火隔离带同理】</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>信息的前后相关性，其实是信息本身固有的特征。或者说，绝大多数时候，我们这个世界的变化是渐进的，而不是完全随机的。不仅在信息的世界如此，在我们的生活中也是如此。</p>
+<ul>
+<li>eg：**==保守主义的做事态度，好处是由我们这个世界渐变的特征决定的。==**绝大多数，不需推倒重来，只需对变化进行一些修补就好了。
+<ul>
+<li>有些人看不起总是修修补补的做法，缺乏革命性；</li>
+<li>信息论角度，保守主义做法成本最低。</li>
+</ul>
+</li>
+<li>==<strong>平衡各方面利益不断修补的结果，若过时如同重新设一段主帧的思想</strong>==
+<ul>
+<li>eg：美国税法；</li>
+<li>eg：学区划分犬牙交错；</li>
+<li>eg：美国宪法修正案；</li>
+</ul>
+</li>
+<li>==<strong>正是因为渐进，牵扯的利益不会太多，才能够推行得下去，从长期来看才能发展。</strong>==
+<ul>
+<li>【学习也是渐进的过程，有了记录的基础，就不用每次推倒重来】</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>==如果想一次完成巨大的突变，常常会因为牵扯的利益太多，最后总是搁浅，永远改不了，结果反而是不进步。==</strong></p>
+</li>
+<li>
+<p>总结</p>
+<ul>
+<li>讲了善用信息前后的相关性，对于后面的信息做增量编码，达到大幅度压缩信息冗余的目的。</li>
+<li>把这种信息处理的方式，和保守主义的做事方法对比。保守主义，坚持总体原则不变，不断作微调，达到渐进改变的目的。效率更高，因为世界客观性。</li>
+</ul>
+</li>
+<li>
+<p>思考题</p>
+<ul>
+<li>如果我们在视频压缩中有一个主帧的概念，后面各帧图像都是对它作对比，那么在我们的生活，什么事情其实扮演了主帧的角色？</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/14 13:56:40 1h12min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="12-压缩比和失真率如何在信息取舍之间作平衡">12 压缩比和失真率：如何在信息取舍之间作平衡<a href="#12-压缩比和失真率如何在信息取舍之间作平衡" class="hash-link" aria-label="12 压缩比和失真率：如何在信息取舍之间作平衡的直接链接" title="12 压缩比和失真率：如何在信息取舍之间作平衡的直接链接">​</a></h3>
+<ul>
+<li>
+<p>任何编码的长度都不会小于信息熵，也就是通常会大于等于信息熵，当然最理想的是等于。</p>
+<ul>
+<li>如果编码长度太短，小于信息熵，就会出现损失信息的现象。
+<ul>
+<li>无损压缩
+<ul>
+<li>eg：傅里叶变换、离散余弦变换，转变为频率，再类似哈夫曼编码压缩；</li>
+</ul>
+</li>
+<li>有损压缩
+<ul>
+<li>今天绝大多数是有损压缩；</li>
+<li>最关键：清楚如何保证因为压缩而丢失的信息不影响我们对信息的理解。
+<ul>
+<li>需平衡压缩比和信息失真度之间的关系。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>三个原则</p>
+<ul>
+<li>世界上很多时候没有最好的技术方案，只能==根据场景找到合适==的，因此==<strong>做事的目的性很重要</strong>==。</li>
+<li>丢失一部分信息，<strong>==一定会增加不确定性==</strong>。用的信息少，永远不可能做得和原来一样好。
+<ul>
+<li>平衡的做法：看矛盾的主要方面在哪一方。</li>
+<li>今天世界最不缺的是数据；</li>
+</ul>
+</li>
+<li>在压缩信息时，有时要**==看应用场景==**。
+<ul>
+<li>eg：语音压缩 VS 声纹识别；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>高比例的信息压缩到底压缩掉什么信息？</p>
+<ul>
+<li>压缩掉**==高频信息==**；
+<ul>
+<li>eg：蓝天、小鸟；JPEG算法压缩，小鸟可能被过滤掉，蓝天细节就没有了；</li>
+<li>eg：枪打出头鸟；</li>
+<li><strong>==任何与众不同的东西，总是先被压缩掉==</strong>，因为对这些东西编码，占用空间相对太多。</li>
+<li>【高频信息，指的就是与众不同的信息，可以想象一张图片的画面，蓝天中突然出现一只小鸟，其频率由表示连续蓝天的平缓，突然产生较大幅度的变化，因此就变成频率不同的信息，至于高低，应该有一个基准线，后面深入了解再细化】</li>
+</ul>
+</li>
+<li>eg：华大基因，杨焕明教授，每个人基因测序，超 1PB 存储空间，1000 个 1T硬盘；</li>
+<li>eg：约翰·霍普金斯大学，遗传压缩算法；
+<ul>
+<li>只要存储有差异的基因即可；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>总结</p>
+<ul>
+<li>信息的压缩分为有损和无损的两种。
+<ul>
+<li>==无损压缩：==原信息可完全复原，压缩比通常不高，因此存在极限（香农第一定律，信息熵极限）；</li>
+<li>==有损压缩：==信息复原，一定程度的失真。</li>
+</ul>
+</li>
+<li>失真率和压缩比直接相关，压缩比越大，失真率越高。
+<ul>
+<li>何种压缩==方法==，压缩到何种==程度==，看具体应用==场景==；</li>
+<li>信息处理领域，常不存在所谓标准答案、最佳答案，<strong>==只有针对某个场景的好的答案，而一切都是妥协的结果==</strong>。</li>
+</ul>
+</li>
+<li>信息压缩的**==思想可以用到很多地方==**，把知识学通，就是这个道理。</li>
+</ul>
+</li>
+<li>
+<p>思考题</p>
+<ul>
+<li>无损音乐、无损电影爱好者，从听觉和观感上说说，真的有那么大区别吗？有没有其他影响因素呢？</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/15 18:57:48 27min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="13-信息正交性在信息很多的情况下如何作决策">13 信息正交性：在信息很多的情况下如何作决策<a href="#13-信息正交性在信息很多的情况下如何作决策" class="hash-link" aria-label="13 信息正交性：在信息很多的情况下如何作决策的直接链接" title="13 信息正交性：在信息很多的情况下如何作决策的直接链接">​</a></h3>
+<ul>
+<li>
+<p>信息特点</p>
+<ul>
+<li>不守恒</li>
+<li>不同信息彼此的关系，使用相同或不同信息带来的结果</li>
+<li>这些方面都和能量完全不同</li>
+<li>相同的信息使用两次就没用了，也不会有害；</li>
+</ul>
+</li>
+<li>
+<p>如何发挥信息叠加的力量呢？</p>
+<ul>
+<li>信息是正交（垂直）的时候，效果最好</li>
+<li>eg：NIST 测试语音识别报告，数据表明，看似来源不同的信息，在消除不确定性时，作用有可能重叠。</li>
+</ul>
+</li>
+<li>
+<p>什么是垂直的信息？（任何信息可对应某空间中的一个矢量，夹角 90 度）</p>
+<ul>
+<li>eg：语音识别，本质 N 选 一问题。
+<ul>
+<li>第一类，语音信息，==每一个==读音和各种语音==之间的相关信息==。</li>
+<li>第二类，语言信息，==一种==读音在上下文中==出现的可能性==。</li>
+</ul>
+</li>
+<li>eg：名片识别
+<ul>
+<li>市面大部分 98% 识别率，很高；</li>
+<li>2012，加州大学华裔教授，大数据方法；把互联网能找到的各个单位的信息找到，用公开信息验证图像识别的结果。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>如何找到正交的信息？【三个原则】</p>
+<ul>
+<li><strong>==不同的信息要来自不同的信息源。==</strong>
+<ul>
+<li>eg：血项检查、医学影像扫描；
+<ul>
+<li>X 光透视、CT 扫描、核磁共振；基本是同一维度的；</li>
+</ul>
+</li>
+<li>容易上当的一个原因：<strong>==不善于选用正交的信息进行交叉验证。==</strong></li>
+<li>eg：媒体信息相互抄，一种信息多次使用；</li>
+</ul>
+</li>
+<li>==<strong>避免反复使用相互嵌套或相互包含的信息。</strong>==
+<ul>
+<li>即便信息源不同，覆盖，相似性太高；</li>
+<li>eg：简历，容易提供相互覆盖的信息，无关紧要的工作经历，可有可无的专业证书；</li>
+</ul>
+</li>
+<li>==<strong>看问题要可以改变一下观察的角度，从几个不同的角度看。</strong>==
+<ul>
+<li>eg：圆柱体的侧面与俯视；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>如何选取几种最重要而且彼此尽可能正交的信息呢？【两个方法】</p>
+<ul>
+<li><strong>==不断叠加。==</strong>
+<ul>
+<li>第一步，单独评估，从大到小排列，第一作为基准；</li>
+<li>第二步，在第一种已用基础上，重新评估剩下的，排序，选出最高；</li>
+<li>第三步，循环。</li>
+<li>衡量的不是每一种信息单独的有效性，而是找到它们组合的有效性。</li>
+<li>eg：篮球球员选拔。</li>
+</ul>
+</li>
+<li><strong>==不断删除。==</strong>
+<ul>
+<li>类似上述，逆向过程。</li>
+</ul>
+</li>
+<li>局限性：
+<ul>
+<li>都有可能陷入一种局部最佳值，至今也没得到彻底解决，成功有运气成分。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>总结</p>
+<ul>
+<li>力学上，用力要在一个方向效果才好，在使用信息上，要选用彼此垂直的正交信息。这其实是换一个角度看问题背后的科学原理。</li>
+<li>给出选择正交信息的 3 个原则，2 个做法。</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/16 16:33:54 39min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="14-互信息相关不是因果">14 互信息：相关不是因果<a href="#14-互信息相关不是因果" class="hash-link" aria-label="14 互信息：相关不是因果的直接链接" title="14 互信息：相关不是因果的直接链接">​</a></h3>
+<ul>
+<li>
+<p>衡量两条信息之间相关性的新工具：互信息——量化度量相关性的方法。</p>
+</li>
+<li>
+<p><strong>==相关不是因果==</strong>，其实世界上大多数联系都是相关联系，而非因果联系。相关联系可以强，可以弱，但<strong>弱相关其实没有什么意义</strong>，我们**==需要寻找和利用的是强相关性==**。</p>
+<ul>
+<li>eg：裙摆指数；
+<ul>
+<li>马尔基尔《漫步华尔街》，专门论述，认为这个牵强的相关性毫无根据。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>互信息公式</p>
+</li>
+</ul>
+<img decoding="async" loading="lazy" src="images/01_信息产生_04-18/image-20220117163051863.png" alt="image-20220117163051863" style="zoom:67%" class="img_O9Fa">
+<ul>
+<li>
+<p>裙子长度 X，故事涨跌 Y，设定时间参数，代入互信息公式。</p>
+<ul>
+<li>互信息可简单理解为相关性；</li>
+<li>不相干，互信息 ≈ 0；</li>
+</ul>
+</li>
+<li>
+<p>世界上很多事情彼此相关，如果它们之间**==有确定的因果关系==<strong>，那样的信息就是</strong>==等价的==**。</p>
+<ul>
+<li>eg：从 A ==一定能推导出== B，那么知道 A ==等同于==知道了 B。</li>
+</ul>
+</li>
+<li>
+<p>但世界上大部分相关的信息**==未必有因果==<strong>关系，它们之间只是一种</strong>==动态的相互关联==**的关系。</p>
+<ul>
+<li>eg：A 发生后，B 发生的==可能性就增加==，这是相关性。</li>
+</ul>
+</li>
+<li>
+<p>==<strong>使用互信息要注意，不要把因果关系搞反了。</strong>==</p>
+<ul>
+<li>eg：由 A 得到 B，但 B 未必能反过来确定 A。</li>
+<li>eg：乌鸦，人老特殊腐臭味；</li>
+<li>eg：盖茨，扎克伯格，退学因果；</li>
+</ul>
+</li>
+<li>
+<p>信息论是<strong>对大量信息整体规律性</strong>的描述。<strong>相关性差的</strong>两件事虽然可能发生，但放到<strong>更大的时空</strong>中，会发现纯属<strong>偶然</strong>。</p>
+</li>
+<li>
+<p>如何找出事物之间更高的相关性？</p>
+<ul>
+<li>eg：专业人士做事的方式；
+<ul>
+<li>有很多业余人士没有的工具；</li>
+<li>风投。研究特质企业，第一次创业成功和第二次再成功之间的互信息……</li>
+<li>有意识、特定群体，投资倾斜。</li>
+</ul>
+</li>
+<li>eg：业余人士；
+<ul>
+<li>常常只能凭感觉作判断。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>总结</p>
+<ul>
+<li>介绍了**==量化度量信息相关性==**的工具：互信息。虽然不相关的事也有概率一同出现，但只有互信息高的，彼此才有较强相关性。</li>
+<li>指出了**==相关性和等价性的区别==<strong>，以及不要在利用互信息时把两件强相关的事情之间的</strong>==因果顺序==**颠倒了。</li>
+<li>专业人士可能因为掌握专业工具，做得比业余人士好。【何为专业工具？通用？】</li>
+</ul>
+</li>
+<li>
+<p>思考题</p>
+<ul>
+<li>经济发展、政治制度是否存在因果关系，谁是因，谁是果？如果没有，只是相关，这种关系是否强？</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/17 17:09:52 50min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="15-条件熵和信息增益你提供的信息到底值多少钱">15 条件熵和信息增益：你提供的信息到底值多少钱**<a href="#15-条件熵和信息增益你提供的信息到底值多少钱" class="hash-link" aria-label="15 条件熵和信息增益：你提供的信息到底值多少钱**的直接链接" title="15 条件熵和信息增益：你提供的信息到底值多少钱**的直接链接">​</a></h3>
+<ul>
+<li>
+<p>更系统、量化地分析，一条信息，到底多大价值。</p>
+<ul>
+<li>eg：裙摆指数；
+<ul>
+<li>A 公司要并购 B 公司，<strong>只有你一个知道</strong>，而且你<strong>之前对它的了解</strong>不亚于其他人，可能你的投资会表现好一点。</li>
+<li>要注意它们**==未必构成因果关系==**，仅仅是挣到钱的可能性大一点。【很多人误区】</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>信息理论对此进行比较严格的分析：</p>
+<ul>
+<li>X——股市的涨跌；</li>
+<li>H(X)——它的全部不确定性，即 X 概率分布所对应的信息熵；</li>
+<li>Y——内部消息，条件；</li>
+<li>H(X|Y)——股市对于你的不确定性即 Y 条件下，C 概率分布的信息熵——条件熵；</li>
+<li>H(X) 别人眼里的股市不确定性，H(X|Y) 你眼里的不确定性。</li>
+<li>==什么情况下，H(X|Y) &lt; H(X) ?==
+<ul>
+<li>信息论可证明，上式永远小于或等于；（Shannon 第一定律）</li>
+<li>等号成立的条件是：你得到的消息和股市无关，那些信息不会帮你也不会害你。
+<ul>
+<li>eg：预测股市的信息是你家孩子上次考试的分数。</li>
+</ul>
+</li>
+<li>好消息（只有你知道）：
+<ul>
+<li>如果你得到消息是股市变化的等价消息，变为确定事件—— X 等价于 Y，条件熵瞬间降为 0（即一定发生），前提是只有你知道，别人不知道。</li>
+</ul>
+</li>
+<li>坏消息（别人也知道）：
+<ul>
+<li>市场的有效性，<strong>==股价能充分反映所有信息==</strong>——一瞬间上涨——这时你再使用那条信息就挣不到钱了，即股价已经包含了市场回购的信息的反应。（同一条信息，使用一万遍，只有第一次会产生结果）——“裙摆指数”假说存在了上百年。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>假定今天大家使用过的关于股市的各种技术指标分别是 Y1，Y2，Y3，……，YN。</p>
+<ul>
+<li>今天股市的不确定性不再是 H(X)，<strong>==而是 H(X | Y1，Y2，Y3，……，YN) 的条件熵==</strong>。【哈哈哈，如果早点知道信息论的知识，就不会那么容易在股市亏钱了，起码知道风险是有那么大的，散户是在跟市场对抗，而不是所谓的庄家】
+<ul>
+<li>画 K 线没用，不过是众人所知的某个 Y。</li>
+<li>专业投资人没有靠画 K 线投资的【那么是如何投资的？】</li>
+<li>假如你有幸发现了一种新的信息 YM，恭喜可能挣到钱。
+<ul>
+<li>eg：彼得·林奇，PEG 信息；</li>
+<li>一旦成为公众信息，就再也挣不到钱了；</li>
+<li>因此真正能通过投资股票挣钱的人，是不会告诉你所谓投资秘诀的，电视开讲座的，反而是自己挣不到钱的。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>==<strong>最有效的信息已经被发现了，剩下来留给大家的微乎其微。</strong>==</p>
+</li>
+<li>
+<p><strong>==信息增益（IG，Information Gain）==</strong></p>
+<ul>
+<li>信息增益 IG(Y1) = H(X) - H(X|Y1)
+<ul>
+<li>具体到这个特殊情况，IG 就是 X 和 Y 之间的互信息，越大，说明消除不确定越大，X 和 Y 越具有相关性。</li>
+<li>另一条信息 Y2，带来的信息增益就是原来 Y1 基础上的增加，IG(Y2)。</li>
+<li>假设后面还有 N 种，带来的信息增益都是在原来所有信息基础上递减的。</li>
+</ul>
+</li>
+<li>通常，总是率先发现所要解决问题互信息最大的信息，即增益最大的信息，越往后，增益越小。
+<ul>
+<li>eg：股市已经被人研究了几百年，有用信号已经被挖掘殆尽；</li>
+<li>eg：计算机，对冲基金，数学模型，有用就保留，<strong>==股市也很快反应了那些信息使用后的情况==</strong>，也就是所谓的**==被 price in 了==**。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>有幸找到一个大家都遗漏的信号，还要确定两件事：</p>
+<ul>
+<li>这个信号不要和其他已经采用的信号重复、或相互覆盖；</li>
+<li>这个信号带来的结果要有足够高的置信度，也就是说，如果它让你收益平均高出 1%，收益浮动区间要远小于 1%，否则浮动区间高达 10%，那一点意义也没有。</li>
+</ul>
+</li>
+<li>
+<p>因此，<strong>==在股市上系统性地捡漏近乎不可能。==</strong></p>
+</li>
+<li>
+<p>信息增益的应用</p>
+<ul>
+<li>衡量一条==<strong>信息的价值；</strong>==
+<ul>
+<li>取决于这条信息对<strong>未知系统所带来的</strong>信息增益，先出现的价值更大，后面更小；</li>
+<li><strong>如果两条信息正交</strong>，那第二条信息仍然像过去那样有价值。</li>
+</ul>
+</li>
+<li>衡量一项**==研究发现的贡献。==**
+<ul>
+<li>eg：一项课题研究，最初几篇论文影响最大，后面论文影响力越小；
+<ul>
+<li>两个指标：
+<ul>
+<li>引用数量；</li>
+<li>所登载期刊的影响因子。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>eg：媒体报道，独家报道关注程度远高于凑热闹围观；</li>
+<li>eg：第一个提出，意见领袖；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>总结</strong></p>
+<ul>
+<li>用==条件熵==的概念，解释了为什么==大众已知的信息==对投资和其他决策其实都==没有意义==；</li>
+<li>给出一个==定量==衡量每一条信息价值的尺度——==信息增益==；</li>
+<li>用上述理论解释了为什么研究领域最初的发明贡献，影响力最大。对每一个人，<strong>==第一个发表意见，以及能够发表与众不同的意见==</strong>，对提高自己的影响力至关重要。</li>
+<li>标新立异才有可能提供信息增量。当然，那些观点本身需要有证据支持，符合逻辑。</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/17 17:45:42 35min + 19min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="16-置信度马斯克犯了什么数学错误">16 置信度：马斯克犯了什么数学错误<a href="#16-置信度马斯克犯了什么数学错误" class="hash-link" aria-label="16 置信度：马斯克犯了什么数学错误的直接链接" title="16 置信度：马斯克犯了什么数学错误的直接链接">​</a></h3>
+<ul>
+<li>
+<p>eg：2016，特斯拉汽车</p>
+<ul>
+<li>这起车祸，出在自动驾驶功能使用了 1.3亿英里之后，而美国平均行车 0.9亿英里就出一次死亡事故。因此低于平均水平。</li>
+<li>这声明出来，一些科学家嘲笑，说马斯克数学没学好，完全没有统计中的置信度的概念。</li>
+<li>出重大车祸是随机性事件，只有当统计的数据量足够大时，从结果上判定一种车比另一种安全才有意义。【实际上，马斯克统计的是特斯拉自动驾驶从运营到出该事故的数据1.3亿，而普通交通数据是历年来的数据平均值，因此不具有可比性】</li>
+<li>麻根史丹利，估算，在美国目前的死亡事故发生的频率条件下，要想证明它的辅助驾驶更安全，需要行驶 100亿英里才能得出足够高的置信度结论。</li>
+</ul>
+</li>
+<li>
+<p>置信度（Confidence Level）——衡量一个信息到底是否可靠。</p>
+<ul>
+<li>eg：钢镚，**==你有多大把握说钢镚不均匀，正面朝上的概率更大，==**这个把握就是置信度。</li>
+<li>衡量置信度很多方法
+<ul>
+<li>T - 测试（ T 检验）——在看到==某种看似有偏差的现象==时，有==多大的可能性可以判断==这种偏差是==因为随机性造成==的，==而非真正存在偏差==。【随机性 VS 偏差】</li>
+<li>偏差确实存在——57%</li>
+<li>偶然造成——43%</li>
+<li>因此有偏差可能是真的，把自己==有多么确定这件事==量化衡量——置信度。
+<ul>
+<li>一般认为，置信度==不到 95% 的==结论不大能相信。</li>
+</ul>
+</li>
+<li>Z - 测试</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>怎样提高置信度？</p>
+<ul>
+<li>通常办法就是**==增加统计的样本数量==**。</li>
+</ul>
+</li>
+<li>
+<p>常犯一个错误，就是忽视它的置信度，以至于我们**==把完全随机的事情，当成必然的事情。==**</p>
+</li>
+<li>
+<p>很多事情偶然性很大，<strong>==几乎每一件历史上的事件，社会学上和经济学上的事情都是如此，甚至很多医学上的奇迹也是如此。==</strong></p>
+<ul>
+<li>人们总能找到合理的解释，但换一种理论也能做到这一点，因此严肃的学者们才感到证伪比证实更重要。</li>
+</ul>
+</li>
+<li>
+<p>世界上有很多道理其实都很难验证，==大到==历史事件，<strong>由于很难多次重复，总结经验其实是非常难的。</strong></p>
+<ul>
+<li>==中到==某些企业的成功经验，事后总结的自圆其说理论，换不换个环境再来一遍，都很难获得同样的成功。</li>
+<li>==小到==个人，做成一件事也有很多偶然的因素，下一次同样的方法是否可行，也有看情况而定。</li>
+</ul>
+</li>
+<li>
+<p>实际上，今天真正可怕的，是那些利用超级数据中心无比强大的计算功能，以及无所不在的监控系统，和具有很强数据处理能力的大公司，它们是==人工智能背后的人==，比人工智能更可怕。</p>
+</li>
+<li>
+<p>当普罗大众还在担心机器获得智能会不会反抗人类，==其实已经被那些智能程序控制了==。看看今天多少人自从有了微信后生活的习惯就改变了，有了今日头条后就失去了主动寻找新闻的能力，甚至失去了判断新闻真伪的能力，有了淘宝多少人买了一堆没用的便宜货。</p>
+</li>
+<li>
+<p>总结</p>
+<ul>
+<li>置信度概念；人们平时看待信息常犯错误，忽视它的置信度。</li>
+<li>对于能够重复的事情，==<strong>要被检验足够多次之后，置信度才高。</strong>==</li>
+<li>对于难以重复检验的事情，要通过其他一些方式验证。</li>
+<li>不要总结那些根本不存在的经验，或者用更科学的话讲，就是==<strong>别相信置信度不高的信息。</strong>==</li>
+</ul>
+</li>
+<li>
+<p>思考题</p>
+<ul>
+<li>平时有归纳总结，及时复盘的习惯吗？</li>
+<li>你是如何判断哪些经验值得以后借鉴，哪些经验无法复制，只能称为经历呢？</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/18 17:14:05 31min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="17-交叉熵如何避免制定出于事实相反的计划">17 交叉熵：如何避免制定出于事实相反的计划<a href="#17-交叉熵如何避免制定出于事实相反的计划" class="hash-link" aria-label="17 交叉熵：如何避免制定出于事实相反的计划的直接链接" title="17 交叉熵：如何避免制定出于事实相反的计划的直接链接">​</a></h3>
+<ul>
+<li>目的：以防我们万一作出了误判，不会像赵括一样满盘皆输。</li>
+<li>==<strong>代价函数，库尔贝勒交叉熵（K-L divergence，KL 散度）</strong>==——信息误判时的损失。</li>
+</ul>
+<img decoding="async" loading="lazy" src="images/01_信息产生_04-18/image-20220118171934155.png" alt="image-20220118171934155" style="zoom:67%" class="img_O9Fa">
+<ul>
+<li>
+<p>信息的度量是个对数函数，差 1，实际上差了 2 倍。</p>
+<ul>
+<li>黑天鹅事件损失最大。</li>
+</ul>
+</li>
+<li>
+<p>==<strong>五点思考原则</strong>==</p>
+<ul>
+<li>如果猜测和真实情况完全一致，没有损失。但只有==猜测不一致==，就或多或少损失。</li>
+<li>猜测和真实情况==相差越大==，损失越大。</li>
+<li>==自大的人==非常容易遗漏很多原本应该考虑的事情，赵括、马谡。</li>
+<li>==过分防范==各种情况，患得患失，除非资源丰厚、实力强大，成本很高。</li>
+<li>信息论中，任何==硬性的决定==（hard decision）都要损失信息。
+<ul>
+<li>All in；</li>
+<li>设成 0。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>经验</p>
+<ul>
+<li>AI ，走到最后一步之前，最好多保留一些可能性，硬性决定后失去的信息是永远不补回来的。</li>
+<li>本科以前，要通识教育；</li>
+<li>变色龙精神；</li>
+<li>对于那些可能性不大的事情，在==有所防范的同时，不要均匀分配力量。==</li>
+</ul>
+</li>
+<li>
+<p>古德-图灵估计（Good-Turing Estimate），原则是从所有预见的事情中拿出很少一些资源，分配给没有预见的事情。</p>
+</li>
+<li>
+<p>思考题</p>
+<ul>
+<li>说说自己随机应变把事情做成的经历，以及 “ALL IN” 做事的经历，回顾一下，看能否在下次制订计划时，得到新启发。</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/18 17:33:39 19min</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="18-复盘如何识别误导人的错误信息">18 复盘：如何识别误导人的错误信息<a href="#18-复盘如何识别误导人的错误信息" class="hash-link" aria-label="18 复盘：如何识别误导人的错误信息的直接链接" title="18 复盘：如何识别误导人的错误信息的直接链接">​</a></h3>
+<ul>
+<li>
+<p>掌握准确信息的好处，特别是别人信息片面的、支离破碎的，而你掌握准确全面的，优势巨大。【深有体会】</p>
+</li>
+<li>
+<p>误导人的信息，三大特征：</p>
+<ul>
+<li>**第一个特征：<strong>刻意要引起你注意的人，常常会用</strong>==耸人听闻==**的信息打动你。
+<ul>
+<li>eg：那些人也知道这样的信息提供的信息量最大，颠覆 “新知”。</li>
+</ul>
+</li>
+<li><strong>第二个特征：</strong>==<strong>没有出处。</strong>==
+<ul>
+<li>eg：很多信息，其实是某个人断章取义，甚至肆意篡改之后，发布到所有媒体上的，只有一个不太可靠的来源，不信也罢。</li>
+</ul>
+</li>
+<li><strong>第三个特征：</strong>==<strong>缺乏上下文。</strong>==
+<ul>
+<li>eg：“俄罗斯是世界最大产油国”，忽略了时间维度；</li>
+<li>eg：页岩气革命，《页岩革命》；</li>
+</ul>
+</li>
+<li>1、将它们放在**==更大的时空==**来考量。
+<ul>
+<li>eg：小尺度信息，就算准确，也只是<strong>增量信息</strong>。</li>
+</ul>
+</li>
+<li>2、要看==<strong>信息的一致性</strong>==。
+<ul>
+<li>eg：标题党；</li>
+</ul>
+</li>
+<li>3、对于从一大堆信息中抽取的信息，要看它们的**==失真率==**。
+<ul>
+<li>eg：故意误导人的==信息相反==，过滤了低频信号，保留个别高频信号，刻意渲染，失真率极高。</li>
+<li>eg：印度强奸案发生率，实际排名 90多；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>对于没有条件溯源的，怎样评价这些信息？</p>
+<ul>
+<li>看**==同行评议。==**</li>
+</ul>
+</li>
+<li>
+<p>第一模块五个重要原则：</p>
+<ul>
+<li>1、最好、最重要的**==资源要用于==<strong>那些</strong>==出现最频繁的事情==**，这样分配资源最有效，其背后的原理是香农第一定律和哈夫曼编码。</li>
+<li>2、<strong>==不用将相关性当成因果关系。==<strong>弱相关性对我们做事情没什么帮助，而对于强相关性，要</strong>==搞清楚==<strong>谁可能是因，谁可能是果，</strong>==切忌因果倒置。==</strong></li>
+<li>3、很多时候，要直接获得某种信息是很困难的，因此可以通过获得**==等价信息==**，得到同样的效果。</li>
+<li>4、日常遇到的大部分事情，都是**==渐变的==<strong>，因此通过</strong>==增量改进，要比推倒重来效率高==**，这就如同对增量压缩，可以比静态压缩高很多一样。</li>
+<li>5、遇到很多信息，一个比较==高效率表示信息的方法==是**==矢量化==**，即将很==多维度的信息映射到我们关心的几个维度==。eg：文字的演变就是矢量化的结果。</li>
+</ul>
+</li>
+<li>
+<p>几个概念</p>
+<ul>
+<li><strong>==信息熵==</strong>，说明信息量和不确定性的关系。</li>
+<li><strong>==冗余度==</strong>，任何信息都有冗余，去除冗余是今天信息处理的一项重要工作，但也有==好处==，可避免出错。</li>
+<li>**==不同信息的正交性：==**常说的==互补==，就是某种意义上的信息正交。同一种信息用好几遍，效果不如使用两种正交信息。不仅信息如此，打造一个团队也如此。</li>
+</ul>
+</li>
+</ul>
+<p>2022/01/18 18:02:20 30min</p>
+<hr></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/Notes/docs/information_theory/导论_01-03/"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">导论_01-03</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/Notes/docs/information_theory/信息传播_19-28/"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">信息传播_19-28</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_G4nv thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#01-模块一信息产生-04-18" class="table-of-contents__link toc-highlight">01 模块一：信息产生 04-18</a><ul><li><a href="#04-信息的量化度量世界上有稳赚不赔的生意吗" class="table-of-contents__link toc-highlight">04 信息的量化度量：世界上有稳赚不赔的生意吗</a></li><li><a href="#05-信息编码数字和文字是如何诞生的" class="table-of-contents__link toc-highlight">05 信息编码：数字和文字是如何诞生的</a></li><li><a href="#06-有效编码10-个手指能表示多少个数字" class="table-of-contents__link toc-highlight">06 有效编码：10 个手指能表示多少个数字</a></li><li><a href="#07-最短编码如何利用哈夫曼编码原理投资" class="table-of-contents__link toc-highlight">07 最短编码：如何利用哈夫曼编码原理投资</a></li><li><a href="#08-矢量化象形文字和拼音文字是如何演化的" class="table-of-contents__link toc-highlight">08 矢量化：象形文字和拼音文字是如何演化的</a></li><li><a href="#09-冗余度史记和圣经哪个信息量大" class="table-of-contents__link toc-highlight">09 冗余度：《史记》和《圣经》哪个信息量大</a></li><li><a href="#10-等价性信息是如何压缩的" class="table-of-contents__link toc-highlight">10 等价性：信息是如何压缩的</a></li><li><a href="#11-信息增量信息压缩中的保守主义原则" class="table-of-contents__link toc-highlight">11 信息增量：信息压缩中的保守主义原则</a></li><li><a href="#12-压缩比和失真率如何在信息取舍之间作平衡" class="table-of-contents__link toc-highlight">12 压缩比和失真率：如何在信息取舍之间作平衡</a></li><li><a href="#13-信息正交性在信息很多的情况下如何作决策" class="table-of-contents__link toc-highlight">13 信息正交性：在信息很多的情况下如何作决策</a></li><li><a href="#14-互信息相关不是因果" class="table-of-contents__link toc-highlight">14 互信息：相关不是因果</a></li><li><a href="#15-条件熵和信息增益你提供的信息到底值多少钱" class="table-of-contents__link toc-highlight">15 条件熵和信息增益：你提供的信息到底值多少钱**</a></li><li><a href="#16-置信度马斯克犯了什么数学错误" class="table-of-contents__link toc-highlight">16 置信度：马斯克犯了什么数学错误</a></li><li><a href="#17-交叉熵如何避免制定出于事实相反的计划" class="table-of-contents__link toc-highlight">17 交叉熵：如何避免制定出于事实相反的计划</a></li><li><a href="#18-复盘如何识别误导人的错误信息" class="table-of-contents__link toc-highlight">18 复盘：如何识别误导人的错误信息</a></li></ul></li></ul></div></div></div></div></main></div></div></div></div>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-linux/Linux_05_进程管理_个人随堂笔记" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">Linux_05_进程管理_个人随堂笔记 | 编程内外</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" name="twitter:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" property="og:url" content="https://CELFS.github.io/Notes/docs/linux/Linux_05_进程管理_个人随堂笔记/"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Linux_05_进程管理_个人随堂笔记 | 编程内外"><meta data-rh="true" name="description" content="05 进程管理 随堂笔记及简答题思考"><meta data-rh="true" property="og:description" content="05 进程管理 随堂笔记及简答题思考"><link data-rh="true" rel="icon" href="/Notes/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://CELFS.github.io/Notes/docs/linux/Linux_05_进程管理_个人随堂笔记/"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/linux/Linux_05_进程管理_个人随堂笔记/" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/linux/Linux_05_进程管理_个人随堂笔记/" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous"><link rel="stylesheet" href="/Notes/assets/css/styles.67339a6f.css">
+<script src="/Notes/assets/js/runtime~main.fdf5edbd.js" defer="defer"></script>
+<script src="/Notes/assets/js/main.886a3333.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"dark")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/Notes/img/logo.png"><div role="region" aria-label="跳到主要内容"><a class="skipToContent__HuA" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Notes/"><div class="navbar__logo"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--light_c3lc"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--dark_Ji9V"></div><b class="navbar__title text--truncate">编程内外</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Notes/docs/category/linux-os/">Notes</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/CELFS/Notes" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link" icon="github">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_OqSl"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_OAgU colorModeToggle_zRe0"><button class="clean-btn toggleButton_aClM toggleButtonDisabled_GkIb" type="button" disabled="" title="切换浅色/暗黑模式（当前为暗黑模式）" aria-label="切换浅色/暗黑模式（当前为暗黑模式）" aria-live="polite" aria-pressed="true"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_zzlY"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_Z832"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Cx4E"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_liLQ"><div class="docsWrapper_evXH"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_nZiY" type="button"></button><div class="docRoot_jKp6"><aside class="theme-doc-sidebar-container docSidebarContainer_wXyP"><div class="sidebarViewport_LQZ0"><div class="sidebar_T0dy"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_WBBB"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/Notes/docs/category/linux-os/">Linux OS</a><button aria-label="折叠侧边栏分类 &#x27;Linux OS&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_00_C++开发环境配置实验/">Linux_00_C++开发环境配置实验</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_00_环境配置个人优化/">Linux_00_环境配置个人优化</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_01_Linux环境下，部分软件安装/">Linux_01_Linux环境下，部分软件安装</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_02_shell环境的熟悉与使用/">Linux_02_shell环境的熟悉与使用</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_03_文件的特殊权限/">Linux_03_文件的特殊权限</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_04_用户管理测验/">Linux_04_用户管理测验</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/Notes/docs/linux/Linux_05_进程管理_个人随堂笔记/">Linux_05_进程管理_个人随堂笔记</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_06_数据提取练习题/">Linux_06_数据提取练习题</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_07_shell编程练习题/">Linux_07_shell编程练习题</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/linux/Linux_08_保存完整网页/">Linux_08_保存完整网页</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/ajax/">Ajax</a><button aria-label="展开侧边栏分类 &#x27;Ajax&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/css/">CSS</a><button aria-label="展开侧边栏分类 &#x27;CSS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript-es6/">JavaScript ES6</a><button aria-label="展开侧边栏分类 &#x27;JavaScript ES6&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript/">JavaScript</a><button aria-label="展开侧边栏分类 &#x27;JavaScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/nodejs/">Node.js</a><button aria-label="展开侧边栏分类 &#x27;Node.js&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/typescript/">TypeScript</a><button aria-label="展开侧边栏分类 &#x27;TypeScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/vue/">Vue</a><button aria-label="展开侧边栏分类 &#x27;Vue&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/轻量级服务器开发tinywebserver/">轻量级服务器开发（TinyWebServer）</a><button aria-label="展开侧边栏分类 &#x27;轻量级服务器开发（TinyWebServer）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/c-后台服务器开发/">C++ 后台服务器开发</a><button aria-label="展开侧边栏分类 &#x27;C++ 后台服务器开发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/mysql-必知必会/">MySQL 必知必会</a><button aria-label="展开侧边栏分类 &#x27;MySQL 必知必会&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/操作系统导论/">操作系统导论</a><button aria-label="展开侧边栏分类 &#x27;操作系统导论&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/qt/">QT</a><button aria-label="展开侧边栏分类 &#x27;QT&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军信息论-40-讲/">读吴军《信息论 40 讲》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《信息论 40 讲》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军富足/">读吴军《富足》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《富足》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/machine-learning-andrew-ng/">Machine Learning (Andrew Ng)</a><button aria-label="展开侧边栏分类 &#x27;Machine Learning (Andrew Ng)&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/机器学习初步周志华/">机器学习初步（周志华）</a><button aria-label="展开侧边栏分类 &#x27;机器学习初步（周志华）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/paddle-零基础深度学习第二版/">Paddle 零基础深度学习（第二版）</a><button aria-label="展开侧边栏分类 &#x27;Paddle 零基础深度学习（第二版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/动手学深度学习pytorch-版/">动手学深度学习（Pytorch 版）</a><button aria-label="展开侧边栏分类 &#x27;动手学深度学习（Pytorch 版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Notes/docs/intro/">学而时习之</a></li></ul></nav></div></div></aside><main class="docMainContainer_dhcR"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_hWfg"><div class="docItemContainer_UIwD"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_ViMa" aria-label="页面路径"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/Notes/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_xAfz"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/Notes/docs/category/linux-os/"><span itemprop="name">Linux OS</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Linux_05_进程管理_个人随堂笔记</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_xgD3 theme-doc-toc-mobile tocMobile_UvqM"><button type="button" class="clean-btn tocCollapsibleButton_ldZF">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>Linux_05_进程管理_个人随堂笔记</h1></header><h3 class="anchor anchorWithStickyNavbar_QJwc" id="05-进程管理-随堂笔记及简答题思考">05 进程管理 随堂笔记及简答题思考<a href="#05-进程管理-随堂笔记及简答题思考" class="hash-link" aria-label="05 进程管理 随堂笔记及简答题思考的直接链接" title="05 进程管理 随堂笔记及简答题思考的直接链接">​</a></h3>
+<p>创建信息：2021年6月22日14:09:07  By CELFS</p>
+<ul>
+<li>随堂笔记整理</li>
+</ul>
+<p>修改信息：2021年6月22日15:53:47  By CELFS</p>
+<ul>
+<li>笔记整理完成</li>
+</ul>
+<p>修改信息：2021年6月22日16:32:08  By CEFLS</p>
+<ul>
+<li>简答题思路添加</li>
+</ul>
+<hr>
+<p>[TOC]</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="一主要命令">一、主要命令<a href="#一主要命令" class="hash-link" aria-label="一、主要命令的直接链接" title="一、主要命令的直接链接">​</a></h3>
+<img decoding="async" loading="lazy" src="https://api2.mubu.com/v3/document_image/70fbdb55-d78a-4021-8759-75b46d1c17b7-4868874.jpg" alt="image" style="zoom:33%" class="img_O9Fa">
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="1-free">1 free<a href="#1-free" class="hash-link" aria-label="1 free的直接链接" title="1 free的直接链接">​</a></h3>
+<ul>
+<li>功能：检查内存使用情况，较多参数控制显示单位。</li>
+<li>勘误：
+<ul>
+<li>[-s] N：--seconds
+<ul>
+<li>​	delay	每隔N秒执行一次</li>
+</ul>
+</li>
+<li>[-t] ：--total
+<ul>
+<li>​	Display a line showing the column totals.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>其他常用参数
+<ul>
+<li>[-h]：--human</li>
+<li>[-b|k|m|g]</li>
+</ul>
+</li>
+<li>运行截图</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20210622142640644" src="/Notes/assets/images/image-20210622142640644-92224368264d1775fda3c28437767166.png" width="2560" height="1111" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="2-top">2 top<a href="#2-top" class="hash-link" aria-label="2 top的直接链接" title="2 top的直接链接">​</a></h3>
+<ul>
+<li>
+<p>功能：了解系统正常运行有哪些常见进程，显示最活跃的进程，通常了解top界面有的信息即可。</p>
+</li>
+<li>
+<p>Swap：交换分区。相关资料显示，该分区类似Windows的虚拟内存，一般设置为内存的两倍。</p>
+</li>
+<li>
+<p><strong>疑问：</strong></p>
+<ul>
+<li><strong>top界面的信息刷新形式，区别于[free -s N]向下增加行的刷新形式，是如何实现的？有没有专有名词？如何定格了画面，用新的信息把画面替换？</strong></li>
+</ul>
+</li>
+<li>
+<p>运行截图</p>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20210622143324729" src="/Notes/assets/images/image-20210622143324729-112e10b61d684f2bb3c29c9b52ec3b57.png" width="2560" height="1600" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="3-dstat">3 dstat<a href="#3-dstat" class="hash-link" aria-label="3 dstat的直接链接" title="3 dstat的直接链接">​</a></h3>
+<ul>
+<li>功能：实时监控磁盘、CPU、网络等的读写流量，辅助判断系统正在做什么、是否忙碌。</li>
+<li>常用命令：
+<ul>
+<li>[num1 num2]]：
+<ul>
+<li>控制显示时间，更新次数</li>
+<li><strong>刷新次数达到num2将退出dstat</strong></li>
+</ul>
+</li>
+<li>[--list]：
+<ul>
+<li>列出内外插件名称</li>
+</ul>
+</li>
+<li>[--output]：
+<ul>
+<li>输出为CSV文件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>运行截图</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20210622144109642" src="/Notes/assets/images/image-20210622144109642-29814af94216e5c6765bed2c2368f209.png" width="2560" height="1053" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20210622144719997" src="/Notes/assets/images/image-20210622144719997-dbcb9700e03ed237335c2e6028cb9f81.png" width="2560" height="507" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20210622144812525" src="/Notes/assets/images/image-20210622144812525-4ef8669a3a8218aa6c5f9c306b9d4785.png" width="2560" height="385" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="4-ps常用">4 ps【常用】<a href="#4-ps常用" class="hash-link" aria-label="4 ps【常用】的直接链接" title="4 ps【常用】的直接链接">​</a></h3>
+<ul>
+<li>功能：类似Windows的任务管理器。</li>
+<li>掌握命令：
+<ul>
+<li>[-aux]
+<ul>
+<li>BSD格式显示进程【BSD风格】</li>
+<li>List all running processes</li>
+<li>SIMPLE PROCESS SELECTION
+<ul>
+<li>[-a]   Select all processes except both session leaders (see getsid(2)) and processes not associated with a terminal.</li>
+</ul>
+</li>
+<li>OUTPUT FORMAT CONTROL
+<ul class="contains-task-list containsTaskList_q3ZP">
+<li>[u]    Display user-oriented format.</li>
+<li class="task-list-item"><input type="checkbox" disabled="" checked=""> Register format.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>[-ef]
+<ul>
+<li>标准格式显示进程</li>
+<li>OUTPUT MODIFIERS
+<ul>
+<li>[e]    Show the environment after the command.</li>
+<li>[f]     ASCII art process hierarchy (forest).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>历史：两参数分别来源于Unix和Linux，展示格式不同。man手册中涉及[-aux]命令有UNIX的相关描述，且讲述了[ps -aux]和[ps aux]是存在区别的。暂未找到详细的历史</li>
+</ul>
+</li>
+<li>运行截图</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20210622145154265" src="/Notes/assets/images/image-20210622145154265-5e0d2e7d835a05927e34128a28ba3dc1.png" width="2560" height="1600" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20210622145220505" src="/Notes/assets/images/image-20210622145220505-0a5018738d065ce98dab8457355c2bc3.png" width="2560" height="1439" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="5-pstree常用">5 pstree【常用】<a href="#5-pstree常用" class="hash-link" aria-label="5 pstree【常用】的直接链接" title="5 pstree【常用】的直接链接">​</a></h3>
+<ul>
+<li>功能：树状显示进程派生关系。</li>
+<li>常用命令：
+<ul>
+<li>[-a]：显示程序完整指令</li>
+<li>[-n]：PID排序</li>
+<li>[-p]：显示PID</li>
+<li>[-u]：显示用户名</li>
+<li>[-l]：使用长列格式显示树状【测试发现，与直接使用pstree结果一致，可能受当前进程环境限制，进程较少，未体现该参数功能】</li>
+</ul>
+</li>
+<li>运行截图</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20210622151509836" src="/Notes/assets/images/image-20210622151509836-838fba58ba1747de0335d0b1c763b5c0.png" width="2560" height="1600" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20210622151146187" src="/Notes/assets/images/image-20210622151146187-926d77473ff67937661fd9fd6e6b0418.png" width="2560" height="1559" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="6-pgrep">6 pgrep<a href="#6-pgrep" class="hash-link" aria-label="6 pgrep的直接链接" title="6 pgrep的直接链接">​</a></h3>
+<ul>
+<li>
+<p>功能：查找进程ID，检索进程（grep检索信息）。</p>
+</li>
+<li>
+<p>运行截图</p>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20210622151953775" src="/Notes/assets/images/image-20210622151953775-f0f1039a238b47f54e64d700a579e632.png" width="2560" height="354" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="7-kill">7 kill<a href="#7-kill" class="hash-link" aria-label="7 kill的直接链接" title="7 kill的直接链接">​</a></h3>
+<ul>
+<li>
+<p>功能：结束执行中的程序和工作。【根据具体进程PID的kill】</p>
+</li>
+<li>
+<p>常用命令：</p>
+<ul>
+<li><code>kill pid</code></li>
+<li><code>kill -9 pid</code>
+<ul>
+<li>[-9]：Kill all processes you can kill.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>疑问：</strong></p>
+<ul>
+<li><strong>为什么强制结束进程的参数是<code>[-9]</code>？至今为止见到的命令参数，基本上都是英文字母，而偶尔出现的个别数字是控制输出形式的，或者像<code>PID</code>那样指明对象。<code>kill</code>下的数字命令参数，还有<code>[-2]</code> <code> [-17]</code>。</strong></li>
+<li><strong><code>kill</code>执行完毕，没有反馈信息，需再次键入<code>jobs</code>等检查进程命令，是否有更快捷的信息反馈方式？例如与<code>kill</code>命令融合执行，<code>kill</code>后自动反馈成功与否的信息。</strong></li>
+<li>执行<code>kill</code>后，进程[1] +/- PID，中的±号代表什么？
+<ul>
+<li>【**变化规律：**1个进程[+]，2个进程[-] [+]，3个进程[空] [-] [+]，4个进程[空] [空] [-] [+]】</li>
+<li><img decoding="async" loading="lazy" alt="image-20210622154913751" src="/Notes/assets/images/image-20210622154913751-bc31816d0f5487f4c80b0ebf4b05574b.png" width="2560" height="272" class="img_O9Fa"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>插曲【ping不通，已解决】</strong>：</p>
+</li>
+</ul>
+<div class="language-bash codeBlockContainer_qNdj theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_enjf"><pre tabindex="0" class="prism-code language-bash codeBlock_txiP thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_XHAo"><span class="token-line" style="color:#F8F8F2"><span class="token plain">//编辑以下文件</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">sudo vim /etc/resolv.conf</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">//添加以下代码</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">nameserver 114.114.114.114</span><br></span></code></pre><div class="buttonGroup_Y8nk"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_FM2O" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_GhTt"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_AhUB"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p><img decoding="async" loading="lazy" alt="image-20210622153609948" src="/Notes/assets/images/image-20210622153609948-12aaac7c62551fbf8023b221beabcd82.png" width="2560" height="91" class="img_O9Fa"></p>
+<ul>
+<li>运行截图</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20210622153023311" src="/Notes/assets/images/image-20210622153023311-e12971fef2ce736f0340805718cdb1aa.png" width="2560" height="677" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20210622153429808" src="/Notes/assets/images/image-20210622153429808-8c1d4233d0f1f7f943ac7034ece77dc2.png" width="2560" height="1323" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="8-pkill">8 pkill<a href="#8-pkill" class="hash-link" aria-label="8 pkill的直接链接" title="8 pkill的直接链接">​</a></h3>
+<ul>
+<li>
+<p>功能：结束进程中的程序和工作。<strong>【模糊匹配进程名称的kill，root下存在<code>kill</code>系统进程的风险】</strong></p>
+</li>
+<li>
+<p>运行截图</p>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20210622155253677" src="/Notes/assets/images/image-20210622155253677-14fcd1708e8a1ef8ba5f81090181b3da.png" width="2560" height="315" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="二简答题">二、简答题<a href="#二简答题" class="hash-link" aria-label="二、简答题的直接链接" title="二、简答题的直接链接">​</a></h3>
+<ul>
+<li>假设你在你的云主机上安装了<code>MySQL</code>数据库，请问你要如何确认它是否在<strong>正确运行</strong>，以及如果它在运行的话，应该如何<strong>结束</strong>它？</li>
+<li><strong>答：</strong>
+<ul>
+<li>以<code>ping</code>进程为例
+<ul>
+<li>执行后挂起程序（非必要）；</li>
+<li><code>jobs</code>获取当前挂起的进程列表（非必要）；</li>
+<li><code>pgrep</code>获取进程<code>PID</code>（挂起操作也会显示<code>PID</code>）；</li>
+<li><code>ps</code>和<code>grep</code>关键词筛选信息，对照获取的<code>PID</code>，可找到<strong>正在运行</strong>的<code>ping</code>进程；</li>
+<li><code>pkill</code>结束进程，<code>jobs</code>检查挂起进程列表，为空，说明<code>ping</code>进程既没有挂起，也没有在总进程中执行，进程成功结束。</li>
+</ul>
+</li>
+<li><strong>但是</strong>
+<ul>
+<li>1、以上的操作，应该<strong>只能够证明<code>MySQL</code>打开了</strong>，不代表正确运行，本人理解的<strong>正确运行，是基于有效实现数据传输任务</strong>的运行，因此，应该结合<strong>进程使用流量等信息进一步判断</strong>。</li>
+<li>2、这样结束的方式，是否代表进程正确结束？<code>kill</code>命令，尤其是<code>[-9]</code>强制<code>kill</code>命令，需考究是否执行数据保存的操作，正常结束进程，<strong>应该是</strong>像<code>vim</code>编辑文本的时候使用的<code>:wq</code>命令，<strong>从程序内部主动结束任务</strong>，而<code>kill</code>相关命令，更像是<strong>程序被动结束</strong>。</li>
+</ul>
+</li>
+<li><strong>进一步判断思路【控制变量】</strong>
+<ul>
+<li>考虑优先清空除系统进程外的额外进程，减少数据干扰；</li>
+<li>运行<code>MySQL</code>前，使用<code>dstat</code>监控当前进程流量，<code>--output</code>输出CSV文件；</li>
+<li>运行<code>MySQL</code>后，考虑利用测试数据，充程序的流量，同时考虑<strong>如何估算</strong>输入输入数据流量大小；</li>
+<li>挂起<code>MySQL</code>后，使用<code>dstat</code>监控当前进程流量，<code>--output</code>输出CSV文件；</li>
+<li>对比相同时间、相同刷新次数下的进程流量CSV文件数据，若数据收发量差值与估算值相近，说明<code>MySQL</code>某种程度上正确运行。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20210622160310979" src="/Notes/assets/images/image-20210622160310979-163ebb280047a711bd2639dd30a710a8.png" width="2560" height="738" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20210622160817518" src="/Notes/assets/images/image-20210622160817518-bd83b4bf7ad7841a0a2d606179cc2e2e.png" width="2560" height="659" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="参考">参考<a href="#参考" class="hash-link" aria-label="参考的直接链接" title="参考的直接链接">​</a></h3>
+<ul>
+<li>Linux脚本刷新屏幕显示输出，像top命令一下刷新屏幕_Aubrey.J的博客-CSDN博客_shell 刷新输出  <a href="https://blog.csdn.net/qq_33598419/article/details/103315187" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/qq_33598419/article/details/103315187</a></li>
+<li>linux top mem/swap内存显示_麦子的博客-CSDN博客  <a href="https://blog.csdn.net/u010931123/article/details/101461771" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/u010931123/article/details/101461771</a></li>
+<li>linux SWAP大小与内存的关系_libaoan1971的专栏-CSDN博客_centos7 swap和内存关系  <a href="https://blog.csdn.net/libaoan1971/article/details/52931284?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/libaoan1971/article/details/52931284?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control</a></li>
+<li><ps> ps aux 和ps -aux和 ps -ef的选择 - 裴银祥的博客园 - 博客园  <a href="https://www.cnblogs.com/yinxiangpei/articles/5053840.html" target="_blank" rel="noopener noreferrer">https://www.cnblogs.com/yinxiangpei/articles/5053840.html</a></ps></li>
+<li>Linux下ps -ef和ps aux的区别及格式详解 - 520_1351 - 博客园  <a href="https://www.cnblogs.com/5201351/p/4206461.html" target="_blank" rel="noopener noreferrer">https://www.cnblogs.com/5201351/p/4206461.html</a></li>
+<li><strong>Linux三种风格（Unix、BSD、GNU）下的ps的参数说明_喵哥的博客-CSDN博客_bsd风格  <a href="https://blog.csdn.net/ruibin_cao/article/details/84660224" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/ruibin_cao/article/details/84660224</a></strong></li>
+<li>Temporary failure in name resolution 错误解决方法 – 默默的点滴  <a href="https://www.mobibrw.com/2017/6092" target="_blank" rel="noopener noreferrer">https://www.mobibrw.com/2017/6092</a></li>
+<li>Temporary failure in name resolution 错误解决方法 - Open source of memory - ITeye博客  <a href="https://www.iteye.com/blog/cloudera-809821" target="_blank" rel="noopener noreferrer">https://www.iteye.com/blog/cloudera-809821</a></li>
+</ul></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/Notes/docs/linux/Linux_04_用户管理测验/"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">Linux_04_用户管理测验</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/Notes/docs/linux/Linux_06_数据提取练习题/"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">Linux_06_数据提取练习题</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_G4nv thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#05-进程管理-随堂笔记及简答题思考" class="table-of-contents__link toc-highlight">05 进程管理 随堂笔记及简答题思考</a></li><li><a href="#一主要命令" class="table-of-contents__link toc-highlight">一、主要命令</a></li><li><a href="#1-free" class="table-of-contents__link toc-highlight">1 free</a></li><li><a href="#2-top" class="table-of-contents__link toc-highlight">2 top</a></li><li><a href="#3-dstat" class="table-of-contents__link toc-highlight">3 dstat</a></li><li><a href="#4-ps常用" class="table-of-contents__link toc-highlight">4 ps【常用】</a></li><li><a href="#5-pstree常用" class="table-of-contents__link toc-highlight">5 pstree【常用】</a></li><li><a href="#6-pgrep" class="table-of-contents__link toc-highlight">6 pgrep</a></li><li><a href="#7-kill" class="table-of-contents__link toc-highlight">7 kill</a></li><li><a href="#8-pkill" class="table-of-contents__link toc-highlight">8 pkill</a></li><li><a href="#二简答题" class="table-of-contents__link toc-highlight">二、简答题</a></li><li><a href="#参考" class="table-of-contents__link toc-highlight">参考</a></li></ul></div></div></div></div></main></div></div></div></div>
+</body>
+</html>

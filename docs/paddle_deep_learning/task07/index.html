@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-paddle_deep_learning/task07" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">task07 | 编程内外</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" name="twitter:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" property="og:url" content="https://CELFS.github.io/Notes/docs/paddle_deep_learning/task07/"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="task07 | 编程内外"><meta data-rh="true" name="description" content="Task07 自然语言处理模型的网络结构"><meta data-rh="true" property="og:description" content="Task07 自然语言处理模型的网络结构"><link data-rh="true" rel="icon" href="/Notes/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://CELFS.github.io/Notes/docs/paddle_deep_learning/task07/"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/paddle_deep_learning/task07/" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/paddle_deep_learning/task07/" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous"><link rel="stylesheet" href="/Notes/assets/css/styles.67339a6f.css">
+<script src="/Notes/assets/js/runtime~main.fdf5edbd.js" defer="defer"></script>
+<script src="/Notes/assets/js/main.886a3333.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"dark")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/Notes/img/logo.png"><div role="region" aria-label="跳到主要内容"><a class="skipToContent__HuA" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Notes/"><div class="navbar__logo"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--light_c3lc"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--dark_Ji9V"></div><b class="navbar__title text--truncate">编程内外</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Notes/docs/category/linux-os/">Notes</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/CELFS/Notes" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link" icon="github">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_OqSl"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_OAgU colorModeToggle_zRe0"><button class="clean-btn toggleButton_aClM toggleButtonDisabled_GkIb" type="button" disabled="" title="切换浅色/暗黑模式（当前为暗黑模式）" aria-label="切换浅色/暗黑模式（当前为暗黑模式）" aria-live="polite" aria-pressed="true"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_zzlY"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_Z832"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Cx4E"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_liLQ"><div class="docsWrapper_evXH"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_nZiY" type="button"></button><div class="docRoot_jKp6"><aside class="theme-doc-sidebar-container docSidebarContainer_wXyP"><div class="sidebarViewport_LQZ0"><div class="sidebar_T0dy"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_WBBB"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/linux-os/">Linux OS</a><button aria-label="展开侧边栏分类 &#x27;Linux OS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/ajax/">Ajax</a><button aria-label="展开侧边栏分类 &#x27;Ajax&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/css/">CSS</a><button aria-label="展开侧边栏分类 &#x27;CSS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript-es6/">JavaScript ES6</a><button aria-label="展开侧边栏分类 &#x27;JavaScript ES6&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript/">JavaScript</a><button aria-label="展开侧边栏分类 &#x27;JavaScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/nodejs/">Node.js</a><button aria-label="展开侧边栏分类 &#x27;Node.js&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/typescript/">TypeScript</a><button aria-label="展开侧边栏分类 &#x27;TypeScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/vue/">Vue</a><button aria-label="展开侧边栏分类 &#x27;Vue&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/轻量级服务器开发tinywebserver/">轻量级服务器开发（TinyWebServer）</a><button aria-label="展开侧边栏分类 &#x27;轻量级服务器开发（TinyWebServer）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/c-后台服务器开发/">C++ 后台服务器开发</a><button aria-label="展开侧边栏分类 &#x27;C++ 后台服务器开发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/mysql-必知必会/">MySQL 必知必会</a><button aria-label="展开侧边栏分类 &#x27;MySQL 必知必会&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/操作系统导论/">操作系统导论</a><button aria-label="展开侧边栏分类 &#x27;操作系统导论&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/qt/">QT</a><button aria-label="展开侧边栏分类 &#x27;QT&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军信息论-40-讲/">读吴军《信息论 40 讲》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《信息论 40 讲》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军富足/">读吴军《富足》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《富足》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/machine-learning-andrew-ng/">Machine Learning (Andrew Ng)</a><button aria-label="展开侧边栏分类 &#x27;Machine Learning (Andrew Ng)&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/机器学习初步周志华/">机器学习初步（周志华）</a><button aria-label="展开侧边栏分类 &#x27;机器学习初步（周志华）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/Notes/docs/category/paddle-零基础深度学习第二版/">Paddle 零基础深度学习（第二版）</a><button aria-label="折叠侧边栏分类 &#x27;Paddle 零基础深度学习（第二版）&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/paddle_deep_learning/task00/">task00</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/paddle_deep_learning/task01/">task01</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/paddle_deep_learning/task02/">task02</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/paddle_deep_learning/task03/">task03</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/paddle_deep_learning/task04/">task04</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/paddle_deep_learning/task05_01/">task05_01</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/paddle_deep_learning/task05_02/">task05_02</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/paddle_deep_learning/task06/">task06</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/Notes/docs/paddle_deep_learning/task07/">task07</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/paddle_deep_learning/task08/">task08</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/paddle_deep_learning/task09/">task09</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/paddle_deep_learning/task10/">task10</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/paddle_deep_learning/task11/">task11</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/paddle_deep_learning/task12/">task12</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/动手学深度学习pytorch-版/">动手学深度学习（Pytorch 版）</a><button aria-label="展开侧边栏分类 &#x27;动手学深度学习（Pytorch 版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Notes/docs/intro/">学而时习之</a></li></ul></nav></div></div></aside><main class="docMainContainer_dhcR"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_hWfg"><div class="docItemContainer_UIwD"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_ViMa" aria-label="页面路径"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/Notes/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_xAfz"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/Notes/docs/category/paddle-零基础深度学习第二版/"><span itemprop="name">Paddle 零基础深度学习（第二版）</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">task07</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_xgD3 theme-doc-toc-mobile tocMobile_UvqM"><button type="button" class="clean-btn tocCollapsibleButton_ldZF">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>task07</h1></header><h3 class="anchor anchorWithStickyNavbar_QJwc" id="task07-自然语言处理模型的网络结构">Task07 自然语言处理模型的网络结构<a href="#task07-自然语言处理模型的网络结构" class="hash-link" aria-label="Task07 自然语言处理模型的网络结构的直接链接" title="Task07 自然语言处理模型的网络结构的直接链接">​</a></h3>
+<p>Date：</p>
+<hr>
+<p>[TOC]</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="71-nlp经典神经网络">7.1 NLP经典神经网络<a href="#71-nlp经典神经网络" class="hash-link" aria-label="7.1 NLP经典神经网络的直接链接" title="7.1 NLP经典神经网络的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20230327201718686" src="/Notes/assets/images/image-20230327201718686-54ad5a9b29feba040ccf6ef8b0e6fc4e.png" width="1725" height="842" class="img_O9Fa"></p>
+<h4 class="anchor anchorWithStickyNavbar_QJwc" id="711rnnlstm评估指标">7.1.1RNN、LSTM、评估指标<a href="#711rnnlstm评估指标" class="hash-link" aria-label="7.1.1RNN、LSTM、评估指标的直接链接" title="7.1.1RNN、LSTM、评估指标的直接链接">​</a></h4>
+<p><img decoding="async" loading="lazy" alt="image-20230327201851236" src="/Notes/assets/images/image-20230327201851236-173b27d91dd9c19970ddf3ac1fb1bae6.png" width="1874" height="861" class="img_O9Fa"></p>
+<ul>
+<li>或者 “递归神经网络”</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327202018052" src="/Notes/assets/images/image-20230327202018052-cde94edb5edefc51daf26b74595fc5e1.png" width="1877" height="855" class="img_O9Fa"></p>
+<ul>
+<li>面对长序列，性能不佳，因此改进，有了 LSTM</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327202103422" src="/Notes/assets/images/image-20230327202103422-cd83953e3491d191158f761d3c8756de.png" width="1872" height="827" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327202211382" src="/Notes/assets/images/image-20230327202211382-6c2693bea96b325dc7f4aaaf89cd5379.png" width="1905" height="825" class="img_O9Fa"></p>
+<ul>
+<li>门结构</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327202258070" src="/Notes/assets/images/image-20230327202258070-3c0a8351ed6ac7e04a6015b0751d3fd8.png" width="1906" height="899" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327202432015" src="/Notes/assets/images/image-20230327202432015-9d735e55ed1123c7b65337b43ac4b0d0.png" width="1873" height="776" class="img_O9Fa"></p>
+<hr>
+<h4 class="anchor anchorWithStickyNavbar_QJwc" id="712-情感分析建模方式模型架构">7.1.2 情感分析、建模方式、模型架构<a href="#712-情感分析建模方式模型架构" class="hash-link" aria-label="7.1.2 情感分析、建模方式、模型架构的直接链接" title="7.1.2 情感分析、建模方式、模型架构的直接链接">​</a></h4>
+<ul>
+<li>情感分析（Hello World）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327202545136" src="/Notes/assets/images/image-20230327202545136-7e2b8f6713fd80cd157e606a6894517f.png" width="1837" height="926" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327202636398" src="/Notes/assets/images/image-20230327202636398-97fa10559d5f6ba4c21aa20b89fa0fe0.png" width="1895" height="906" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327202746600" src="/Notes/assets/images/image-20230327202746600-1aa23b58345dcf98c3c1efa3f4970601.png" width="1705" height="956" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327202802592" src="/Notes/assets/images/image-20230327202802592-795e9d1d143af6fef9c68a111eb9d48d.png" width="1766" height="918" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327202937477" src="/Notes/assets/images/image-20230327202937477-c7f9062a69caf87054954b9b4febca52.png" width="1767" height="751" class="img_O9Fa"></p>
+<ul>
+<li>2023/03/27 20:32:41</li>
+</ul>
+<hr>
+<h4 class="anchor anchorWithStickyNavbar_QJwc" id="713-用飞桨实现情感分析">7.1.3 用飞桨实现情感分析<a href="#713-用飞桨实现情感分析" class="hash-link" aria-label="7.1.3 用飞桨实现情感分析的直接链接" title="7.1.3 用飞桨实现情感分析的直接链接">​</a></h4>
+<p><img decoding="async" loading="lazy" alt="image-20230327212927345" src="/Notes/assets/images/image-20230327212927345-ab639e2cb47672bde4833f77b9ede286.png" width="1845" height="895" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327212933702" src="/Notes/assets/images/image-20230327212933702-8410c4b9ef9c297bfa4b2d5744e8dfa0.png" width="1568" height="767" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327212939103" src="/Notes/assets/images/image-20230327212939103-b5fb4466d67001d7a7d118932d28cf73.png" width="1836" height="829" class="img_O9Fa"></p>
+<ul>
+<li>经典入门 NLP 数据集</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327212955525" src="/Notes/assets/images/image-20230327212955525-0e9137af6b7c4163200acb5a8e1ae03e.png" width="1781" height="994" class="img_O9Fa"></p>
+<ul>
+<li>关键是做成迭代器</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327213020405" src="/Notes/assets/images/image-20230327213020405-5a418388ce79387016412968d1cadc54.png" width="1757" height="977" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327213054683" src="/Notes/assets/images/image-20230327213054683-46bb4aac3c29096d78163a1cb01d3b3e.png" width="1829" height="908" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327213123764" src="/Notes/assets/images/image-20230327213123764-371799d7bcafa73db910a6e2cee38b14.png" width="1772" height="1005" class="img_O9Fa"></p>
+<ul>
+<li>模型搭建：</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327213224027" src="/Notes/assets/images/image-20230327213224027-197965d75636deb66a56a438343938b4.png" width="1734" height="917" class="img_O9Fa"></p>
+<ul>
+<li>分析网络如何搭建：</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327213335239" src="/Notes/assets/images/image-20230327213335239-f1c986e6ecaa91bc54a9a7c37ca66718.png" width="1788" height="935" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327213530038" src="/Notes/assets/images/image-20230327213530038-4e76d64caf02cfc7e93f12bd359ba0e1.png" width="1787" height="975" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327213617327" src="/Notes/assets/images/image-20230327213617327-beb5db1e9a99c0e37c9cdca5288d49b8.png" width="1782" height="973" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327213631229" src="/Notes/assets/images/image-20230327213631229-51b8faf533dfb7946c9146e61c5351a4.png" width="1819" height="893" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="72-transformer网络结构">7.2 Transformer网络结构<a href="#72-transformer网络结构" class="hash-link" aria-label="7.2 Transformer网络结构的直接链接" title="7.2 Transformer网络结构的直接链接">​</a></h3>
+<h4 class="anchor anchorWithStickyNavbar_QJwc" id="721自注意力模型">7.2.1自注意力模型<a href="#721自注意力模型" class="hash-link" aria-label="7.2.1自注意力模型的直接链接" title="7.2.1自注意力模型的直接链接">​</a></h4>
+<p><img decoding="async" loading="lazy" alt="image-20230327213739598" src="/Notes/assets/images/image-20230327213739598-94d8dc226afa9c1e9199a68f3bb1ca3b.png" width="1833" height="742" class="img_O9Fa"></p>
+<ul>
+<li>为了解决 RNN 长距离依赖、不能进行并行计算的缺点</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327213832898" src="/Notes/assets/images/image-20230327213832898-2f3a6b001f5adf946f6519abfff2afb1.png" width="1863" height="866" class="img_O9Fa"></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em"></span><span class="mord mathnormal" style="margin-right:0.0037em">α</span></span></span></span> 即注意力系数</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327213832898" src="/Notes/assets/images/image-20230327213832898-2f3a6b001f5adf946f6519abfff2afb1.png" width="1863" height="866" class="img_O9Fa"></p>
+<ul>
+<li>因为结果值比较大，需要归一化处理，而结果又涉及概率，除以 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><msub><mi>D</mi><mi>k</mi></msub></msqrt></mrow><annotation encoding="application/x-tex">\sqrt{D_k}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.1883em"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8517em"><span class="svg-align" style="top:-3em"><span class="pstrut" style="height:3em"></span><span class="mord" style="padding-left:0.833em"><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span></span></span><span style="top:-2.8117em"><span class="pstrut" style="height:3em"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z"></path></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1883em"><span></span></span></span></span></span></span></span></span> 可以使得数据变集中；而除法之后得到的是数值，因此为了得到系数，用 Softmax 处理</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327214105866" src="/Notes/assets/images/image-20230327214105866-25960147fb4c9fd985353e4ac7c7ae61.png" width="1874" height="846" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327214150545" src="/Notes/assets/images/image-20230327214150545-b4c62508bd0ce8cbd14f485fd6d22d70.png" width="1866" height="833" class="img_O9Fa"></p>
+<ul>
+<li>模型单元：</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327214230955" src="/Notes/assets/images/image-20230327214230955-b66a8f462af2d57784c4577a7f3e2181.png" width="1808" height="759" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327214242787" src="/Notes/assets/images/image-20230327214242787-4c0512eb0efdb95e08555c9a422b785f.png" width="1864" height="755" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327214322124" src="/Notes/assets/images/image-20230327214322124-0e8cfc60617491d87f2f26c5da2cde94.png" width="1849" height="816" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230327214418829" src="/Notes/assets/images/image-20230327214418829-6b76384ff4a99c489e06d0dd4979939f.png" width="1834" height="855" class="img_O9Fa"></p>
+<ul>
+<li>2023/03/27 21:44:57</li>
+</ul>
+<hr>
+<h4 class="anchor anchorWithStickyNavbar_QJwc" id="722-seq2seq模型">7.2.2 Seq2Seq模型<a href="#722-seq2seq模型" class="hash-link" aria-label="7.2.2 Seq2Seq模型的直接链接" title="7.2.2 Seq2Seq模型的直接链接">​</a></h4>
+<p><img decoding="async" loading="lazy" alt="image-20230328144338691" src="/Notes/assets/images/image-20230328144338691-e813aaa9dff4238e2dbec659988e881d.png" width="1868" height="842" class="img_O9Fa"></p>
+<ul>
+<li>这种结构很重要，泛用性很广</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230328144407003" src="/Notes/assets/images/image-20230328144407003-f2e73204d9b93c1234ce45b00d00add2.png" width="1815" height="773" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230328145016459" src="/Notes/assets/images/image-20230328145016459-b6dea5dfce203774973930f635c344a3.png" width="1846" height="761" class="img_O9Fa"></p>
+<ul>
+<li>自控制结构的实现</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230328145132283" src="/Notes/assets/images/image-20230328145132283-c43b0b8ffd368230dd0fabcf481de53e.png" width="1872" height="801" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230328145254320" src="/Notes/assets/images/image-20230328145254320-efc182e1242c4f4afdb05c5aa2cfdd8a.png" width="1863" height="859" class="img_O9Fa"></p>
+<hr>
+<h4 class="anchor anchorWithStickyNavbar_QJwc" id="723-transformer模型-">7.2.3 Transformer模型 *<a href="#723-transformer模型-" class="hash-link" aria-label="7.2.3 Transformer模型 *的直接链接" title="7.2.3 Transformer模型 *的直接链接">​</a></h4>
+<p><img decoding="async" loading="lazy" alt="image-20230328150548932" src="/Notes/assets/images/image-20230328150548932-b964a9c57746e958796f6ff9d9a675f6.png" width="1754" height="963" class="img_O9Fa"></p>
+<ul>
+<li>本内容后面学习，只会用到左边的结构，而像 GPT 模型，则需要加上右边的结构</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230328155044524" src="/Notes/assets/images/image-20230328155044524-60e5d12604372781a584b0f6df97cd6b.png" width="1757" height="913" class="img_O9Fa"></p>
+<ul>
+<li>六层</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230328161850062" src="/Notes/assets/images/image-20230328161850062-93f4a6afdd9ac3ec407028a6fdb11edf.png" width="1766" height="951" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230328162344338" src="/Notes/assets/images/image-20230328162344338-f3445a10f0450d1df42ed72484e9e17c.png" width="1855" height="881" class="img_O9Fa"></p>
+<ul>
+<li>利用周期性变化，表征位置信息</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230328162427395" src="/Notes/assets/images/image-20230328162427395-82136bd302da893213cf5f1c18ad5450.png" width="1856" height="897" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230328162529838" src="/Notes/assets/images/image-20230328162529838-c0e172c46f3cb97e1176c6367377ca61.png" width="1877" height="913" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230328162610397" src="/Notes/assets/images/image-20230328162610397-81621ba55bb91bfae182ab4bc2cb0a3c.png" width="1814" height="954" class="img_O9Fa"></p>
+<ul>
+<li>
+<p>Layer Normalization 归一化处理，很适合 NLP 模型</p>
+</li>
+<li>
+<p>观察其余结构，都是线性的，而 Feed Forward 可处理非线性内容，加入后能够提升模型性能（论文）</p>
+</li>
+<li>
+<p>思考模型设计的意义</p>
+</li>
+</ul>
+<hr>
+<h4 class="anchor anchorWithStickyNavbar_QJwc" id="724-新闻分类任务实现">7.2.4 新闻分类任务实现<a href="#724-新闻分类任务实现" class="hash-link" aria-label="7.2.4 新闻分类任务实现的直接链接" title="7.2.4 新闻分类任务实现的直接链接">​</a></h4>
+<p><img decoding="async" loading="lazy" alt="image-20230328163026292" src="/Notes/assets/images/image-20230328163026292-5baecb4dea52cf9b9719767a45f407cb.png" width="1704" height="671" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230328163107313" src="/Notes/assets/images/image-20230328163107313-4d04b343f352d0a1cc8ed60be143a73b.png" width="1856" height="902" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230328163133084" src="/Notes/assets/images/image-20230328163133084-5a2f69205c390dd93a5f8c14019759a7.png" width="1852" height="996" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230328163305062" src="/Notes/assets/images/image-20230328163305062-a5640310c4aff580493ee39ede759d24.png" width="1845" height="903" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230328163411054" src="/Notes/assets/images/image-20230328163411054-a578d74a43032b450d32057238cdd06c.png" width="1863" height="741" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230328163440774" src="/Notes/assets/images/image-20230328163440774-55e3439146718ab82a4f7d01fe1769e5.png" width="1866" height="931" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230328163544683" src="/Notes/assets/images/image-20230328163544683-eff44d27db2b0e7205723b9d118d5590.png" width="1894" height="919" class="img_O9Fa"></p>
+<ul>
+<li>先搭建一层 <code>encoder_layer</code>，再用 <code>TransformerEncoder</code> 搭六层结构（层层叠加）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230328164057494" src="/Notes/assets/images/image-20230328164057494-85964e0262c532ce9ce170bbcfedb9d2.png" width="1857" height="879" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20230328164325141" src="/Notes/assets/images/image-20230328164325141-c449128564ed973b50ea751032fdf412.png" width="1779" height="1005" class="img_O9Fa"></p>
+<ul>
+<li>权重衰减 line 27</li>
+<li>模型很多操作都是为了减少过拟合（层多了就容易过拟合，就像人一样，学得多了，如果不丢弃一些，或者做一些规范整理，思绪就会更具有倾向性而妨碍了进步）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230328164548425" src="/Notes/assets/images/image-20230328164548425-6cda1b41d1dfb31295802e87f3d9dd88.png" width="1843" height="949" class="img_O9Fa"></p>
+<ul>
+<li>当完成所有模型训练，认为模型收敛之后，就可以做模型测试</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230328164707659" src="/Notes/assets/images/image-20230328164707659-5c866481a374277f645e201f5a04e3ca.png" width="1648" height="905" class="img_O9Fa"></p>
+<ul>
+<li>作业</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230328164754251" src="/Notes/assets/images/image-20230328164754251-dbe7305af4e2a43914edb41956860cb9.png" width="1506" height="462" class="img_O9Fa"></p>
+<ul>
+<li>总结</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230328164814081" src="/Notes/assets/images/image-20230328164814081-d3fa626a47c9175c1e3088c4a6d97218.png" width="1660" height="770" class="img_O9Fa"></p>
+<ul>
+<li>2023/03/28 16:48:15</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第三周-直播课-llm-模型">第三周 直播课 LLM 模型<a href="#第三周-直播课-llm-模型" class="hash-link" aria-label="第三周 直播课 LLM 模型的直接链接" title="第三周 直播课 LLM 模型的直接链接">​</a></h3>
+<ul>
+<li>
+<p>2023/03/27 20:30</p>
+</li>
+<li>
+<p>零样本预测能力</p>
+</li>
+<li>
+<p>思维链涌现 OCT</p>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327203800302" src="/Notes/assets/images/image-20230327203800302-833fa9c3733c01b8f29ea3b2ab4fa475.png" width="1701" height="852" class="img_O9Fa"></p>
+<ul>
+<li>插件补短板</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327204042543" src="/Notes/assets/images/image-20230327204042543-c22afb103b739566285d366d3700f16e.png" width="1864" height="1021" class="img_O9Fa"></p>
+<ul>
+<li>数据飞轮的形成</li>
+<li>达芬奇 002</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327204614092" src="/Notes/assets/images/image-20230327204614092-cbb80c94fd1cfd82a946f1618d456c09.png" width="1920" height="1080" class="img_O9Fa"></p>
+<ul>
+<li>必然逃不过理论基础，Transformer 的 decode 结构</li>
+<li>自编码模型，自回归模型</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327204836242" src="/Notes/assets/images/image-20230327204836242-a376933fbbe6f0cc60a289ed45753f1e.png" width="1920" height="1080" class="img_O9Fa"></p>
+<ul>
+<li>沿用了预训练 + 微调的结构（YOLO 作业也是这么做了）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327205158783" src="/Notes/assets/images/image-20230327205158783-b44158eb4c3269984a4083ca58dbafc3.png" width="1920" height="1080" class="img_O9Fa"></p>
+<ul>
+<li>发现：零样本的多任务能力（涌现）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327205454653" src="/Notes/assets/images/image-20230327205454653-743f15d7065186b5dbcb985b0de5f1ab.png" width="1920" height="1080" class="img_O9Fa"></p>
+<ul>
+<li>
+<p>GPT-3 2020 年，60 页报告（讲训练过程、实现思路）</p>
+</li>
+<li>
+<p>两种问题</p>
+<ul>
+<li>胡说八道</li>
+<li>安全风险</li>
+</ul>
+</li>
+<li>
+<p>API、玩等方式，形成了数据飞轮的闭环</p>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327210021399" src="/Notes/assets/images/image-20230327210021399-e4c1099e18532f8150ba0c97fd5b31a6.png" width="1920" height="1080" class="img_O9Fa"></p>
+<ul>
+<li>后续课程讲解</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20230327210105283" src="/Notes/assets/images/image-20230327210105283-b4548c787b5a697da0d52f612e7486d0.png" width="1920" height="1080" class="img_O9Fa"></p>
+<ul>
+<li>第八节很关键</li>
+<li>GPT 开源中间件</li>
+<li>GPT-3 预训练模型不建议继续微调，因为成本太高（几千的集群）
+<ul>
+<li>官方更希望基于 prompt 挖掘</li>
+<li>应该储备的知识：如何写 prompt、如何对接数据库，等到 API</li>
+</ul>
+</li>
+<li>文心千帆（2023/03/27 下午发布）</li>
+<li>跟上，多学，挖掘工具能力</li>
+<li>ChatGPT + Plugins 新生态</li>
+<li>toB 商业化变现</li>
+</ul></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/Notes/docs/paddle_deep_learning/task06/"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">task06</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/Notes/docs/paddle_deep_learning/task08/"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">task08</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_G4nv thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#task07-自然语言处理模型的网络结构" class="table-of-contents__link toc-highlight">Task07 自然语言处理模型的网络结构</a></li><li><a href="#71-nlp经典神经网络" class="table-of-contents__link toc-highlight">7.1 NLP经典神经网络</a></li><li><a href="#72-transformer网络结构" class="table-of-contents__link toc-highlight">7.2 Transformer网络结构</a></li><li><a href="#第三周-直播课-llm-模型" class="table-of-contents__link toc-highlight">第三周 直播课 LLM 模型</a></li></ul></div></div></div></div></main></div></div></div></div>
+</body>
+</html>

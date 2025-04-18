@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-machine_learning/Task03" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">Task03 | 编程内外</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" name="twitter:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" property="og:url" content="https://CELFS.github.io/Notes/docs/machine_learning/Task03/"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Task03 | 编程内外"><meta data-rh="true" name="description" content="3.0 线性模型"><meta data-rh="true" property="og:description" content="3.0 线性模型"><link data-rh="true" rel="icon" href="/Notes/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://CELFS.github.io/Notes/docs/machine_learning/Task03/"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/machine_learning/Task03/" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/machine_learning/Task03/" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous"><link rel="stylesheet" href="/Notes/assets/css/styles.67339a6f.css">
+<script src="/Notes/assets/js/runtime~main.fdf5edbd.js" defer="defer"></script>
+<script src="/Notes/assets/js/main.886a3333.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"dark")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/Notes/img/logo.png"><div role="region" aria-label="跳到主要内容"><a class="skipToContent__HuA" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Notes/"><div class="navbar__logo"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--light_c3lc"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--dark_Ji9V"></div><b class="navbar__title text--truncate">编程内外</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Notes/docs/category/linux-os/">Notes</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/CELFS/Notes" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link" icon="github">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_OqSl"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_OAgU colorModeToggle_zRe0"><button class="clean-btn toggleButton_aClM toggleButtonDisabled_GkIb" type="button" disabled="" title="切换浅色/暗黑模式（当前为暗黑模式）" aria-label="切换浅色/暗黑模式（当前为暗黑模式）" aria-live="polite" aria-pressed="true"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_zzlY"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_Z832"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Cx4E"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_liLQ"><div class="docsWrapper_evXH"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_nZiY" type="button"></button><div class="docRoot_jKp6"><aside class="theme-doc-sidebar-container docSidebarContainer_wXyP"><div class="sidebarViewport_LQZ0"><div class="sidebar_T0dy"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_WBBB"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/linux-os/">Linux OS</a><button aria-label="展开侧边栏分类 &#x27;Linux OS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/ajax/">Ajax</a><button aria-label="展开侧边栏分类 &#x27;Ajax&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/css/">CSS</a><button aria-label="展开侧边栏分类 &#x27;CSS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript-es6/">JavaScript ES6</a><button aria-label="展开侧边栏分类 &#x27;JavaScript ES6&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript/">JavaScript</a><button aria-label="展开侧边栏分类 &#x27;JavaScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/nodejs/">Node.js</a><button aria-label="展开侧边栏分类 &#x27;Node.js&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/typescript/">TypeScript</a><button aria-label="展开侧边栏分类 &#x27;TypeScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/vue/">Vue</a><button aria-label="展开侧边栏分类 &#x27;Vue&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/轻量级服务器开发tinywebserver/">轻量级服务器开发（TinyWebServer）</a><button aria-label="展开侧边栏分类 &#x27;轻量级服务器开发（TinyWebServer）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/c-后台服务器开发/">C++ 后台服务器开发</a><button aria-label="展开侧边栏分类 &#x27;C++ 后台服务器开发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/mysql-必知必会/">MySQL 必知必会</a><button aria-label="展开侧边栏分类 &#x27;MySQL 必知必会&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/操作系统导论/">操作系统导论</a><button aria-label="展开侧边栏分类 &#x27;操作系统导论&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/qt/">QT</a><button aria-label="展开侧边栏分类 &#x27;QT&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军信息论-40-讲/">读吴军《信息论 40 讲》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《信息论 40 讲》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军富足/">读吴军《富足》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《富足》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/machine-learning-andrew-ng/">Machine Learning (Andrew Ng)</a><button aria-label="展开侧边栏分类 &#x27;Machine Learning (Andrew Ng)&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/Notes/docs/category/机器学习初步周志华/">机器学习初步（周志华）</a><button aria-label="折叠侧边栏分类 &#x27;机器学习初步（周志华）&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task00/">Task00</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task01/">Task01</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task02/">Task02</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/Notes/docs/machine_learning/Task03/">Task03</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task04/">Task04</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task05/">Task05</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task06/">Task06</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task07/">Task07</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/machine_learning/Task08/">Task08</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/paddle-零基础深度学习第二版/">Paddle 零基础深度学习（第二版）</a><button aria-label="展开侧边栏分类 &#x27;Paddle 零基础深度学习（第二版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/动手学深度学习pytorch-版/">动手学深度学习（Pytorch 版）</a><button aria-label="展开侧边栏分类 &#x27;动手学深度学习（Pytorch 版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Notes/docs/intro/">学而时习之</a></li></ul></nav></div></div></aside><main class="docMainContainer_dhcR"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_hWfg"><div class="docItemContainer_UIwD"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_ViMa" aria-label="页面路径"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/Notes/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_xAfz"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/Notes/docs/category/机器学习初步周志华/"><span itemprop="name">机器学习初步（周志华）</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Task03</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_xgD3 theme-doc-toc-mobile tocMobile_UvqM"><button type="button" class="clean-btn tocCollapsibleButton_ldZF">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>Task03</h1></header><h3 class="anchor anchorWithStickyNavbar_QJwc" id="30-线性模型">3.0 线性模型<a href="#30-线性模型" class="hash-link" aria-label="3.0 线性模型的直接链接" title="3.0 线性模型的直接链接">​</a></h3>
+<p>Date：2022/10/19</p>
+<hr>
+<p>[TOC]</p>
+<hr>
+<p>​		线性模型的重要性在于与人类的思维习惯一致，如果思考线性的内容，马上容易产生一个几何直观印象，以后加上一些技巧，就可能可以得到一些针对非常复杂的非线性问题的方案。</p>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="31-线性回归">3.1 线性回归<a href="#31-线性回归" class="hash-link" aria-label="3.1 线性回归的直接链接" title="3.1 线性回归的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20221019185001268" src="/Notes/assets/images/image-20221019185001268-c0de3b82ff55a085a4660fe7d573de1f.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>线性回归模型非常擅长处理数值属性
+<ul>
+<li>需要特别的处理：把离散的东西转成连续的东西</li>
+<li>先考虑是否有 “序” 关系，不能一看到离散的东西就当成0和1，因为在具体的算法求解过程中，很可能把1和0当成了数值关系（例如当成A B C的距离，会导致引入了错误的关系）</li>
+<li><strong>离散量的处理</strong>
+<ul>
+<li>有序：保序即可</li>
+<li>无序：A B C，其中 B 表示成 [0 1 0] 类似的编码，如果一个离散量有 k 个取值，则可表示成一个 k 维向量</li>
+</ul>
+</li>
+<li>因此，看到离散的，不要马上想转成连续的，其中的处理可能会出问题</li>
+</ul>
+</li>
+<li>通常，机器学习大概有两大类方法（数值处理的角度）
+<ul>
+<li>一大类擅长处理离散东西</li>
+<li>一大类擅长处理连续东西</li>
+<li>若要用离散的东西处理连续的信号，需先做离散化；</li>
+<li>若要用连续的东西处理离散的信号，需先做连续化；</li>
+<li>目前，尚未有完美的解决方案</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019191406137" src="/Notes/assets/images/image-20221019191406137-eda471ffdc3f374ba0a437df89d88715.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019191529950" src="/Notes/assets/images/image-20221019191529950-306a4828cb42bdff47036ab21c813a37.png" width="791" height="376" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019191555282" src="/Notes/assets/images/image-20221019191555282-9d0c713d43f38207c556768f807b328b.png" width="804" height="363" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019191622399" src="/Notes/assets/images/image-20221019191622399-f9fbe60e626aee208452630498a50306.png" width="811" height="167" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="32-最小二乘解">3.2 最小二乘解<a href="#32-最小二乘解" class="hash-link" aria-label="3.2 最小二乘解的直接链接" title="3.2 最小二乘解的直接链接">​</a></h3>
+<ul>
+<li>最小二乘法估计：实际上就是求偏导，并且令导数为 0</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019202429763" src="/Notes/assets/images/image-20221019202429763-da487840c1232d73317798e80dc04991.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li><strong>自己推导，并且推出来没有问题</strong>，==如果这里觉得难，说明学习这门课的准备还没做好==（说明书对你选择，因此要回头把基础打好再回来学）</li>
+<li><strong>除了基础以外，真正要理解的是：为什么要求偏导？这些数学工具为什么我们在这里这样使用？</strong>
+<ul>
+<li>（1）对一个对象求偏导，意味着我希望找到这个对象不再发生变化的那个点；</li>
+<li>（2）什么时候不变化了，是达到了一个极值、稳定值，不会再大或再小了。对线性回归而言，偏差可以无限大，所以当我们找到这个点的时候，它就是再也不会再小了，由此找到最优解。</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019203252432" src="/Notes/assets/images/image-20221019203252432-ffb849555a286c6f61d5fc4e34dd528b.png" width="802" height="360" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019203351179" src="/Notes/assets/images/image-20221019203351179-5266b1848f7a8d00a4f96615ede4bd5a.png" width="811" height="301" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019203407917" src="/Notes/assets/images/image-20221019203407917-1fd09a4fb5363bfe2f9b2bc355da5091.png" width="806" height="146" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="33-多元线性回归">3.3 多元线性回归<a href="#33-多元线性回归" class="hash-link" aria-label="3.3 多元线性回归的直接链接" title="3.3 多元线性回归的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20221019203718084" src="/Notes/assets/images/image-20221019203718084-15768e74f8c49679990dc58a629abeae.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019204147142" src="/Notes/assets/images/image-20221019204147142-b37b1d3b09df7413f2cdabc5e7c0bbb6.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>正则化就是前面讨论过的归纳偏好，当方程组不满秩，将有多个解，正则化可以引导筛选出需要的解。</li>
+<li>【感悟】
+<ul>
+<li>==这里矩阵的逆、秩、正定，知识需要补充；==【已补充，2022/11/24】</li>
+<li>尽管之前已学习了一部分线代知识，但讨论到矩阵的组合运算，还是不熟，尤其是讲述矩阵和方程之间相互转换，简便书写的过程。</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019204410818" src="/Notes/assets/images/image-20221019204410818-7acf44d0676fbc630d717b70f8893ba8.png" width="808" height="192" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019204543758" src="/Notes/assets/images/image-20221019204543758-36bda5cf513f4fc6771c040edf25a9a2.png" width="798" height="377" class="img_O9Fa"></p>
+<ul>
+<li>对这里形式的区别，就有疑惑了——在吴恩达的课上也有类似的疑问，比如数学公式的书写顺序，转置、逆的位置顺序，与编写代码的顺序感觉上有矛盾——这是亟待理清的。</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019204720365" src="/Notes/assets/images/image-20221019204720365-21ac3f37dd1dedcee923f8a8a0bab333.png" width="805" height="166" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="34-广义线性模型">3.4 广义线性模型<a href="#34-广义线性模型" class="hash-link" aria-label="3.4 广义线性模型的直接链接" title="3.4 广义线性模型的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20221019204832256" src="/Notes/assets/images/image-20221019204832256-b2ad35dc1ce175f33cec3733310c1ad7.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>用线性回归逼近对数的目标</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019204919442" src="/Notes/assets/images/image-20221019204919442-b7a0d3e962961ef0fe82c70dd9b06461.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>联系函数：把线性回归产生的结果，与你真正要的结果两者联系起来。</li>
+<li>可以加各种各样的东西，得到线性回归模型的广义变化</li>
+<li>其中，特别重要且有趣的是：我们如何用回归模型解分类问题</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019205240591" src="/Notes/assets/images/image-20221019205240591-34efb29d103667505c8eb3287b3c36ee.png" width="808" height="397" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019205259857" src="/Notes/assets/images/image-20221019205259857-6748553f4122a606f5fd0848db4d9c71.png" width="807" height="165" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="35-对率回归">3.5 对率回归<a href="#35-对率回归" class="hash-link" aria-label="3.5 对率回归的直接链接" title="3.5 对率回归的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20221019205644494" src="/Notes/assets/images/image-20221019205644494-4199cd9c6c6ce49a898d0c4e7467d6d6.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>起因是要找一个联系函数，把模型的输出和我们期待的输出联系起来，自然的做法是想象有一个<strong>单位阶跃函数</strong>——但这样的函数不连续、损失大，不好用。于是，找到了一个 logistic 函数，性质非常好。</li>
+<li>==注意：logistic 跟逻辑没有半毛钱关系==</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019210144615" src="/Notes/assets/images/image-20221019210144615-706e971fc148ebda2fd7f326a3b6d52f.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>几率（odds），在统计学上有严格的术语。odds 和 logit 是统计学家专门造的词，要结合历史背景来说明，但国内有些地方翻译得不好。【这让我想起了之前吴恩达课程，经常混淆两者——我甚至经常用 “逻辑回归” 的名词，现在发现是错的】</li>
+<li>注意：此处使用回归模型做分类，正是因为联系函数的存在——这是一个广义的线性模型。（P57）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019210517872" src="/Notes/assets/images/image-20221019210517872-e6cbf83814067c827815462c4061a589.png" width="826" height="378" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019210815820" src="/Notes/assets/images/image-20221019210815820-e1acbb0a7f01e3674f6e5155b6f73b23.png" width="668" height="297" class="img_O9Fa"></p>
+<ul>
+<li>分段的是单位阶跃函数；</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019210952306" src="/Notes/assets/images/image-20221019210952306-2ee2cc7c6d8956aea97a742a6cce66e7.png" width="785" height="363" class="img_O9Fa"></p>
+<ul>
+<li>如何理解其他选项？应该对比两者
+<ul>
+<li>（1）中心对称性两者都有；</li>
+<li>（2）严格大于0，不理解这个边界是否具有意义？</li>
+<li>（3）单调且任意阶可导（这是我们希望的）；</li>
+<li>（4）不需写成分段形式，不理解，但猜测后续会看到更多不一样的替代函数，或许有分段形式的。</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019211249033" src="/Notes/assets/images/image-20221019211249033-c1c2d25ce271774ce67610487d01ddad.png" width="794" height="164" class="img_O9Fa"></p>
+<ul>
+<li>这一项需要好好理解与分析[05:00]</li>
+<li>作为正例的可能性，相对于作为负例的可能性的比值，这个 y 不是 ground true 而是一个实值。y 越大，越可能是个正例，而 1 - y，由于在 0~1 区间取值，下面的东西越大，越可能是个负例。</li>
+<li>因此，分子表达了是正例的可能性，分母表达了是负例的可能性。即 odds 为
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mo>+</mo><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(f(x) = + | x) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10764em">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord">+</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span></li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mo>−</mo><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(f(x) = - | x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10764em">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord">−</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="36-对率回归求解">3.6 对率回归求解<a href="#36-对率回归求解" class="hash-link" aria-label="3.6 对率回归求解的直接链接" title="3.6 对率回归求解的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20221019215719723" src="/Notes/assets/images/image-20221019215719723-5219766049bd634a2fcca502e97efbe5.png" width="1920" height="1079" class="img_O9Fa"></p>
+<ul>
+<li>导数等于 0 的点，不一定是极值。因此，如果学过优化，那么可以知道有个条件——凸函数（两点连线，中点在曲线上方；有的地方是反过来的，但只要取负号就可以倒过来，不影响分析数学性质）。</li>
+<li>作业：分析一下 P58 公式（3.18）的凸性（答案是非凸）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019215941369" src="/Notes/assets/images/image-20221019215941369-ceee0ad6587b7a23391220048725a43f.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019220606375" src="/Notes/assets/images/image-20221019220606375-c1a987b7de2b238f200c75e6fd84a99b.png" width="1026" height="663" class="img_O9Fa"></p>
+<ul>
+<li>未理解，提到乘积项存在非常小的两项相乘，在计算机容易造成下溢，而使用对数似然，可以将乘积转换为加和——这样一定程度地缓解了下溢情况。</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019221224956" src="/Notes/assets/images/image-20221019221224956-14bf2d3c499ceddd09aeffef8497e190.png" width="1448" height="830" class="img_O9Fa"></p>
+<ul>
+<li>上述两版黑板，==未理解==；提到了书本 P59 的推导过程。提到了存在逆的形式的方程，在现实中基本上非常少（相当于直接解方程），通常都要用各种方法去逼近。而往往使用放之四海而皆准的梯度下降法。</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019221512840" src="/Notes/assets/images/image-20221019221512840-910d5beaa30074d94fbef391fce4f345.png" width="796" height="382" class="img_O9Fa"></p>
+<ul>
+<li>是否意味着书本对应内容讲的就是这个？正因为无法另令偏导数为 0 求解，所以一系列如极大似然法（提前用到的概念，具体要第 7 章），的 “弯路” 去解题。</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019222006853" src="/Notes/assets/images/image-20221019222006853-40d9af3757e8d1a978b806fae877d64b.png" width="801" height="583" class="img_O9Fa"></p>
+<ul>
+<li>C 并行——是否可理解为向量化传参，从而可并行？</li>
+<li>==D 读题的时候确实认为太绝对，但没有判断能力。==</li>
+<li>Introductory lectures on Convex optimization - A basic course</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019222433750" src="/Notes/assets/images/image-20221019222433750-54782ccdee72cfdfde1bb85467211544.png" width="802" height="176" class="img_O9Fa"></p>
+<ul>
+<li>这题提醒我，要回去理解什么是 “似然函数”</li>
+<li>==并且本章涉及 “参数估计” 内容，要补习了。==</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019222735581" src="/Notes/assets/images/image-20221019222735581-a96e6f63e9a03106e983adb45aa15f05.png" width="1232" height="753" class="img_O9Fa"></p>
+<ul>
+<li>视频断层</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="37-类别不平衡">3.7 类别不平衡<a href="#37-类别不平衡" class="hash-link" aria-label="3.7 类别不平衡的直接链接" title="3.7 类别不平衡的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20221019224606817" src="/Notes/assets/images/image-20221019224606817-af842ae7247b72e9d5a6f6921ed5af2b.png" width="1136" height="681" class="img_O9Fa"></p>
+<ul>
+<li>此处讨论的是，对比了前面使用的预测阈值，默认存在 0.5 的阈值，而如果正例和反例的比例相差大，那么阈值的选择就要调整。例如黑板列举的 1/4，但实际上，阈值的精确估计通常很困难。</li>
+<li>于是，就概括了应对类比不平衡的几种学习方法
+<ul>
+<li>过采样【有点像吴恩达讲过的应对 High bias 和 High variance 的方法】</li>
+<li>欠采样</li>
+<li>阈值移动：少数算法可以做到，例如支持向量机</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019224418666" src="/Notes/assets/images/image-20221019224418666-c2a1491e0824b031186b2d80ed6a4ae4.png" width="1920" height="1079" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019225526851" src="/Notes/assets/images/image-20221019225526851-9e0770405f9f47d3752ece8f331e86e2.png" width="854" height="384" class="img_O9Fa"></p>
+<ul>
+<li>
+<p>过采样</p>
+<ul>
+<li>为了平衡较小的样本，通常想到复制，但可能带来大问题，例如复制的样本有噪声，那么会放大；且容易导致过拟合。</li>
+<li>因此使用 SMOTE，两个样本中间插值，核心思想是不要完全复制，要加点变化。这个方法是目前处理不平衡问题过采样的最经典方法，大多数工具包都能找到。</li>
+<li>SMOTE 算法，印度名，美国学者，圣母大学，来过南大访问 Nitech Chawla</li>
+</ul>
+</li>
+<li>
+<p>欠采样</p>
+<ul>
+<li>意思是丢掉一些大样本，早期有随机丢掉一些，但会带来大问题：因为你不知道丢掉的是不是关键的东西——这会影响分类边界。</li>
+<li>EasyEnsemble
+<ul>
+<li>每次从大类里找3个，做一个模型①，下次再找，模型②，每一个子模型都是均衡的——这样避免丢掉了有价值的样本，并且日后集成学习可以看到，这样得到的精度反而更高。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>【感悟】</p>
+<ul>
+<li>视频内容跳过了书本的不少东西，有些可能是剪辑掉了。但有好处，就是对新手更有方向。</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019230315234" src="/Notes/assets/images/image-20221019230315234-928843568158253838b0fda8f9d9f3b4.png" width="803" height="572" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019230356822" src="/Notes/assets/images/image-20221019230356822-ed8b76181b7184a6c377a9d1c80a5703.png" width="802" height="163" class="img_O9Fa"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="03-exam">【03 EXAM】<a href="#03-exam" class="hash-link" aria-label="【03 EXAM】的直接链接" title="【03 EXAM】的直接链接">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="image-20221019230705473" src="/Notes/assets/images/image-20221019230705473-bbfb2246a1f94d10e5b46df33aa5c69d.png" width="797" height="387" class="img_O9Fa"></p>
+<ul>
+<li>B 是对率函数</li>
+<li>但我跟什么混淆了？是什么用对数函数作为联系函数？
+<ul>
+<li>跟对数线性回归混淆了；此处是对数几率回归</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019231000827" src="/Notes/assets/images/image-20221019231000827-674395d64fb662bdd15a0971b56746f8.png" width="794" height="471" class="img_O9Fa"></p>
+<ul>
+<li>不解，但我用的是直觉上的相关性——并没有使用领域工具</li>
+<li>但应该回到 ML 的使用场景去思考——数据的对象是多维度的，希望分析是综合性的</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019231116932" src="/Notes/assets/images/image-20221019231116932-63870b7bbf18e76fb3635a0dc454c499.png" width="816" height="380" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019231503240" src="/Notes/assets/images/image-20221019231503240-c12c69f84b6e2e58391e4c8f07a752a5.png" width="796" height="467" class="img_O9Fa"></p>
+<ul>
+<li>注意，不含标记</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019231710008" src="/Notes/assets/images/image-20221019231710008-92f3cb6fc166d18ad4d928e550fb3377.png" width="794" height="441" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019231824924" src="/Notes/assets/images/image-20221019231824924-e11d75fb37e75dd757b62d2c43cdedc0.png" width="822" height="390" class="img_O9Fa"></p>
+<ul>
+<li>蒙对了，我的理解是：要近似 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>y</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">y^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0085em;vertical-align:-0.1944em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span> 并不简单，另一个就是对比单调性、起伏程度</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019232122543" src="/Notes/assets/images/image-20221019232122543-60f47a76216c0b6c856022a7b617825a.png" width="807" height="365" class="img_O9Fa"></p>
+<ul>
+<li>不太懂，不过 A 有道理，吴恩达讲过类似的，引入正则项，可避免出现输出过小，导致精度溢出的情况。</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019232448685" src="/Notes/assets/images/image-20221019232448685-a1012fb5c7989fea42f7f844a4ad062e.png" width="806" height="368" class="img_O9Fa"></p>
+<ul>
+<li>==不知道什么是闭式解（P54，下）==
+<ul>
+<li>即解析解，通过严格公式所求得的解——可用解析表达式来表达的解</li>
+<li>对 w 和 b 求偏导的那部分，可见</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019233147827" src="/Notes/assets/images/image-20221019233147827-a6807b71c9fd87fb75b61b3399c15601.png" width="799" height="179" class="img_O9Fa"></p>
+<ul>
+<li>开始的时候懵逼，但看了书（P54）的公式就算对了，另外，吴恩达好像讲过类似的（真的欠复盘回顾！）</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019233322168" src="/Notes/assets/images/image-20221019233322168-db80b9ae85cc41af8026e54030b63c4e.png" width="635" height="125" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019233759613" src="/Notes/assets/images/image-20221019233759613-08cb20940a39be1831149f7fce67510e.png" width="806" height="307" class="img_O9Fa"></p>
+<ul>
+<li>这题就不知道说什么了
+<ul>
+<li>（1）不知道线性模型对数据集的影响，对比上一题 0.5，我简单乘了个系数；</li>
+<li>（2）如果前面理解了，是否意味着这题应该用编程做？</li>
+<li>（3）不知道最小化数据集到线性模型的欧氏距离的平方和求得的斜率是什么，因为有多个参数，不知道如何解；</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019234106721" src="/Notes/assets/images/image-20221019234106721-16c0c1b4440bbcbc1d174f5f7fd75384.png" width="814" height="176" class="img_O9Fa"></p>
+<ul>
+<li>幸好这题指出了两者的区别——指向了：我应该</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019234401220" src="/Notes/assets/images/image-20221019234401220-0f8cad43c70e02b16dc14e4239106561.png" width="802" height="190" class="img_O9Fa"></p>
+<ul>
+<li>OvR 视频课没讲，但阈值移动理解了</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019234623177" src="/Notes/assets/images/image-20221019234623177-18efb0c2a672aec7aa2e63327472d914.png" width="803" height="168" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019234645558" src="/Notes/assets/images/image-20221019234645558-cd7de72004381b40d0b3a38114253dcd.png" width="803" height="174" class="img_O9Fa"></p>
+<ul>
+<li>为什么不需要？其他的一些方法，为什么需要？</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="image-20221019234724974" src="/Notes/assets/images/image-20221019234724974-077e8a7945ee06382eb05093ff4af2fa.png" width="805" height="170" class="img_O9Fa"></p>
+<p><img decoding="async" loading="lazy" alt="image-20221019234734220" src="/Notes/assets/images/image-20221019234734220-44393cf2bda753ae5d0e4b001ac6f978.png" width="708" height="228" class="img_O9Fa"></p>
+<p>2022/10/19 23:47:36 34min + 16min + 58min + 1h53min = 221min = 3.68h</p>
+<hr></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/Notes/docs/machine_learning/Task02/"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">Task02</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/Notes/docs/machine_learning/Task04/"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">Task04</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_G4nv thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#30-线性模型" class="table-of-contents__link toc-highlight">3.0 线性模型</a></li><li><a href="#31-线性回归" class="table-of-contents__link toc-highlight">3.1 线性回归</a></li><li><a href="#32-最小二乘解" class="table-of-contents__link toc-highlight">3.2 最小二乘解</a></li><li><a href="#33-多元线性回归" class="table-of-contents__link toc-highlight">3.3 多元线性回归</a></li><li><a href="#34-广义线性模型" class="table-of-contents__link toc-highlight">3.4 广义线性模型</a></li><li><a href="#35-对率回归" class="table-of-contents__link toc-highlight">3.5 对率回归</a></li><li><a href="#36-对率回归求解" class="table-of-contents__link toc-highlight">3.6 对率回归求解</a></li><li><a href="#37-类别不平衡" class="table-of-contents__link toc-highlight">3.7 类别不平衡</a></li><li><a href="#03-exam" class="table-of-contents__link toc-highlight">【03 EXAM】</a></li></ul></div></div></div></div></main></div></div></div></div>
+</body>
+</html>

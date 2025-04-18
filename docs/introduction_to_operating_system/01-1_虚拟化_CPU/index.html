@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-introduction_to_operating_system/01-1_虚拟化_CPU" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">01-1_虚拟化_CPU | 编程内外</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" name="twitter:image" content="https://CELFS.github.io/Notes/img/logo.png"><meta data-rh="true" property="og:url" content="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/01-1_虚拟化_CPU/"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="01-1_虚拟化_CPU | 编程内外"><meta data-rh="true" name="description" content="01-1 虚拟化（CPU 虚拟化）"><meta data-rh="true" property="og:description" content="01-1 虚拟化（CPU 虚拟化）"><link data-rh="true" rel="icon" href="/Notes/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/01-1_虚拟化_CPU/"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/01-1_虚拟化_CPU/" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://CELFS.github.io/Notes/docs/introduction_to_operating_system/01-1_虚拟化_CPU/" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous"><link rel="stylesheet" href="/Notes/assets/css/styles.67339a6f.css">
+<script src="/Notes/assets/js/runtime~main.fdf5edbd.js" defer="defer"></script>
+<script src="/Notes/assets/js/main.886a3333.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"dark")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/Notes/img/logo.png"><div role="region" aria-label="跳到主要内容"><a class="skipToContent__HuA" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Notes/"><div class="navbar__logo"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--light_c3lc"><img src="/Notes/img/logo.png" alt="Notes Logo" class="themedComponent_Exct themedComponent--dark_Ji9V"></div><b class="navbar__title text--truncate">编程内外</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Notes/docs/category/linux-os/">Notes</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/CELFS/Notes" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link" icon="github">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_OqSl"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_OAgU colorModeToggle_zRe0"><button class="clean-btn toggleButton_aClM toggleButtonDisabled_GkIb" type="button" disabled="" title="切换浅色/暗黑模式（当前为暗黑模式）" aria-label="切换浅色/暗黑模式（当前为暗黑模式）" aria-live="polite" aria-pressed="true"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_zzlY"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_Z832"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Cx4E"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_liLQ"><div class="docsWrapper_evXH"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_nZiY" type="button"></button><div class="docRoot_jKp6"><aside class="theme-doc-sidebar-container docSidebarContainer_wXyP"><div class="sidebarViewport_LQZ0"><div class="sidebar_T0dy"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_WBBB"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/linux-os/">Linux OS</a><button aria-label="展开侧边栏分类 &#x27;Linux OS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/ajax/">Ajax</a><button aria-label="展开侧边栏分类 &#x27;Ajax&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/css/">CSS</a><button aria-label="展开侧边栏分类 &#x27;CSS&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript-es6/">JavaScript ES6</a><button aria-label="展开侧边栏分类 &#x27;JavaScript ES6&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/javascript/">JavaScript</a><button aria-label="展开侧边栏分类 &#x27;JavaScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/nodejs/">Node.js</a><button aria-label="展开侧边栏分类 &#x27;Node.js&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/typescript/">TypeScript</a><button aria-label="展开侧边栏分类 &#x27;TypeScript&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/vue/">Vue</a><button aria-label="展开侧边栏分类 &#x27;Vue&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/轻量级服务器开发tinywebserver/">轻量级服务器开发（TinyWebServer）</a><button aria-label="展开侧边栏分类 &#x27;轻量级服务器开发（TinyWebServer）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/c-后台服务器开发/">C++ 后台服务器开发</a><button aria-label="展开侧边栏分类 &#x27;C++ 后台服务器开发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/mysql-必知必会/">MySQL 必知必会</a><button aria-label="展开侧边栏分类 &#x27;MySQL 必知必会&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/Notes/docs/category/操作系统导论/">操作系统导论</a><button aria-label="折叠侧边栏分类 &#x27;操作系统导论&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/概述/">概述</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/附录/">附录</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/作业/">作业</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/Linux补充/">Linux补充</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/OS概念类比/">OS概念类比</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/Notes/docs/introduction_to_operating_system/01-1_虚拟化_CPU/">01-1_虚拟化_CPU</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/01-2_虚拟化_内存/">01-2_虚拟化_内存</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/01-3_code/">01-3_code</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/02-1_并发/">02-1_并发</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/02-2_code/">02-2_code</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/03-1_持久化/">03-1_持久化</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Notes/docs/introduction_to_operating_system/03-2_code/">03-2_code</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/qt/">QT</a><button aria-label="展开侧边栏分类 &#x27;QT&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军信息论-40-讲/">读吴军《信息论 40 讲》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《信息论 40 讲》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/读吴军富足/">读吴军《富足》</a><button aria-label="展开侧边栏分类 &#x27;读吴军《富足》&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/machine-learning-andrew-ng/">Machine Learning (Andrew Ng)</a><button aria-label="展开侧边栏分类 &#x27;Machine Learning (Andrew Ng)&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/机器学习初步周志华/">机器学习初步（周志华）</a><button aria-label="展开侧边栏分类 &#x27;机器学习初步（周志华）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/paddle-零基础深度学习第二版/">Paddle 零基础深度学习（第二版）</a><button aria-label="展开侧边栏分类 &#x27;Paddle 零基础深度学习（第二版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/Notes/docs/category/动手学深度学习pytorch-版/">动手学深度学习（Pytorch 版）</a><button aria-label="展开侧边栏分类 &#x27;动手学深度学习（Pytorch 版）&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Notes/docs/intro/">学而时习之</a></li></ul></nav></div></div></aside><main class="docMainContainer_dhcR"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_hWfg"><div class="docItemContainer_UIwD"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_ViMa" aria-label="页面路径"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/Notes/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_xAfz"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/Notes/docs/category/操作系统导论/"><span itemprop="name">操作系统导论</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">01-1_虚拟化_CPU</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_xgD3 theme-doc-toc-mobile tocMobile_UvqM"><button type="button" class="clean-btn tocCollapsibleButton_ldZF">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>01-1_虚拟化_CPU</h1></header><h3 class="anchor anchorWithStickyNavbar_QJwc" id="01-1-虚拟化cpu-虚拟化">01-1 虚拟化（CPU 虚拟化）<a href="#01-1-虚拟化cpu-虚拟化" class="hash-link" aria-label="01-1 虚拟化（CPU 虚拟化）的直接链接" title="01-1 虚拟化（CPU 虚拟化）的直接链接">​</a></h3>
+<p>Date：2023/04/07</p>
+<hr>
+<p>[TOC]</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第3章-关于虚拟化的对话">第3章 关于虚拟化的对话<a href="#第3章-关于虚拟化的对话" class="hash-link" aria-label="第3章 关于虚拟化的对话的直接链接" title="第3章 关于虚拟化的对话的直接链接">​</a></h3>
+<ul>
+<li>摘录
+<ul>
+<li>重要的是，在这种假象中，每个人看起来都有一个物理桃子，但实际上不是。</li>
+<li>多数时间他们都在打盹或者做其他事情，所以，你可以在他们打盹的时候把他手中的桃子拿过来分给其他人，这样我们就创造了有许多虚拟桃子的假象，每人一个桃子！</li>
+<li>每个应用都以为自己在独占CPU，但实际上只有一个CPU。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第4章-抽象进程">第4章 抽象：进程<a href="#第4章-抽象进程" class="hash-link" aria-label="第4章 抽象：进程的直接链接" title="第4章 抽象：进程的直接链接">​</a></h3>
+<ul>
+<li>
+<p><strong>关键问题：如何提供有许多CPU的假象？</strong></p>
+</li>
+<li>
+<p>概念</p>
+<ul>
+<li>虚拟化 CPU：通过让一个进程只运行一个时间片，然后切换到其他进程，操作系统提供了存在多个虚拟CPU的假象。</li>
+<li>时分共享（time sharing）、机制（mechanism）（Which）、上下文切换（context switch）、空分共享</li>
+<li>策略（policy）（How）：在操作系统内做出某种决定的算法</li>
+<li>调度策略（scheduling policy）：用历史信息、工作负载知识、性能指标进行决策</li>
+</ul>
+</li>
+<li>
+<p><strong>进程（process）</strong>（操作系统的最基本抽象）</p>
+<ul>
+<li>
+<p>机器状态（machine state）：程序在运行时可以读取或更新的内容（内存）</p>
+</li>
+<li>
+<p>寄存器：</p>
+<ul>
+<li>程序计数器（Program Counter，PC/IP）：描述程序正在执行哪个指令</li>
+<li>栈指针（stack pointer）、帧指针（frame pointer）：管理函数参数栈、局部变量、返回地址</li>
+</ul>
+</li>
+<li>
+<p>分离策略和机制 [L+75]、模块化（modularity）</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>进程 API</strong>（所有现代操作系统都以某种形式提供这些API）</p>
+<ul>
+<li>创建（create）：命令、双击等，系统调用而运行指定程序</li>
+<li>销毁（destroy）：停止失控进程</li>
+<li>等待（wait）：等待进程停止运行</li>
+<li>其他控制（miscellaneous control）：暂停、恢复等</li>
+<li>状态（status）：获得有关进程的状态信息</li>
+</ul>
+</li>
+<li>
+<p><strong>进程创建</strong>：更多细节（从程序到进程）</p>
+<ul>
+<li>
+<p>运行任何程序之前，操作系统显然必须做一些工作，才能将重要的程序字节从磁盘读入内存（初始化任务）：将<strong>代码和静态数据</strong>加载到内存中，通过<strong>创建和初始化栈</strong>以及执行与 <strong>I/O</strong> 设置相关的其他工作，为程序执行搭好了舞台。最后，<strong>启动程序</strong>，在入口处运行，即 <code>main()</code> ，借由跳转到 <code>main()</code> 例程， OS 将 CPU 的<strong>控制权转移</strong>到新创建的进程中，从而程序开始执行。</p>
+<p><img decoding="async" loading="lazy" alt="epub_30179184_5" src="/Notes/assets/images/epub_30179184_5-5a4a5043f457d5216a37520c95a38b25.jpg" width="637" height="697" class="img_O9Fa"></p>
+</li>
+<li>
+<p>概念</p>
+<ul>
+<li>尽早（eagerly）、惰性（lazily）（理解需基于后续的分页和交换机制）</li>
+<li>运行时栈（run-time stack 或 stack）：OS 用参数初始化栈，即将参数填入 <code>main()</code> 函数，即 <code>argc</code> 和 <code>argv</code> 数组</li>
+<li>堆（heap）：C 中，用于显式请求的动态分配数据（ <code>malloc(), free()</code>）
+<ul>
+<li>使用：链表、散列表、树、其他有趣的数据结构</li>
+</ul>
+</li>
+<li>默认每个进程都有3个打开的文件描述符（file descriptor）
+<ul>
+<li>标准输入、输出、错误（输入/输出（I/O）任务）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>进程状态</strong></p>
+<ul>
+<li>
+<p>早期 OS [DV66，V+65]，进程在给定时间内，通常为下列 3 个状态之一：</p>
+<ul>
+<li>运行（running）：正在执行指令</li>
+<li>就绪（ready）：已准备好运行，但某原因 OS 选择暂不运行</li>
+<li>阻塞（blocked）：一个进程执行了某种操作，直到发生其他事件时才会准备运行（例如发起 I/O 操作，进程会被阻塞，直到 I/O 完成，进入就绪态）</li>
+<li>其他状态：
+<ul>
+<li>初始（initial）状态：进程在创建时处于的状态</li>
+<li>最终（final）状态/僵尸状态：进程处于已退出但尚未清理的状态，很有用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>已经被调度（scheduled）、取消调度（descheduled）</p>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_6-4c262d232cd5334a53f85cd80e78e564.jpg" width="396" height="337" class="img_O9Fa"></p>
+</li>
+<li>
+<p>跟踪进程状态</p>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_8-ed391139cfd5b6ec408d8a237af848c5.jpg" width="648" height="517" class="img_O9Fa"></p>
+<ul>
+<li>通过保持CPU繁忙来提高资源利用率；当I/O完成时，系统决定不切换回 Process0</li>
+</ul>
+</li>
+<li>
+<p>**数据结构：**OS 利用关键的数据结构来跟踪各种相关的信息</p>
+<ul>
+<li>进程列表（process list）、进程控制块（Process Control Block，PCB）</li>
+<li>上下文切换（context switch）：通过恢复相关寄存器（将它们的值放回实际的物理寄存器中），操作系统可以恢复运行该进程。</li>
+</ul>
+</li>
+<li>
+<p>疑问</p>
+<ul>
+<li>时分、空分中的 “分” 是指什么？为什么这样翻译？</li>
+<li>当I/O完成时，系统决定不切换回 Process0，目前还不清楚这是不是一个很好的决定。你怎么看？</li>
+</ul>
+</li>
+<li>
+<p>提示/感悟</p>
+<ul>
+<li>有了概念，继续讨论具体细节（结合机制和策略）</li>
+<li>Nucleus、微内核（microkernel）、xv6、Hydra、Multics</li>
+</ul>
+</li>
+<li>
+<p>2023/04/07 17:38:08</p>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第5章-插叙进程api">第5章 插叙：进程API<a href="#第5章-插叙进程api" class="hash-link" aria-label="第5章 插叙：进程API的直接链接" title="第5章 插叙：进程API的直接链接">​</a></h3>
+<ul>
+<li>
+<p><strong>关键问题：如何创建并控制进程</strong></p>
+</li>
+<li>
+<p>系统调用 <code>fork()</code></p>
+<ul>
+<li>进程描述符（process identifier，PID）、子进程（child）、父进程（parent）、确定的（deterministic）、不确定性（non-determinism）、调度程序（scheduler）、多线程程序（multi-threaded program）</li>
+<li>进程从 <code>fork()</code> 返回的值不同，这个差别非常重要，使得很容易编写代码处理两种不同的情况。父进程获得的返回值是新创建子进程的 PID，而子进程获得的返回值是 0</li>
+<li>由于 CPU 调度程序的影响，输出结果不稳定</li>
+</ul>
+</li>
+<li>
+<p>系统调用 <code>wait()</code>  / 更完整的兄弟接口 <code>waitpid()</code></p>
+<ul>
+<li>等待子程序执行完毕，即延迟父进程的执行，输出结果变得确定</li>
+</ul>
+</li>
+<li>
+<p>系统调用 <code>exec()</code></p>
+<ul>
+<li>创建进程 API 的一个重要部分（让子进程执行与父进程不同的程序）</li>
+<li>实现进程替换</li>
+<li>多种变体 <code>execl()</code>、<code>execle()</code>、<code>execlp()</code>、<code>execv()</code> 和 <code>execvp()</code></li>
+</ul>
+</li>
+<li>
+<p>为什么这样设计 API</p>
+<ul>
+<li>分离的做法，给了 shell 在 fork 之后 exec 之前运行代码的机会，这些代码可以在运行新程序前改变环境。例如模拟 shell 的重定向操作、pipe 同理（无缝、串联）</li>
+<li>重要的是做对事（LAMPSON定律）、重定向（redirect）、标准输出（standard output）、RTFM——阅读man手册、<code>kill()</code> 、信号（signal）、<code>ps</code> 、<code>top</code> 、MenuMeters</li>
+</ul>
+</li>
+<li>
+<p>疑问</p>
+<ul>
+<li>为什么是 exec 之前？</li>
+</ul>
+</li>
+<li>
+<p>2023/04/09 17:57:18</p>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第6章-机制受限直接执行">第6章 机制：受限直接执行<a href="#第6章-机制受限直接执行" class="hash-link" aria-label="第6章 机制：受限直接执行的直接链接" title="第6章 机制：受限直接执行的直接链接">​</a></h3>
+<ul>
+<li>
+<p><strong>关键问题：如何高效、可控地虚拟化 CPU</strong></p>
+<ul>
+<li>实现虚拟化：轮换、时分共享（time sharing）</li>
+<li>挑战
+<ul>
+<li>第一个是<strong>性能</strong>：如何在不增加系统开销的情况下实现虚拟化？</li>
+<li>第二个是<strong>控制权</strong>：如何有效地运行进程，同时保留对CPU的控制？</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>基本技巧：受限直接执行（LDE 协议）</p>
+<ul>
+<li>受限的直接执行（limited direct execution）：使程序尽可能快地运行，直接放 CPU 上面。</li>
+<li><strong>两个问题</strong>
+<ul>
+<li>第一个问题很简单：如果我们只运行一个程序，操作系统怎么能确保程序不做任何我们<strong>不希望</strong>它做的事，同时仍然高效地运行它？</li>
+<li>第二个问题：当我们运行一个进程时，操作系统如何让它<strong>停</strong>下来并<strong>切换</strong>到另一个进程，从而实现虚拟化CPU所需的时分共享？</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>问题1：受限制的操作</p>
+<ul>
+<li><strong>关键问题：如何执行受限制的操作</strong></li>
+<li>提示：采用受保护的控制权转移</li>
+<li>陷入（trap）、从陷阱返回（return-from-trap）、<strong>陷阱表（trap table）</strong>、用户模式（user mode）（<strong>受限的来源</strong>）、内核模式（kernel mode）、内核栈（kernel stack）、特权（privileged）</li>
+<li>摘录/抛出问题
+<ul>
+<li>执行陷阱时，硬件需要小心，因为它必须确保存储足够的调用者寄存器，以便在操作系统发出从陷阱返回指令时能够正确返回。</li>
+<li>为什么系统调用看起来像过程调用？原因很简单：它是一个过程调用，但隐藏在过程调用内部的是著名的陷阱指令。</li>
+<li>陷阱如何知道在OS内运行哪些代码？第一件事，就是告诉硬件在发生某些异常事件时要运行哪些代码（用 trap table 实现）。一旦硬件被通知，它就会记住这些处理程序的位置，直到下一次重新启动机器，并且硬件知道在发生系统调用和其他异常事件时要做什么（即跳转到哪段代码）。</li>
+<li>思考问题：如果可以设置自己的陷阱表，你可以对系统做些什么？你能接管机器吗？</li>
+<li>LDE 协议的两个阶段
+<ul>
+<li>第一个阶段（在系统引导时）</li>
+<li>第二个阶段（运行进程时）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>问题2：在进程之间切换</p>
+<ul>
+<li><strong>关键问题：如何重获CPU的控制权</strong></li>
+<li>控制权（regain control）、协作（cooperative）</li>
+<li>**协作方式：**等待系统调用（显式的 <code>yield</code> 系统调用）
+<ul>
+<li>理解：有点类似先假设程序都是良性的，若某个程序运行时间过长，则 OS 会改变对待它的策略，会被假定为定期放弃 CPU（指定优先情绪）</li>
+<li>提示：处理应用程序的不当行为</li>
+<li>被动方式：等待系统调用或者某种非法操作发生</li>
+</ul>
+</li>
+<li>**非协作方式：**操作系统进行控制
+<ul>
+<li><strong>关键问题：如何在没有协作的情况下获得控制权</strong></li>
+<li>提示：利用时钟中断重新获得控制权（硬件功能）</li>
+<li>时钟中断（timer interrupt）、中断处理程序（interrupt handler）</li>
+</ul>
+</li>
+<li><strong>保存和恢复上下文</strong>
+<ul>
+<li>调度程序、上下文切换（通过切换栈实现不同进程的上下文切换）</li>
+<li>两种类型寄存器：保存/恢复</li>
+</ul>
+</li>
+<li>受限直接执行协议（时钟中断）：</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_11-5fd2caf4c2a751efef48f88956b1ea78.jpg" width="651" height="700" class="img_O9Fa"></p>
+<ul>
+<li>
+<p>担心并发吗</p>
+<ul>
+<li>亚微秒级、内存密集型、内存带宽、禁止中断（disable interrupt）、加锁（locking）、并发访问、宝宝防护（baby proofing）</li>
+<li>提示：重新启动是有用的</li>
+<li>摘录
+<ul>
+<li>“呃……在系统调用期间发生时钟中断时会发生什么？” 或 “处理一个中断时发生另一个中断，会发生什么？这不会让内核难以处理吗？”</li>
+<li>上下文切换需要多长时间？甚至系统调用要多长时间？（lmbench [MS96]工具，现代亚微秒级）</li>
+<li>LDE 协议的基本思路很简单：就让你想运行的程序在CPU上运行，但首先确保设置好硬件，以便在没有操作系统帮助的情况下限制进程可以执行的操作。</li>
+<li>但一个主要问题还没有答案：在特定时间，我们应该运行哪个进程？</li>
+<li>有些文章会让你在研读过程中不时看到一些令人惊叹、令人兴奋的想法。</li>
+</ul>
+</li>
+<li>测量成本
+<ul>
+<li>系统调用成本： <code>gettimeofday()</code> 、<code>rdtsc</code> 指令</li>
+<li>上下文切换成本：
+<ul>
+<li>单CPU：lmbench 基准测试（反复测量，管道或 UNIX套接字等通信机制）</li>
+<li>多 CPU：<code>sched_setaffinity()</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>感悟/疑问</p>
+<ul>
+<li>利用时间线总结协议</li>
+<li>为什么是把寄存器保存到内核栈？寄存器相当于什么？
+<ul>
+<li>因为寄存器代表了程序在底层运行的状态</li>
+<li>操作系统要做的就是为当前正在执行的进程保存一些寄存器的值（例如，到它的内核栈），并为即将执行的进程恢复一些寄存器的值（从它的内核栈）</li>
+</ul>
+</li>
+<li>很多文字都是在描述过程，并不适合直接记忆，更好的办法是可视化（如列表分析）、动手做一遍，让理解的印象以另一种形式存在</li>
+<li>无论系统当前有多卡，任务管理器往往能优先打开，是否运用了时钟中断？</li>
+<li>搞清楚概念出现的原因，对于理解很重要</li>
+<li>在学习认知过程被卡住的时候，是否能运用类似操作系统重启解决无限循环的方式？
+<ul>
+<li>重启的意义：让软件回到已知的状态，回收资源，容易自动化；</li>
+<li>eg：大规模集群互联网服务，定期重启一些机器</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>2023/04/10 18:31:00</p>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第7章-进程调度介绍">第7章 进程调度：介绍<a href="#第7章-进程调度介绍" class="hash-link" aria-label="第7章 进程调度：介绍的直接链接" title="第7章 进程调度：介绍的直接链接">​</a></h3>
+<ul>
+<li>
+<p><strong>关键问题：如何开发调度策略</strong></p>
+</li>
+<li>
+<p>概念</p>
+<ul>
+<li>机制（mechanism）、调度策略（sheduling policy / discipline）、工作负载（workload）</li>
+</ul>
+</li>
+<li>
+<p>工作负载假设（从理想假设开始，逐步<strong>放宽假设</strong>）</p>
+<ul>
+<li><strong>理想假设</strong>
+<ul>
+<li>1．每一个工作运行相同的时间；</li>
+<li>2．所有的工作同时到达；</li>
+<li>3．一旦开始，每个工作保持运行直到完成；</li>
+<li>4．所有的工作只是用CPU（即它们不执行IO操作）；</li>
+<li>5．每个工作的运行时间是已知的。</li>
+</ul>
+</li>
+<li>一个完全可操作的调度准则（a fully-operational scheduling discipline）</li>
+<li>必须记得<strong>工作负载</strong>：既有运行时间很短、频繁放弃CPU的交互型工作，也有需要很多CPU时间、响应时间却不重要的长时间计算密集型工作。</li>
+</ul>
+</li>
+<li>
+<p>调度指标</p>
+<ul>
+<li>用以比较不同的调度策略</li>
+<li><strong>周转时间（turnaround time）</strong>、性能（performance）、公平（fairness）</li>
+</ul>
+</li>
+<li>
+<p>先进先出（FIFO）</p>
+<ul>
+<li>先进先出（First In First Out或FIFO）调度 / 先到先服务（First Come First Served 或FCFS）、平均周转时间（average turnaround time）、护航效应（convoy effect）、SJF 原则（最短任务优先，当平均客户周转时间很重要）</li>
+<li>放宽假设1</li>
+</ul>
+</li>
+<li>
+<p>最短任务优先（Shortest Job First，SJF）（非抢占式）</p>
+<ul>
+<li>最优（optimal）、非抢占式（non-preemptive）、抢占式（preemptive）</li>
+<li>放宽假设2</li>
+</ul>
+</li>
+<li>
+<p>最短完成时间优先（Shortest Time-to-Completion First，STCF）</p>
+<ul>
+<li>抢占（preempt）、抢占式最短作业优先（Preemptive Shortest Job First ，PSJF）</li>
+<li>摘录
+<ul>
+<li>STCF 或 PSJF 每当新工作进入系统时，它就会确定剩余工作和新工作中，谁的剩余时间最少，然后调度该工作。</li>
+</ul>
+</li>
+<li>放宽假设3</li>
+</ul>
+</li>
+<li>
+<p>新度量指标：<strong>响应时间（response time）</strong></p>
+<ul>
+<li>STCF和相关方法在响应时间上并不是很好。例如，如果3个工作同时到达，第三个工作必须等待前两个工作全部运行后才能运行。这种方法虽然有很好的周转时间，但对于响应时间和交互性是相当糟糕的。因此有了 RR 算法。</li>
+</ul>
+</li>
+<li>
+<p><strong>轮转（Round-Robin，RR）</strong></p>
+<ul>
+<li>基本思想：RR在一个时间片（time slice，有时称为调度量子，scheduling quantum）内运行一个工作，然后切换到运行队列中的下一个任务，而不是运行一个任务直到结束。它反复执行，直到所有任务完成。因此，RR有时被称为时间切片（time-slicing）。即每个程序都运行一会儿，切换。</li>
+<li>时间片太短的问题：突然上下文切换的成本将影响整体性能。
+<ul>
+<li>提示：摊销可以减少成本</li>
+<li>提示：重叠可以提高利用率</li>
+</ul>
+</li>
+<li>摊销（amortize）、摊销技术（amortization）、重叠（overlap）</li>
+<li>摘录
+<ul>
+<li>上下文切换的成本
+<ul>
+<li>保存和恢复少量寄存器的 OS 操作</li>
+<li>程序运行时，它们在 CPU 高速缓存、TLB、分支预测器和其他片上硬件中建立了大量的状态，切换会导致状态刷新</li>
+</ul>
+</li>
+<li>事实上，这是固有的权衡：如果你愿意不公平，你可以运行较短的工作直到完成，但是要以响应时间为代价。如果你重视公平性，则响应时间会较短，但会以周转时间为代价。这种权衡在系统中很常见。你不能既拥有你的蛋糕，又吃它。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>结合I/O</p>
+<ul>
+<li>
+<p>摘录</p>
+<ul>
+<li>
+<p>一个进程在等待另一个进程的I/O完成时使用CPU，系统因此得到更好的利用</p>
+<p><img decoding="async" loading="lazy" alt="img" src="data:image/jpeg;base64,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" width="450" height="209" class="img_O9Fa"></p>
+</li>
+<li>
+<p>仍未解决操作系统根本无法看到未来的问题</p>
+</li>
+</ul>
+</li>
+<li>
+<p>放宽假设4，CPU密集型、重叠</p>
+</li>
+</ul>
+</li>
+<li>
+<p>无法预知</p>
+<ul>
+<li>放宽假设5：操作系统通常对每个作业的长度知之甚少</li>
+</ul>
+</li>
+<li>
+<p>感悟</p>
+<ul>
+<li>从理想假设到放宽假设，以引导思考、实验探索</li>
+<li>可证明最优，如何证明？需要什么前置知识？</li>
+<li>如何理解时间片长度增加后，切换时间的占比下降，所带来的成本减少？
+<ul>
+<li>类似网购一定金额，包邮</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>2023/04/10 20:40:54 1h21min</p>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第8章-调度多级反馈队列">第8章 调度：多级反馈队列<a href="#第8章-调度多级反馈队列" class="hash-link" aria-label="第8章 调度：多级反馈队列的直接链接" title="第8章 调度：多级反馈队列的直接链接">​</a></h3>
+<ul>
+<li>
+<p><strong>关键问题：没有完备的知识如何调度？</strong></p>
+<ul>
+<li>提示：从历史中学习</li>
+</ul>
+</li>
+<li>
+<p>概念</p>
+<ul>
+<li>多级反馈队列（Multi-level Feedback Queue，MLFQ）、兼容时分共享系统（CTSS）、先验（priori）</li>
+</ul>
+</li>
+<li>
+<p>MLFQ：基本规则（关键：如何设置优先级；根据观察的行为调整，历史预测）</p>
+<ul>
+<li>队列（queue）、优先级（priority level）、交互型进程、静态快照、计算密集型进程、竞争CPU</li>
+<li>基本规则
+<ul>
+<li>规则1：如果A的优先级 &gt; B的优先级，运行A（不运行B）。</li>
+<li>规则2：如果A的优先级 = B的优先级，轮转运行A和B。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>尝试1：如何改变优先级</strong></p>
+<ul>
+<li>第一次尝试优先级调整算法
+<ul>
+<li>规则3：工作进入系统时，放在最高优先级（最上层队列）。</li>
+<li>规则4a：工作用完整个时间片后，降低其优先级（移入下一个队列）。</li>
+<li>规则4b：如果工作在其时间片以内主动释放CPU，则优先级不变。</li>
+</ul>
+</li>
+<li>实例
+<ul>
+<li>实例1：单个长工作</li>
+<li>实例2：来了一个短工作（若不知，则假设为短，否则慢慢移入低优先级）</li>
+<li>实例3：如果有I/O呢</li>
+</ul>
+</li>
+<li>当前MLFQ的一些问题
+<ul>
+<li>饥饿（starvation）、愚弄调度程序（game the scheduler）、攻击、程序状态的不确定性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>尝试2：提升优先级</strong></p>
+<ul>
+<li>
+<p>规则5：经过一段时间S，就将系统中所有工作重新加入最高优先级队列。</p>
+</li>
+<li>
+<p>提升（boost）、“巫毒常量（voo-doo constant）”（S 的设置，需要黑魔法）</p>
+</li>
+<li>
+<p>摘录</p>
+<ul>
+<li>因此至少保证长工作会有一些进展，每过50ms就被提升到最高优先级，从而定期获得执行。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="img" src="/Notes/assets/images/epub_30179184_25-d2201fa47039e4c0a58f7b24231f1b30.jpg" width="779" height="369" class="img_O9Fa"></p>
+<ul>
+<li>
+<p><strong>尝试3：更好的计时方式</strong>（如何阻止调度程序被愚弄？）</p>
+<ul>
+<li>（重写）规则4：一旦工作用完了其在某一层中的时间配额（无论中间主动放弃了多少次CPU），就降低其优先级（移入低一级队列）。</li>
+<li>计时方式（accounting）、各层时间配额（如同生命，有限的意义）</li>
+</ul>
+</li>
+<li>
+<p><strong>MLFQ调优及其他问题</strong></p>
+<ul>
+<li>摘录
+<ul>
+<li>还有许多问题都没有显而易见的答案，因此只有利用对工作负载的经验，以及后续对调度程序的调优，才会导致令人满意的平衡。</li>
+<li>提示：避免巫毒常量（Ousterhout定律）</li>
+<li>许多系统使用某种类型的MLFQ作为自己的基础调度程序，包括类 BSD UNIX 系统、Solaris 以及 Windows NT 和其后的 Window 系列操作系统。</li>
+</ul>
+</li>
+<li>Solaris 的 MLFQ 实现（时分调度类TS）、FreeBSD 调度程序（4.3版本）、使用量衰减（decay-usage）、建议（advice）、<code>nice</code> 工具、基础调度程序</li>
+<li>建议（advice）
+<ul>
+<li>提供接口并允许用户或管理员给操作系统一些提示（hint）常常很有用；</li>
+<li>这种用户建议的方式在操作系统中的各个领域经常十分有用，包括调度程序（通过nice）、内存管理（madvise），以及文件系统（通知预取和缓存）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>感悟</p>
+<ul>
+<li>使用量衰减，是否类似权重衰减？</li>
+<li>内核黑客、首创想法的来源、调度技术发展状况</li>
+<li>没有完备的知识，如何解决问题？MLFQ 提供了一种思路</li>
+</ul>
+</li>
+<li>
+<p>补充</p>
+<ul>
+<li>“Inside Windows NT” <a href="https://learn.microsoft.com/en-us/sysinternals/resources/windows-internals" target="_blank" rel="noopener noreferrer">https://learn.microsoft.com/en-us/sysinternals/resources/windows-internals</a></li>
+</ul>
+</li>
+<li>
+<p>2023/04/10 22:14:18 1h36min</p>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="阶段小结">阶段小结<a href="#阶段小结" class="hash-link" aria-label="阶段小结的直接链接" title="阶段小结的直接链接">​</a></h3>
+<p>​		目前从 6 号开始，到如今 11 号（今日未开始），学了 5 天。</p>
+<ul>
+<li>
+<p>第一个感受是概念多、耦合强，每个概念工具的提出，都有很直接的问题背景，而它们的逐一出现，构成了一条很长的逻辑链；</p>
+</li>
+<li>
+<p>第二个感受是文字承载的大多数属于过程信息，虽然作者有意运用图表展示算法和程序的运行顺序关系，但这些载体的表达能力还是相当有限；</p>
+</li>
+<li>
+<p>第三个感受是开发环境、资源包的说明不足，作业的介绍有点奇葩，各章末的问题其实就是作业或者实践的尝试方向，但这种风格还不习惯，而且描述有点晦涩，到真正要基于给定的代码做实验时，还需要理清代码，何况资料是 python 文件，这就与书中提倡的开发环境有点不协调了；</p>
+</li>
+<li>
+<p>第四个感受是书中的例子、讲述方式很生动，解释背景、分析问题、剖析原因、罗列文献等方式，非常值得揣摩学习；</p>
+</li>
+<li>
+<p>第五个感受是代码实践弱，或许目前遇到的内容还够不多，强耦合的代码实践还未能开展。</p>
+</li>
+<li>
+<p>得</p>
+<ul>
+<li>在阅读的时候，会想起以前刚接触 Linux 系统编程的场景，目前懂得了系统调用存在的意义，以及一些基本的系统调用方法；对于进程的概念和调度过程也更加清晰了；在重新部署本地虚拟机环境的时候，看到了一些操作系统当中的术语，例如任务管理器-性能-虚拟化，就知道虚拟化启用的目的是帮助 CPU 更好地利用物理资源。</li>
+<li>还有一些我看不到的……如何看到？</li>
+</ul>
+</li>
+<li>
+<p>失</p>
+<ul>
+<li>机会成本，占用的时间挺多的，一章精读大约 1.5~2 小时；</li>
+<li>同时，还不能协调更多的重要任务，例如算法刷题、SQL等软件开发的技术栈；</li>
+<li>还有一些我看不到的……如何看到？</li>
+</ul>
+</li>
+<li>
+<p>调整</p>
+<ul>
+<li>之前边读边标注，并且记录在笔记；现在尝试读完一章做一个回顾笔记；</li>
+<li>留意实践的机会，随时尝试想法，随时实践；</li>
+<li>过程信息必须动手或者经历一遍，才能转化为真实的经验，否则只是机械记忆；</li>
+<li>交错笔记，有时候会扰乱思维的整体感，但又有助于在长文期间记录目前学到的东西，且便于标注想法。</li>
+</ul>
+</li>
+<li>
+<p>2023/04/11 21:30:16 40min</p>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第9章-调度比例份额">第9章 调度：比例份额<a href="#第9章-调度比例份额" class="hash-link" aria-label="第9章 调度：比例份额的直接链接" title="第9章 调度：比例份额的直接链接">​</a></h3>
+<ul>
+<li>
+<p><strong>关键问题：如何按比例分配CPU</strong></p>
+</li>
+<li>
+<p>概念</p>
+<ul>
+<li>比例份额（proportional-share）调度 / 公平份额（fair-share）调度、<strong>彩票调度（lottery scheduling）</strong></li>
+</ul>
+</li>
+<li>
+<p>基本概念：彩票数表示份额</p>
+<ul>
+<li>提示：利用<strong>随机性</strong>（优势）
+<ul>
+<li>1、随机方法常常可以避免奇怪的边角情况</li>
+<li>2、随机方法很轻量，几乎不需要记录任何状态</li>
+<li>3、随机方法很快</li>
+</ul>
+</li>
+<li>提示：用彩票来表示份额</li>
+<li>彩票数（ticket）、随机性（randomness）、LRU替换策略、彩票（步长）、份额、虚存管理、所有权比例</li>
+</ul>
+</li>
+<li>
+<p>彩票机制</p>
+<ul>
+<li>彩票货币（ticket currency）（有部分自主性）、兑换全局彩票、彩票转让（ticket transfer）、彩票通胀（ticket inflation）（信任环境 VS 竞争环境）</li>
+</ul>
+</li>
+<li>
+<p>实现</p>
+<ul>
+<li>随机数生成器 + 记录的列表（链表）</li>
+<li>若想更有效率，做递减排序</li>
+</ul>
+</li>
+<li>
+<p>一个例子</p>
+<ul>
+<li>不公平指标 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi></mrow><annotation encoding="application/x-tex">U</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em"></span><span class="mord mathnormal" style="margin-right:0.10903em">U</span></span></span></span>（unfairness metric）
+<ul>
+<li>完美的公平调度程序可以做到 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">U = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em"></span><span class="mord mathnormal" style="margin-right:0.10903em">U</span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:0.6444em"></span><span class="mord">1</span></span></span></span> （前提：工作执行非常多的时间片）</li>
+</ul>
+</li>
+<li>如何分配彩票？尽管自主分配是一种思路，但还没给出具体的分配策略</li>
+</ul>
+</li>
+<li>
+<p>为什么不是确定的</p>
+<ul>
+<li><strong>步长调度（stride scheduling）</strong>、步长（stride）、行程（pass）值、彩票调度算法（不需要全局状态）、步长调度算法</li>
+<li>步长：用一个大数分别除以它们的票数，得到每个进程的步长（票数成反比）</li>
+<li>基本思路：当需要进行调度时，选择目前拥有<strong>最小行程值的进程</strong>，并且在运行之后将该进程的行程值增加一个步长。直到所有行程值相等，再次循环进行。</li>
+<li>摘录
+<ul>
+<li>虽然两者都很有趣，但一些原因，并<strong>没有作为 CPU 调度程序被广泛使用</strong>。
+<ul>
+<li>都不能很好地适合 I/O</li>
+<li>其中最难的票数分配问题并没有确定的解决方式</li>
+</ul>
+</li>
+<li>两者通常用在：虚拟（virtualized）数据中心、Waldspurger（VMWare的ESX系统）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>感悟</p>
+<ul>
+<li>如何把随机性的优点，用在学习上面？问问GPT</li>
+<li>很多地方都能看到随机性带来的增益，例如 timsort，有点像利用世界的固有属性来解决问题，让问题回归系统</li>
+<li>如何理解行程值在过程中相等？意味着行程值之间存在最小公倍数</li>
+<li>句式：既然有了……，为什么还有……呢？用来分析新旧工具的存在意义与优势</li>
+</ul>
+</li>
+<li>
+<p>2023/04/11 22:38:24 1h8min</p>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第10章-多处理器调度高级">第10章 多处理器调度（高级）<a href="#第10章-多处理器调度高级" class="hash-link" aria-label="第10章 多处理器调度（高级）的直接链接" title="第10章 多处理器调度（高级）的直接链接">​</a></h3>
+<ul>
+<li>建议不按顺序学习这些高级章节。对于本章，建议在学习完第2部分之后学习。</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_QJwc" id="第11章-关于cpu虚拟化的总结对话">第11章 关于CPU虚拟化的总结对话<a href="#第11章-关于cpu虚拟化的总结对话" class="hash-link" aria-label="第11章 关于CPU虚拟化的总结对话的直接链接" title="第11章 关于CPU虚拟化的总结对话的直接链接">​</a></h3>
+<ul>
+<li>摘录
+<ul>
+<li>了解了操作系统如何虚拟化 CPU，同时又必须了解一些重要的机制：陷阱和陷阱处理程序，时钟中断以及操作系统和硬件在进程间切换时如何谨慎地保存和恢复状态。</li>
+<li>要想学的更多
+<ul>
+<li>没有其他办法可以替代<strong>动手</strong>，做<strong>课堂项目</strong>是必须的。</li>
+</ul>
+</li>
+<li>操作系统的哲学？
+<ul>
+<li>它希望确保控制机器，希望程序能够尽可能高效地运行，也希望能够对错误或恶意的程序说“啊！别那么快，我的朋友”。</li>
+<li>如同偏执狂全天控制，因此也称为资源管理器。</li>
+</ul>
+</li>
+<li>机制之上的策略呢？
+<ul>
+<li>学到的经验，明显的也可以是很好的。比如将短工作提升到队列前面的想法。</li>
+<li>你可以建立一个聪明的调度程序，试图既像SJF又像RR——MLFQ相当漂亮。参阅CFS、BFS和O（1）调度程序之间的Linux战斗。</li>
+<li>度量指标也不一致，也许目标不是找到最好的解决方案，而是为了避免灾难。</li>
+<li>实用主义者意识到并非所有问题都有简洁明了的解决方案，而是要找到满意的方案。</li>
+<li>操控调度程序，会有许多有趣的事情发生。</li>
+</ul>
+</li>
+<li>让我们对某件事感到兴奋，这样我们就会自己对它进行研究。</li>
+</ul>
+</li>
+<li><strong>合上书，我还记得多少？</strong>
+<ul>
+<li>待复盘</li>
+</ul>
+</li>
+</ul>
+<p>2023/04/11 23:51:01</p>
+<hr></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/Notes/docs/introduction_to_operating_system/OS概念类比/"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">OS概念类比</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/Notes/docs/introduction_to_operating_system/01-2_虚拟化_内存/"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">01-2_虚拟化_内存</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_G4nv thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#01-1-虚拟化cpu-虚拟化" class="table-of-contents__link toc-highlight">01-1 虚拟化（CPU 虚拟化）</a></li><li><a href="#第3章-关于虚拟化的对话" class="table-of-contents__link toc-highlight">第3章 关于虚拟化的对话</a></li><li><a href="#第4章-抽象进程" class="table-of-contents__link toc-highlight">第4章 抽象：进程</a></li><li><a href="#第5章-插叙进程api" class="table-of-contents__link toc-highlight">第5章 插叙：进程API</a></li><li><a href="#第6章-机制受限直接执行" class="table-of-contents__link toc-highlight">第6章 机制：受限直接执行</a></li><li><a href="#第7章-进程调度介绍" class="table-of-contents__link toc-highlight">第7章 进程调度：介绍</a></li><li><a href="#第8章-调度多级反馈队列" class="table-of-contents__link toc-highlight">第8章 调度：多级反馈队列</a></li><li><a href="#阶段小结" class="table-of-contents__link toc-highlight">阶段小结</a></li><li><a href="#第9章-调度比例份额" class="table-of-contents__link toc-highlight">第9章 调度：比例份额</a></li><li><a href="#第10章-多处理器调度高级" class="table-of-contents__link toc-highlight">第10章 多处理器调度（高级）</a></li><li><a href="#第11章-关于cpu虚拟化的总结对话" class="table-of-contents__link toc-highlight">第11章 关于CPU虚拟化的总结对话</a></li></ul></div></div></div></div></main></div></div></div></div>
+</body>
+</html>

@@ -1,3 +1,7 @@
+---
+sidebar_label: "06-9 Week Exercise"
+---
+
 # 06-9 Week Exercise
 
 Date：2022/05/14 21:05:21

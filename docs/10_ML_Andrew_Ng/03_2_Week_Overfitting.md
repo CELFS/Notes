@@ -1,3 +1,7 @@
+---
+sidebar_label: "03-2 Week Overfitting"
+---
+
 # 03-2 Week Overfitting
 
 Date：2022/04/29 16:13:13

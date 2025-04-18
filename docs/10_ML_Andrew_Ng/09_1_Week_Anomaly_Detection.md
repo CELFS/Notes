@@ -1,3 +1,7 @@
+---
+sidebar_label: "09-1 Week Anomaly Detection"
+---
+
 # 09-1 Week Anomaly Detection
 
 Date：2022/05/29 21:37:16

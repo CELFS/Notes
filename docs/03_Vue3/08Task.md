@@ -1,3 +1,7 @@
+---
+sidebar_label: "08 Task Vue 3 核心语法"
+---
+
 ## 08 Task Vue 3 核心语法
 
 Date：2024/07/16 17:16:13

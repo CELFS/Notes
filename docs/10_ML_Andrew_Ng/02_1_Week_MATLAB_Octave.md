@@ -1,3 +1,7 @@
+---
+sidebar_label: "02-1 Week Two"
+---
+
 # 02-1 Week Two
 
 Date：2022/04/25

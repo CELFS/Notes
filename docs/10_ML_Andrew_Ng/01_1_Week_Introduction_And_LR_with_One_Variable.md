@@ -1,3 +1,7 @@
+---
+sidebar_label: "01-1 Week Introduction And LR with One Variable"
+---
+
 # 01-1 Week Introduction And LR with One Variable
 
 Date：2022/04/20 22:31:29

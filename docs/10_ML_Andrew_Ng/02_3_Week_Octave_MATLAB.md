@@ -1,3 +1,7 @@
+---
+sidebar_label: "02-3 Week Octave-MATLAB"
+---
+
 # 02-3 Week Octave-MATLAB
 
 Date：2022/04/26

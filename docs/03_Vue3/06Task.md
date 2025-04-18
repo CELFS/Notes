@@ -1,3 +1,7 @@
+---
+sidebar_label: "06 Task Vue CLI + 组件化开发"
+---
+
 ## 06 Task Vue CLI + 组件化开发
 
 Date：2024/07/11 19:36:08

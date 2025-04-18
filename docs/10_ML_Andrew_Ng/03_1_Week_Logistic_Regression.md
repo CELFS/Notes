@@ -1,3 +1,7 @@
+---
+sidebar_label: "03-1 Week Logistic Regression"
+---
+
 # 03-1 Week Logistic Regression
 
 Date：2022/04/28 1:22:19

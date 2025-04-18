@@ -1,3 +1,7 @@
+---
+sidebar_label: "08-1 Week Unsupervised Learning"
+---
+
 # 08-1 Week Unsupervised Learning
 
 Date：2022/05/21 22:46:02

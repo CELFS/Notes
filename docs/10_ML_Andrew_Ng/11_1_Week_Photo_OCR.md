@@ -1,3 +1,7 @@
+---
+sidebar_label: "11-1 Week Photo OCR"
+---
+
 # 11-1 Week Photo OCR
 
 Date：2022/06/05 13:49:47

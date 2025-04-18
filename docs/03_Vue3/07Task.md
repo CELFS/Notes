@@ -1,3 +1,7 @@
+---
+sidebar_label: "07 Task Vue2 综合案例"
+---
+
 ## 07 Task Vue2 综合案例
 
 Date：2024/07/14 18:53:52

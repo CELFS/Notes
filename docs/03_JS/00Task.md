@@ -1,3 +1,7 @@
+---
+sidebar_label: "00 Task JavaScript + DOM + ES6"
+---
+
 ## 00 Task JavaScript + DOM + ES6
 
 Date：2024/07/09 17:11:01

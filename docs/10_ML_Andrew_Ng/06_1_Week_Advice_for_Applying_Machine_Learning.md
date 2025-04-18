@@ -1,3 +1,7 @@
+---
+sidebar_label: "06-1 Week Advice for Applying Machine Learning"
+---
+
 # 06-1 Week Advice for Applying Machine Learning
 
 Date：2022/05/08

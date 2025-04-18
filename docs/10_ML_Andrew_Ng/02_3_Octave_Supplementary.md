@@ -1,3 +1,7 @@
+---
+sidebar_label: "02-3 Common Octave commands"
+---
+
 # 02-3 Common Octave commands
 
 Data : 2022/06/01 18:33:39

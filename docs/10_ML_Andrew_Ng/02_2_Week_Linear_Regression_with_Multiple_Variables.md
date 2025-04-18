@@ -1,3 +1,7 @@
+---
+sidebar_label: "02-2 Week Two Linear Regression with Multiple Variables"
+---
+
 # 02-2 Week Two Linear Regression with Multiple Variables
 
 Date：2022/04/25 15:01:11

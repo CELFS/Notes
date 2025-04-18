@@ -1,3 +1,7 @@
+---
+sidebar_label: "08-2 Week Dimensionality Reduction"
+---
+
 # 08-2 Week Dimensionality Reduction
 
 Date：2022/05/24 10:52:14

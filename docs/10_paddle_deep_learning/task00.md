@@ -1,3 +1,7 @@
+---
+sidebar_label: "Task00 Paddle 深度学习总结"
+---
+
 ### Task00 Paddle 深度学习总结
 
 Date：2023/03/15 17:13:08

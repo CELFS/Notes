@@ -1,3 +1,7 @@
+---
+sidebar_label: "01-2 Week Linear Algebra"
+---
+
 # 01-2 Week Linear Algebra
 
 Date：2022/04/24 18:25:51

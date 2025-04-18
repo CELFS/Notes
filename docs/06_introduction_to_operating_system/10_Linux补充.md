@@ -1,3 +1,7 @@
+---
+sidebar_label: "Linux 常用命令"
+---
+
 ### Linux 常用命令
 
 Date：2023/04/09 1:29:20

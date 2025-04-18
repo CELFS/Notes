@@ -1,3 +1,7 @@
+---
+sidebar_label: "04-1 Week Neural Networks: Representation"
+---
+
 # 04-1 Week Neural Networks: Representation
 
 Date:2022/05/01 2:15:42

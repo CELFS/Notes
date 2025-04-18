@@ -1,3 +1,7 @@
+---
+sidebar_label: "05-1 Week Neural Networks: Learning"
+---
+
 # 05-1 Week Neural Networks: Learning
 
 Date：2022/05/06

@@ -1,3 +1,7 @@
+---
+sidebar_label: "10-1 Week Large Scale Machine Learning"
+---
+
 # 10-1 Week Large Scale Machine Learning
 
 Date：2022/06/03 16:47:41

@@ -1,3 +1,7 @@
+---
+sidebar_label: "07-1 Week Support Vector Machines"
+---
+
 # 07-1 Week Support Vector Machines
 
 Date：2022/05/16 21:11:19

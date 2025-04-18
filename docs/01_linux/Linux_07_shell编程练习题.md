@@ -1,3 +1,7 @@
+---
+sidebar_label: "07 shell编程练习题"
+---
+
 ### 07 shell编程练习题
 
 创建信息：2021年6月25日23:00:23  By CELFS

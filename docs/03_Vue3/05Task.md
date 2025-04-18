@@ -1,3 +1,7 @@
+---
+sidebar_label: "05 Task Vue Router & Vuex"
+---
+
 ## 05 Task Vue Router & Vuex
 
 Date：2024/07/08 21:59:24

@@ -1,3 +1,7 @@
+---
+sidebar_label: "06-2 Week Machine Learning System Design"
+---
+
 # 06-2 Week Machine Learning System Design
 
 Date：2022/05/12

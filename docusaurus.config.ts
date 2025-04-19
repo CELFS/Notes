@@ -9,12 +9,15 @@ import remarkHtml from 'remark-html';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
+  // 设置网站标题
   title: '编程内外',
+  // 设置网站副标题
   tagline: '编程内外 - 上下求索',
+  // 设置网站图标
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://CELFS.github.io',
+  url: 'https://celfs.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/Notes/',
@@ -134,9 +137,9 @@ const config: Config = {
         // {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/CELFS/Notes',
-          label: 'GitHub',
-          icon: 'github',
           position: 'right',
+          className: 'header-github-link',
+          'aria-label': 'GitHub repository',
         },
       ],
     },

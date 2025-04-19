@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunknotes_new=self.webpackChunknotes_new||[]).push([[4583],{45676:(e,n,s)=>{s.r(n),s.d(n,{default:()=>c});var t=s(36672),u=s(85291);function c(){const e=(0,u.W6)();return(0,t.useEffect)((()=>{e.replace("/Notes/docs/")}),[e]),null}}}]);

@@ -1,0 +1,150 @@
+---
+import { SITE } from '../../config/site';
+---
+
+<dialog class="image-viewer" id="image-viewer" aria-label={SITE.imageViewerLabel}>
+  <div class="image-viewer__panel">
+    <div class="image-viewer__toolbar">
+      <button class="image-viewer__button" id="image-viewer-previous" type="button" aria-label={SITE.previousImage}>←</button>
+      <span class="image-viewer__counter" id="image-viewer-counter"></span>
+      <div class="image-viewer__zoom">
+        <button class="image-viewer__button" id="image-viewer-zoom-out" type="button" aria-label={SITE.zoomOutImage}>−</button>
+        <button class="image-viewer__button image-viewer__reset" id="image-viewer-reset" type="button" aria-label={SITE.resetImageZoom}>1:1</button>
+        <button class="image-viewer__button" id="image-viewer-zoom-in" type="button" aria-label={SITE.zoomInImage}>＋</button>
+      </div>
+      <button class="image-viewer__button" id="image-viewer-next" type="button" aria-label={SITE.nextImage}>→</button>
+      <button class="image-viewer__button image-viewer__close" id="image-viewer-close" type="button" aria-label={SITE.closeImageViewer}>×</button>
+    </div>
+    <div class="image-viewer__stage" id="image-viewer-stage">
+      <img id="image-viewer-image" alt="" draggable="false" />
+    </div>
+    <div class="image-viewer__caption" id="image-viewer-caption"></div>
+  </div>
+</dialog>
+
+<script>
+  import { SITE } from '../../config/site';
+
+  const dialog = document.querySelector<HTMLDialogElement>('#image-viewer');
+  const viewerImage = document.querySelector<HTMLImageElement>('#image-viewer-image');
+  const stage = document.querySelector<HTMLElement>('#image-viewer-stage');
+  const counter = document.querySelector<HTMLElement>('#image-viewer-counter');
+  const caption = document.querySelector<HTMLElement>('#image-viewer-caption');
+  const previousButton = document.querySelector<HTMLButtonElement>('#image-viewer-previous');
+  const nextButton = document.querySelector<HTMLButtonElement>('#image-viewer-next');
+  const zoomOutButton = document.querySelector<HTMLButtonElement>('#image-viewer-zoom-out');
+  const zoomInButton = document.querySelector<HTMLButtonElement>('#image-viewer-zoom-in');
+  const resetButton = document.querySelector<HTMLButtonElement>('#image-viewer-reset');
+  const images = Array.from(document.querySelectorAll<HTMLImageElement>('.note-content img'));
+
+  let currentIndex = 0;
+  let scale = 1;
+  let offsetX = 0;
+  let offsetY = 0;
+  let pointerStart: { x: number; y: number; offsetX: number; offsetY: number } | undefined;
+
+  const applyTransform = () => {
+    if (!viewerImage || !resetButton || !stage) return;
+    viewerImage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+    resetButton.textContent = `${Math.round(scale * 100)}%`;
+    stage.classList.toggle('is-zoomed', scale > 1);
+  };
+
+  const resetTransform = () => {
+    scale = 1;
+    offsetX = 0;
+    offsetY = 0;
+    applyTransform();
+  };
+
+  const setScale = (nextScale: number) => {
+    scale = Math.min(5, Math.max(1, nextScale));
+    if (scale === 1) {
+      offsetX = 0;
+      offsetY = 0;
+    }
+    applyTransform();
+  };
+
+  const showImage = (index: number) => {
+    if (!viewerImage || images.length === 0) return;
+    currentIndex = (index + images.length) % images.length;
+    const source = images[currentIndex];
+    viewerImage.src = source.currentSrc || source.src;
+    viewerImage.alt = source.alt;
+    if (caption) {
+      caption.textContent = source.alt || source.title;
+      caption.hidden = !caption.textContent;
+    }
+    if (counter) counter.textContent = `${currentIndex + 1} / ${images.length}`;
+    if (previousButton) previousButton.disabled = images.length < 2;
+    if (nextButton) nextButton.disabled = images.length < 2;
+    resetTransform();
+  };
+
+  const openImage = (index: number) => {
+    if (!dialog) return;
+    showImage(index);
+    dialog.showModal();
+  };
+
+  images.forEach((image, index) => {
+    image.tabIndex = 0;
+    image.setAttribute('role', 'button');
+    image.setAttribute('aria-label', image.alt ? `${SITE.openImageViewer}：${image.alt}` : SITE.openImageViewer);
+    image.addEventListener('click', (event) => {
+      event.preventDefault();
+      openImage(index);
+    });
+    image.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openImage(index);
+      }
+    });
+  });
+
+  previousButton?.addEventListener('click', () => showImage(currentIndex - 1));
+  nextButton?.addEventListener('click', () => showImage(currentIndex + 1));
+  zoomOutButton?.addEventListener('click', () => setScale(scale - 0.25));
+  zoomInButton?.addEventListener('click', () => setScale(scale + 0.25));
+  resetButton?.addEventListener('click', resetTransform);
+  document.querySelector('#image-viewer-close')?.addEventListener('click', () => dialog?.close());
+
+  dialog?.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog?.addEventListener('close', resetTransform);
+
+  stage?.addEventListener('wheel', (event) => {
+    event.preventDefault();
+    setScale(scale + (event.deltaY < 0 ? 0.25 : -0.25));
+  }, { passive: false });
+
+  stage?.addEventListener('pointerdown', (event) => {
+    if (scale === 1) return;
+    pointerStart = { x: event.clientX, y: event.clientY, offsetX, offsetY };
+    stage.setPointerCapture(event.pointerId);
+  });
+  stage?.addEventListener('pointermove', (event) => {
+    if (!pointerStart) return;
+    offsetX = pointerStart.offsetX + event.clientX - pointerStart.x;
+    offsetY = pointerStart.offsetY + event.clientY - pointerStart.y;
+    applyTransform();
+  });
+  stage?.addEventListener('pointerup', () => {
+    pointerStart = undefined;
+  });
+  stage?.addEventListener('pointercancel', () => {
+    pointerStart = undefined;
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (!dialog?.open) return;
+    if (event.key === 'ArrowLeft') showImage(currentIndex - 1);
+    if (event.key === 'ArrowRight') showImage(currentIndex + 1);
+    if (event.key === '+' || event.key === '=') setScale(scale + 0.25);
+    if (event.key === '-') setScale(scale - 0.25);
+    if (event.key === '0') resetTransform();
+  });
+</script>

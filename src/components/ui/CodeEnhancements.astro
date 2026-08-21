@@ -13,18 +13,57 @@ import { SITE } from '../../config/site';
   const settings = document.querySelector<HTMLElement>('#code-enhancements');
   const copyLabel = settings?.dataset.copyLabel ?? '';
   const copiedLabel = settings?.dataset.copiedLabel ?? '';
+  const languageNames: Record<string, string> = {
+    asm: 'Assembly',
+    bash: 'Bash',
+    c: 'C',
+    cpp: 'C++',
+    css: 'CSS',
+    html: 'HTML',
+    javascript: 'JavaScript',
+    js: 'JavaScript',
+    json: 'JSON',
+    matlab: 'MATLAB',
+    perl: 'Perl',
+    plaintext: 'Text',
+    python: 'Python',
+    shell: 'Shell',
+    shellscript: 'Shell',
+    sql: 'SQL',
+    text: 'Text',
+    ts: 'TypeScript',
+    typescript: 'TypeScript',
+    vue: 'Vue',
+    xml: 'XML',
+    yaml: 'YAML',
+  };
 
   for (const pre of document.querySelectorAll<HTMLPreElement>('.note-content pre')) {
-    if (!pre.querySelector('code')) continue;
+    const code = pre.querySelector('code');
+    const parent = pre.parentNode;
+    if (!code || !parent) continue;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block';
+    const toolbar = document.createElement('div');
+    toolbar.className = 'code-block__toolbar';
+    const language = document.createElement('span');
+    language.className = 'code-language';
+    const languageId = pre.dataset.language?.trim() || 'text';
+    language.textContent = languageNames[languageId.toLocaleLowerCase()] ?? languageId;
+
     const button = document.createElement('button');
     button.className = 'code-copy';
     button.type = 'button';
     button.textContent = copyLabel;
     button.addEventListener('click', async () => {
-      await navigator.clipboard.writeText(pre.querySelector('code')?.textContent ?? '');
+      await navigator.clipboard.writeText(code.textContent ?? '');
       button.textContent = copiedLabel;
       window.setTimeout(() => { button.textContent = copyLabel; }, 1600);
     });
-    pre.append(button);
+
+    parent.insertBefore(wrapper, pre);
+    toolbar.append(language, button);
+    wrapper.append(toolbar, pre);
   }
 </script>

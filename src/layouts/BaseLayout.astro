@@ -27,6 +27,8 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
       try {
         const theme = localStorage.getItem('notes-theme');
         document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+        const sidebar = localStorage.getItem('notes-sidebar');
+        if (sidebar === 'collapsed') document.documentElement.dataset.sidebar = 'collapsed';
       } catch {}
     </script>
   </head>

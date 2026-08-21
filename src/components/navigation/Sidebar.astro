@@ -14,11 +14,17 @@ const base = import.meta.env.BASE_URL;
 ---
 
 <aside class="sidebar" id="site-navigation" aria-label={SITE.navigationLabel}>
+  <div class="sidebar__top">
+    <a class="brand" href={base} aria-label={`${SITE.title} · ${SITE.homeLabel}`}>
+      <span class="brand__mark"><img src={`${base}logo.png`} alt={SITE.logoAlt} /></span>
+      <span class="brand__title">{SITE.title}</span>
+    </a>
+    <button class="icon-button sidebar__toggle" id="navigation-toggle" type="button" aria-label={SITE.closeNavigation} aria-controls="site-navigation" aria-expanded="true">
+      <Icon name="menu" />
+    </button>
+  </div>
   <div class="sidebar__header">
     <span>{SITE.navigationLabel}</span>
-    <button class="icon-button sidebar__close" id="navigation-close" type="button" aria-label={SITE.closeNavigation}>
-      <Icon name="close" />
-    </button>
   </div>
   <nav class="sidebar__scroll custom-scrollbar">
     <a class:list={['nav-link nav-link--home', { 'is-active': !activeId }]} href={base}>{SITE.homeLabel}</a>
@@ -31,10 +37,44 @@ const base = import.meta.env.BASE_URL;
 <button class="navigation-scrim" id="navigation-scrim" type="button" aria-label={SITE.closeNavigation}></button>
 
 <script>
-  const closeNavigation = () => {
-    delete document.body.dataset.navigation;
+  import { SITE } from '../../config/site';
+
+  const root = document.documentElement;
+  const toggleButton = document.querySelector<HTMLButtonElement>('#navigation-toggle');
+  const mobileNavigation = window.matchMedia('(max-width: 48rem)');
+
+  const syncToggleButton = () => {
+    if (!toggleButton) return;
+    const isOpen = mobileNavigation.matches
+      ? document.body.dataset.navigation === 'open'
+      : root.dataset.sidebar !== 'collapsed';
+    toggleButton.setAttribute('aria-expanded', String(isOpen));
+    toggleButton.setAttribute('aria-label', isOpen ? SITE.closeNavigation : SITE.openNavigation);
   };
 
-  document.querySelector('#navigation-close')?.addEventListener('click', closeNavigation);
+  const closeNavigation = () => {
+    delete document.body.dataset.navigation;
+    syncToggleButton();
+  };
+
+  toggleButton?.addEventListener('click', () => {
+    if (mobileNavigation.matches) {
+      closeNavigation();
+      return;
+    }
+
+    const collapsed = root.dataset.sidebar !== 'collapsed';
+    if (collapsed) root.dataset.sidebar = 'collapsed';
+    else delete root.dataset.sidebar;
+    localStorage.setItem('notes-sidebar', collapsed ? 'collapsed' : 'expanded');
+    syncToggleButton();
+  });
+
   document.querySelector('#navigation-scrim')?.addEventListener('click', closeNavigation);
+  new MutationObserver(syncToggleButton).observe(document.body, {
+    attributes: true,
+    attributeFilter: ['data-navigation'],
+  });
+  mobileNavigation.addEventListener('change', syncToggleButton);
+  syncToggleButton();
 </script>

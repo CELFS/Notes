@@ -4,6 +4,7 @@ import TopBar from '../components/layout/TopBar.astro';
 import Sidebar from '../components/navigation/Sidebar.astro';
 import TableOfContents from '../components/navigation/TableOfContents.astro';
 import CodeEnhancements from '../components/ui/CodeEnhancements.astro';
+import ImageViewer from '../components/ui/ImageViewer.astro';
 import SearchDialog from '../components/ui/SearchDialog.astro';
 import { getNavigationTree } from '../lib/notes';
 import BaseLayout from './BaseLayout.astro';
@@ -31,5 +32,6 @@ const tree = getNavigationTree();
     </div>
   </div>
   <SearchDialog />
+  <ImageViewer />
   <CodeEnhancements />
 </BaseLayout>

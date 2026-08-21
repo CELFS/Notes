@@ -70,6 +70,23 @@ const searchIndexUrl = `${import.meta.env.BASE_URL}search-index.json`;
     return `${start > 0 ? '…' : ''}${text.slice(start, end)}${end < text.length ? '…' : ''}`;
   };
 
+  const appendHighlightedText = (element: HTMLElement, value: string, query: string) => {
+    const normalizedValue = value.toLocaleLowerCase();
+    let cursor = 0;
+    let location = normalizedValue.indexOf(query);
+
+    while (location >= 0) {
+      if (location > cursor) element.append(document.createTextNode(value.slice(cursor, location)));
+      const highlight = document.createElement('mark');
+      highlight.textContent = value.slice(location, location + query.length);
+      element.append(highlight);
+      cursor = location + query.length;
+      location = normalizedValue.indexOf(query, cursor);
+    }
+
+    if (cursor < value.length) element.append(document.createTextNode(value.slice(cursor)));
+  };
+
   const renderResults = () => {
     if (!input || !results || !dialog) return;
     const query = input.value.trim().toLocaleLowerCase();
@@ -94,13 +111,13 @@ const searchIndexUrl = `${import.meta.env.BASE_URL}search-index.json`;
       link.href = item.href;
 
       const title = document.createElement('strong');
-      title.textContent = item.title;
+      appendHighlightedText(title, item.title, query);
       const directory = document.createElement('span');
       directory.className = 'search-result__directory';
-      directory.textContent = item.directory;
+      appendHighlightedText(directory, item.directory, query);
       const snippet = document.createElement('span');
       snippet.className = 'search-result__snippet';
-      snippet.textContent = createSnippet(item.text, query);
+      appendHighlightedText(snippet, createSnippet(item.text, query), query);
 
       link.append(title, directory, snippet);
       results.append(link);

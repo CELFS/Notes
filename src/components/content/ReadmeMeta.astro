@@ -1,0 +1,24 @@
+---
+import { SITE } from '../../config/site';
+
+interface Props {
+  updatedAt: Date;
+  wordCount?: number;
+}
+
+const { updatedAt, wordCount } = Astro.props;
+const formattedUpdatedAt = new Intl.DateTimeFormat('zh-CN', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+  timeZone: 'Asia/Shanghai',
+}).format(updatedAt);
+---
+
+<div class="readme-meta">
+  <span>{SITE.updatedAtLabel} {formattedUpdatedAt}</span>
+  {typeof wordCount === 'number' && <span>{wordCount.toLocaleString('zh-CN')} {SITE.wordCountLabel}</span>}
+</div>

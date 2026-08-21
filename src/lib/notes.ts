@@ -16,6 +16,7 @@ export type Note = {
   headings: MarkdownHeading[];
   Content: unknown;
   searchText: string;
+  wordCount: number;
 };
 
 export type NavigationGroup = {
@@ -74,14 +75,22 @@ function hrefFromRoute(route: string) {
 function plainText(markdown: string) {
   return markdown
     .replace(/^---[\s\S]*?---\s*/u, '')
-    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/(```|~~~)[\s\S]*?\1/g, ' ')
     .replace(/`([^`]+)`/g, '$1')
     .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
     .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/https?:\/\/\S+/g, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/[#>*_~=|\-]+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+function countWords(text: string) {
+  const hanCharacters = text.match(/\p{Script=Han}/gu)?.length ?? 0;
+  const remainingText = text.replace(/\p{Script=Han}/gu, ' ');
+  const words = remainingText.match(/[\p{Letter}\p{Number}]+(?:[’'-][\p{Letter}\p{Number}]+)*/gu)?.length ?? 0;
+  return hanCharacters + words;
 }
 
 export const notes: Note[] = Object.entries(markdownModules)
@@ -95,6 +104,7 @@ export const notes: Note[] = Object.entries(markdownModules)
     const title = typeof frontmatter.title === 'string'
       ? frontmatter.title
       : headings[0]?.text ?? formatPathSegment(filename);
+    const searchText = plainText(rawModules[modulePath] ?? '');
 
     return {
       id,
@@ -105,7 +115,8 @@ export const notes: Note[] = Object.entries(markdownModules)
       directory: segments.slice(0, -1),
       headings,
       Content: module.Content,
-      searchText: plainText(rawModules[modulePath] ?? ''),
+      searchText,
+      wordCount: countWords(searchText),
     };
   })
   .sort((left, right) => collator.compare(left.id, right.id));

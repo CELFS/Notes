@@ -46,7 +46,8 @@ function transformNode(node, rewrite) {
 }
 
 export default function remarkNoteLinks(options = {}) {
-  const base = `/${String(options.base ?? '').replace(/^\/+|\/+$/g, '')}/`;
+  const normalizedBase = String(options.base ?? '').replace(/^\/+|\/+$/g, '');
+  const base = normalizedBase ? `/${normalizedBase}/` : '/';
 
   return (tree, file) => {
     const normalizedPath = String(file.path ?? '').replaceAll('\\', '/');

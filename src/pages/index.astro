@@ -2,11 +2,14 @@
 import { SITE } from '../config/site';
 import { homeNote } from '../lib/notes';
 import NotesLayout from '../layouts/NotesLayout.astro';
+import ReadmeMeta from '../components/content/ReadmeMeta.astro';
 
 const Content = homeNote?.Content as any;
+const updatedAt = new Date();
 ---
 
 <NotesLayout headings={homeNote?.headings}>
+  <ReadmeMeta updatedAt={updatedAt} wordCount={homeNote?.wordCount} />
   <article class="note-content note-content--home">
     {Content ? <Content /> : (
       <div class="empty-state">

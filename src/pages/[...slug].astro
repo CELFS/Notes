@@ -15,9 +15,12 @@ const adjacent = getAdjacentNotes(note);
 ---
 
 <NotesLayout title={note.title} description={note.description} activeId={note.id} headings={note.headings}>
-  <div class="document-path" aria-label={SITE.documentPathLabel}>
-    <a href={import.meta.env.BASE_URL}>{SITE.homeLabel}</a>
-    {note.directory.map((segment) => <><span>/</span><span>{formatPathSegment(segment)}</span></>)}
+  <div class="document-overview">
+    <div class="document-path" aria-label={SITE.documentPathLabel}>
+      <a href={import.meta.env.BASE_URL}>{SITE.homeLabel}</a>
+      {note.directory.map((segment) => <><span>/</span><span>{formatPathSegment(segment)}</span></>)}
+    </div>
+    <div class="document-meta">{note.wordCount.toLocaleString('zh-CN')} {SITE.wordCountLabel}</div>
   </div>
   <article class="note-content">
     <Content />

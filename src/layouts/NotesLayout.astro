@@ -15,11 +15,12 @@ interface Props {
   activeId?: string;
   activeRoute?: string;
   headings?: MarkdownHeading[];
+  contentsMaxDepth?: number;
 }
 
-const { title, description, activeId, activeRoute, headings = [] } = Astro.props;
+const { title, description, activeId, activeRoute, headings = [], contentsMaxDepth = 4 } = Astro.props;
 const tree = getNavigationTree();
-const hasContents = headings.some((heading) => heading.depth >= 2 && heading.depth <= 4);
+const hasContents = headings.some((heading) => heading.depth >= 2 && heading.depth <= contentsMaxDepth);
 ---
 
 <BaseLayout title={title} description={description}>
@@ -32,7 +33,7 @@ const hasContents = headings.some((heading) => heading.depth >= 2 && heading.dep
       </main>
       {hasContents && (
         <div class="toc-column">
-          <TableOfContents headings={headings} />
+          <TableOfContents headings={headings} maxDepth={contentsMaxDepth} />
         </div>
       )}
     </div>

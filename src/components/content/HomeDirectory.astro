@@ -1,0 +1,14 @@
+---
+import type { HomeDirectoryNode } from '../../lib/home-directory';
+import HomeDirectoryBranch from './HomeDirectoryBranch.astro';
+
+interface Props {
+  nodes: HomeDirectoryNode[];
+}
+
+const { nodes } = Astro.props;
+---
+
+<ul class="home-directory">
+  {nodes.map((node) => <HomeDirectoryBranch node={node} />)}
+</ul>

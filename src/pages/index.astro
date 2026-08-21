@@ -1,17 +1,22 @@
 ---
 import { SITE } from '../config/site';
-import { homeNote } from '../lib/notes';
+import { getHomeDirectoryHeadings, getHomeDirectoryNodes } from '../lib/home-directory';
+import { getNavigationTree, homeNote } from '../lib/notes';
 import NotesLayout from '../layouts/NotesLayout.astro';
+import HomeDirectory from '../components/content/HomeDirectory.astro';
 import ReadmeMeta from '../components/content/ReadmeMeta.astro';
 
 const Content = homeNote?.Content as any;
+const tree = getNavigationTree();
+const directoryNodes = getHomeDirectoryNodes(tree);
+const headings = [...(homeNote?.headings ?? []), ...getHomeDirectoryHeadings(directoryNodes)];
 const updatedAt = new Date();
 ---
 
-<NotesLayout headings={homeNote?.headings}>
+<NotesLayout headings={headings} contentsMaxDepth={6}>
   <ReadmeMeta updatedAt={updatedAt} wordCount={homeNote?.wordCount} />
   <article class="note-content note-content--home">
-    {Content ? <Content /> : (
+    {Content ? <><Content /><HomeDirectory nodes={directoryNodes} /></> : (
       <div class="empty-state">
         <h1>{SITE.emptyTitle}</h1>
         <p>{SITE.emptyDescription}</p>

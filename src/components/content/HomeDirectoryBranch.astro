@@ -1,0 +1,22 @@
+---
+import type { HomeDirectoryNode } from '../../lib/home-directory';
+import HomeDirectoryBranchComponent from './HomeDirectoryBranch.astro';
+
+interface Props {
+  node: HomeDirectoryNode;
+}
+
+const { node } = Astro.props;
+const Heading = `h${Math.min(node.depth + 2, 6)}` as keyof HTMLElementTagNameMap;
+---
+
+<li class="home-directory__item" data-depth={node.depth}>
+  <Heading class="home-directory__heading" id={node.slug}>
+    <a href={node.group.href}>{node.group.label}<span aria-hidden="true">→</span></a>
+  </Heading>
+  {node.children.length > 0 && (
+    <ul class="home-directory__children">
+      {node.children.map((child) => <HomeDirectoryBranchComponent node={child} />)}
+    </ul>
+  )}
+</li>

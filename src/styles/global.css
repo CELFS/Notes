@@ -606,7 +606,9 @@ a {
   font-weight: 600;
 }
 
-.toc__link[data-depth='4'] {
+.toc__link[data-depth='4'],
+.toc__link[data-depth='5'],
+.toc__link[data-depth='6'] {
   font-size: 0.72rem;
 }
 
@@ -808,7 +810,7 @@ a {
 
 .note-content h1 {
   margin: 0 0 2rem;
-  font-size: clamp(2rem, 5vw, 3.15rem);
+  font-size: 2rem;
   font-weight: 590;
   letter-spacing: -0.045em;
 }
@@ -818,6 +820,82 @@ a {
   padding-bottom: 0.65rem;
   border-bottom: 1px solid var(--border);
   font-size: 1.55rem;
+}
+
+.note-content .home-directory {
+  display: grid;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  gap: 0.85rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+}
+
+.note-content .home-directory__item {
+  margin: 0;
+  padding: 0;
+}
+
+.note-content .home-directory > .home-directory__item {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  transition: border-color var(--motion-fast), background var(--motion-fast);
+}
+
+.note-content .home-directory > .home-directory__item:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-hover);
+}
+
+.note-content .home-directory__heading {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 0.82rem;
+  font-weight: 560;
+  letter-spacing: 0;
+}
+
+.note-content .home-directory__heading a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.32rem 0.45rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.note-content .home-directory__heading a:hover {
+  background: var(--surface-active);
+  color: var(--active-text);
+}
+
+.note-content .home-directory__heading span {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
+
+.note-content .home-directory > .home-directory__item > .home-directory__heading {
+  font-size: 1rem;
+  font-weight: 620;
+}
+
+.note-content .home-directory > .home-directory__item > .home-directory__heading a {
+  padding: 0.15rem 0.25rem 0.65rem;
+  color: var(--text);
+}
+
+.note-content .home-directory__children {
+  display: grid;
+  margin: 0.25rem 0 0 0.45rem;
+  padding: 0 0 0 0.55rem;
+  gap: 0.12rem;
+  border-left: 1px solid var(--border);
+  list-style: none;
 }
 
 .note-content h3 {
@@ -1692,6 +1770,10 @@ a {
   .note-content h2 {
     margin-top: 3rem;
     font-size: 1.35rem;
+  }
+
+  .note-content .home-directory {
+    grid-template-columns: 1fr;
   }
 
   .article-pagination {

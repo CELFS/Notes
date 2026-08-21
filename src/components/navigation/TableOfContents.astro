@@ -6,9 +6,11 @@ import TableOfContentsBranch, { type TocHeading } from './TableOfContentsBranch.
 
 interface Props {
   headings?: MarkdownHeading[];
+  maxDepth?: number;
 }
 
-const headings = (Astro.props.headings ?? []).filter((heading) => heading.depth >= 2 && heading.depth <= 4);
+const { maxDepth = 4 } = Astro.props;
+const headings = (Astro.props.headings ?? []).filter((heading) => heading.depth >= 2 && heading.depth <= maxDepth);
 const headingTree: TocHeading[] = [];
 const stack: Array<{ depth: number; children: TocHeading[] }> = [{ depth: 1, children: headingTree }];
 

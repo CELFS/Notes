@@ -5,6 +5,9 @@ node_modules/
 .astro/
 dist/
 
+# Retired documentation site
+docs/
+
 # Local environment variables
 .env
 .env.*

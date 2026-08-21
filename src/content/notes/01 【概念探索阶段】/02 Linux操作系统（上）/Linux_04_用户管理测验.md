@@ -225,7 +225,7 @@ pscp[空1][可选参数][空2]Windows待上传文件路径[空3]Linux用户名@[
 * 如果输入提示**连接超时**，**大概率是因为IP地址错了**，IP地址不要相信网上说的ifconfig，即使是root用户下，ifconfig或者last得到的也不是真正的IP【这个问题的出现，不知道是不是云主机平台的保护机制，因为网上教程有些情况下得到的IP可以实现传输操作】【**其实pscp安装以及命令执行都很便捷，主要的时间花销就在IP地址的确认里面，IP错了，系统抛出新的问题，接着就逐渐导向了错误的解决方向**】
 * 真正的IP【应该叫主机IP】，要打开Xshell——会话管理窗口——右键属性——连接——主机
 
-<img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210621155558109.png" alt="image-20210621155558109" style="zoom: 20%;" />
+<img src="http://img.celfs.site/typora/2026/08/21/1787319724432-image-20210621155558109.png" alt="image-20210621155558109" style="zoom: 30%;" />
 
 ```bash
 //由于要输入密码，或者有时候是对大量文件进行备份操作

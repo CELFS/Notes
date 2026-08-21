@@ -18,7 +18,7 @@
 
 * 题干：对文件的重命名，内容的替换操作。
 
-<img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210623105034609.png" alt="image-20210623105034609" style="zoom:33%;" /> 
+<img src="http://img.celfs.site/typora/2026/08/21/1787319889022-image-20210623105034609.png" alt="image-20210623105034609" style="zoom:33%;" /> 
 
 #### 1.1 `tr`命令对文件重命名（translate or delete characters）【疑问？】
 
@@ -243,7 +243,7 @@ cat passwd_test | cut -d ":" -f 1 | xargs -esync
 
 * 题干：统计a.txt中各词的词频，并按照从大到小的顺序输出。
 
-<img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210623105106473.png" alt="image-20210623105106473" style="zoom: 33%;" /> 
+<img src="http://img.celfs.site/typora/2026/08/21/1787319903436-image-20210623105106473.png" alt="image-20210623105106473" style="zoom: 33%;" /> 
 
 ```bash
 #测试及资料显示，单独使用uniq命令只能去重相邻行元素

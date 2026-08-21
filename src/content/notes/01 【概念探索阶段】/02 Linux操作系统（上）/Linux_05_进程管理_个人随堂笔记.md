@@ -24,7 +24,7 @@
 
 ### 一、主要命令
 
-<img src="https://api2.mubu.com/v3/document_image/70fbdb55-d78a-4021-8759-75b46d1c17b7-4868874.jpg" alt="image" style="zoom: 33%;" />
+<img src="http://img.celfs.site/typora/2026/08/21/1787319778573-70fbdb55-d78a-4021-8759-75b46d1c17b7-4868874.jpeg" alt="image" style="zoom: 33%;" />
 
 ------
 

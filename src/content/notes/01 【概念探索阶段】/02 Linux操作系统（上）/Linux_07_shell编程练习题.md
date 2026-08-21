@@ -16,7 +16,7 @@
 
 ### 0 测评截图
 
-![image-20210626182610843](http://img.celfs.site/typora/2025/11/22/1763815799450-image-20210626182610843.png)
+![image-20210626182610843](http://img.celfs.site/typora/2026/08/21/1787319251773-image-20210626182610843.png)
 
 ------
 
@@ -26,7 +26,7 @@
 
 * 题干
 
-  <img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626183057554.png" alt="image-20210626183057554" style="zoom:33%;" /> 
+  <img src="http://img.celfs.site/typora/2026/08/21/1787319244637-image-20210626183057554.png" alt="image-20210626183057554" style="zoom:33%;" /> 
 
 * 代码实现
 
@@ -49,7 +49,7 @@ fi
 
 * 题干
 
-  <img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626183313115.png" alt="image-20210626183313115" style="zoom:33%;" /> 
+  <img src="http://img.celfs.site/typora/2026/08/21/1787319273435-image-20210626183313115.png" alt="image-20210626183313115" style="zoom:33%;" /> 
 
 * 代码实现
 
@@ -72,7 +72,7 @@ fi
 
 * 题干
 
-  <img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626183341145.png" alt="image-20210626183341145" style="zoom:33%;" /> 
+  <img src="http://img.celfs.site/typora/2026/08/21/1787319276268-image-20210626183341145.png" alt="image-20210626183341145" style="zoom:33%;" /> 
 
 * 思路：
 
@@ -117,7 +117,7 @@ fi
 
 * 题干：
 
-  <img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626010813869.png" alt="image-20210626010813869" style="zoom: 33%;" />  
+  <img src="http://img.celfs.site/typora/2026/08/21/1787319284746-image-20210626010813869.png" alt="image-20210626010813869" style="zoom: 33%;" />  
 
 * 读题：考察的应该是浮点数运算、比较大小
 
@@ -145,7 +145,7 @@ echo $cnt
 
 * 运行截图【失败】
 
-![image-20210626001834137](http://img.celfs.site/typora/2025/11/22/1763815799027-image-20210626001834137.png)
+![image-20210626001834137](http://img.celfs.site/typora/2026/08/21/1787319291548-image-20210626001834137.png)
 
 * 代码实现【成功】
 
@@ -193,7 +193,7 @@ echo $cnt
 
 * 题干
 
-  <img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626012826034.png" alt="image-20210626012826034" style="zoom:33%;" />  
+  <img src="http://img.celfs.site/typora/2026/08/21/1787319297290-image-20210626012826034.png" alt="image-20210626012826034" style="zoom:33%;" />  
 
 * 读题：区间、整数、单个数字出现次数，循环，管道
 
@@ -239,7 +239,7 @@ echo $cnt
 
 * 运行截图
 
-![image-20210626024320749](http://img.celfs.site/typora/2025/11/22/1763815798672-image-20210626024320749.png)
+![image-20210626024320749](http://img.celfs.site/typora/2026/08/21/1787319304397-image-20210626024320749.png)
 
 ------
 
@@ -249,7 +249,7 @@ echo $cnt
 
 * 题干
 
-  <img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626031307884.png" alt="image-20210626031307884" style="zoom:33%;" /> 
+  <img src="http://img.celfs.site/typora/2026/08/21/1787319314926-image-20210626031307884.png" alt="image-20210626031307884" style="zoom:33%;" /> 
 
 * 示例
 
@@ -292,7 +292,7 @@ echo $cnt
 
 * 运行截图
 
-![image-20210626035520953](http://img.celfs.site/typora/2025/11/22/1763815798340-image-20210626035520953.png)
+![image-20210626035520953](http://img.celfs.site/typora/2026/08/21/1787319322590-image-20210626035520953.png)
 
 ------
 
@@ -302,7 +302,7 @@ echo $cnt
 
 * 题干
 
-  <img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626035646257.png" alt="image-20210626035646257" style="zoom:33%;" /> 
+  <img src="http://img.celfs.site/typora/2026/08/21/1787319325167-image-20210626035646257.png" alt="image-20210626035646257" style="zoom:33%;" /> 
 
 * 示例
 
@@ -350,7 +350,7 @@ echo ${arr2[*]}
 
 * 运行截图
 
-![image-20210626142607919](http://img.celfs.site/typora/2025/11/22/1763815798009-image-20210626142607919.png)
+![image-20210626142607919](http://img.celfs.site/typora/2026/08/21/1787319331324-image-20210626142607919.png)
 
 * 参考
   * Shell删除数组元素（也可以删除整个数组）  http://c.biancheng.net/view/819.html
@@ -371,7 +371,7 @@ echo ${arr2[*]}
 
 * 题干
 
-  <img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626143321431.png" alt="image-20210626143321431" style="zoom:33%;" /> 
+  <img src="http://img.celfs.site/typora/2026/08/21/1787319334480-image-20210626143321431.png" alt="image-20210626143321431" style="zoom:33%;" /> 
 
 * 读题：递推实现。
 
@@ -413,7 +413,7 @@ echo ${step[*]}
 
 * 运行截图
 
-![image-20210626154451916](http://img.celfs.site/typora/2025/11/22/1763815797691-image-20210626154451916.png)
+![image-20210626154451916](http://img.celfs.site/typora/2026/08/21/1787319559681-image-20210626154451916.png)
 
 ------
 
@@ -423,7 +423,7 @@ echo ${step[*]}
 
 * 题干
 
-  <img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626154757534.png" alt="image-20210626154757534" style="zoom:33%;" /> 
+  <img src="http://img.celfs.site/typora/2026/08/21/1787319338326-image-20210626154757534.png" alt="image-20210626154757534" style="zoom:33%;" /> 
 
 * 示例
 
@@ -519,7 +519,7 @@ echo ${cnt}
 
 * 题干
 
-  <img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626172731986.png" alt="image-20210626172731986" style="zoom:33%;" /> 
+  <img src="http://img.celfs.site/typora/2026/08/21/1787319343077-image-20210626172731986.png" alt="image-20210626172731986" style="zoom:33%;" /> 
 
 * 读题：与C语言程序设计课程中的“蒜头爬楼梯”题目一样。
 
@@ -560,7 +560,7 @@ echo ${step[$N]}
 
 * 题干
 
-  <img src="C:\Users\CELFS\AppData\Roaming\Typora\typora-user-images\image-20210626181310101.png" alt="image-20210626181310101" style="zoom:33%;" /> 
+  <img src="http://img.celfs.site/typora/2026/08/21/1787319346173-image-20210626181310101.png" alt="image-20210626181310101" style="zoom:33%;" /> 
 
 * 读题：顾名思义，与第8题一样，修改一下起始值与输出值即可。
 

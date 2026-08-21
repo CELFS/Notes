@@ -6,11 +6,9 @@ import TableOfContentsBranch, { type TocHeading } from './TableOfContentsBranch.
 
 interface Props {
   headings?: MarkdownHeading[];
-  maxDepth?: number;
 }
 
-const { maxDepth = 4 } = Astro.props;
-const headings = (Astro.props.headings ?? []).filter((heading) => heading.depth >= 2 && heading.depth <= maxDepth);
+const headings = (Astro.props.headings ?? []).filter((heading) => heading.depth >= 2 && heading.depth <= 4);
 const headingTree: TocHeading[] = [];
 const stack: Array<{ depth: number; children: TocHeading[] }> = [{ depth: 1, children: headingTree }];
 
@@ -40,6 +38,7 @@ for (const heading of headings) {
     </aside>
     <div class="toc__actions" hidden>
       <button class="toc__top" id="toc-scroll-top" type="button">{SITE.scrollToTop}<span aria-hidden="true">↑</span></button>
+      <button class="toc__bottom" id="toc-scroll-bottom" type="button">{SITE.scrollToBottom}<span aria-hidden="true">↓</span></button>
     </div>
   </>
 )}
@@ -50,6 +49,7 @@ for (const heading of headings) {
   const root = document.documentElement;
   const toggleButton = document.querySelector<HTMLButtonElement>('#toc-toggle');
   const scrollTopButton = document.querySelector<HTMLButtonElement>('#toc-scroll-top');
+  const scrollBottomButton = document.querySelector<HTMLButtonElement>('#toc-scroll-bottom');
   const scrollTopActions = scrollTopButton?.closest<HTMLElement>('.toc__actions');
   const tocColumn = scrollTopButton?.closest<HTMLElement>('.toc-column');
   const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc__link'));
@@ -110,6 +110,9 @@ for (const heading of headings) {
   });
   scrollTopButton?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  scrollBottomButton?.addEventListener('click', () => {
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
   });
 
   const syncScrollTopButton = () => {

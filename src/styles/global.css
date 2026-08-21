@@ -177,16 +177,6 @@ a {
   transition: left var(--motion-normal) ease;
 }
 
-.topbar::after {
-  position: absolute;
-  right: 0.85rem;
-  bottom: 0;
-  left: 0.85rem;
-  height: 1px;
-  background: var(--border);
-  content: '';
-}
-
 .topbar__actions {
   display: flex;
   align-items: center;
@@ -317,16 +307,6 @@ a {
   backdrop-filter: blur(18px) saturate(1.2);
 }
 
-.sidebar__top::after {
-  position: absolute;
-  right: 0.85rem;
-  bottom: 0;
-  left: 0.85rem;
-  height: 1px;
-  background: var(--border);
-  content: '';
-}
-
 .sidebar__toggle {
   flex: none;
 }
@@ -447,7 +427,7 @@ a {
   width: 100%;
   max-width: calc(var(--content-width) + 4rem);
   margin: 0 auto;
-  padding: 3.5rem 2rem 6rem;
+  padding: 3.5rem 2rem 1.5rem;
   align-items: start;
   justify-content: center;
   grid-column: 2;
@@ -463,6 +443,15 @@ a {
 .main-column {
   min-width: 0;
   grid-column: 1;
+}
+
+.site-footer {
+  max-width: var(--content-width);
+  margin: 4rem auto 0;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  text-align: center;
 }
 
 .toc-column {
@@ -534,13 +523,20 @@ a {
 }
 
 .toc__actions {
+  display: grid;
   flex: none;
   margin-top: 0.75rem;
   padding-top: 0.65rem;
-  border-top: 1px solid var(--border);
+  gap: 0.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.toc__top {
+.toc__actions[hidden] {
+  display: none;
+}
+
+.toc__top,
+.toc__bottom {
   display: flex;
   width: 100%;
   padding: 0.4rem 0.45rem;
@@ -557,7 +553,22 @@ a {
   transition: background var(--motion-fast), color var(--motion-fast);
 }
 
-.toc__top:hover {
+.toc__bottom {
+  position: relative;
+}
+
+.toc__bottom::before {
+  position: absolute;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  left: -0.25rem;
+  width: 1px;
+  background: var(--border);
+  content: '';
+}
+
+.toc__top:hover,
+.toc__bottom:hover {
   background: var(--surface-hover);
   color: var(--text-secondary);
 }
@@ -606,9 +617,7 @@ a {
   font-weight: 600;
 }
 
-.toc__link[data-depth='4'],
-.toc__link[data-depth='5'],
-.toc__link[data-depth='6'] {
+.toc__link[data-depth='4'] {
   font-size: 0.72rem;
 }
 

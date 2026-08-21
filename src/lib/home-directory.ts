@@ -1,4 +1,3 @@
-import type { MarkdownHeading } from 'astro';
 import type { NavigationGroup } from './notes';
 
 export type HomeDirectoryNode = {
@@ -22,22 +21,4 @@ export function getHomeDirectoryNodes(tree: NavigationGroup) {
   });
 
   return buildNodes(tree.children, []);
-}
-
-export function getHomeDirectoryHeadings(nodes: HomeDirectoryNode[]) {
-  const headings: MarkdownHeading[] = [];
-
-  const collect = (items: HomeDirectoryNode[]) => {
-    for (const item of items) {
-      headings.push({
-        depth: Math.min(item.depth + 2, 6),
-        slug: item.slug,
-        text: item.group.label,
-      });
-      collect(item.children);
-    }
-  };
-
-  collect(nodes);
-  return headings;
 }

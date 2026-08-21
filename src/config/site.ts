@@ -42,4 +42,6 @@ export const SITE = {
   resetImageZoom: '重置图片缩放',
   emptyTitle: '发布目录还是空的',
   emptyDescription: '把确认公开的 Markdown 原文件复制到 src/content/notes 后，目录和页面会自动生成。',
+  copyright: '© 2026 CELFS',
+  scrollToBottom: '滚动到底部',
 } as const;

@@ -10,6 +10,7 @@
     "check": "astro check",
     "notes:add": "node scripts/sync-notes.mjs --add",
     "notes:add:dry": "node scripts/sync-notes.mjs --add --dry",
+    "notes:check-routes": "node scripts/check-note-routes.mjs",
     "notes:list": "node scripts/sync-notes.mjs --list",
     "notes:update": "node scripts/sync-notes.mjs --update",
     "notes:update:dry": "node scripts/sync-notes.mjs --update --dry",

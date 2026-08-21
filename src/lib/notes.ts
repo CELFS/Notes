@@ -64,7 +64,10 @@ function routeFromId(id: string) {
 function hrefFromRoute(route: string) {
   const base = import.meta.env.BASE_URL;
   if (!route) return base;
-  const encodedRoute = route.split('/').map(encodeURIComponent).join('/');
+  const encodedRoute = route
+    .split('/')
+    .map((segment) => encodeURIComponent(segment).replace(/%2B/gi, '+'))
+    .join('/');
   return `${base}${encodedRoute}/`;
 }
 

@@ -68,6 +68,20 @@ pnpm build
 pnpm dev
 ```
 
+开发服务运行后，可以一键检查全部公开笔记路由：
+
+```bash
+pnpm notes:check-routes
+```
+
+检查已经部署的站点时指定站点根地址：
+
+```bash
+pnpm notes:check-routes -- --base-url https://celfs.github.io/Notes/
+```
+
+脚本会核对 Markdown 与搜索索引的数量，并逐一请求首页和全部笔记页面。任一路由缺失、重复、越过站点根路径或返回非 2xx 时，命令都会失败并列出具体地址。
+
 ## 图床域名
 
 复制 `.env.example` 为 `.env`，配置旧地址和当前公开图床地址：

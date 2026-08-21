@@ -8,7 +8,9 @@ function routeFromMarkdownPath(markdownPath) {
   const segments = withoutExtension.split('/').filter(Boolean);
   const leaf = segments.at(-1)?.toLowerCase();
   if (leaf === 'readme' || leaf === 'index') segments.pop();
-  return segments.map(encodeURIComponent).join('/');
+  return segments
+    .map((segment) => encodeURIComponent(segment).replace(/%2B/gi, '+'))
+    .join('/');
 }
 
 function rewriteMarkdownUrl(url, sourcePath, base) {

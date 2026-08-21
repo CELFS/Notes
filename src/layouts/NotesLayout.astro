@@ -19,17 +19,22 @@ interface Props {
 
 const { title, description, activeId, activeRoute, headings = [] } = Astro.props;
 const tree = getNavigationTree();
+const hasContents = headings.some((heading) => heading.depth >= 2 && heading.depth <= 4);
 ---
 
 <BaseLayout title={title} description={description}>
   <TopBar />
   <div class="app-shell">
     <Sidebar tree={tree} activeId={activeId} activeRoute={activeRoute} />
-    <main class="main-column" id="main-content">
-      <slot />
-    </main>
-    <div class="toc-column">
-      <TableOfContents headings={headings} />
+    <div class:list={['content-workspace', { 'content-workspace--with-toc': hasContents }] }>
+      <main class="main-column" id="main-content">
+        <slot />
+      </main>
+      {hasContents && (
+        <div class="toc-column">
+          <TableOfContents headings={headings} />
+        </div>
+      )}
     </div>
   </div>
   <SearchDialog />

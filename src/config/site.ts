@@ -17,6 +17,8 @@ export const SITE = {
   openNavigation: '打开笔记目录',
   closeNavigation: '关闭笔记目录',
   contentsLabel: '本页目录',
+  expandContents: '展开本页目录',
+  collapseContents: '收起本页目录',
   documentPathLabel: '文档路径',
   subdirectoriesLabel: '子目录',
   documentsLabel: '笔记',

@@ -1,5 +1,5 @@
 ---
-type IconName = 'book' | 'chevron' | 'close' | 'github' | 'menu' | 'moon' | 'search' | 'sun';
+type IconName = 'book' | 'chevron' | 'close' | 'collapse' | 'expand' | 'github' | 'menu' | 'moon' | 'search' | 'sun';
 
 interface Props {
   name: IconName;
@@ -24,6 +24,8 @@ const { name, size = 18 } = Astro.props;
   {name === 'book' && <g><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z" /><path d="M4 5.5v16" /></g>}
   {name === 'chevron' && <path d="m9 18 6-6-6-6" />}
   {name === 'close' && <g><path d="m6 6 12 12" /><path d="M18 6 6 18" /></g>}
+  {name === 'collapse' && <g><path d="m8 3v5H3" /><path d="m16 21v-5h5" /><path d="m3 8 6-6" /><path d="m21 16-6 6" /></g>}
+  {name === 'expand' && <g><path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="m21 3-7 7" /><path d="m3 21 7-7" /></g>}
   {name === 'github' && <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3.3-.4 6.8-1.6 6.8-7A5.4 5.4 0 0 0 19.3 4 5 5 0 0 0 19.2.5S18 0 15 2a13.4 13.4 0 0 0-7 0C5-.1 3.8.5 3.8.5A5 5 0 0 0 3.7 4a5.4 5.4 0 0 0-1.5 3.7c0 5.3 3.5 6.5 6.8 7A4.8 4.8 0 0 0 8 18v4m0-3c-3 .9-3-1.5-4-2" />}
   {name === 'menu' && <g><path d="M4 7h16" /><path d="M4 12h16" /><path d="M4 17h16" /></g>}
   {name === 'moon' && <path d="M20.8 15.4A9 9 0 0 1 8.6 3.2 9 9 0 1 0 20.8 15.4Z" />}

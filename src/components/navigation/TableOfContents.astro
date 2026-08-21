@@ -1,6 +1,7 @@
 ---
 import type { MarkdownHeading } from 'astro';
 import { SITE } from '../../config/site';
+import Icon from '../ui/Icon.astro';
 
 interface Props {
   headings?: MarkdownHeading[];
@@ -11,8 +12,14 @@ const headings = (Astro.props.headings ?? []).filter((heading) => heading.depth 
 
 {headings.length > 0 && (
   <aside class="toc" aria-label={SITE.contentsLabel}>
-    <div class="toc__title">{SITE.contentsLabel}</div>
-    <nav class="toc__nav custom-scrollbar">
+    <div class="toc__header">
+      <div class="toc__title">{SITE.contentsLabel}</div>
+      <button class="icon-button toc__toggle" id="toc-toggle" type="button" aria-label={SITE.expandContents} aria-controls="toc-navigation" aria-expanded="false">
+        <span class="toc__toggle-icon toc__toggle-icon--expand"><Icon name="expand" size={15} /></span>
+        <span class="toc__toggle-icon toc__toggle-icon--collapse"><Icon name="collapse" size={15} /></span>
+      </button>
+    </div>
+    <nav class="toc__nav custom-scrollbar" id="toc-navigation">
       {headings.map((heading) => (
         <a href={`#${heading.slug}`} data-depth={heading.depth}>{heading.text}</a>
       ))}
@@ -21,6 +28,10 @@ const headings = (Astro.props.headings ?? []).filter((heading) => heading.depth 
 )}
 
 <script>
+  import { SITE } from '../../config/site';
+
+  const root = document.documentElement;
+  const toggleButton = document.querySelector<HTMLButtonElement>('#toc-toggle');
   const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc__nav a'));
   const headings = links
     .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
@@ -41,4 +52,20 @@ const headings = (Astro.props.headings ?? []).filter((heading) => heading.depth 
     headings.forEach((heading) => observer.observe(heading));
     setActive(headings[0].id);
   }
+
+  const syncToggleButton = () => {
+    if (!toggleButton) return;
+    const expanded = root.dataset.toc === 'expanded';
+    toggleButton.setAttribute('aria-expanded', String(expanded));
+    toggleButton.setAttribute('aria-label', expanded ? SITE.collapseContents : SITE.expandContents);
+  };
+
+  toggleButton?.addEventListener('click', () => {
+    const expanded = root.dataset.toc !== 'expanded';
+    if (expanded) root.dataset.toc = 'expanded';
+    else delete root.dataset.toc;
+    localStorage.setItem('notes-toc', expanded ? 'expanded' : 'collapsed');
+    syncToggleButton();
+  });
+  syncToggleButton();
 </script>

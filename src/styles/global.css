@@ -375,6 +375,21 @@ a {
   background: var(--surface-hover);
 }
 
+.nav-group.is-active > summary {
+  background: var(--surface-active);
+  color: var(--active-text);
+}
+
+.nav-group__link {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .nav-group__chevron {
   color: var(--text-muted);
   transition: transform var(--motion-fast);
@@ -524,6 +539,90 @@ a {
 
 .note-content--home {
   padding-top: 0.25rem;
+}
+
+.directory-page {
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  color: var(--text-secondary);
+}
+
+.directory-page h1 {
+  margin: 0 0 2.5rem;
+  color: var(--text);
+  font-size: clamp(2rem, 5vw, 3.15rem);
+  font-weight: 590;
+  letter-spacing: -0.045em;
+  line-height: 1.25;
+}
+
+.directory-section + .directory-section {
+  margin-top: 3rem;
+}
+
+.directory-section h2 {
+  margin: 0 0 1rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.15rem;
+  font-weight: 620;
+}
+
+.directory-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+}
+
+.directory-card,
+.directory-list a {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: border-color var(--motion-fast), background var(--motion-fast), color var(--motion-fast);
+}
+
+.directory-card {
+  padding: 0.8rem 1rem;
+  font-size: 0.84rem;
+  font-weight: 560;
+}
+
+.directory-card:hover,
+.directory-list a:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.directory-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.directory-list a {
+  display: grid;
+  padding: 0.8rem 1rem;
+}
+
+.directory-list strong {
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 580;
+}
+
+.directory-list span {
+  margin-top: 0.2rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.directory-empty {
+  color: var(--text-muted);
 }
 
 .note-content h1,

@@ -1,0 +1,41 @@
+---
+import { SITE } from '../../config/site';
+import { getNavigationGroupContents, type NavigationGroup } from '../../lib/notes';
+
+interface Props {
+  group: NavigationGroup;
+}
+
+const { group } = Astro.props;
+const contents = getNavigationGroupContents(group);
+---
+
+<article class="directory-page">
+  <h1>{group.label}</h1>
+  {contents.children.length > 0 && (
+    <section class="directory-section">
+      <h2>{SITE.subdirectoriesLabel}</h2>
+      <div class="directory-grid">
+        {contents.children.map((child) => (
+          <a class="directory-card" href={child.href}>{child.label}</a>
+        ))}
+      </div>
+    </section>
+  )}
+  {contents.notes.length > 0 && (
+    <section class="directory-section">
+      <h2>{SITE.documentsLabel}</h2>
+      <div class="directory-list">
+        {contents.notes.map((note) => (
+          <a href={note.href}>
+            <strong>{note.title}</strong>
+            {note.description && <span>{note.description}</span>}
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+  {contents.children.length === 0 && contents.notes.length === 0 && (
+    <p class="directory-empty">{SITE.emptyDirectoryLabel}</p>
+  )}
+</article>

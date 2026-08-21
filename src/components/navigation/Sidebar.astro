@@ -7,9 +7,10 @@ import NavGroup from './NavGroup.astro';
 interface Props {
   tree: NavigationGroup;
   activeId?: string;
+  activeRoute?: string;
 }
 
-const { tree, activeId } = Astro.props;
+const { tree, activeId, activeRoute } = Astro.props;
 const base = import.meta.env.BASE_URL;
 ---
 
@@ -27,11 +28,11 @@ const base = import.meta.env.BASE_URL;
     <span>{SITE.navigationLabel}</span>
   </div>
   <nav class="sidebar__scroll custom-scrollbar">
-    <a class:list={['nav-link nav-link--home', { 'is-active': !activeId }]} href={base}>{SITE.homeLabel}</a>
+    <a class:list={['nav-link nav-link--home', { 'is-active': !activeId && !activeRoute }]} href={base}>{SITE.homeLabel}</a>
     {tree.notes.map((note) => (
       <a class:list={['nav-link', { 'is-active': note.id === activeId }]} href={note.href}>{note.title}</a>
     ))}
-    {tree.children.map((group) => <NavGroup group={group} activeId={activeId} />)}
+    {tree.children.map((group) => <NavGroup group={group} activeId={activeId} activeRoute={activeRoute} />)}
   </nav>
 </aside>
 <button class="navigation-scrim" id="navigation-scrim" type="button" aria-label={SITE.closeNavigation}></button>
@@ -71,6 +72,9 @@ const base = import.meta.env.BASE_URL;
   });
 
   document.querySelector('#navigation-scrim')?.addEventListener('click', closeNavigation);
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('.nav-group__link')) {
+    link.addEventListener('click', (event) => event.stopPropagation());
+  }
   new MutationObserver(syncToggleButton).observe(document.body, {
     attributes: true,
     attributeFilter: ['data-navigation'],

@@ -13,17 +13,18 @@ interface Props {
   title?: string;
   description?: string;
   activeId?: string;
+  activeRoute?: string;
   headings?: MarkdownHeading[];
 }
 
-const { title, description, activeId, headings = [] } = Astro.props;
+const { title, description, activeId, activeRoute, headings = [] } = Astro.props;
 const tree = getNavigationTree();
 ---
 
 <BaseLayout title={title} description={description}>
   <TopBar />
   <div class="app-shell">
-    <Sidebar tree={tree} activeId={activeId} />
+    <Sidebar tree={tree} activeId={activeId} activeRoute={activeRoute} />
     <main class="main-column" id="main-content">
       <slot />
     </main>

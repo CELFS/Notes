@@ -1,6 +1,6 @@
 /**
- * 通过 HTTP 逐一验证当前站点的全部公开笔记路由。
- * 脚本只读取搜索索引和本地 Markdown 数量，不会启动服务或修改任何文件。
+ * 通过 HTTP 逐一验证当前站点的全部公开笔记与目录路由。
+ * 脚本只读取路由索引和本地 Markdown 数量，不会启动服务或修改任何文件。
  *
  * 使用方法：
  * 1. 检查本地开发站点：pnpm notes:check-routes
@@ -92,7 +92,7 @@ async function checkPages(urls) {
 async function main() {
   if (baseFlagIndex >= 0 && !baseArgument) fail('--base-url 后必须提供站点根地址');
   const baseUrl = normalizeBaseUrl(baseArgument ?? defaultBaseUrl);
-  const indexUrl = new URL('search-index.json', baseUrl);
+  const indexUrl = new URL('route-index.json', baseUrl);
 
   let response;
   try {
@@ -111,8 +111,9 @@ async function main() {
   if (!Array.isArray(entries)) fail('路由索引必须是数组');
 
   const markdownCount = await countMarkdownFiles(notesRoot);
-  if (entries.length !== markdownCount) {
-    fail(`文档数量不一致：本地 ${markdownCount} 篇，索引 ${entries.length} 篇`);
+  const indexedNoteCount = entries.filter((entry) => entry?.type === 'note').length;
+  if (indexedNoteCount !== markdownCount) {
+    fail(`文档数量不一致：本地 ${markdownCount} 篇，索引 ${indexedNoteCount} 篇`);
   }
 
   const seen = new Set();
@@ -133,7 +134,7 @@ async function main() {
   if (!seen.has(baseUrl.href)) fail(`路由索引缺少站点首页：${baseUrl.href}`);
 
   console.log(`站点：${baseUrl.href}`);
-  console.log(`文档：${markdownCount} 篇；待检查页面：${pageUrls.length} 个`);
+  console.log(`文档：${markdownCount} 篇；目录：${pageUrls.length - markdownCount} 个；待检查页面：${pageUrls.length} 个`);
   const failures = await checkPages(pageUrls);
   if (failures.length > 0) {
     console.error(`\n失败 ${failures.length} 个：`);

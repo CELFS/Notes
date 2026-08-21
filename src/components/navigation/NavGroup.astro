@@ -1,32 +1,36 @@
 ---
-import type { NavigationGroup } from '../../lib/notes';
+import { getNavigationGroupContents, type NavigationGroup } from '../../lib/notes';
 import Icon from '../ui/Icon.astro';
 import NavGroupComponent from './NavGroup.astro';
 
 interface Props {
   group: NavigationGroup;
   activeId?: string;
+  activeRoute?: string;
   depth?: number;
 }
 
-const { group, activeId, depth = 0 } = Astro.props;
+const { group, activeId, activeRoute, depth = 0 } = Astro.props;
+const contents = getNavigationGroupContents(group);
 const containsActive = group.notes.some((note) => note.id === activeId)
-  || group.children.some((child) => activeId?.startsWith(`${child.path.join('/')}/`));
+  || activeId?.startsWith(`${group.route}/`)
+  || activeRoute === group.route
+  || activeRoute?.startsWith(`${group.route}/`);
 ---
 
-<details class="nav-group" open={depth === 0 || containsActive}>
+<details class:list={['nav-group', { 'is-active': activeRoute === group.route }]} open={depth === 0 || containsActive}>
   <summary>
     <span class="nav-group__chevron"><Icon name="chevron" size={13} /></span>
-    <span>{group.label}</span>
+    <a class:list={['nav-group__link', { 'is-active': activeRoute === group.route }]} href={group.href}>{group.label}</a>
   </summary>
   <div class="nav-group__content">
-    {group.notes.map((note) => (
+    {contents.notes.map((note) => (
       <a class:list={['nav-link', { 'is-active': note.id === activeId }]} href={note.href}>
         <span>{note.title}</span>
       </a>
     ))}
-    {group.children.map((child) => (
-      <NavGroupComponent group={child} activeId={activeId} depth={depth + 1} />
+    {contents.children.map((child) => (
+      <NavGroupComponent group={child} activeId={activeId} activeRoute={activeRoute} depth={depth + 1} />
     ))}
   </div>
 </details>

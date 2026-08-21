@@ -1,31 +1,59 @@
 ---
 import { SITE } from '../config/site';
-import { documentNotes, formatPathSegment, getAdjacentNotes } from '../lib/notes';
+import DirectoryPage from '../components/content/DirectoryPage.astro';
+import {
+  documentNotes,
+  getAdjacentNotes,
+  getBreadcrumbGroups,
+  getNavigationGroups,
+} from '../lib/notes';
 import NotesLayout from '../layouts/NotesLayout.astro';
 
 export function getStaticPaths() {
-  return documentNotes.map((note) => ({ params: { slug: note.route } }));
+  const noteRoutes = new Set(documentNotes.map((note) => note.route));
+  const directoryPaths = getNavigationGroups()
+    .filter((group) => !noteRoutes.has(group.route))
+    .map((group) => ({ params: { slug: group.route } }));
+
+  return [
+    ...documentNotes.map((note) => ({ params: { slug: note.route } })),
+    ...directoryPaths,
+  ];
 }
 
 const note = documentNotes.find((item) => item.route === Astro.params.slug);
-if (!note) throw new Error(`找不到发布笔记：${Astro.params.slug}`);
+const directory = note
+  ? undefined
+  : getNavigationGroups().find((group) => group.route === Astro.params.slug);
+if (!note && !directory) throw new Error(`找不到发布路径：${Astro.params.slug}`);
 
-const Content = note.Content as any;
-const adjacent = getAdjacentNotes(note);
+const Content = note?.Content as any;
+const adjacent = note ? getAdjacentNotes(note) : undefined;
+const breadcrumbPath = note ? note.directory : directory?.path.slice(0, -1) ?? [];
+const breadcrumbs = getBreadcrumbGroups(breadcrumbPath);
+const title = note?.title ?? directory?.label;
 ---
 
-<NotesLayout title={note.title} description={note.description} activeId={note.id} headings={note.headings}>
+<NotesLayout
+  title={title}
+  description={note?.description}
+  activeId={note?.id}
+  activeRoute={directory?.route}
+  headings={note?.headings}
+>
   <div class="document-overview">
     <div class="document-path" aria-label={SITE.documentPathLabel}>
       <a href={import.meta.env.BASE_URL}>{SITE.homeLabel}</a>
-      {note.directory.map((segment) => <><span>/</span><span>{formatPathSegment(segment)}</span></>)}
+      {breadcrumbs.map((group) => <><span>/</span><a href={group.href}>{group.label}</a></>)}
     </div>
-    <div class="document-meta">{note.wordCount.toLocaleString('zh-CN')} {SITE.wordCountLabel}</div>
+    {note && <div class="document-meta">{note.wordCount.toLocaleString('zh-CN')} {SITE.wordCountLabel}</div>}
   </div>
-  <article class="note-content">
-    <Content />
-  </article>
-  {(adjacent.previous || adjacent.next) && (
+  {note ? (
+    <article class="note-content">
+      <Content />
+    </article>
+  ) : directory && <DirectoryPage group={directory} />}
+  {adjacent && (adjacent.previous || adjacent.next) && (
     <nav class="article-pagination" aria-label={SITE.adjacentNotesLabel}>
       {adjacent.previous ? (
         <a href={adjacent.previous.href} rel="prev">

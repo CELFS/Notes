@@ -22,6 +22,8 @@ export type Note = {
 export type NavigationGroup = {
   label: string;
   path: string[];
+  route: string;
+  href: string;
   notes: Note[];
   children: NavigationGroup[];
 };
@@ -134,16 +136,27 @@ export const homeNote = notes.find((note) => note.route === '');
 export const documentNotes = notes.filter((note) => note.route !== '');
 
 export function getNavigationTree() {
-  const root: NavigationGroup = { label: '', path: [], notes: [], children: [] };
+  const root: NavigationGroup = {
+    label: '',
+    path: [],
+    route: '',
+    href: import.meta.env.BASE_URL,
+    notes: [],
+    children: [],
+  };
 
   for (const note of documentNotes) {
     let group = root;
     for (const segment of note.directory) {
       let child = group.children.find((item) => item.path.at(-1) === segment);
       if (!child) {
+        const childPath = [...group.path, segment];
+        const childRoute = childPath.join('/');
         child = {
           label: formatPathSegment(segment),
-          path: [...group.path, segment],
+          path: childPath,
+          route: childRoute,
+          href: hrefFromRoute(childRoute),
           notes: [],
           children: [],
         };
@@ -162,6 +175,53 @@ export function getNavigationTree() {
 
   sortGroup(root);
   return root;
+}
+
+export function getNavigationGroups() {
+  const groups: NavigationGroup[] = [];
+
+  const collect = (group: NavigationGroup) => {
+    for (const child of group.children) {
+      groups.push(child);
+      collect(child);
+    }
+  };
+
+  collect(getNavigationTree());
+  return groups;
+}
+
+export function getGroupLandingNote(group: NavigationGroup) {
+  return group.notes.find((note) => note.route === group.route);
+}
+
+export function isCollapsibleNavigationGroup(group: NavigationGroup) {
+  return group.notes.length === 0 && group.children.length === 1;
+}
+
+export function getNavigationGroupContents(group: NavigationGroup) {
+  let content = group;
+  while (isCollapsibleNavigationGroup(content)) content = content.children[0];
+
+  return {
+    notes: content.notes.filter((note) => note.route !== group.route),
+    children: content.children,
+  };
+}
+
+export function getBreadcrumbGroups(path: string[]) {
+  const groups: NavigationGroup[] = [];
+  let current = getNavigationTree();
+
+  for (const segment of path) {
+    const parent = current;
+    const child = parent.children.find((group) => group.path.at(-1) === segment);
+    if (!child) break;
+    if (parent.path.length === 0 || !isCollapsibleNavigationGroup(parent)) groups.push(child);
+    current = child;
+  }
+
+  return groups;
 }
 
 export function getAdjacentNotes(current: Note) {

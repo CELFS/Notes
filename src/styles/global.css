@@ -840,13 +840,18 @@ a {
 }
 
 .note-content table {
-  display: block;
+  display: table;
   width: 100%;
-  overflow-x: auto;
+  min-width: max-content;
+  margin: 0;
   border-collapse: collapse;
   font-size: 0.875rem;
-  scrollbar-color: var(--border-strong) transparent;
-  scrollbar-width: thin;
+}
+
+.note-content .table-wrap {
+  width: 100%;
+  margin: 1.05rem 0;
+  overflow-x: auto;
 }
 
 .note-content th,

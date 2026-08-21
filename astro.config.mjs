@@ -4,6 +4,7 @@ import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import { loadEnv } from 'vite';
+import rehypeTableWrap from './src/lib/markdown/rehype-table-wrap.mjs';
 import remarkCodeLanguage from './src/lib/markdown/remark-code-language.mjs';
 import remarkImageOrigin from './src/lib/markdown/remark-image-origin.mjs';
 import remarkMark from './src/lib/markdown/remark-mark.mjs';
@@ -35,7 +36,7 @@ export default defineConfig({
           target: env.PUBLIC_IMAGE_ORIGIN ?? '',
         }],
       ],
-      rehypePlugins: [[rehypeKatex, { strict: false }]],
+      rehypePlugins: [rehypeTableWrap, [rehypeKatex, { strict: false }]],
     }),
     shikiConfig: {
       themes: {

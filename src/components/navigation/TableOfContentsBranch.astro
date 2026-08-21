@@ -1,0 +1,24 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+export interface TocHeading extends MarkdownHeading {
+  children: TocHeading[];
+}
+
+interface Props {
+  headings: TocHeading[];
+}
+
+const { headings } = Astro.props;
+---
+
+{headings.map((heading) => (
+  <li class="toc__item" data-depth={heading.depth}>
+    <a class="toc__link" href={`#${heading.slug}`} data-depth={heading.depth}>{heading.text}</a>
+    {heading.children.length > 0 && (
+      <ul class="toc__children">
+        <Astro.self headings={heading.children} />
+      </ul>
+    )}
+  </li>
+))}

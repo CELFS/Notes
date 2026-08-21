@@ -2,12 +2,22 @@
 import type { MarkdownHeading } from 'astro';
 import { SITE } from '../../config/site';
 import Icon from '../ui/Icon.astro';
+import TableOfContentsBranch, { type TocHeading } from './TableOfContentsBranch.astro';
 
 interface Props {
   headings?: MarkdownHeading[];
 }
 
 const headings = (Astro.props.headings ?? []).filter((heading) => heading.depth >= 2 && heading.depth <= 4);
+const headingTree: TocHeading[] = [];
+const stack: Array<{ depth: number; children: TocHeading[] }> = [{ depth: 1, children: headingTree }];
+
+for (const heading of headings) {
+  while (stack.length > 1 && stack.at(-1)!.depth >= heading.depth) stack.pop();
+  const node = { ...heading, children: [] };
+  stack.at(-1)!.children.push(node);
+  stack.push(node);
+}
 ---
 
 {headings.length > 0 && (
@@ -21,9 +31,9 @@ const headings = (Astro.props.headings ?? []).filter((heading) => heading.depth 
         </button>
       </div>
       <nav class="toc__nav custom-scrollbar" id="toc-navigation">
-        {headings.map((heading) => (
-          <a href={`#${heading.slug}`} data-depth={heading.depth}>{heading.text}</a>
-        ))}
+        <ul class="toc__list">
+          <TableOfContentsBranch headings={headingTree} />
+        </ul>
       </nav>
     </aside>
     <div class="toc__actions">
@@ -38,14 +48,35 @@ const headings = (Astro.props.headings ?? []).filter((heading) => heading.depth 
   const root = document.documentElement;
   const toggleButton = document.querySelector<HTMLButtonElement>('#toc-toggle');
   const scrollTopButton = document.querySelector<HTMLButtonElement>('#toc-scroll-top');
-  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc__nav a'));
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc__link'));
+  const items = Array.from(document.querySelectorAll<HTMLElement>('.toc__item'));
+  const getLinkId = (link: HTMLAnchorElement) => decodeURIComponent(link.hash.slice(1));
   const headings = links
-    .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
+    .map((link) => document.getElementById(getLinkId(link)))
     .filter((heading): heading is HTMLElement => Boolean(heading));
 
   if (headings.length > 0) {
     const setActive = (id: string) => {
-      for (const link of links) link.classList.toggle('is-active', link.hash === `#${id}`);
+      let activeLink: HTMLAnchorElement | undefined;
+
+      for (const link of links) {
+        const active = getLinkId(link) === id;
+        link.classList.toggle('is-active', active);
+        if (active) activeLink = link;
+      }
+
+      for (const item of items) item.classList.remove('is-active-branch', 'is-active-ancestor');
+
+      const activeItem = activeLink?.closest<HTMLElement>('.toc__item');
+      if (!activeItem) return;
+
+      activeItem.classList.add('is-active-branch');
+      let ancestor = activeItem.parentElement?.closest<HTMLElement>('.toc__item') ?? null;
+
+      while (ancestor) {
+        ancestor.classList.add('is-active-branch', 'is-active-ancestor');
+        ancestor = ancestor.parentElement?.closest<HTMLElement>('.toc__item') ?? null;
+      }
     };
 
     const observer = new IntersectionObserver((entries) => {

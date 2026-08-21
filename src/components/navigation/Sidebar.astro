@@ -1,0 +1,40 @@
+---
+import { SITE } from '../../config/site';
+import type { NavigationGroup } from '../../lib/notes';
+import Icon from '../ui/Icon.astro';
+import NavGroup from './NavGroup.astro';
+
+interface Props {
+  tree: NavigationGroup;
+  activeId?: string;
+}
+
+const { tree, activeId } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<aside class="sidebar" id="site-navigation" aria-label={SITE.navigationLabel}>
+  <div class="sidebar__header">
+    <span>{SITE.navigationLabel}</span>
+    <button class="icon-button sidebar__close" id="navigation-close" type="button" aria-label={SITE.closeNavigation}>
+      <Icon name="close" />
+    </button>
+  </div>
+  <nav class="sidebar__scroll custom-scrollbar">
+    <a class:list={['nav-link nav-link--home', { 'is-active': !activeId }]} href={base}>{SITE.homeLabel}</a>
+    {tree.notes.map((note) => (
+      <a class:list={['nav-link', { 'is-active': note.id === activeId }]} href={note.href}>{note.title}</a>
+    ))}
+    {tree.children.map((group) => <NavGroup group={group} activeId={activeId} />)}
+  </nav>
+</aside>
+<button class="navigation-scrim" id="navigation-scrim" type="button" aria-label={SITE.closeNavigation}></button>
+
+<script>
+  const closeNavigation = () => {
+    delete document.body.dataset.navigation;
+  };
+
+  document.querySelector('#navigation-close')?.addEventListener('click', closeNavigation);
+  document.querySelector('#navigation-scrim')?.addEventListener('click', closeNavigation);
+</script>

@@ -1,0 +1,41 @@
+---
+import { SITE } from '../config/site';
+import { documentNotes, formatPathSegment, getAdjacentNotes } from '../lib/notes';
+import NotesLayout from '../layouts/NotesLayout.astro';
+
+export function getStaticPaths() {
+  return documentNotes.map((note) => ({ params: { slug: note.route } }));
+}
+
+const note = documentNotes.find((item) => item.route === Astro.params.slug);
+if (!note) throw new Error(`找不到发布笔记：${Astro.params.slug}`);
+
+const Content = note.Content as any;
+const adjacent = getAdjacentNotes(note);
+---
+
+<NotesLayout title={note.title} description={note.description} activeId={note.id} headings={note.headings}>
+  <div class="document-path" aria-label={SITE.documentPathLabel}>
+    <a href={import.meta.env.BASE_URL}>{SITE.homeLabel}</a>
+    {note.directory.map((segment) => <><span>/</span><span>{formatPathSegment(segment)}</span></>)}
+  </div>
+  <article class="note-content">
+    <Content />
+  </article>
+  {(adjacent.previous || adjacent.next) && (
+    <nav class="article-pagination" aria-label={SITE.adjacentNotesLabel}>
+      {adjacent.previous ? (
+        <a href={adjacent.previous.href} rel="prev">
+          <span>{SITE.previousLabel}</span>
+          <strong>{adjacent.previous.title}</strong>
+        </a>
+      ) : <span></span>}
+      {adjacent.next && (
+        <a href={adjacent.next.href} rel="next">
+          <span>{SITE.nextLabel}</span>
+          <strong>{adjacent.next.title}</strong>
+        </a>
+      )}
+    </nav>
+  )}
+</NotesLayout>

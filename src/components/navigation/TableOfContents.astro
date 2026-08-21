@@ -1,0 +1,44 @@
+---
+import type { MarkdownHeading } from 'astro';
+import { SITE } from '../../config/site';
+
+interface Props {
+  headings?: MarkdownHeading[];
+}
+
+const headings = (Astro.props.headings ?? []).filter((heading) => heading.depth >= 2 && heading.depth <= 4);
+---
+
+{headings.length > 0 && (
+  <aside class="toc" aria-label={SITE.contentsLabel}>
+    <div class="toc__title">{SITE.contentsLabel}</div>
+    <nav class="toc__nav custom-scrollbar">
+      {headings.map((heading) => (
+        <a href={`#${heading.slug}`} data-depth={heading.depth}>{heading.text}</a>
+      ))}
+    </nav>
+  </aside>
+)}
+
+<script>
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc__nav a'));
+  const headings = links
+    .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
+    .filter((heading): heading is HTMLElement => Boolean(heading));
+
+  if (headings.length > 0) {
+    const setActive = (id: string) => {
+      for (const link of links) link.classList.toggle('is-active', link.hash === `#${id}`);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((left, right) => left.boundingClientRect.top - right.boundingClientRect.top);
+      if (visible[0]?.target.id) setActive(visible[0].target.id);
+    }, { rootMargin: '-12% 0px -74% 0px' });
+
+    headings.forEach((heading) => observer.observe(heading));
+    setActive(headings[0].id);
+  }
+</script>

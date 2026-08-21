@@ -1,0 +1,35 @@
+---
+import type { MarkdownHeading } from 'astro';
+import TopBar from '../components/layout/TopBar.astro';
+import Sidebar from '../components/navigation/Sidebar.astro';
+import TableOfContents from '../components/navigation/TableOfContents.astro';
+import CodeEnhancements from '../components/ui/CodeEnhancements.astro';
+import SearchDialog from '../components/ui/SearchDialog.astro';
+import { getNavigationTree } from '../lib/notes';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  activeId?: string;
+  headings?: MarkdownHeading[];
+}
+
+const { title, description, activeId, headings = [] } = Astro.props;
+const tree = getNavigationTree();
+---
+
+<BaseLayout title={title} description={description}>
+  <TopBar />
+  <div class="app-shell">
+    <Sidebar tree={tree} activeId={activeId} />
+    <main class="main-column" id="main-content">
+      <slot />
+    </main>
+    <div class="toc-column">
+      <TableOfContents headings={headings} />
+    </div>
+  </div>
+  <SearchDialog />
+  <CodeEnhancements />
+</BaseLayout>

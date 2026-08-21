@@ -1,0 +1,123 @@
+---
+import { SITE } from '../../config/site';
+import Icon from './Icon.astro';
+
+const searchIndexUrl = `${import.meta.env.BASE_URL}search-index.json`;
+---
+
+<dialog
+  class="search-dialog"
+  id="search-dialog"
+  data-index-url={searchIndexUrl}
+  data-empty-label={SITE.searchEmpty}
+  data-initial-label={SITE.searchInitial}
+>
+  <div class="search-dialog__panel">
+    <div class="search-dialog__field">
+      <Icon name="search" size={18} />
+      <input id="search-input" type="search" placeholder={SITE.searchPlaceholder} autocomplete="off" />
+      <button class="icon-button" id="search-close" type="button" aria-label={SITE.closeSearch}>
+        <Icon name="close" />
+      </button>
+    </div>
+    <div class="search-dialog__results custom-scrollbar" id="search-results">
+      <p class="search-dialog__message">{SITE.searchInitial}</p>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  type SearchItem = {
+    title: string;
+    href: string;
+    directory: string;
+    text: string;
+  };
+
+  const dialog = document.querySelector<HTMLDialogElement>('#search-dialog');
+  const input = document.querySelector<HTMLInputElement>('#search-input');
+  const results = document.querySelector<HTMLElement>('#search-results');
+  let index: SearchItem[] | undefined;
+
+  const message = (value: string) => {
+    if (!results) return;
+    results.replaceChildren();
+    const paragraph = document.createElement('p');
+    paragraph.className = 'search-dialog__message';
+    paragraph.textContent = value;
+    results.append(paragraph);
+  };
+
+  const loadIndex = async () => {
+    if (index || !dialog) return;
+    const response = await fetch(dialog.dataset.indexUrl ?? '');
+    index = await response.json();
+  };
+
+  const openSearch = async () => {
+    if (!dialog) return;
+    dialog.showModal();
+    await loadIndex();
+    input?.focus();
+  };
+
+  const createSnippet = (text: string, query: string) => {
+    const normalizedText = text.toLocaleLowerCase();
+    const location = normalizedText.indexOf(query);
+    if (location < 0) return text.slice(0, 120);
+    const start = Math.max(0, location - 44);
+    const end = Math.min(text.length, location + query.length + 76);
+    return `${start > 0 ? '…' : ''}${text.slice(start, end)}${end < text.length ? '…' : ''}`;
+  };
+
+  const renderResults = () => {
+    if (!input || !results || !dialog) return;
+    const query = input.value.trim().toLocaleLowerCase();
+    if (!query) {
+      message(dialog.dataset.initialLabel ?? '');
+      return;
+    }
+
+    const matches = (index ?? [])
+      .filter((item) => `${item.title} ${item.directory} ${item.text}`.toLocaleLowerCase().includes(query))
+      .slice(0, 30);
+
+    if (matches.length === 0) {
+      message(dialog.dataset.emptyLabel ?? '');
+      return;
+    }
+
+    results.replaceChildren();
+    for (const item of matches) {
+      const link = document.createElement('a');
+      link.className = 'search-result';
+      link.href = item.href;
+
+      const title = document.createElement('strong');
+      title.textContent = item.title;
+      const directory = document.createElement('span');
+      directory.className = 'search-result__directory';
+      directory.textContent = item.directory;
+      const snippet = document.createElement('span');
+      snippet.className = 'search-result__snippet';
+      snippet.textContent = createSnippet(item.text, query);
+
+      link.append(title, directory, snippet);
+      results.append(link);
+    }
+  };
+
+  document.querySelector('#search-open')?.addEventListener('click', openSearch);
+  document.querySelector('#search-close')?.addEventListener('click', () => dialog?.close());
+  dialog?.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  input?.addEventListener('input', renderResults);
+  document.addEventListener('keydown', (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLocaleLowerCase() === 'k') {
+      event.preventDefault();
+      dialog?.open ? dialog.close() : openSearch();
+    }
+    if (event.key === 'Escape' && dialog?.open) dialog.close();
+  });
+</script>

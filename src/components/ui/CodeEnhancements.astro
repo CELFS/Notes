@@ -1,0 +1,30 @@
+---
+import { SITE } from '../../config/site';
+---
+
+<div
+  id="code-enhancements"
+  data-copy-label={SITE.copyCodeLabel}
+  data-copied-label={SITE.copiedCodeLabel}
+  hidden
+></div>
+
+<script>
+  const settings = document.querySelector<HTMLElement>('#code-enhancements');
+  const copyLabel = settings?.dataset.copyLabel ?? '';
+  const copiedLabel = settings?.dataset.copiedLabel ?? '';
+
+  for (const pre of document.querySelectorAll<HTMLPreElement>('.note-content pre')) {
+    if (!pre.querySelector('code')) continue;
+    const button = document.createElement('button');
+    button.className = 'code-copy';
+    button.type = 'button';
+    button.textContent = copyLabel;
+    button.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(pre.querySelector('code')?.textContent ?? '');
+      button.textContent = copiedLabel;
+      window.setTimeout(() => { button.textContent = copyLabel; }, 1600);
+    });
+    pre.append(button);
+  }
+</script>

@@ -1,0 +1,32 @@
+---
+import type { NavigationGroup } from '../../lib/notes';
+import Icon from '../ui/Icon.astro';
+import NavGroupComponent from './NavGroup.astro';
+
+interface Props {
+  group: NavigationGroup;
+  activeId?: string;
+  depth?: number;
+}
+
+const { group, activeId, depth = 0 } = Astro.props;
+const containsActive = group.notes.some((note) => note.id === activeId)
+  || group.children.some((child) => activeId?.startsWith(`${child.path.join('/')}/`));
+---
+
+<details class="nav-group" open={depth === 0 || containsActive}>
+  <summary>
+    <span class="nav-group__chevron"><Icon name="chevron" size={13} /></span>
+    <span>{group.label}</span>
+  </summary>
+  <div class="nav-group__content">
+    {group.notes.map((note) => (
+      <a class:list={['nav-link', { 'is-active': note.id === activeId }]} href={note.href}>
+        <span>{note.title}</span>
+      </a>
+    ))}
+    {group.children.map((child) => (
+      <NavGroupComponent group={child} activeId={activeId} depth={depth + 1} />
+    ))}
+  </div>
+</details>

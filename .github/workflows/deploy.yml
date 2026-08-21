@@ -1,31 +1,41 @@
-   name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages
 
-   on:
-     push:
-       branches: [main]
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
 
-   # 添加权限配置
-   permissions:
-     contents: write
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
-   jobs:
-     deploy:
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v3
-         - uses: pnpm/action-setup@v2
-           with:
-             version: 8
-         - uses: actions/setup-node@v3
-           with:
-             node-version: 18
-             cache: pnpm
-         - name: Install dependencies
-           run: pnpm install
-         - name: Build
-           run: pnpm build
-         - name: Deploy
-           uses: peaceiris/actions-gh-pages@v3
-           with:
-             github_token: ${{ secrets.GITHUB_TOKEN }}
-             publish_dir: ./build
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+      - name: Build and upload Astro site
+        uses: withastro/action@v6
+        with:
+          node-version: 24
+          package-manager: pnpm@latest
+        env:
+          IMAGE_SOURCE_ORIGINS: ${{ vars.IMAGE_SOURCE_ORIGINS }}
+          PUBLIC_IMAGE_ORIGIN: ${{ vars.PUBLIC_IMAGE_ORIGIN }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

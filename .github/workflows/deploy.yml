@@ -24,7 +24,6 @@ jobs:
         uses: withastro/action@v6
         with:
           node-version: 24
-          package-manager: pnpm@latest
         env:
           IMAGE_SOURCE_ORIGINS: ${{ vars.IMAGE_SOURCE_ORIGINS }}
           PUBLIC_IMAGE_ORIGIN: ${{ vars.PUBLIC_IMAGE_ORIGIN }}

@@ -10,6 +10,10 @@ dist/
 .env.*
 !.env.example
 
+# Private local note publishing manifest
+.notes-publish.local.json
+*.notes-syncing
+
 # Editors and operating systems
 .DS_Store
 .history/

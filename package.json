@@ -7,7 +7,13 @@
     "dev": "astro dev --port 33881",
     "build": "astro build",
     "preview": "astro preview --port 33881",
-    "check": "astro check"
+    "check": "astro check",
+    "notes:add": "node scripts/sync-notes.mjs --add",
+    "notes:add:dry": "node scripts/sync-notes.mjs --add --dry",
+    "notes:list": "node scripts/sync-notes.mjs --list",
+    "notes:update": "node scripts/sync-notes.mjs --update",
+    "notes:update:dry": "node scripts/sync-notes.mjs --update --dry",
+    "sync:notes": "node scripts/sync-notes.mjs --update"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "7.2.4",

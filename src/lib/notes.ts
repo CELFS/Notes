@@ -3,7 +3,7 @@ import type { MarkdownHeading } from 'astro';
 type MarkdownModule = {
   Content: unknown;
   frontmatter?: Record<string, unknown>;
-  headings?: MarkdownHeading[];
+  getHeadings?: () => MarkdownHeading[];
 };
 
 export type Note = {
@@ -88,7 +88,7 @@ export const notes: Note[] = Object.entries(markdownModules)
     const segments = id.split('/');
     const filename = segments.at(-1) ?? id;
     const frontmatter = module.frontmatter ?? {};
-    const headings = module.headings ?? [];
+    const headings = module.getHeadings?.() ?? [];
     const title = typeof frontmatter.title === 'string'
       ? frontmatter.title
       : headings[0]?.text ?? formatPathSegment(filename);

@@ -1,0 +1,10 @@
+{
+  "sourceRoot": "/absolute/path/to/Typora-学习",
+  "entries": [
+    "公开分类/示例笔记.md",
+    {
+      "from": "本地分类/原始笔记.md",
+      "to": "网站分类/发布笔记.md"
+    }
+  ]
+}

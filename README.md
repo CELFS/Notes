@@ -14,6 +14,44 @@
 - 页面标题依次取可选的 `title`、文档首个标题、文件名；
 - 无需添加 `sidebar_label`，也无需运行文档预处理脚本。
 
+## 新增与同步公开笔记
+
+同步脚本只读取本机清单中明确列出的 Markdown，并单向写入 `src/content/notes/`。本机清单 `.notes-publish.local.json` 已被 Git 忽略，可参考 `.notes-publish.example.json` 配置。
+
+新增单篇笔记或整个目录时，可以使用相对于 Typora 根目录的路径，也可以把 Finder 中的文件或目录直接拖进终端。目录会递归展开成逐篇清单；以后目录中新建的笔记不会自动公开。
+
+只预览将要新增的笔记，不修改清单也不复制：
+
+```bash
+pnpm notes:add:dry -- "/完整路径/笔记或目录"
+```
+
+确认预览结果后，加入本机发布清单并复制：
+
+```bash
+pnpm notes:add -- "/完整路径/笔记或目录" --write
+```
+
+只预览已选笔记的更新：
+
+```bash
+pnpm notes:update:dry
+```
+
+确认预览结果后执行更新：
+
+```bash
+pnpm notes:update -- --write
+```
+
+查看当前本机发布清单：
+
+```bash
+pnpm notes:list
+```
+
+`notes:add` 和 `notes:update` 在没有 `--write` 时同样只会预览。脚本自动忽略隐藏目录和 `.backup`，不会修改、移动、重命名或删除 Typora 源文件，也不会自动清理发布目录。
+
 ## 本地构建
 
 项目要求 Node.js 22.12 或更高版本，并使用 pnpm。

@@ -4,6 +4,7 @@ import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import { loadEnv } from 'vite';
+import remarkCodeLanguage from './src/lib/markdown/remark-code-language.mjs';
 import remarkImageOrigin from './src/lib/markdown/remark-image-origin.mjs';
 import remarkMark from './src/lib/markdown/remark-mark.mjs';
 import remarkNoteLinks from './src/lib/markdown/remark-note-links.mjs';
@@ -26,6 +27,7 @@ export default defineConfig(({ mode }) => {
         remarkPlugins: [
           remarkGfm,
           remarkMath,
+          remarkCodeLanguage,
           remarkMark,
           [remarkNoteLinks, { base }],
           [remarkImageOrigin, {

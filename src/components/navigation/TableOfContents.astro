@@ -36,7 +36,7 @@ for (const heading of headings) {
         </ul>
       </nav>
     </aside>
-    <div class="toc__actions">
+    <div class="toc__actions" hidden>
       <button class="toc__top" id="toc-scroll-top" type="button">{SITE.scrollToTop}<span aria-hidden="true">↑</span></button>
     </div>
   </>
@@ -48,6 +48,8 @@ for (const heading of headings) {
   const root = document.documentElement;
   const toggleButton = document.querySelector<HTMLButtonElement>('#toc-toggle');
   const scrollTopButton = document.querySelector<HTMLButtonElement>('#toc-scroll-top');
+  const scrollTopActions = scrollTopButton?.closest<HTMLElement>('.toc__actions');
+  const tocColumn = scrollTopButton?.closest<HTMLElement>('.toc-column');
   const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc__link'));
   const items = Array.from(document.querySelectorAll<HTMLElement>('.toc__item'));
   const getLinkId = (link: HTMLAnchorElement) => decodeURIComponent(link.hash.slice(1));
@@ -107,5 +109,14 @@ for (const heading of headings) {
   scrollTopButton?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  const syncScrollTopButton = () => {
+    const visible = window.scrollY > 240;
+    scrollTopActions?.toggleAttribute('hidden', !visible);
+    tocColumn?.classList.toggle('has-scroll-top-action', visible);
+  };
+
+  window.addEventListener('scroll', syncScrollTopButton, { passive: true });
+  syncScrollTopButton();
   syncToggleButton();
 </script>

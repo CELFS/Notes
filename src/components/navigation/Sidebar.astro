@@ -24,11 +24,7 @@ const base = import.meta.env.BASE_URL;
       <Icon name="menu" />
     </button>
   </div>
-  <div class="sidebar__header">
-    <span>{SITE.navigationLabel}</span>
-  </div>
   <nav class="sidebar__scroll custom-scrollbar">
-    <a class:list={['nav-link nav-link--home', { 'is-active': !activeId && !activeRoute }]} href={base}>{SITE.homeLabel}</a>
     {tree.notes.map((note) => (
       <a class:list={['nav-link', { 'is-active': note.id === activeId }]} href={note.href}>{note.title}</a>
     ))}

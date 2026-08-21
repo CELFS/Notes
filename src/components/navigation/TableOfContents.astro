@@ -11,20 +11,25 @@ const headings = (Astro.props.headings ?? []).filter((heading) => heading.depth 
 ---
 
 {headings.length > 0 && (
-  <aside class="toc" aria-label={SITE.contentsLabel}>
-    <div class="toc__header">
-      <div class="toc__title">{SITE.contentsLabel}</div>
-      <button class="icon-button toc__toggle" id="toc-toggle" type="button" aria-label={SITE.expandContents} aria-controls="toc-navigation" aria-expanded="false">
-        <span class="toc__toggle-icon toc__toggle-icon--expand"><Icon name="expand" size={15} /></span>
-        <span class="toc__toggle-icon toc__toggle-icon--collapse"><Icon name="collapse" size={15} /></span>
-      </button>
+  <>
+    <aside class="toc" aria-label={SITE.contentsLabel}>
+      <div class="toc__header">
+        <div class="toc__title">{SITE.contentsLabel}</div>
+        <button class="icon-button toc__toggle" id="toc-toggle" type="button" aria-label={SITE.expandContents} aria-controls="toc-navigation" aria-expanded="false">
+          <span class="toc__toggle-icon toc__toggle-icon--expand"><Icon name="expand" size={15} /></span>
+          <span class="toc__toggle-icon toc__toggle-icon--collapse"><Icon name="collapse" size={15} /></span>
+        </button>
+      </div>
+      <nav class="toc__nav custom-scrollbar" id="toc-navigation">
+        {headings.map((heading) => (
+          <a href={`#${heading.slug}`} data-depth={heading.depth}>{heading.text}</a>
+        ))}
+      </nav>
+    </aside>
+    <div class="toc__actions">
+      <button class="toc__top" id="toc-scroll-top" type="button">{SITE.scrollToTop}<span aria-hidden="true">↑</span></button>
     </div>
-    <nav class="toc__nav custom-scrollbar" id="toc-navigation">
-      {headings.map((heading) => (
-        <a href={`#${heading.slug}`} data-depth={heading.depth}>{heading.text}</a>
-      ))}
-    </nav>
-  </aside>
+  </>
 )}
 
 <script>
@@ -32,6 +37,7 @@ const headings = (Astro.props.headings ?? []).filter((heading) => heading.depth 
 
   const root = document.documentElement;
   const toggleButton = document.querySelector<HTMLButtonElement>('#toc-toggle');
+  const scrollTopButton = document.querySelector<HTMLButtonElement>('#toc-scroll-top');
   const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc__nav a'));
   const headings = links
     .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
@@ -66,6 +72,9 @@ const headings = (Astro.props.headings ?? []).filter((heading) => heading.depth 
     else delete root.dataset.toc;
     localStorage.setItem('notes-toc', expanded ? 'expanded' : 'collapsed');
     syncToggleButton();
+  });
+  scrollTopButton?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
   syncToggleButton();
 </script>

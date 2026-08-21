@@ -33,6 +33,7 @@ export const SITE = {
   nextLabel: '下一篇',
   imageViewerLabel: '图片查看器',
   openImageViewer: '查看大图',
+  imageLoadFailed: '图片加载失败',
   closeImageViewer: '关闭图片查看器',
   previousImage: '上一张图片',
   nextImage: '下一张图片',

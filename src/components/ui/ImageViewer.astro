@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../../config/site';
+import Icon from './Icon.astro';
 ---
 
 <dialog class="image-viewer" id="image-viewer" aria-label={SITE.imageViewerLabel}>
@@ -21,6 +22,7 @@ import { SITE } from '../../config/site';
     <div class="image-viewer__caption" id="image-viewer-caption"></div>
   </div>
 </dialog>
+<template id="image-fallback-icon"><Icon name="image-off" size={24} /></template>
 
 <script>
   import { SITE } from '../../config/site';
@@ -35,6 +37,7 @@ import { SITE } from '../../config/site';
   const zoomOutButton = document.querySelector<HTMLButtonElement>('#image-viewer-zoom-out');
   const zoomInButton = document.querySelector<HTMLButtonElement>('#image-viewer-zoom-in');
   const resetButton = document.querySelector<HTMLButtonElement>('#image-viewer-reset');
+  const fallbackIconTemplate = document.querySelector<HTMLTemplateElement>('#image-fallback-icon');
   const images = Array.from(document.querySelectorAll<HTMLImageElement>('.note-content img'));
 
   let currentIndex = 0;
@@ -42,6 +45,43 @@ import { SITE } from '../../config/site';
   let offsetX = 0;
   let offsetY = 0;
   let pointerStart: { x: number; y: number; offsetX: number; offsetY: number } | undefined;
+
+  const getAvailableImages = () => images.filter((image) => image.isConnected);
+
+  const renderImageFailure = (image: HTMLImageElement) => {
+    if (!image.isConnected) return;
+    const sourceUrl = image.currentSrc || image.src;
+
+    const fallback = document.createElement('span');
+    fallback.className = 'image-fallback';
+    fallback.setAttribute('role', 'img');
+    fallback.setAttribute('aria-label', image.alt ? `${SITE.imageLoadFailed}：${image.alt}；${sourceUrl}` : `${SITE.imageLoadFailed}：${sourceUrl}`);
+
+    const icon = fallbackIconTemplate?.content.firstElementChild?.cloneNode(true);
+    if (icon instanceof SVGElement) {
+      icon.classList.add('image-fallback__icon');
+      fallback.append(icon);
+    }
+
+    const title = document.createElement('strong');
+    title.className = 'image-fallback__title';
+    title.textContent = SITE.imageLoadFailed;
+    fallback.append(title);
+
+    if (image.alt) {
+      const description = document.createElement('span');
+      description.className = 'image-fallback__description';
+      description.textContent = image.alt;
+      fallback.append(description);
+    }
+
+    const url = document.createElement('span');
+    url.className = 'image-fallback__url';
+    url.textContent = sourceUrl;
+    fallback.append(url);
+
+    image.replaceWith(fallback);
+  };
 
   const applyTransform = () => {
     if (!viewerImage || !resetButton || !stage) return;
@@ -67,39 +107,49 @@ import { SITE } from '../../config/site';
   };
 
   const showImage = (index: number) => {
-    if (!viewerImage || images.length === 0) return;
-    currentIndex = (index + images.length) % images.length;
-    const source = images[currentIndex];
+    const availableImages = getAvailableImages();
+    if (!viewerImage || availableImages.length === 0) return;
+    currentIndex = (index + availableImages.length) % availableImages.length;
+    const source = availableImages[currentIndex];
     viewerImage.src = source.currentSrc || source.src;
     viewerImage.alt = source.alt;
     if (caption) {
       caption.textContent = source.alt || source.title;
       caption.hidden = !caption.textContent;
     }
-    if (counter) counter.textContent = `${currentIndex + 1} / ${images.length}`;
-    if (previousButton) previousButton.disabled = images.length < 2;
-    if (nextButton) nextButton.disabled = images.length < 2;
+    if (counter) counter.textContent = `${currentIndex + 1} / ${availableImages.length}`;
+    if (previousButton) previousButton.disabled = availableImages.length < 2;
+    if (nextButton) nextButton.disabled = availableImages.length < 2;
     resetTransform();
   };
 
-  const openImage = (index: number) => {
+  const openImage = (image: HTMLImageElement) => {
     if (!dialog) return;
+    const index = getAvailableImages().indexOf(image);
+    if (index < 0) return;
     showImage(index);
     dialog.showModal();
   };
 
-  images.forEach((image, index) => {
+  images.forEach((image) => {
+    image.addEventListener('error', () => renderImageFailure(image), { once: true });
+
+    if (image.complete && image.naturalWidth === 0) {
+      renderImageFailure(image);
+      return;
+    }
+
     image.tabIndex = 0;
     image.setAttribute('role', 'button');
     image.setAttribute('aria-label', image.alt ? `${SITE.openImageViewer}：${image.alt}` : SITE.openImageViewer);
     image.addEventListener('click', (event) => {
       event.preventDefault();
-      openImage(index);
+      openImage(image);
     });
     image.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
-        openImage(index);
+        openImage(image);
       }
     });
   });

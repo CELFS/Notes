@@ -1140,6 +1140,53 @@ a {
   cursor: zoom-in;
 }
 
+.note-content .image-fallback {
+  --image-fallback-accent: #d88989;
+  display: flex;
+  width: 100%;
+  min-height: 5.5rem;
+  margin: 1.5rem auto;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem 1.25rem;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--image-fallback-accent) 3%, transparent);
+  color: color-mix(in srgb, var(--image-fallback-accent) 32%, var(--text-muted));
+  text-align: center;
+}
+
+.note-content .image-fallback__icon {
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-bottom: 0.1rem;
+  color: color-mix(in srgb, var(--image-fallback-accent) 45%, var(--text-muted));
+}
+
+.note-content .image-fallback__title {
+  color: color-mix(in srgb, var(--image-fallback-accent) 45%, var(--text-muted));
+  font-size: 0.84rem;
+  font-weight: 620;
+}
+
+.note-content .image-fallback__description {
+  max-width: 34rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.note-content .image-fallback__url {
+  max-width: 100%;
+  color: color-mix(in srgb, var(--image-fallback-accent) 28%, var(--text-muted));
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
 :root[data-theme='dark'] .note-content img,
 :root[data-theme='dark'] .image-viewer__stage img {
   filter: brightness(0.78) saturate(0.9);

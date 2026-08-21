@@ -838,6 +838,79 @@ a {
   color: var(--text-muted);
 }
 
+.note-content .inline-toc {
+  margin: 1.5rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.note-content .inline-toc__summary {
+  position: relative;
+  padding: 0.8rem 2.5rem 0.8rem 1rem;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 620;
+  cursor: pointer;
+  list-style: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.note-content .inline-toc__summary::-webkit-details-marker {
+  display: none;
+}
+
+.note-content .inline-toc__summary::after {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  color: var(--text-muted);
+  content: '›';
+  font-size: 1.2rem;
+  line-height: 1;
+  transform: translateY(-50%) rotate(90deg);
+  transition: transform var(--motion-fast);
+}
+
+.note-content .inline-toc[open] > .inline-toc__summary::after {
+  transform: translateY(-50%) rotate(-90deg);
+}
+
+.note-content .inline-toc__summary:hover {
+  background: var(--surface-hover);
+}
+
+.note-content .inline-toc__nav {
+  padding: 0.2rem 1rem 0.9rem;
+  border-top: 1px solid var(--border);
+}
+
+.note-content .inline-toc__nav ul {
+  margin: 0.55rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.note-content .inline-toc__nav > ul {
+  padding-left: 1rem;
+}
+
+.note-content .inline-toc__nav li {
+  margin: 0.25rem 0;
+}
+
+.note-content .inline-toc__nav a {
+  color: var(--link);
+  font-size: 0.84rem;
+  text-decoration: none;
+}
+
+.note-content .inline-toc__nav a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
 .note-content input[type='checkbox'] {
   width: 0.92rem;
   height: 0.92rem;

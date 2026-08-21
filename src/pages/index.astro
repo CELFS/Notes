@@ -13,7 +13,7 @@ const updatedAt = new Date();
 ---
 
 <NotesLayout>
-  <ReadmeMeta updatedAt={updatedAt} wordCount={homeNote?.wordCount} />
+  <ReadmeMeta updatedAt={updatedAt} />
   <article class="note-content note-content--home">
     {Content ? <><Content /><HomeDirectory nodes={directoryNodes} /></> : (
       <div class="empty-state">

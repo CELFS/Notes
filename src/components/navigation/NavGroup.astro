@@ -20,12 +20,12 @@ const containsActive = containsNavigationItem(group, activeId, activeRoute);
 <details class:list={['nav-group', { 'is-active': activeRoute === group.route }]} open={containsActive}>
   <summary>
     <span class="nav-group__chevron"><Icon name="chevron" size={13} /></span>
-    <span class="nav-group__label">{label}</span>
+    <span class="nav-group__label" title={label}>{label}</span>
     <a class:list={['nav-group__link', { 'is-active': activeRoute === group.route }]} href={group.href} aria-label={label} title={label}><span aria-hidden="true">↗</span></a>
   </summary>
   <div class="nav-group__content">
     {contents.notes.map((note) => (
-      <a class:list={['nav-link', { 'is-active': note.id === activeId }]} href={note.href} aria-current={note.id === activeId ? 'page' : undefined}>
+      <a class:list={['nav-link', { 'is-active': note.id === activeId }]} href={note.href} title={note.title} aria-current={note.id === activeId ? 'page' : undefined}>
         <span>{note.title}</span>
       </a>
     ))}

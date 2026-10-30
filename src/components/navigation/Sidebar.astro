@@ -28,7 +28,7 @@ const base = import.meta.env.BASE_URL;
     <a class="sidebar__home" href={base}><span aria-hidden="true">↖</span>{SITE.reader.backHome}</a>
     <div class="sidebar__collection">{SITE.reader.navigationCaption}</div>
     {tree.notes.map((note) => (
-      <a class:list={['nav-link', { 'is-active': note.id === activeId }]} href={note.href}>{note.title}</a>
+      <a class:list={['nav-link', { 'is-active': note.id === activeId }]} href={note.href} title={note.title}><span>{note.title}</span></a>
     ))}
     {tree.children.map((group) => <NavGroup group={group} activeId={activeId} activeRoute={activeRoute} />)}
   </nav>

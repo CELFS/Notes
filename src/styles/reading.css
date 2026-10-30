@@ -27,13 +27,16 @@
 .nav-group__link { opacity: 0.5; }
 .nav-group summary:hover .nav-group__link { opacity: 1; }
 .nav-group__content { margin-left: 0.75rem; padding-left: 0.35rem; border-left-color: color-mix(in srgb, var(--border) 65%, transparent); }
+.nav-group[open]:has(.nav-link.is-active, .nav-group__link.is-active) > .nav-group__content { border-left-color: var(--focus); }
+.nav-group:has(.nav-link.is-active, .nav-group__link.is-active) > summary > .nav-group__label { color: var(--active-text); }
 .nav-link { padding: 0.7rem 0.6rem; font-size: 0.72rem; line-height: 1.65; }
-.nav-link.is-active { background: color-mix(in srgb, var(--focus) 9%, var(--navigation-background)); box-shadow: inset 2px 0 var(--focus); color: var(--focus); }
+.nav-link.is-active { position: relative; overflow: visible; background: color-mix(in srgb, var(--focus) 7%, transparent); box-shadow: none; color: var(--focus); }
+.nav-group__content > .nav-link.is-active::before { position: absolute; top: 0.35rem; bottom: 0.35rem; left: calc(-0.35rem - 1px); width: 2px; border-radius: 999px; background: var(--focus); content: ''; }
 .content-workspace { padding-top: 3rem; }
 .content-workspace--with-toc { gap: 2.75rem; }
 .note-content { font-size: 0.99rem; line-height: 1.95; }
-.note-content h1, .directory-page h1 { font-size: clamp(2rem, 3.2vw, 3.2rem); line-height: 1.35; font-weight: 600; letter-spacing: -0.04em; }
-.note-content > :is(h1, h2, h3, h4, h5, h6):first-child { margin: 0 0 1.4rem; padding: 0; border: 0; font-size: clamp(2rem, 3.2vw, 3.2rem); line-height: 1.35; font-weight: 600; }
+.note-content h1, .directory-page h1 { font-size: clamp(1.65rem, 2.3vw, 2.25rem); line-height: 1.35; font-weight: 600; letter-spacing: -0.04em; }
+.note-content > :is(h1, h2, h3, h4, h5, h6):first-child { margin: 0 0 1.4rem; padding: 0; border: 0; font-size: clamp(1.65rem, 2.3vw, 2.25rem); line-height: 1.35; font-weight: 600; }
 .note-content h2 { border-bottom-color: color-mix(in srgb, var(--border) 65%, transparent); padding-bottom: 0.9rem; }
 .note-content blockquote { background: color-mix(in srgb, var(--focus) 4%, var(--page)); border-left-width: 2px; border-radius: 0; padding-block: 0.65rem; }
 .note-content pre, .note-content .inline-toc { border-color: color-mix(in srgb, var(--border) 70%, transparent); }
@@ -91,7 +94,7 @@
   .reader-focus { padding: 0.55rem; font-size: 0.59rem; }
   .topbar:not(.topbar--home) .topbar__actions > a { display: none; }
   .content-workspace { padding: 2rem 1.25rem; }
-  .note-content h1, .directory-page h1, .note-content > :is(h1, h2, h3, h4, h5, h6):first-child { font-size: 1.9rem; }
+  .note-content h1, .directory-page h1, .note-content > :is(h1, h2, h3, h4, h5, h6):first-child { font-size: 1.65rem; }
   .note-content { font-size: 0.94rem; }
   .sidebar { width: min(20rem, calc(100vw - 3rem)); }
   .sidebar__scroll { padding-bottom: 2rem; }

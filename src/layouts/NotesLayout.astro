@@ -8,7 +8,7 @@ import CodeEnhancements from '../components/ui/CodeEnhancements.astro';
 import ImageViewer from '../components/ui/ImageViewer.astro';
 import SearchDialog from '../components/ui/SearchDialog.astro';
 import ReadingProgress from '../components/ui/ReadingProgress.astro';
-import { getNavigationTree } from '../lib/notes';
+import { getDisplayNavigationTree } from '../lib/navigation';
 import BaseLayout from './BaseLayout.astro';
 
 interface Props {
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const { title, description, activeId, activeRoute, headings = [] } = Astro.props;
-const tree = getNavigationTree();
+const tree = getDisplayNavigationTree();
 const hasContents = headings.some((heading) => heading.depth >= 2 && heading.depth <= 4);
 ---
 

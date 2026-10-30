@@ -1,7 +1,7 @@
 ---
 import { getNavigationGroupContents, type NavigationGroup } from '../../lib/notes';
+import { containsNavigationItem, getNavigationGroupLabel } from '../../lib/navigation';
 import Icon from '../ui/Icon.astro';
-import { SITE } from '../../config/site';
 import NavGroupComponent from './NavGroup.astro';
 
 interface Props {
@@ -13,11 +13,8 @@ interface Props {
 
 const { group, activeId, activeRoute, depth = 0 } = Astro.props;
 const contents = getNavigationGroupContents(group);
-const label = SITE.home.topics[group.label as keyof typeof SITE.home.topics]?.name ?? group.label.replace(/[【】]/g, '');
-const containsActive = group.notes.some((note) => note.id === activeId)
-  || activeId?.startsWith(`${group.route}/`)
-  || activeRoute === group.route
-  || activeRoute?.startsWith(`${group.route}/`);
+const label = getNavigationGroupLabel(group);
+const containsActive = containsNavigationItem(group, activeId, activeRoute);
 ---
 
 <details class:list={['nav-group', { 'is-active': activeRoute === group.route }]} open={containsActive}>

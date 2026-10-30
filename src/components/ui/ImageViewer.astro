@@ -54,7 +54,7 @@ import Icon from './Icon.astro';
 
     const fallback = document.createElement('span');
     fallback.className = 'image-fallback';
-    fallback.setAttribute('role', 'img');
+    fallback.setAttribute('role', 'group');
     fallback.setAttribute('aria-label', image.alt ? `${SITE.imageLoadFailed}：${image.alt}；${sourceUrl}` : `${SITE.imageLoadFailed}：${sourceUrl}`);
 
     const icon = fallbackIconTemplate?.content.firstElementChild?.cloneNode(true);
@@ -79,6 +79,52 @@ import Icon from './Icon.astro';
     url.className = 'image-fallback__url';
     url.textContent = sourceUrl;
     fallback.append(url);
+
+    const hint = document.createElement('span');
+    hint.className = 'image-fallback__hint';
+    hint.textContent = SITE.imageRetryHint;
+    fallback.append(hint);
+
+    const actions = document.createElement('span');
+    actions.className = 'image-fallback__actions';
+    const retry = document.createElement('button');
+    retry.className = 'image-fallback__action';
+    retry.type = 'button';
+    retry.textContent = SITE.retryImage;
+    retry.addEventListener('click', () => {
+      retry.disabled = true;
+      retry.textContent = SITE.retryingImage;
+      fallback.setAttribute('aria-busy', 'true');
+
+      const cleanup = () => {
+        image.removeEventListener('load', restore);
+        image.removeEventListener('error', failed);
+        fallback.removeAttribute('aria-busy');
+      };
+      const restore = () => {
+        cleanup();
+        fallback.replaceWith(image);
+        image.focus({ preventScroll: true });
+      };
+      const failed = () => {
+        cleanup();
+        retry.disabled = false;
+        retry.textContent = SITE.retryImage;
+      };
+
+      image.addEventListener('load', restore);
+      image.addEventListener('error', failed);
+      image.loading = 'eager';
+      image.src = image.getAttribute('src') ?? sourceUrl;
+    });
+    const original = document.createElement('a');
+    original.className = 'image-fallback__action';
+    original.href = sourceUrl;
+    original.target = '_blank';
+    original.rel = 'noopener noreferrer';
+    original.textContent = SITE.openOriginalImage;
+    actions.append(retry, original);
+    fallback.append(actions);
 
     image.replaceWith(fallback);
   };
@@ -132,13 +178,7 @@ import Icon from './Icon.astro';
   };
 
   images.forEach((image) => {
-    image.addEventListener('error', () => renderImageFailure(image), { once: true });
-
-    if (image.complete && image.naturalWidth === 0) {
-      renderImageFailure(image);
-      return;
-    }
-
+    image.addEventListener('error', () => renderImageFailure(image));
     image.tabIndex = 0;
     image.setAttribute('role', 'button');
     image.setAttribute('aria-label', image.alt ? `${SITE.openImageViewer}：${image.alt}` : SITE.openImageViewer);
@@ -152,6 +192,8 @@ import Icon from './Icon.astro';
         openImage(image);
       }
     });
+
+    if (image.complete && image.naturalWidth === 0) renderImageFailure(image);
   });
 
   previousButton?.addEventListener('click', () => showImage(currentIndex - 1));

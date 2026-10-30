@@ -1341,6 +1341,50 @@ a {
   overflow-wrap: anywhere;
 }
 
+.note-content .image-fallback__hint {
+  max-width: 34rem;
+  margin-top: 0.35rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.note-content .image-fallback__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 0.65rem;
+}
+
+.note-content .image-fallback__action {
+  display: inline-flex;
+  min-height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 0.75rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--motion-fast), border-color var(--motion-fast);
+}
+
+.note-content .image-fallback__action:hover {
+  border-color: var(--focus);
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.note-content .image-fallback__action:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
 :root[data-theme='dark'] .note-content img,
 :root[data-theme='dark'] .image-viewer__stage img {
   filter: brightness(0.78) saturate(0.9);

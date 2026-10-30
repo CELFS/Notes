@@ -64,10 +64,9 @@ export const SITE = {
     center: '好奇心',
     centerCaption: 'EVERYTHING CONNECTS',
     topics: {
-      '【编程素养】': { name: '代码与系统', caption: 'ENGINEERING', description: '从一行代码，到理解系统如何运转。', color: '#b8f780' },
-      '【概念探索阶段】': { name: '计算机漫游', caption: 'COMPUTING', description: '打开终端，探索计算机的另一面。', color: '#77d8ee' },
-      '【前端 1】': { name: '前端实验', caption: 'INTERFACES', description: '让逻辑可见，让想法发生在屏幕上。', color: '#f1b47d' },
-      '【Datawhale】': { name: '深度学习', caption: 'INTELLIGENCE', description: '从数据出发，理解机器如何学习。', color: '#89baff' },
+      '【概念探索阶段】': { name: '计算机漫游', caption: 'COMPUTING', description: '从一行代码，到理解系统如何运转。', color: '#77d8ee' },
+      '【前端 1】': { name: '前端', caption: 'INTERFACES', description: '让逻辑可见，让想法发生在屏幕上。', color: '#f1b47d' },
+      '【Datawhale】': { name: 'AI/LLM', caption: 'INTELLIGENCE', description: '从数据出发，理解机器如何学习。', color: '#89baff' },
       '【深刻提升】': { name: '阅读与思考', caption: 'PERSPECTIVES', description: '翻过一页书，也打开一种看世界的方式。', color: '#eed589' },
     },
   },
@@ -80,4 +79,8 @@ export const SITE = {
   },
   searchLoading: '正在寻找线索…',
   searchError: '暂时无法加载笔记，请关闭后重试。',
+  retryImage: '重新加载',
+  retryingImage: '正在加载…',
+  openOriginalImage: '打开原图',
+  imageRetryHint: '可尝试重新加载。若原图出现安全提示，请先检查连接情况，再返回重试。',
 } as const;

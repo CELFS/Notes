@@ -1,10 +1,11 @@
 ---
 import { SITE } from '../../config/site';
-import { documentNotes, getNavigationTree } from '../../lib/notes';
+import { documentNotes } from '../../lib/notes';
+import { getDisplayNavigationTree, getNavigationGroupNotes } from '../../lib/navigation';
 import KnowledgeField from './KnowledgeField.astro';
 import '../../styles/observatory.css';
 
-const topics = getNavigationTree().children.map((group) => {
+const topics = getDisplayNavigationTree().children.map((group) => {
   const identity = SITE.home.topics[group.label as keyof typeof SITE.home.topics];
   return {
     ...group,
@@ -12,7 +13,7 @@ const topics = getNavigationTree().children.map((group) => {
     caption: identity?.caption,
     description: identity?.description,
     color: identity?.color ?? '#b8f780',
-    entries: documentNotes.filter((note) => note.directory[0] === group.path[0]),
+    entries: getNavigationGroupNotes(group),
   };
 });
 const first = topics[0];

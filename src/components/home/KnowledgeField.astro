@@ -1,0 +1,102 @@
+<canvas class="knowledge-field" aria-hidden="true"></canvas>
+
+<script>
+  const canvas = document.querySelector<HTMLCanvasElement>('.knowledge-field');
+  const context = canvas?.getContext('2d');
+  const space = canvas?.closest<HTMLElement>('.knowledge-space');
+  if (canvas && context && space) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let width = 0;
+    let height = 0;
+    let frame = 0;
+    let previousTime = 0;
+    let elapsed = 0;
+    let pointerX = 0;
+    let pointerY = 0;
+    let tiltX = 0;
+    let tiltY = 0;
+    let light = document.documentElement.dataset.theme === 'light';
+    const particles = Array.from({ length: 1250 }, (_, index) => {
+      const u = index * 2.3999632297;
+      const v = index * 0.3819660113;
+      return { u, v, size: index % 13 === 0 ? 1.6 : 0.7 };
+    });
+
+    // Project a slowly turning torus; pointer movement tilts the field without moving its controls.
+    const draw = () => {
+      context.clearRect(0, 0, width, height);
+      tiltX += (pointerX - tiltX) * 0.045;
+      tiltY += (pointerY - tiltY) * 0.045;
+      const rotation = elapsed * 0.00009 + tiltX * 0.3;
+      const pitch = 0.72 + tiltY * 0.25;
+      const scale = Math.min(width * 0.32, height * 0.39);
+      const points = particles.map(({ u, v, size }) => {
+        const warp = 0.27 + 0.055 * Math.sin(u * 3 + elapsed * 0.0003);
+        const radius = 1 + warp * Math.cos(v);
+        const x = radius * Math.cos(u + rotation);
+        const y = warp * Math.sin(v);
+        const z = radius * Math.sin(u + rotation);
+        const projectedY = y * Math.cos(pitch) - z * Math.sin(pitch);
+        const depth = y * Math.sin(pitch) + z * Math.cos(pitch);
+        const perspective = 3.5 / (3.5 + depth);
+        return { x: width / 2 + x * scale * perspective, y: height / 2 + projectedY * scale * perspective, depth, size, u };
+      }).sort((a, b) => b.depth - a.depth);
+      for (const point of points) {
+        const alpha = 0.2 + (1.4 - point.depth) * 0.22;
+        const warm = Math.sin(point.u) > 0.4;
+        context.fillStyle = light
+          ? `rgba(${warm ? '60,111,81' : '13,117,147'},${alpha})`
+          : `rgba(${warm ? '181,241,143' : '94,208,215'},${alpha})`;
+        context.beginPath();
+        context.arc(point.x, point.y, point.size * (1.2 - point.depth * 0.22), 0, Math.PI * 2);
+        context.fill();
+      }
+      space.style.setProperty('--field-x', `${tiltX * 9}px`);
+      space.style.setProperty('--field-y', `${tiltY * 9}px`);
+    };
+
+    const tick = (time: number) => {
+      frame = 0;
+      if (document.hidden || reducedMotion.matches) return;
+      if (time - previousTime >= 32) {
+        elapsed += Math.min(time - previousTime, 64);
+        previousTime = time;
+        draw();
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    const syncAnimation = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      previousTime = performance.now();
+      draw();
+      if (!document.hidden && !reducedMotion.matches) frame = requestAnimationFrame(tick);
+    };
+    new ResizeObserver(() => {
+      const bounds = space.getBoundingClientRect();
+      width = bounds.width;
+      height = bounds.height;
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(width * ratio);
+      canvas.height = Math.round(height * ratio);
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      draw();
+    }).observe(space);
+    space.addEventListener('pointermove', (event) => {
+      if (reducedMotion.matches || event.pointerType === 'touch') return;
+      const bounds = space.getBoundingClientRect();
+      pointerX = ((event.clientX - bounds.left) / width - 0.5) * 2;
+      pointerY = ((event.clientY - bounds.top) / height - 0.5) * 2;
+    });
+    space.addEventListener('pointerleave', () => { pointerX = 0; pointerY = 0; });
+    new MutationObserver(() => {
+      light = document.documentElement.dataset.theme === 'light';
+      draw();
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    document.addEventListener('visibilitychange', syncAnimation);
+    reducedMotion.addEventListener('change', syncAnimation);
+    window.addEventListener('pagehide', () => cancelAnimationFrame(frame));
+    window.addEventListener('pageshow', syncAnimation);
+    syncAnimation();
+  }
+</script>

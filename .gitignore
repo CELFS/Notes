@@ -5,6 +5,9 @@ node_modules/
 .astro/
 dist/
 
+# Generated design output
+output/
+
 # Retired documentation site
 docs/
 

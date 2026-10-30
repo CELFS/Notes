@@ -1,0 +1,23 @@
+---
+import { SITE } from '../../config/site';
+---
+
+<div class="reading-progress" role="progressbar" aria-label={SITE.reader.progress} aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+
+<script>
+  const progress = document.querySelector<HTMLElement>('.reading-progress');
+  let pending = false;
+  const update = () => {
+    const distance = document.documentElement.scrollHeight - window.innerHeight;
+    const value = distance > 0 ? Math.max(0, Math.min(1, window.scrollY / distance)) : 1;
+    progress?.style.setProperty('--progress', String(value));
+    progress?.setAttribute('aria-valuenow', String(Math.round(value * 100)));
+    pending = false;
+  };
+  const schedule = () => {
+    if (!pending) { pending = true; requestAnimationFrame(update); }
+  };
+  window.addEventListener('scroll', schedule, { passive: true });
+  new ResizeObserver(schedule).observe(document.body);
+  update();
+</script>

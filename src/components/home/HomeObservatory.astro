@@ -1,0 +1,132 @@
+---
+import { SITE } from '../../config/site';
+import { documentNotes, getNavigationTree } from '../../lib/notes';
+import KnowledgeField from './KnowledgeField.astro';
+import '../../styles/observatory.css';
+
+const topics = getNavigationTree().children.map((group) => {
+  const identity = SITE.home.topics[group.label as keyof typeof SITE.home.topics];
+  return {
+    ...group,
+    name: identity?.name ?? group.label.replace(/[【】]/g, ''),
+    caption: identity?.caption,
+    description: identity?.description,
+    color: identity?.color ?? '#b8f780',
+    entries: documentNotes.filter((note) => note.directory[0] === group.path[0]),
+  };
+});
+const first = topics[0];
+---
+
+<main class="observatory" id="main-content" style={`--topic-color: ${first?.color}`}>
+  <section class="home-intro" aria-labelledby="home-title">
+    <p class="home-eyebrow"><span></span>{SITE.home.eyebrow}</p>
+    <h1 id="home-title">{SITE.home.titleFirst}<br /><span>{SITE.home.titleLast}</span></h1>
+    <p class="home-intro__description">{SITE.home.introduction}</p>
+    <div class="home-intro__actions">
+      <a class="home-enter" href={first?.href}>{SITE.home.explore}<span aria-hidden="true">↗</span></a>
+      <a class="home-random" id="random-note" href={documentNotes[0]?.href}><span class="random-symbol" aria-hidden="true">⚄</span>{SITE.home.surprise}</a>
+    </div>
+    <div class="home-stats">
+      <div><strong>{documentNotes.length.toString().padStart(3, '0')}</strong><span>{SITE.home.noteUnit}</span></div>
+      <span class="home-stats__divider" aria-hidden="true"></span>
+      <div><strong>{topics.length.toString().padStart(2, '0')}</strong><span>{SITE.home.topicUnit}</span></div>
+      <span class="home-stats__asterisk" aria-hidden="true">✳</span>
+    </div>
+  </section>
+
+  <section class="knowledge-space" aria-label={SITE.home.orbitLabel}>
+    <KnowledgeField />
+    <div class="orbital-guides" aria-hidden="true"><i></i><i></i><i></i><span>+</span></div>
+    <div class="orbit-core" aria-hidden="true"><span>✳</span><small>{SITE.home.centerCaption}</small></div>
+    <div class="orbit-topics">
+      {topics.map((topic, index) => (
+        <button class:list={['orbit-topic', { 'is-selected': index === 0 }]} type="button" data-topic={index} style={`--index: ${index}; --node-color: ${topic.color}`} aria-pressed={index === 0} aria-controls={`topic-panel-${index}`}>
+          <span class="orbit-topic__dot" aria-hidden="true"></span>
+          <span><small>{(index + 1).toString().padStart(2, '0')} / {topic.caption}</small><strong>{topic.name}</strong></span>
+          <span class="orbit-topic__arrow" aria-hidden="true">↗</span>
+        </button>
+      ))}
+    </div>
+    <p class="orbit-hint"><span aria-hidden="true">⤧</span>{SITE.home.orbitHint}</p>
+  </section>
+
+  <section class="discovery" aria-label={SITE.home.collection}>
+    <div class="discovery__label"><span class="live-dot"></span>{SITE.home.collection}<span class="discovery__line"></span></div>
+    {topics.map((topic, index) => (
+      <div class="discovery-panel" id={`topic-panel-${index}`} data-panel={index} hidden={index !== 0}>
+        <div class="discovery-panel__intro">
+          <div class="discovery-panel__title"><h2>{topic.name}</h2><span>{topic.entries.length.toString().padStart(2, '0')}</span></div>
+          {topic.description && <p>{topic.description}</p>}
+          <a href={topic.href}>{SITE.home.allNotes}<span aria-hidden="true">↗</span></a>
+        </div>
+        <ol class="discovery-notes">
+          {topic.entries.map((note, noteIndex) => (
+            <li hidden={noteIndex >= 3}>
+              <a href={note.href}>
+                <span class="discovery-notes__number">{(noteIndex + 1).toString().padStart(2, '0')}</span>
+                <strong>{note.title}</strong>
+                <span class="discovery-notes__arrow" aria-hidden="true">↗</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+        <div class="discovery-paging">
+          <span class="discovery-paging__count" aria-live="polite">01 / {Math.max(1, Math.ceil(topic.entries.length / 3)).toString().padStart(2, '0')}</span>
+          <button type="button" data-page-step="-1" aria-label={SITE.home.previous} disabled>←</button>
+          <button type="button" data-page-step="1" aria-label={SITE.home.next} disabled={topic.entries.length <= 3}>→</button>
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <footer class="home-footer"><span>{SITE.home.footer}</span><span><i class="live-dot"></i>{SITE.home.status}</span><span>{SITE.copyright}</span></footer>
+</main>
+
+<script>
+  const observatory = document.querySelector<HTMLElement>('.observatory');
+  const selectors = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-topic]'));
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-panel]'));
+  selectors.forEach((button) => {
+    button.addEventListener('click', () => {
+      selectors.forEach((selector) => {
+        const selected = selector === button;
+        selector.classList.toggle('is-selected', selected);
+        selector.setAttribute('aria-pressed', String(selected));
+      });
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.panel !== button.dataset.topic;
+        if (!panel.hidden) {
+          const destination = panel.querySelector<HTMLAnchorElement>('.discovery-panel__intro > a');
+          const enter = document.querySelector<HTMLAnchorElement>('.home-enter');
+          if (destination && enter) enter.href = destination.href;
+        }
+      });
+      observatory?.style.setProperty('--topic-color', button.style.getPropertyValue('--node-color'));
+    });
+  });
+
+  panels.forEach((panel) => {
+    const entries = Array.from(panel.querySelectorAll<HTMLElement>('.discovery-notes li'));
+    const buttons = Array.from(panel.querySelectorAll<HTMLButtonElement>('[data-page-step]'));
+    const total = Math.max(1, Math.ceil(entries.length / 3));
+    let page = 0;
+    buttons.forEach((button) => button.addEventListener('click', () => {
+      page = Math.max(0, Math.min(total - 1, page + Number(button.dataset.pageStep)));
+      entries.forEach((entry, index) => { entry.hidden = Math.floor(index / 3) !== page; });
+      const count = panel.querySelector('.discovery-paging__count');
+      if (count) count.textContent = `${(page + 1).toString().padStart(2, '0')} / ${total.toString().padStart(2, '0')}`;
+      buttons.forEach((control) => { control.disabled = Number(control.dataset.pageStep) < 0 ? page === 0 : page === total - 1; });
+    }));
+  });
+
+  const randomLink = document.querySelector<HTMLAnchorElement>('#random-note');
+  const noteLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.discovery-notes a'));
+  const chooseRandom = () => {
+    const note = noteLinks[Math.floor(Math.random() * noteLinks.length)];
+    if (randomLink && note) randomLink.href = note.href;
+  };
+  chooseRandom();
+  randomLink?.addEventListener('pointerenter', chooseRandom);
+  randomLink?.addEventListener('focus', chooseRandom);
+</script>

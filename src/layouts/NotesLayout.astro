@@ -7,6 +7,7 @@ import TableOfContents from '../components/navigation/TableOfContents.astro';
 import CodeEnhancements from '../components/ui/CodeEnhancements.astro';
 import ImageViewer from '../components/ui/ImageViewer.astro';
 import SearchDialog from '../components/ui/SearchDialog.astro';
+import ReadingProgress from '../components/ui/ReadingProgress.astro';
 import { getNavigationTree } from '../lib/notes';
 import BaseLayout from './BaseLayout.astro';
 
@@ -24,7 +25,8 @@ const hasContents = headings.some((heading) => heading.depth >= 2 && heading.dep
 ---
 
 <BaseLayout title={title} description={description}>
-  <TopBar />
+  <TopBar title={title} />
+  <ReadingProgress />
   <div class="app-shell">
     <Sidebar tree={tree} activeId={activeId} activeRoute={activeRoute} />
     <div class:list={['content-workspace', { 'content-workspace--with-toc': hasContents }] }>

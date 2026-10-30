@@ -1,25 +1,14 @@
 ---
-import { SITE } from '../config/site';
-import { getHomeDirectoryNodes } from '../lib/home-directory';
-import { getNavigationTree, homeNote } from '../lib/notes';
-import NotesLayout from '../layouts/NotesLayout.astro';
-import HomeDirectory from '../components/content/HomeDirectory.astro';
-import ReadmeMeta from '../components/content/ReadmeMeta.astro';
-
-const Content = homeNote?.Content as any;
-const tree = getNavigationTree();
-const directoryNodes = getHomeDirectoryNodes(tree);
-const updatedAt = new Date();
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopBar from '../components/layout/TopBar.astro';
+import HomeObservatory from '../components/home/HomeObservatory.astro';
+import SearchDialog from '../components/ui/SearchDialog.astro';
 ---
 
-<NotesLayout>
-  <ReadmeMeta updatedAt={updatedAt} />
-  <article class="note-content note-content--home">
-    {Content ? <><Content /><HomeDirectory nodes={directoryNodes} /></> : (
-      <div class="empty-state">
-        <h1>{SITE.emptyTitle}</h1>
-        <p>{SITE.emptyDescription}</p>
-      </div>
-    )}
-  </article>
-</NotesLayout>
+<BaseLayout>
+  <div class="home-screen">
+    <TopBar home />
+    <HomeObservatory />
+  </div>
+  <SearchDialog />
+</BaseLayout>

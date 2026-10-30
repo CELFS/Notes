@@ -17,7 +17,7 @@ const base = import.meta.env.BASE_URL;
 <aside class="sidebar" id="site-navigation" aria-label={SITE.navigationLabel}>
   <div class="sidebar__top">
     <a class="brand" href={base} aria-label={`${SITE.title} · ${SITE.homeLabel}`}>
-      <span class="brand__mark"><img src={`${base}logo.png`} alt={SITE.logoAlt} /></span>
+      <img class="brand__symbol" src={`${base}logo.png`} alt={SITE.logoAlt} width="34" height="34" />
       <span class="brand__title">{SITE.title}</span>
     </a>
     <button class="icon-button sidebar__toggle" id="navigation-toggle" type="button" aria-label={SITE.closeNavigation} aria-controls="site-navigation" aria-expanded="true">
@@ -25,6 +25,8 @@ const base = import.meta.env.BASE_URL;
     </button>
   </div>
   <nav class="sidebar__scroll custom-scrollbar">
+    <a class="sidebar__home" href={base}><span aria-hidden="true">↖</span>{SITE.reader.backHome}</a>
+    <div class="sidebar__collection">{SITE.reader.navigationCaption}</div>
     {tree.notes.map((note) => (
       <a class:list={['nav-link', { 'is-active': note.id === activeId }]} href={note.href}>{note.title}</a>
     ))}
@@ -47,11 +49,17 @@ const base = import.meta.env.BASE_URL;
       : root.dataset.sidebar !== 'collapsed';
     toggleButton.setAttribute('aria-expanded', String(isOpen));
     toggleButton.setAttribute('aria-label', isOpen ? SITE.closeNavigation : SITE.openNavigation);
+    const sidebar = document.querySelector<HTMLElement>('#site-navigation');
+    if (sidebar) sidebar.inert = mobileNavigation.matches && !isOpen;
+    const workspace = document.querySelector<HTMLElement>('.content-workspace');
+    if (workspace) workspace.inert = mobileNavigation.matches && isOpen;
   };
 
   const closeNavigation = () => {
+    const wasOpen = document.body.dataset.navigation === 'open';
     delete document.body.dataset.navigation;
     syncToggleButton();
+    if (wasOpen) document.querySelector<HTMLButtonElement>('#navigation-open-mobile')?.focus();
   };
 
   toggleButton?.addEventListener('click', () => {
@@ -75,6 +83,25 @@ const base = import.meta.env.BASE_URL;
     attributes: true,
     attributeFilter: ['data-navigation'],
   });
-  mobileNavigation.addEventListener('change', syncToggleButton);
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && document.body.dataset.navigation === 'open') closeNavigation();
+    if (event.key === 'Tab' && mobileNavigation.matches && document.body.dataset.navigation === 'open') {
+      const controls = Array.from(document.querySelectorAll<HTMLElement>('#site-navigation a, #site-navigation button, #site-navigation summary'))
+        .filter((control) => control.getClientRects().length > 0);
+      const first = controls[0];
+      const last = controls.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    }
+  });
+  const activeLink = document.querySelector<HTMLElement>('.sidebar__scroll .nav-link.is-active, .sidebar__scroll .nav-group__link.is-active');
+  const navigationScroll = document.querySelector<HTMLElement>('.sidebar__scroll');
+  if (activeLink && navigationScroll) {
+    navigationScroll.scrollTop = Math.max(0, activeLink.offsetTop - navigationScroll.clientHeight / 2);
+  }
+  mobileNavigation.addEventListener('change', () => {
+    if (!mobileNavigation.matches) closeNavigation();
+    syncToggleButton();
+  });
   syncToggleButton();
 </script>

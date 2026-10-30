@@ -1,4 +1,4 @@
-import type { NavigationGroup } from './notes';
+import { getNavigationGroupContents, type NavigationGroup } from './notes';
 
 export type HomeDirectoryNode = {
   group: NavigationGroup;
@@ -16,7 +16,7 @@ export function getHomeDirectoryNodes(tree: NavigationGroup) {
       group,
       depth,
       slug: `directory-${indexes.join('-')}`,
-      children: buildNodes(group.children, indexes),
+      children: buildNodes(getNavigationGroupContents(group).children, indexes),
     };
   });
 

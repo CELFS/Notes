@@ -8,6 +8,7 @@ const searchIndexUrl = `${import.meta.env.BASE_URL}search-index.json`;
 <dialog
   class="search-dialog"
   id="search-dialog"
+  aria-label={SITE.searchLabel}
   data-index-url={searchIndexUrl}
   data-empty-label={SITE.searchEmpty}
   data-initial-label={SITE.searchInitial}
@@ -15,7 +16,7 @@ const searchIndexUrl = `${import.meta.env.BASE_URL}search-index.json`;
   <div class="search-dialog__panel">
     <div class="search-dialog__field">
       <Icon name="search" size={18} />
-      <input id="search-input" type="search" placeholder={SITE.searchPlaceholder} autocomplete="off" />
+      <input id="search-input" type="search" aria-label={SITE.searchLabel} placeholder={SITE.searchPlaceholder} autocomplete="off" />
       <button class="icon-button" id="search-close" type="button" aria-label={SITE.closeSearch}>
         <Icon name="close" />
       </button>
@@ -27,6 +28,7 @@ const searchIndexUrl = `${import.meta.env.BASE_URL}search-index.json`;
 </dialog>
 
 <script>
+  import { SITE } from '../../config/site';
   type SearchItem = {
     title: string;
     href: string;
@@ -38,6 +40,8 @@ const searchIndexUrl = `${import.meta.env.BASE_URL}search-index.json`;
   const input = document.querySelector<HTMLInputElement>('#search-input');
   const results = document.querySelector<HTMLElement>('#search-results');
   let index: SearchItem[] | undefined;
+  let loading: Promise<void> | undefined;
+  let failed = false;
 
   const message = (value: string) => {
     if (!results) return;
@@ -50,15 +54,27 @@ const searchIndexUrl = `${import.meta.env.BASE_URL}search-index.json`;
 
   const loadIndex = async () => {
     if (index || !dialog) return;
-    const response = await fetch(dialog.dataset.indexUrl ?? '');
-    index = await response.json();
+    if (loading) return loading;
+    failed = false;
+    loading = (async () => {
+      const response = await fetch(dialog.dataset.indexUrl ?? '');
+      if (!response.ok) throw new Error(String(response.status));
+      index = await response.json();
+    })();
+    try { await loading; } finally { loading = undefined; }
   };
 
   const openSearch = async () => {
     if (!dialog) return;
     dialog.showModal();
-    await loadIndex();
     input?.focus();
+    try {
+      await loadIndex();
+      renderResults();
+    } catch {
+      failed = true;
+      message(SITE.searchError);
+    }
   };
 
   const createSnippet = (text: string, query: string) => {
@@ -94,6 +110,10 @@ const searchIndexUrl = `${import.meta.env.BASE_URL}search-index.json`;
       message(dialog.dataset.initialLabel ?? '');
       return;
     }
+    if (!index) {
+      message(failed ? SITE.searchError : SITE.searchLoading);
+      return;
+    }
 
     const matches = (index ?? [])
       .filter((item) => `${item.title} ${item.directory} ${item.text}`.toLocaleLowerCase().includes(query))
@@ -112,14 +132,11 @@ const searchIndexUrl = `${import.meta.env.BASE_URL}search-index.json`;
 
       const title = document.createElement('strong');
       appendHighlightedText(title, item.title, query);
-      const directory = document.createElement('span');
-      directory.className = 'search-result__directory';
-      appendHighlightedText(directory, item.directory, query);
       const snippet = document.createElement('span');
       snippet.className = 'search-result__snippet';
       appendHighlightedText(snippet, createSnippet(item.text, query), query);
 
-      link.append(title, directory, snippet);
+      link.append(title, snippet);
       results.append(link);
     }
   };
@@ -130,6 +147,21 @@ const searchIndexUrl = `${import.meta.env.BASE_URL}search-index.json`;
     if (event.target === dialog) dialog.close();
   });
   input?.addEventListener('input', renderResults);
+  dialog?.addEventListener('keydown', (event) => {
+    const links = Array.from(results?.querySelectorAll<HTMLAnchorElement>('.search-result') ?? []);
+    if (!links.length) return;
+    const current = links.indexOf(document.activeElement as HTMLAnchorElement);
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      const next = event.key === 'ArrowDown' ? Math.min(current + 1, links.length - 1) : current - 1;
+      if (next < 0) input?.focus();
+      else links[next]?.focus();
+    }
+    if (event.key === 'Enter' && document.activeElement === input) {
+      event.preventDefault();
+      links[0]?.click();
+    }
+  });
   document.addEventListener('keydown', (event) => {
     if ((event.metaKey || event.ctrlKey) && event.key.toLocaleLowerCase() === 'k') {
       event.preventDefault();

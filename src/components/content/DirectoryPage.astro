@@ -8,10 +8,11 @@ interface Props {
 
 const { group } = Astro.props;
 const contents = getNavigationGroupContents(group);
+const label = SITE.home.topics[group.label as keyof typeof SITE.home.topics]?.name ?? group.label.replace(/[【】]/g, '');
 ---
 
 <article class="directory-page">
-  <h1>{group.label}</h1>
+  <h1>{label}</h1>
   {contents.children.length > 0 && (
     <section class="directory-section">
       <h2>{SITE.subdirectoriesLabel}</h2>

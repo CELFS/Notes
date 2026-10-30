@@ -3,15 +3,19 @@ import { SITE } from '../../config/site';
 import Icon from '../ui/Icon.astro';
 
 const base = import.meta.env.BASE_URL;
+interface Props { home?: boolean; title?: string; }
+const { home = false, title } = Astro.props;
 ---
 
-<header class="topbar">
-  <button class="icon-button topbar__mobile-menu" id="navigation-open-mobile" type="button" aria-label={SITE.openNavigation} aria-controls="site-navigation" aria-expanded="false">
+<header class:list={['topbar', { 'topbar--home': home }]}>
+  {!home && <button class="icon-button topbar__mobile-menu" id="navigation-open-mobile" type="button" aria-label={SITE.openNavigation} aria-controls="site-navigation" aria-expanded="false">
     <Icon name="menu" />
-  </button>
+  </button>}
   <a class="topbar__collapsed-brand" href={base} aria-label={`${SITE.title} · ${SITE.homeLabel}`}>
-    <span class="brand__mark"><img src={`${base}logo.png`} alt={SITE.logoAlt} /></span>
+    <img class="brand__symbol" src={`${base}logo.png`} alt={SITE.logoAlt} width="34" height="34" />
+    <span class="brand__title">{SITE.title}</span>
   </a>
+  {!home && title && <span class="topbar__page-title">{title}</span>}
 
   <div class="topbar__actions">
     <button class="search-trigger" id="search-open" type="button">
@@ -26,6 +30,7 @@ const base = import.meta.env.BASE_URL;
     <a class="icon-button" href={SITE.repository} target="_blank" rel="noreferrer" aria-label={SITE.repositoryLabel}>
       <Icon name="github" />
     </a>
+    {!home && <button class="reader-focus" id="reader-focus" type="button" aria-pressed="false">{SITE.reader.focus}</button>}
   </div>
 </header>
 
@@ -45,7 +50,7 @@ const base = import.meta.env.BASE_URL;
   themeButton?.addEventListener('click', () => {
     const nextTheme = root.dataset.theme === 'light' ? 'dark' : 'light';
     root.dataset.theme = nextTheme;
-    localStorage.setItem('notes-theme', nextTheme);
+    try { localStorage.setItem('notes-theme', nextTheme); } catch {}
     syncThemeButton();
   });
 
@@ -54,8 +59,20 @@ const base = import.meta.env.BASE_URL;
     mobileNavigationButton.setAttribute('aria-expanded', String(document.body.dataset.navigation === 'open'));
   };
 
+  document.querySelector<HTMLButtonElement>('#reader-focus')?.addEventListener('click', (event) => {
+    const button = event.currentTarget as HTMLButtonElement;
+    const focused = root.dataset.reading !== 'focused';
+    if (focused) root.dataset.reading = 'focused';
+    else delete root.dataset.reading;
+    button.setAttribute('aria-pressed', String(focused));
+    button.textContent = focused ? SITE.reader.exitFocus : SITE.reader.focus;
+  });
+
   mobileNavigationButton?.addEventListener('click', () => {
     document.body.dataset.navigation = 'open';
+    const sidebar = document.querySelector<HTMLElement>('#site-navigation');
+    if (sidebar) sidebar.inert = false;
+    document.querySelector<HTMLButtonElement>('#navigation-toggle')?.focus();
     syncMobileNavigationButton();
   });
 

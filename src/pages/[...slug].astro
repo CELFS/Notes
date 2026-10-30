@@ -4,7 +4,6 @@ import DirectoryPage from '../components/content/DirectoryPage.astro';
 import {
   documentNotes,
   getAdjacentNotes,
-  getBreadcrumbGroups,
   getNavigationGroups,
 } from '../lib/notes';
 import NotesLayout from '../layouts/NotesLayout.astro';
@@ -29,8 +28,6 @@ if (!note && !directory) throw new Error(`找不到发布路径：${Astro.params
 
 const Content = note?.Content as any;
 const adjacent = note ? getAdjacentNotes(note) : undefined;
-const breadcrumbPath = note ? note.directory : directory?.path.slice(0, -1) ?? [];
-const breadcrumbs = getBreadcrumbGroups(breadcrumbPath);
 const title = note?.title ?? directory?.label;
 ---
 
@@ -41,13 +38,7 @@ const title = note?.title ?? directory?.label;
   activeRoute={directory?.route}
   headings={note?.headings}
 >
-  <div class="document-overview">
-    <div class="document-path" aria-label={SITE.documentPathLabel}>
-      <a href={import.meta.env.BASE_URL}>{SITE.homeLabel}</a>
-      {breadcrumbs.map((group) => <><span>/</span><a href={group.href}>{group.label}</a></>)}
-    </div>
-    {note && <div class="document-meta">{note.wordCount.toLocaleString('zh-CN')} {SITE.wordCountLabel}</div>}
-  </div>
+  {note && <div class="document-overview"><div class="document-meta">{note.wordCount.toLocaleString('zh-CN')} {SITE.wordCountLabel}</div></div>}
   {note ? (
     <article class="note-content">
       <Content />

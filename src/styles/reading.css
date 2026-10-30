@@ -17,23 +17,45 @@
 .sidebar { border-right: 1px solid color-mix(in srgb, var(--border) 60%, transparent); }
 .sidebar__top { background: var(--navigation-background); padding-inline: 1.15rem 0.65rem; }
 .sidebar__scroll { padding-inline: 0.85rem; padding-top: calc(var(--topbar-height) + 0.85rem); }
-.sidebar__home { display: flex; align-items: center; gap: 0.7rem; margin: 0 0.25rem 2.1rem; padding: 0.7rem; border: 1px solid var(--border); border-radius: 0.65rem; color: var(--text-secondary); text-decoration: none; font-size: 0.74rem; transition: border-color 180ms, background 180ms; }
+.sidebar__home { display: inline-flex; width: 2.25rem; height: 2.25rem; align-items: center; justify-content: center; margin: 0 0.25rem 0.85rem; border: 1px solid var(--border); border-radius: 0.65rem; color: var(--text-secondary); text-decoration: none; font-size: 0.74rem; transition: border-color 180ms, background 180ms; }
 .sidebar__home > span { color: var(--focus); font-size: 1rem; }
 .sidebar__home:hover { background: var(--surface-hover); border-color: var(--focus); }
-.sidebar__collection { margin: 0 0.7rem 0.8rem; color: var(--text-muted); font: 0.52rem var(--font-mono); letter-spacing: 0.17em; }
-.nav-group { margin-block: 0.5rem; }
-.nav-group summary { min-height: 2.8rem; font-size: 0.76rem; font-weight: 450; }
+.sidebar__collection { margin: 0 0.7rem 0.5rem; color: var(--text-muted); font: 0.52rem var(--font-mono); letter-spacing: 0.17em; }
+.nav-group { margin-block: 0.125rem; }
+.nav-group summary { min-height: 2.25rem; font-size: 0.76rem; font-weight: 450; }
 .nav-group__chevron { opacity: 0.7; }
 .nav-group__label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.nav-group__link { opacity: 0.5; }
+.nav-group__link { width: 1.75rem; height: 1.75rem; opacity: 0.5; }
 .nav-group summary:hover .nav-group__link { opacity: 1; }
 .nav-group__content { margin-left: 0.75rem; padding-left: 0.35rem; border-left-color: color-mix(in srgb, var(--border) 65%, transparent); }
 .nav-group[open]:has(.nav-link.is-active, .nav-group__link.is-active) > .nav-group__content { border-left-color: color-mix(in srgb, var(--focus) 20%, var(--border)); }
 .nav-group:has(.nav-link.is-active, .nav-group__link.is-active) > summary > .nav-group__label { color: var(--text-secondary); }
-.nav-link { padding: 0.7rem 0.6rem; font-size: 0.72rem; line-height: 1.65; }
+.nav-link { min-height: 2rem; padding: 0.35rem 0.6rem; font-size: 0.72rem; line-height: 1.65; }
 .nav-link > span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .nav-link.is-active { position: relative; overflow: visible; background: color-mix(in srgb, var(--focus) 7%, transparent); box-shadow: none; color: var(--focus); }
 .nav-group__content > .nav-link.is-active::before { position: absolute; top: 0.35rem; bottom: 0.35rem; left: calc(-0.35rem - 1.5px); width: 2px; border-radius: 999px; background: var(--focus); content: ''; }
+
+/* 深色侧栏独立使用中性色，不影响正文和浅色主题。 */
+:root[data-theme='dark'] .sidebar {
+  --navigation-background: #0a0a0a;
+  --surface: #111111;
+  --surface-hover: rgb(255 255 255 / 4%);
+  --surface-active: rgb(255 255 255 / 7%);
+  --text: #ededed;
+  --text-secondary: #c9c9c9;
+  --text-muted: #a3a3a3;
+  --border: rgb(255 255 255 / 9%);
+  --border-strong: rgb(255 255 255 / 16%);
+  --active-text: var(--focus);
+}
+:root[data-theme='dark'] .sidebar__home > span { color: var(--text-secondary); }
+:root[data-theme='dark'] .sidebar__home:hover { border-color: var(--border-strong); }
+:root[data-theme='dark'] .sidebar .nav-group__link { color: var(--text-muted); }
+:root[data-theme='dark'] .sidebar .nav-group[open]:has(.nav-link.is-active, .nav-group__link.is-active) > .nav-group__content { border-left-color: var(--border); }
+:root[data-theme='dark'] .sidebar .nav-link.is-active { background: var(--surface-active); }
+:root[data-theme='dark'] .sidebar .nav-group.is-active > summary > .nav-group__label { color: var(--focus); }
+:root[data-theme='dark'] .sidebar :focus-visible { outline-color: var(--text-secondary); }
+
 .content-workspace { padding-top: 3rem; }
 .content-workspace--with-toc { gap: 2.75rem; }
 .note-content { font-size: 0.99rem; line-height: 1.95; }

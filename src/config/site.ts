@@ -71,7 +71,7 @@ export const SITE = {
     },
   },
   reader: {
-    backHome: '回到知识宇宙',
+    backHome: '返回',
     navigationCaption: 'THE COLLECTION',
     focus: '专注阅读',
     exitFocus: '退出专注',
